@@ -1,0 +1,25 @@
+basis={
+default=cc-pwcvtz
+set,jkfit,context=jkfit
+default,avtz
+set,mp2fit,context=mp2fit
+default,avdz
+set,ri,context=jkfit
+default,avtz
+}
+
+
+{hf,so-sci} 
+{PNO-LMP2-F12}
+
+mp2_fc = energy
+
+
+{hf,so-sci} 
+{PNO-LMP2-F12;core}
+
+mp2_ae = energy
+
+
+! Composite energy calculation according to scheme, without hf_energy
+exe_energy =  mp2_ae - mp2_fc

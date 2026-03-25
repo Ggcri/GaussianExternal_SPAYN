@@ -1,0 +1,16 @@
+!scheme
+!  1.0    
+!end
+
+!SECTION1
+energy_pattern=Total CCSD(F12*)(T+) energy [au]:
+basis=cc-pVDZ-F12
+scftype=rohf
+calc=CCSD(T)-F12
+ptthreads=4
+ccsdthreads=4
+ccsdmkl=thr
+ccprog=ccsd
+
+
+

@@ -1,0 +1,465 @@
+#!/Users/luigicrisci/opt/anaconda3/bin/python
+# -*- coding: utf-8 -*-
+#/shared/apps/python/3.9.16/bin/python3.9 -u
+
+import sys
+import os
+import subprocess
+import numpy as np
+
+# Add parent directory to Python path to find elecext module
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+PARENT_DIR = os.path.abspath(os.path.join(CURRENT_DIR, ".."))
+if PARENT_DIR not in sys.path:
+    sys.path.insert(0, PARENT_DIR)
+
+# Now we can import elecext
+from elecext import GauInpParser, write_output, parse_coefficients, combine_gradients, Logger, resolve_path_with_env, parse_scheme_and_formula, evaluate_custom_formula, validate_formula_syntax, find_gaussian_executable
+
+def read_energy_from_fchk(fchk_path):
+    """
+    Legge l'energia totale da un file .fchk di Gaussian.
+    """
+    energy = 0.0
+    with open(fchk_path, 'r') as f:
+        for line in f:
+            if 'Total Energy' in line:
+                energy = float(line.split()[-1])
+                break
+    return energy
+
+def read_gradients_from_log(log_path, atoms, expected_blocks,log):
+    """
+    Legge tutti i blocchi di gradienti da un file .log di Gaussian.
+    """
+    gradients = []
+    if not os.path.exists(log_path):
+        raise RuntimeError(f"File di log non trovato: {log_path}")
+
+    with open(log_path, 'r') as f:
+        content = f.read()
+
+    search_start_pos = 0
+    force_block_marker = 'Forces (Hartrees/Bohr)'
+
+    for _ in range(expected_blocks):
+        found_pos = content.find(force_block_marker, search_start_pos)
+        if found_pos == -1: break
+
+        block_start = content.find('\n', found_pos) + 1
+        block_start = content.find('\n', block_start) + 1
+        block_start = content.find('\n', block_start) + 1
+
+        grad = []
+        lines = content[block_start:].splitlines()
+        log.log(77*"-")
+        for i in range(atoms):
+            parts = lines[i].split()
+            grad_line = [-float(p) for p in parts[2:]]  # Forces -> Gradients: multiply by -1
+            grad.append(grad_line)
+            # Log di ogni riga del gradiente letto
+            log.log(f"  Gradiente Atomo {parts[0]}: {grad_line}")
+
+        gradients.append(grad)
+        log.log(77*"-")
+        search_start_pos = block_start
+
+    if len(gradients) != expected_blocks:
+        raise RuntimeError(f"Trovati {len(gradients)} blocchi di gradienti, ma ne erano attesi {expected_blocks}.")
+
+    return gradients
+
+def parse_multistep_file(file_path, preserve_scheme=False):
+    """
+    Divide un file in blocchi basandosi sul separatore --link1--,
+    ignorando eventuali blocchi vuoti.
+    
+    Args:
+        file_path: Path to the file to parse
+        preserve_scheme: If False, removes !scheme block. If True, keeps original content
+    """
+    if not os.path.exists(file_path):
+        return []
+    with open(file_path, 'r') as f:
+        content = f.read()
+
+    if not preserve_scheme:
+        # Old behavior: remove !scheme block
+        content_no_scheme = "\n".join([line for line in content.splitlines() if '!' not in line.lower()])
+    else:
+        # New behavior: remove only the !scheme...!end block but keep --link1-- sections
+        lines = content.splitlines()
+        filtered_lines = []
+        in_scheme = False
+        
+        for line in lines:
+            if '!scheme' in line.lower():
+                in_scheme = True
+                continue
+            if in_scheme:
+                # Check for end of scheme block
+                if '!end' in line.lower():
+                    in_scheme = False
+                    continue
+                # Also end scheme block when we hit --link1-- (for old-style files without !end)
+                elif '--link1--' in line:
+                    in_scheme = False
+                    filtered_lines.append(line)
+                    continue
+                # Skip coefficient lines inside scheme block
+                elif line.strip().startswith('!'):
+                    continue
+            if not in_scheme:
+                filtered_lines.append(line)
+        
+        content_no_scheme = "\n".join(filtered_lines)
+
+    # Split by --link1-- delimiter
+    blocks_raw = content_no_scheme.split('--link1--')
+
+    # Filter out empty blocks
+    final_blocks = [block.strip() for block in blocks_raw if block.strip()]
+
+    return final_blocks
+
+def main():
+    logger = Logger("external.log")
+    global print
+    print = logger.log
+    # Check if the number of arguments is correct (including the script name)
+
+#  PARSE THE GAUSSIAN INFORMATIONS GIVEN AS INPUT
+    # Arguments are accessed by indexes in sys.argv
+    preamble_file = resolve_path_with_env(sys.argv[1])
+    end_file = resolve_path_with_env(sys.argv[2])
+    nprocs = sys.argv[3]
+    mem = sys.argv[4]
+    algo_flag = sys.argv[5]
+    layer = sys.argv[6]
+    ein_path = sys.argv[7]
+    eout_path = sys.argv[8]
+
+    log = Logger('ExternalLog.log')
+    log.header("Gaussian (External Scheme)", nprocs, mem)
+
+    # Parse .EIn file (coordinates are in Bohr by convention) and convert to Angstrom for Gaussian
+    BOHR_TO_ANGSTROM = 0.529177210903
+    geom, atoms, spin, charge, opt_flag = GauInpParser(ein_path, scale=BOHR_TO_ANGSTROM)
+
+    algo = algo_flag.upper()
+    use_scheme = algo not in ("NONE", "N")
+    
+    # Parse scheme and formula using the new advanced parsing logic
+    if use_scheme:
+        operations, formula = parse_scheme_and_formula(preamble_file, "gaussian")
+        log.log(f"Operazioni dal schema: {operations}")
+        if formula:
+            log.log(f"Formula trovata: {formula}")
+        
+        # Count actual blocks needed (only 'coeff' operations need new calculations)
+        actual_blocks_needed = sum(1 for op in operations if op[0] == 'coeff')
+        
+        # For backward compatibility, create a simple coefficients list for validation
+        coefficients = []
+        for op in operations:
+            if op[0] == 'coeff':
+                coefficients.append(op[1])
+            elif op[0] == 'copy':
+                coefficients.append(op[2])  # Add coefficient part for counting
+        
+        # Store both operations and formula for later use
+        scheme_operations = operations
+        scheme_formula = formula
+    else:
+        coefficients = [1.0]
+        actual_blocks_needed = 1
+        scheme_operations = []
+        scheme_formula = None
+    
+    is_scheme = use_scheme and len(coefficients) > 1
+    log.log(f"Rilevato schema: {is_scheme}, Coefficienti: {coefficients}")
+    if scheme_formula:
+        log.log(f"Formula dello schema: {scheme_formula}")
+
+    # --- Generazione Input ---
+    gau_input_file = 'GauExternal.gjf'
+
+    with open(gau_input_file, 'w') as f:
+        if not is_scheme:
+            # ---- Calcolo Singolo ----
+            with open(preamble_file, 'r') as pf:
+                preamble_lines = [line for line in pf if '!' not in line and 'scheme' not in line.lower()]
+
+            # Add GB suffix only if not already present
+            mem_str = mem if 'GB' in mem.upper() or 'MB' in mem.upper() else f'{mem}GB'
+            f.write(f'%nproc={nprocs}\n%mem={mem_str}\n%chk=GauExternal.chk\n')
+            f.writelines(preamble_lines)
+            f.write('\nExternal Calculation\n\n')
+            f.write(f'{charge} {spin}\n')
+            for line in geom: f.write(f'{line}\n')
+            f.write('\n')
+            if os.path.exists(end_file):
+                with open(end_file, 'r') as end_f: f.write(end_f.read())
+                f.write('\n')
+        else:
+            # ---- Schema Composito (Multi-Step) ----
+            # Parse preamble blocks using --link1-- separator (preserving scheme)
+            preamble_blocks = parse_multistep_file(preamble_file, preserve_scheme=True)
+            ending_blocks = parse_multistep_file(end_file, preserve_scheme=True)
+            
+            log.log(f"Trovati {len(preamble_blocks)} blocchi nel preamble")
+            log.log(f"Trovati {len(ending_blocks)} blocchi nell'ending")
+            
+            # Check if we have the right number of blocks for the actual calculations needed
+            if preamble_blocks and len(preamble_blocks) != actual_blocks_needed:
+                # If there's only one preamble block but multiple actual blocks needed, 
+                # replicate it for each calculation (backward compatibility)
+                if len(preamble_blocks) == 1:
+                    log.log(f"Un solo blocco preamble trovato, replicando per {actual_blocks_needed} calcoli effettivi")
+                    preamble_blocks = preamble_blocks * actual_blocks_needed
+                else:
+                    raise ValueError(f"Discrepanza tra blocchi nel preamble ({len(preamble_blocks)}) e numero di calcoli effettivi necessari ({actual_blocks_needed}).")
+            
+            if not preamble_blocks:
+                # No blocks found, use default
+                log.log("Nessun blocco trovato nel preamble, utilizzo default")
+                preamble_blocks = ['#P hf/sto-3g'] * actual_blocks_needed
+            
+            # Handle ending blocks similarly
+            if ending_blocks and len(ending_blocks) != actual_blocks_needed:
+                if len(ending_blocks) == 1:
+                    log.log(f"Un solo blocco ending trovato, replicando per {actual_blocks_needed} calcoli effettivi")
+                    ending_blocks = ending_blocks * actual_blocks_needed
+                else:
+                    raise ValueError(f"Discrepanza tra blocchi nell'ending file ({len(ending_blocks)}) e numero di calcoli effettivi necessari ({actual_blocks_needed}).")
+            
+            # Generate the multi-step input file
+            for i in range(actual_blocks_needed):
+                chk_name = f'GauExternal_{i+1}.chk'
+                # Add GB suffix only if not already present
+                mem_str = mem if 'GB' in mem.upper() or 'MB' in mem.upper() else f'{mem}GB'
+                f.write(f'%nproc={nprocs}\n%mem={mem_str}\n%chk={chk_name}\n')
+                f.write(preamble_blocks[i] + '\n')
+                f.write(f'\nStep {i+1} of composite scheme\n\n{charge} {spin}\n')
+                for line in geom: f.write(f'{line}\n')
+                f.write('\n')
+                if ending_blocks and i < len(ending_blocks):
+                    f.write(ending_blocks[i] + '\n\n')
+                if i < actual_blocks_needed - 1:
+                    f.write('--link1--\n')
+
+    # --- Esecuzione ---
+    if "EXT_TEST_MODE" not in os.environ:
+        # Find Gaussian executable from GAUSS_EXEDIR
+        try:
+            gaussian_exe = find_gaussian_executable()
+            log.log(f"Using Gaussian executable: {gaussian_exe}")
+        except RuntimeError as e:
+            log.log(f"ERROR: {e}")
+            # Fallback to old behavior for backward compatibility
+            gaussian_exe = os.environ.get("GAUSSIAN_EXE", "g16")
+            log.log(f"Falling back to GAUSSIAN_EXE or default: {gaussian_exe}")
+
+        log.log(f"Esecuzione di: {gaussian_exe} < {gau_input_file}")
+        try:
+            subprocess.run([gaussian_exe, gau_input_file],  stderr=subprocess.STDOUT, check=True)
+        except subprocess.CalledProcessError as e:
+            cwd = os.getcwd()
+            print(f"\n{'='*70}", file=sys.stderr)
+            print(f"ERROR: Gaussian calculation failed!", file=sys.stderr)
+            print(f"  Exit code: {e.returncode}", file=sys.stderr)
+            print(f"  Output directory: {cwd}", file=sys.stderr)
+            print(f"  Input file: {gau_input_file}", file=sys.stderr)
+            print(f"  Check the output files in the directory above for error details.", file=sys.stderr)
+            print(f"{'='*70}\n", file=sys.stderr)
+            raise
+
+    # --- Parsing ---
+    energies = []
+    formchk_exe = os.environ.get("FORMCHK_EXE", "formchk")
+    chk_files = [f'GauExternal_{i+1}.chk' for i in range(actual_blocks_needed)] if is_scheme else ['GauExternal.chk']
+
+    for chk_file in chk_files:
+        fchk_file = os.path.splitext(chk_file)[0] + '.fchk'
+        if not os.path.isfile(fchk_file):
+            if "EXT_TEST_MODE" in os.environ:
+                raise FileNotFoundError(f"MODALITÀ TEST: {fchk_file} mancante.")
+            if os.path.isfile(chk_file):
+                log.log(f"File {fchk_file} non trovato. Eseguo formchk su {chk_file}.")
+                try:
+                    subprocess.run([formchk_exe, chk_file, fchk_file], check=True, capture_output=True, text=True)
+                except (subprocess.CalledProcessError, FileNotFoundError) as e:
+                    raise RuntimeError(f"formchk fallito per {chk_file}") from e
+            else:
+                 raise FileNotFoundError(f"File {chk_file} e {fchk_file} mancanti.")
+
+        energies.append(read_energy_from_fchk(fchk_file))
+        log.log(f"Energia da {fchk_file}: {energies[-1]}")
+
+    # Automatic cleanup of .chk files for single-point calculations in parallel gradient context
+    if opt_flag == 0:  # Single point energy calculation (not gradient)
+        current_dir = os.getcwd()
+        in_parallel_context = ('Iterations' in current_dir or 'task_' in os.path.basename(current_dir))
+        keep_chk = os.environ.get('KEEP_CHK_FILES') == '1'
+
+        if in_parallel_context and not keep_chk:
+            log.log("Single-point in parallel gradient context detected - cleaning up .chk files to save disk space")
+            total_space_saved = 0.0
+            for chk_file in chk_files:
+                if os.path.isfile(chk_file):
+                    try:
+                        file_size_mb = os.path.getsize(chk_file) / (1024 * 1024)
+                        os.remove(chk_file)
+                        total_space_saved += file_size_mb
+                        log.log(f"  Removed {chk_file} ({file_size_mb:.2f} MB)")
+                    except Exception as e:
+                        log.log(f"  Warning: Failed to remove {chk_file}: {e}")
+            if total_space_saved > 0:
+                log.log(f"Checkpoint cleanup complete - freed {total_space_saved:.2f} MB (only .fchk files retained)")
+
+    # Calculate final energy using formula or operations or simple combination
+    if is_scheme and scheme_formula:
+        # Use custom formula evaluation
+        log.log("Utilizzo della formula personalizzata per l'energia")
+        
+        # Extract coefficient values for formula evaluation
+        coeff_values = []
+        for op in scheme_operations:
+            if op[0] == 'coeff':
+                coeff_values.append(op[1])
+            elif op[0] == 'copy':
+                coeff_values.append(op[2])  # Store coefficient for formula
+        
+        # Validate formula if present
+        try:
+            validate_formula_syntax(scheme_formula, len(energies), len(coeff_values))
+            log.log(f"Validazione formula riuscita per {len(energies)} energie e {len(coeff_values)} coefficienti")
+        except Exception as e:
+            log.log(f"Errore nella validazione della formula: {e}")
+            raise ValueError(f"Errore nella validazione della formula: {e}")
+        
+        # Evaluate formula for energy
+        try:
+            final_energy = evaluate_custom_formula(scheme_formula, energies, coeff_values)
+            log.log(f"Risultato valutazione formula (energia): {final_energy:.12f}")
+        except Exception as e:
+            log.log(f"ERRORE: Valutazione formula fallita: {e}")
+            raise ValueError(f"Errore nella valutazione della formula: {e}")
+            
+    elif is_scheme and scheme_operations:
+        # Use operations-based combination (copy mechanism with linear combination)
+        log.log(f"Utilizzo combinazione basata su operazioni: {scheme_operations}")
+        
+        # Process operations to get actual energies and coefficients
+        processed_energies = []
+        processed_coefficients = []
+        
+        for op in scheme_operations:
+            if op[0] == 'coeff':
+                # Direct coefficient - use corresponding energy
+                op_index = len(processed_energies)
+                if op_index < len(energies):
+                    processed_energies.append(energies[op_index])
+                    processed_coefficients.append(op[1])
+            elif op[0] == 'copy':
+                # Copy operation - reuse energy from another calculation
+                source_index, coeff_value = op[1], op[2]
+                if 1 <= source_index <= len(energies):
+                    processed_energies.append(energies[source_index - 1])  # Convert to 0-based
+                    processed_coefficients.append(coeff_value)
+                    log.log(f"Operazione copy: energia e{source_index} = {energies[source_index - 1]:.12f}, coeff = {coeff_value}")
+                else:
+                    raise ValueError(f"Indice copy non valido: {source_index} (energie disponibili: {len(energies)})")
+        
+        # Linear combination of processed energies
+        final_energy = sum(c * e for c, e in zip(processed_coefficients, processed_energies))
+        log.log(f"Combinazione finale: {' + '.join([f'{c}*{e}' for c, e in zip(processed_coefficients, processed_energies)])}")
+        log.log(f"Energia finale dalle operazioni: {final_energy}")
+        
+    else:
+        # Simple combination or single calculation
+        final_energy = np.dot(energies, coefficients) if is_scheme else energies[0]
+        log.log(f"Energia finale (combinazione semplice): {final_energy}")
+    
+    if opt_flag == 1:
+        # Gradient calculation needed
+        expected_blocks = len(coefficients) if is_scheme else 1
+        all_gradients = read_gradients_from_log('GauExternal.log', atoms, expected_blocks, log)
+        
+        if is_scheme and scheme_formula:
+            # Use formula for gradient combination
+            log.log("Utilizzo della formula personalizzata per i gradienti")
+            
+            # Extract coefficient values for formula evaluation
+            coeff_values = []
+            for op in scheme_operations:
+                if op[0] == 'coeff':
+                    coeff_values.append(op[1])
+                elif op[0] == 'copy':
+                    coeff_values.append(op[2])
+            
+            try:
+                # Convert gradients to numpy arrays for formula evaluation
+                gradient_arrays = [np.array(grad) for grad in all_gradients]
+                combined_gradient_np = evaluate_custom_formula(scheme_formula, gradient_arrays, coeff_values)
+                final_gradient = combined_gradient_np.tolist()
+                log.log(f"Risultato valutazione formula (gradiente): shape {combined_gradient_np.shape}")
+            except Exception as e:
+                log.log(f"ERRORE: Valutazione formula gradiente fallita: {e}")
+                raise ValueError(f"Errore nella valutazione della formula per gradienti: {e}")
+                
+        elif is_scheme and scheme_operations:
+            # Use operations for gradient combination
+            log.log(f"Utilizzo combinazione gradienti basata su operazioni")
+            
+            # Process gradients using same operations logic
+            processed_gradients = []
+            processed_coefficients = []
+            
+            for op in scheme_operations:
+                if op[0] == 'coeff':
+                    op_index = len(processed_gradients)
+                    if op_index < len(all_gradients):
+                        processed_gradients.append(all_gradients[op_index])
+                        processed_coefficients.append(op[1])
+                elif op[0] == 'copy':
+                    source_index, coeff_value = op[1], op[2]
+                    if 1 <= source_index <= len(all_gradients):
+                        processed_gradients.append(all_gradients[source_index - 1])
+                        processed_coefficients.append(coeff_value)
+            
+            # Combine gradients
+            if processed_gradients:
+                final_gradient = combine_gradients(processed_coefficients, processed_gradients)
+            else:
+                final_gradient = all_gradients[0] if all_gradients else [[0.0, 0.0, 0.0] for _ in range(atoms)]
+                
+        elif is_scheme:
+            # Standard scheme gradient combination
+            final_gradient = combine_gradients(coefficients, all_gradients)
+        else:
+            # Single calculation
+            final_gradient = all_gradients[0]
+        
+        # Write energy and gradient
+        write_output(eout_path, final_energy, gradient=[list(map(float,x)) for x in final_gradient])
+        log.log(f"Output scritto con energia e gradiente in {eout_path}")
+    else:
+        # Energy-only calculation
+        if is_scheme:
+            log.log("Schema composito rilevato per calcolo solo energia")
+            log.log(f"Energie individuali: {energies}")
+            if scheme_formula:
+                log.log(f"Formula utilizzata: {scheme_formula}")
+            elif scheme_operations:
+                log.log(f"Operazioni utilizzate: {scheme_operations}")
+            else:
+                log.log(f"Coefficienti utilizzati: {coefficients}")
+        
+        # Write energy only
+        write_output(eout_path, final_energy)
+        log.log(f"Output scritto con solo energia in {eout_path}")
+    log.log(f"Output finale scritto in {eout_path}")
+
+if __name__ == "__main__":
+    main()

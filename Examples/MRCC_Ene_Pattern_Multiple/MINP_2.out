@@ -1,0 +1,499 @@
+ **********************************************************************
+                          MRCC program system
+ **********************************************************************
+ 
+                              Written by
+     Mihaly Kallay, Peter R. Nagy, David Mester, Laszlo Gyevi-Nagy,
+        Jozsef Csoka, P. Bernat Szabo, Zoltan Rolik, Gyula Samu,
+      Bence Hegely, Bence Ladoczki, Klara Petrov, Jozsef Csontos,
+     Adam Ganyecz, Istvan Ladjanszki, Lorant Szegedy, Mate Farkas,
+          Pal D. Mezei, Reka A. Horvath, and Balazs D. Lorincz
+ 
+        Department of Physical Chemistry and Materials Science
+            Budapest University of Technology and Economics
+                  Budapest P.O.Box 91, H-1521 Hungary
+ 
+                              www.mrcc.hu
+ 
+                    Release date: December 31, 2024
+
+ ************************ 2025-09-11 15:06:15 *************************
+ Executing minp...
+
+ Reading input from MINP...
+ 
+ Input file:
+ 
+basis=cc-pVDZ-F12
+mem=4GB
+
+calc=scf
+dft=user
+5
+0.3100 PBEx
+0.4296 P86
+0.6900 HFx
+0.5785 MP2s
+0.0799 MP2t
+
+scfiguess=off
+
+
+unit=bohr
+geom=xyz
+3
+
+O     0.00000000    0.00000000   -0.12502304
+H     0.00000000    1.43266384    0.99210317
+H     0.00000000   -1.43266384    0.99210317
+ 
+ 
+ Checking keyword combinations...
+ 
+ Keywords:
+ 
+ active=none
+ agrid=ld0006-ld0590
+ agrid_pssp=ld0006-ld0194
+ agrid_pssp_sm=ld0006-ld0074
+ basis=cc-pvdz-f12
+ basis_sm=none
+ basopt=off
+ bfbasis=none
+ bfgsmem=10
+ bfgstol=1.0d-3
+ boysalg=jacobi
+ bpcompo=0.985
+ bpcompv=0.98
+ bpdfo=0.985
+ bpocc=0.985
+ bppdo=0.985
+ bppdv=0.98
+ bpedo=0.985
+ bpedv=0.98
+ bp_subsyso=0.95
+ bp_subsysv=0.95
+ cabscorr=off
+ cabsdual=off
+ calc=mp2
+ ccmaxit=50
+ ccprog=mrcc
+ ccsdalg=disk
+ ccsdmkl=seq
+ ccsdrest=off
+ ccsdthreads=2
+ cctol=6
+ charge=0
+ cialg=disk
+ ciguess=off
+ cmpgrp=auto
+ comprest=off
+ coord_sys=ric
+ core=frozen
+ corembed=off
+ csapprox=off
+ cvs=off
+ dboc=off
+ deltaf12=off
+ delocsomofact=
+ dendec=cholesky
+ dens=0
+ denscorr=0
+ dfalg=lineq
+ dfbasis_cab=none
+ dfbasis_cor=auto
+ dfbasis_scf=auto
+ dfbasis_scf_sm=auto
+ dfintran=drpa
+ dft=user
+ dhexc=adc(2)
+ diag=david
+ docc=
+ domrad=10.d0
+ drpaalg=fit
+ dual=off
+ dual_df=off
+ dyson=off
+ ecp=auto
+ edisp=off
+ edisp_embed=off
+ embed=off
+ epairestfact=off
+ epairscale=1.d0
+ etemp=300
+ epert=none
+ eps=
+ espcharge=off
+ excrad=0.d0
+ excrad_f12=0.d0
+ excrad_fin=0.000000000D+00
+ fastdbbsc=v2
+ fitting=coulomb
+ fmm=off
+ fmmord=8
+ fnonorb=
+ freq=off
+ gamma=0.9d0
+ gauss=spher
+ geom=xyz
+ gopt=off
+ ghost=none
+ gtol=7
+ grdens=off
+ grid=auto
+ grid_sm=auto
+ gridbatch_cos=2000
+ grtol=10
+ guido_ct=off
+ hamilton=dc
+ iface=none
+ incore=off
+ intalg=auto
+ ip_ea=off
+ itol=10
+ laptol=1.d-2
+ lccoporder=trffirst
+ lcorthr=normal
+ lccrest=off
+ ldfgrad_tol=8
+ lmp2dens=on
+ lnoepso=0.d0
+ lnoepsv=1e-6
+ localcc=off
+ localcorrsymm=off
+ locintrf=disk
+ mact=
+ maxact=off
+ maxdim=200
+ maxex=0
+ maxmicroit=100
+ mcscfiguess=hf
+ mem=4gb
+ mmprog=
+ molden=off
+ mp2ongrid=off
+ mpitasks=1
+ mulmet=0
+ mult=
+ nab=off
+ nacto=0
+ nactv=0
+ naf_amp=3.16d-3
+ naf_cor=off
+ naf_f12=off
+ naf_scf=off
+ nafalg=albe
+ nafdens=off
+ naftyp=
+ nchol=auto
+ ndeps=1e-3
+ nstate=1
+ nsing=0
+ nto=off
+ ntrip=0
+ num_grad=off
+ occ=
+ occri=off
+ oniom=off
+ oniom_eechg=off
+ oniom_pcm=off
+ oniom_qcorr=off
+ optalg=
+ optmaxit=50
+ optetol=1e-6
+ optex=0
+ optgtol=1e-4
+ optstol=1e-3
+ orblocc=off
+ orbloce=off
+ orbloco=off
+ orblocv=off
+ orblocguess=cholesky
+ osveps=1e-3
+ ovirt=off
+ ovltol=1e-7
+ ovosnorb=80.0
+ pao_subsys_tol=1e-3
+ pao_tol=1e-3
+ pcm=off
+ popul=off
+ pressure=100000
+ pssp=off
+ ptfreq=0.0
+ ptthreads=2
+ qmreg=
+ qmmm=off
+ qro=off
+ qscf=off
+ redcost_exc=off
+ redcost_tddft=off
+ refdet=none
+ rest=0
+ rgrid=log3
+ rism=off
+ rohfcore=semicanonical
+ rohftype=semicanonical
+ scfalg=direct
+ scf_conv=auto
+ scfdamp=0.7d0
+ scfdamp_mode=1
+ scfdamp_end=3
+ scfdamp_dampstep=0.d0
+ scfdamp_dtol=0.0d0
+ scfdamp_maxfact=0.7d0
+ scfdamp_minfact=0.7d0
+ scfdiis=on
+ scfdiis_dtol=0.0d0
+ scfdiis_end=50
+ scfdiis_start=2
+ scfdiis_step=1
+ scfdiis_watch=off
+ scfdiis_wrange=10
+ scfdiis_wlimit=5
+ scfdiis_delmax=2
+ scfdtol=7
+ scfext=10
+ scfguessdens=
+ scfiguess=off
+ scfloc=off
+ scflshift=0.20
+ scflshift_end=8
+ scflshift_dtol=0.0
+ scflshift_gaptol=0.20
+ scfmaxit=50
+ scftype=
+ scftol=6
+ scspe=1.d0
+ scsph=1.d0
+ scsps=0.5785000000
+ scsps_t=1.2d0
+ scspt=0.0799000000
+ scspt_t=0.33333333333333
+ scspv=1.d0
+ spairtol=1e-4
+ sqmprog=
+ subminp=top
+ subsys_bopu=on
+ symm=
+ talg=occ
+ temp=298.15
+ test=off
+ theodore=off
+ tlmo=0.999
+ tpao=0.94
+ tprint=off
+ uncontract=off
+ unit=bohr
+ usedisk=2
+ verbosity=2
+ wpairtol=0.100000000E-05
+
+ ************************ 2025-09-11 15:06:22 *************************
+ Executing integ...
+
+ Allocation of 4096.0 Mbytes of memory...
+ 
+ 
+ Number of atoms:                  3
+ Charge:                           0
+ Number of electrons:             10
+ Number of core electrons:         2
+ Spin multiplicity:                1
+ 
+                 Cartesian coordinates [bohr]      Atomic mass [AMU]  Z
+   1  O     0.00000000    0.00000000   -0.12502304    15.994915       8
+   2  H     0.00000000    1.43266384    0.99210317     1.007825       1
+   3  H     0.00000000   -1.43266384    0.99210317     1.007825       1
+ 
+ This molecule is an asymmetric top.
+ This molecule is planar.
+ 
+ Rotational constants [cm-1]: 
+     26.947595184485     14.550921400621      9.448827855353
+ 
+ Point group: C2v 
+ Computational point group: C2v 
+ 
+ Cartesian coordinates in standard orientation [bohr]
+   1  O     0.00000000    0.00000000   -0.12502304
+   2  H     0.00000000    1.43266384    0.99210317
+   3  H     0.00000000   -1.43266384    0.99210317
+ 
+ Nuclear repulsion energy [au]:          9.156047642193
+ 
+ Density functional: user-defined
+ 
+ 
+ Basis set information:
+ 
+ Maximum angular momentum: f
+ Maximum number of contracted Gaussians:   11
+ Maximum number of primitive Gaussians:    11
+ Spherical harmonic GTOs are used.
+ 
+ 
+ Conventional basis set:
+ 
+   1  O  cc-pvdz-f12 [ 11s 6p 2d | 5s 5p 2d ]
+   2  H  cc-pvdz-f12 [ 5s 2p | 3s 2p ]
+   3  H  cc-pvdz-f12 [ 5s 2p | 3s 2p ]
+ 
+ Total number of basis functions:     48
+ 
+ 
+ Fitting basis set for the SCF calculation:
+ 
+   1  O  aug-cc-pvdz-ri-jk [ 11s 8p 6d 3f | 11s 8p 6d 3f ]
+   2  H  aug-cc-pvdz-ri-jk [ 5s 4p 3d | 5s 4p 3d ]
+   3  H  aug-cc-pvdz-ri-jk [ 5s 4p 3d | 5s 4p 3d ]
+ 
+ Total number of basis functions:    150
+ 
+ 
+ Fitting basis set for the correlation calculation:
+ 
+   1  O  aug-cc-pvdz-ri [ 8s 6p 5d 3f | 8s 6p 5d 3f ]
+   2  H  aug-cc-pvdz-ri [ 4s 3p 2d | 4s 3p 2d ]
+   3  H  aug-cc-pvdz-ri [ 4s 3p 2d | 4s 3p 2d ]
+ 
+ Total number of basis functions:    118
+ 
+ 
+ Initializing the SAD routines for the initial guess...
+ Checking the files required for the initial guess...
+ All atomic density files have been found for the initial guess.
+ CPU time [min]:     0.004                   Wall time [min]:     0.111
+ 
+ Character table for point group C2v:
+ 
+          E  C2  Qh  Qv  
+    A1    1   1   1   1
+    B1    1  -1   1  -1
+    B2    1  -1  -1   1
+    A2    1   1  -1  -1
+ 
+ Number of basis functions per irrep:
+    A1     21
+    B1     14
+    B2      9
+    A2      4
+ 
+ MRCC is compiled with Libxc support.
+ Libxc version: 7.0.0
+ Reference: S. Lehtola, C. Steigemann, M. J.T. Oliveira, and M. A.L. Marques.,  SoftwareX 7, 1–5 (2018)
+ DOI: 10.1016/j.softx.2017.11.002
+ 
+ Constructing integration grid for DFT...
+ Angular integration grid: adaptive 590-point Lebedev quadrature
+ Radial integration grid: Log3 quadrature
+ Total number of grid points: 33936       
+ CPU time [min]:     0.007                   Wall time [min]:     0.135
+ 
+ Calculation of overlap integrals...
+ CPU time [min]:     0.007                   Wall time [min]:     0.135
+ 
+ Calculation of the square root of the overlap matrix...
+ Minimum eigenvalue of the overlap matrix: 0.170248E-02
+ CPU time [min]:     0.007                   Wall time [min]:     0.135
+ 
+ Calculation of kinetic energy integrals...
+ CPU time [min]:     0.007                   Wall time [min]:     0.136
+ Calculation of nuclear attraction integrals...
+ CPU time [min]:     0.007                   Wall time [min]:     0.136
+ 
+ Calculation of prescreening integrals...
+ CPU time [min]:     0.007                   Wall time [min]:     0.136
+ 
+ 
+ ***FINAL KOHN-SHAM ENERGY:       -73.3244389325528232 [AU]
+
+ ************************ 2025-09-11 15:06:34 *************************
+ Executing integ...
+
+ Allocation of 4096.0 Mbytes of memory...
+ 
+ 
+ Basis set information:
+ 
+ Maximum angular momentum: f
+ Maximum number of contracted Gaussians:   11
+ Maximum number of primitive Gaussians:    11
+ Spherical harmonic GTOs are used.
+ 
+ 
+ Conventional basis set:
+ 
+   1  O  cc-pvdz-f12 [ 11s 6p 2d | 5s 5p 2d ]
+   2  H  cc-pvdz-f12 [ 5s 2p | 3s 2p ]
+   3  H  cc-pvdz-f12 [ 5s 2p | 3s 2p ]
+ 
+ Total number of basis functions:     48
+ 
+ 
+ Fitting basis set for the SCF calculation:
+ 
+   1  O  aug-cc-pvdz-ri-jk [ 11s 8p 6d 3f | 11s 8p 6d 3f ]
+   2  H  aug-cc-pvdz-ri-jk [ 5s 4p 3d | 5s 4p 3d ]
+   3  H  aug-cc-pvdz-ri-jk [ 5s 4p 3d | 5s 4p 3d ]
+ 
+ Total number of basis functions:    150
+ 
+ 
+ Fitting basis set for the correlation calculation:
+ 
+   1  O  aug-cc-pvdz-ri [ 8s 6p 5d 3f | 8s 6p 5d 3f ]
+   2  H  aug-cc-pvdz-ri [ 4s 3p 2d | 4s 3p 2d ]
+   3  H  aug-cc-pvdz-ri [ 4s 3p 2d | 4s 3p 2d ]
+ 
+ Total number of basis functions:    118
+ 
+ 
+ Calculation of prescreening integrals...
+ CPU time [min]:     0.003                   Wall time [min]:     0.025
+ 
+ Calculation of two-center Coulomb integrals...
+   1% done.
+  19% done.
+  37% done.
+  52% done.
+  65% done.
+  84% done.
+ 100% done.
+ CPU time [min]:     0.003                   Wall time [min]:     0.026
+ 
+ Cholesky decomposition of the inverse of the two-center matrix...
+ CPU time [min]:     0.003                   Wall time [min]:     0.027
+ 
+ Calculation of three-center Coulomb integrals...
+   1% done.
+  18% done.
+  40% done.
+  66% done.
+  77% done.
+ 100% done.
+ CPU time [min]:     0.004                   Wall time [min]:     0.028
+
+ ************************ 2025-09-11 15:06:40 *************************
+ Executing drpa...
+
+ Three-index integral transformation and DF-MP2 calculation
+ Allocation of 4096.0 Mbytes of memory...
+ 
+ Minimal memory requirement for (ai|P) integrals:        0.4 MB
+
+ Calculating (ai|P) integrals...
+ Number of integral batches:    1
+ Occupied indices per batch:    4
+ 
+ Transforming integrals of batch 1...
+ CPU time [min]:     0.002                   Wall time [min]:     0.013
+ 
+ 
+ 
+ Reference energy [au]:                       -73.324438932553
+ SCS-MP2 contribution [au]:                    -0.125752541494
+ KS energy + MP2 correction [au]:             -73.450191474046
+ 
+ ************************ 2025-09-11 15:06:44 *************************
+                      Normal termination of mrcc.
+ **********************************************************************

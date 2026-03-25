@@ -1,0 +1,38 @@
+!scheme
+!  1.0 1.0 -1.0
+!end
+
+!SECTION1
+energy_pattern=Total CCSD(F12*)(T+) energy [au]:
+basis=cc-pVDZ-F12
+calc=CCSD(T)-F12
+
+
+!SECTION2
+energy_pattern=DF-MP2 energy [au]:
+basis=atomtype
+O:cc-pwcvtz
+C:cc-pwcvtz
+H:cc-pvtz
+calc=df-MP2
+basis=cc-pwcvtz
+core=corr
+dens=2
+symm=off
+
+
+!SECTION3
+energy_pattern=DF-MP2 energy [au]:
+basis=atomtype
+O:cc-pwcvtz
+C:cc-pwcvtz
+H:cc-pvtz
+calc=df-MP2
+basis=cc-pwcvtz
+dens=2
+symm=off
+
+
+
+
+

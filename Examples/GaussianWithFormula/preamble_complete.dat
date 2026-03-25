@@ -1,0 +1,11 @@
+!scheme
+! 1.0 -0.5 copy[1,0.5]
+!formula
+! e=c1*e1 + c2*e2 + c3*e1*log(2.0)
+!end
+--link1--
+#P ccsd(t)/cc-pvtz force
+--link1--
+#P mp2/cc-pvtz force
+--link1--
+#P hf/cc-pvtz force

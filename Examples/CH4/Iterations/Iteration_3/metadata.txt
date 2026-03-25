@@ -1,0 +1,5 @@
+Iteration: 3
+Output file: /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/CH4/test_ch4_fixed.EOut
+Central energy: -76.123456789
+Number of atoms: 5
+Timestamp: 2025-09-09 15:20:54

@@ -1,0 +1,28 @@
+
+{hf,so-sci} 
+{ccsd(t)-f12b,scale_trip=1}
+
+
+basis=cc-pwcvtz
+
+{rhf,so-sci}
+{mp2}
+
+mp2_fc = energy
+
+
+{rhf,so-sci}
+{mp2;core}
+mp2_ae = energy
+
+
+! Composite energy calculation according to scheme, without hf_energy
+exe_energy = ccsd_energy + mp2_ae - mp2_fc
+
+!normalmode
+!symmetry=auto
+!reference_fc=error_dependent
+!energy_error_grad=1e-10
+!fakekey
+! scf=xqc  level="b3lyp/6-31g(d,p)"
+

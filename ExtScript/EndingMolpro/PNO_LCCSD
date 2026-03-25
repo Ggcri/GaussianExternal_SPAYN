@@ -1,0 +1,26 @@
+basis={
+default=vdz-f12
+set,jkfit,context=jkfit
+default,avtz
+set,mp2fit,context=mp2fit
+default,avdz
+set,ri,context=jkfit
+default,avtz
+}
+explicit,ri_basis=ri,df_basis=mp2fit,df_basis_exch=jkfit
+
+
+df-hf,basis=jkfit            !Hartree-Fock using the JKFIT density fitting basis
+{pno-lccsd(t)-f12,scale_trip=1}
+exe_energy=energy
+
+
+!normalmode
+!symmetry=auto
+!reference_fc=error_dependent
+!energy_error_grad=1e-10
+!fakekey
+! scf=xqc  level="b3lyp/6-31g(d,p)"
+
+
+

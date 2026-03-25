@@ -1,0 +1,3 @@
+# Test preamble for NH3
+gau_basis_set=sto-3g
+gau_method=hf

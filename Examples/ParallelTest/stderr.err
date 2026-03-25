@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/home/barone/lcrisci_vb/MyBin/ExternalDev/Executables/CentralExt", line 508, in <module>
+    main()
+  File "/home/barone/lcrisci_vb/MyBin/ExternalDev/Executables/CentralExt", line 481, in main
+    if run_parallel_numerical_gradient():
+  File "/home/barone/lcrisci_vb/MyBin/ExternalDev/Executables/CentralExt", line 396, in run_parallel_numerical_gradient
+    calculated_energies = run_energy_tasks_in_parallel(
+  File "/home/barone/lcrisci_vb/MyBin/ExternalDev/elecext/parall.py", line 273, in run_energy_tasks_in_parallel
+    results[fut_map[fut]] = fut.result()
+  File "/shared/apps/python/3.9.16/lib/python3.9/concurrent/futures/_base.py", line 439, in result
+    return self.__get_result()
+  File "/shared/apps/python/3.9.16/lib/python3.9/concurrent/futures/_base.py", line 391, in __get_result
+    raise self._exception
+  File "/shared/apps/python/3.9.16/lib/python3.9/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/barone/lcrisci_vb/MyBin/ExternalDev/elecext/parall.py", line 236, in run_single_point_energy
+    energy = hooks["read_energy"](out_file)
+  File "/home/barone/lcrisci_vb/MyBin/ExternalDev/Executables/CentralExt", line 376, in read_energy
+    raise FileNotFoundError(f"Energy output file not found: {abs_target_file}")
+FileNotFoundError: Energy output file not found: /home/barone/lcrisci_vb/MyBin/ExternalDev/Examples/ParallelTest/Iterations/Iteration_1/task_atom_1_ixyz_3_up/energy_output.dat

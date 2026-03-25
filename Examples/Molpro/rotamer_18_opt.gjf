@@ -1,0 +1,6 @@
+%oldchk=rotamer_18_opt_rev.chk
+%chk=rotamer_18_opt_pcs2.chk
+%nprocs=1
+#p opt=(tight,readFC,maxcycles=100,nomicro)  output=pickett  External="MolproExt preamble.dat ending.dat 32 999 read" geom=allcheck 
+
+

@@ -1,0 +1,7 @@
+
+basis=cc-pvdz-f12
+{uhf,so-sci} 
+{uccsd(t)-f12c,scale_trip=1}
+forces
+
+exe_energy=energy

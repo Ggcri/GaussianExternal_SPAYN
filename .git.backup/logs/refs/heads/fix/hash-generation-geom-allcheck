@@ -1,0 +1,12 @@
+0000000000000000000000000000000000000000 9d87f53beb72f268b24130737cde9db65108e15a Luigi Crisci <luigi.crisci@sns.it> 1761502730 +0100	branch: Created from HEAD
+9d87f53beb72f268b24130737cde9db65108e15a dcaeba95c4911effa9a2219058626a96ceed41d3 Luigi Crisci <luigi.crisci@sns.it> 1761503493 +0100	commit: Fix hash generation for geom=allcheck link1 jobs
+dcaeba95c4911effa9a2219058626a96ceed41d3 aaab935a0bf5e0ee1a56d219ec2de7194ea4ec07 Luigi Crisci <luigi.crisci@sns.it> 1761504450 +0100	commit: totest parsing
+aaab935a0bf5e0ee1a56d219ec2de7194ea4ec07 177acb43411d9239d04af04172962930453dd2df Luigi Crisci <luigi.crisci@sns.it> 1761505536 +0100	commit: Fix: Use base directory for .gjf/.log lookup in hash generation
+177acb43411d9239d04af04172962930453dd2df 0935de82228c6279a16ec7b93fd2ba5ae47b0f27 Luigi Crisci <luigi.crisci@sns.it> 1761506524 +0100	commit: totest parsing pt 2
+0935de82228c6279a16ec7b93fd2ba5ae47b0f27 f8a272de571f7f24bd659dc537bd8fa14deb87df Luigi Crisci <luigi.crisci@sns.it> 1761507341 +0100	commit: Fix: Use input file directory for .gjf/.log lookup instead of cwd
+f8a272de571f7f24bd659dc537bd8fa14deb87df 90c98df913dfe0687ffcf258c035feb21b510a04 Luigi Crisci <luigi.crisci@sns.it> 1761507507 +0100	commit: totest parsing pt 3
+90c98df913dfe0687ffcf258c035feb21b510a04 c0527d8a96b008ec2998451d4a4e7b91a1ae3161 Luigi Crisci <luigi.crisci@sns.it> 1761507944 +0100	commit: Fix: Handle both Iterations/ and standalone input paths for hash consistency
+c0527d8a96b008ec2998451d4a4e7b91a1ae3161 c22cf37c24424db353780ba4e33af455489d7a85 Luigi Crisci <luigi.crisci@sns.it> 1761508079 +0100	commit: Fix: Search for .gjf in directory containing Iterations/ (cwd-based)
+c22cf37c24424db353780ba4e33af455489d7a85 b5e4615a337edc6e5cf54457609f7032934b20f5 Luigi Crisci <luigi.crisci@sns.it> 1761508206 +0100	commit: totest parsing pt 4
+b5e4615a337edc6e5cf54457609f7032934b20f5 92e4885443a6d06a89108aaec7cd9faf1d611e28 Luigi Crisci <luigi.crisci@sns.it> 1761508820 +0100	commit: Add gradient_mode to system hash computation
+92e4885443a6d06a89108aaec7cd9faf1d611e28 184b6e58c90efae06b090b1d5d5aafa4d6a65ecd Luigi Crisci <luigi.crisci@sns.it> 1761508880 +0100	commit: Gradient mode added in hash gen

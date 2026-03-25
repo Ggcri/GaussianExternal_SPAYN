@@ -1,0 +1,5 @@
+Iteration: 8
+Output file: /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/NH3_C3v/test_final_c3v_fix.EOut
+Central energy: -76.123456789
+Number of atoms: 4
+Timestamp: 2025-09-10 16:43:42

@@ -1,0 +1,15 @@
+! =======================================================
+! Test case for COPY OPERATIONS in MolproExt_project
+! =======================================================
+! Test: Combination using copy operations and coefficients
+! Expected: E_final = 1.5*E_hf + copy[1,2.0] = 1.5*E_hf + 2.0*E_hf = 3.5*E_hf
+
+!scheme
+! 1.5 copy[1,2.0]
+!end
+
+basis=cc-pvdz
+memory,1000,m
+
+{hf
+wf,10,1,0}

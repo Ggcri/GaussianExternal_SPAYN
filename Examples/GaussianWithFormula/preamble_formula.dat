@@ -1,0 +1,7 @@
+!scheme
+! 1.0 0.5
+!formula
+! e=c1*e1+c2*e2*log(2.0)
+!end
+
+#P mp2/sto-3g

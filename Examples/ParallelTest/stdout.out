@@ -1,0 +1,973 @@
+DEBUG: Preserved fake frequency log as FAKE_FREQ/fake_freq_1.log
+DEBUG: Expected atoms: 3
+DEBUG: Task central: 3 atoms
+DEBUG: Task atom_1_ixyz_3_up: 3 atoms
+DEBUG: Task atom_1_ixyz_3_down: 3 atoms
+DEBUG: Task atom_2_ixyz_2_up: 3 atoms
+DEBUG: Task atom_2_ixyz_2_down: 3 atoms
+DEBUG: Task atom_2_ixyz_3_up: 3 atoms
+DEBUG: Task atom_2_ixyz_3_down: 3 atoms
+DEBUG: All geometries have correct atom count (3)
+Created iteration directory: /home/barone/lcrisci_vb/MyBin/ExternalDev/Examples/ParallelTest/Iterations/Iteration_1
+INFO: This is iteration number 1
+INFO: Running parallel gradient calculation in iteration 1
+Running parallel energy calculations with 2 threads
+Executing MRCC External Script (v4)...
+*****************************************************************************
+STARTING PARSING OF ARGUMENTS
+Found Gaussian input file via glob: Gau-central.EIn
+
+--- Parsed Arguments ---
+  mem (Total GB):           1
+  readgradpy:               READ
+  MRCC OpenMP threads:      1
+  MRCC MPI tasks:           1
+  MRCC Preamble file:       mrcc_preamble.dat
+  MRCC End file:            mrcc_ending.dat
+  Layer:                    R
+  Gaussian Input file:      Gau-central.EIn
+  Gaussian Output file:     energy_output.dat
+------------------------
+
+Parsing Gaussian input: Gau-central.EIn
+  Header: Atoms=3, OptFlag=0, Charge=0, Multiplicity=1
+  Parsing geometry lines (Symbol X Y Z):
+    O       0.0000000000     0.0000000000     0.0000000000
+    H       0.0000000000     1.4307248770     1.1069751076
+    H       0.0000000000    -1.4307248770     1.1069751076
+Gaussian input parsing finished successfully.
+Gaussian input parsing successful: 3 atoms, charge=0, multiplicity=1, OptFlag=0
+*****************************************************************************
+PARSING COMPLETED - GEOMETRY (Bohr)
+  O       0.0000000000     0.0000000000     0.0000000000
+  H       0.0000000000     1.4307248770     1.1069751076
+  H       0.0000000000    -1.4307248770     1.1069751076
+(Total 3 atoms)
+*****************************************************************************
+Parsing coefficients from mrcc_preamble.dat (comment='!')
+  Entered !scheme section at line 5.
+    Line 6: Comment line has no numeric values after '!': '! Definisce i coefficienti per combinare le energie/gradienti.'
+    Line 7: Comment line has no numeric values after '!': '! Il numero di coefficienti DEVE corrispondere al numero di calcoli.'
+    Line 8: Comment line has no numeric values after '!': '! In questo caso, 3 calcoli -> 3 coefficienti.'
+  Warning: Nested '!scheme' detected at line 9. Ignoring inner start.
+    Line 10: Found coefficient(s): [1.0]
+  Exited !scheme section at line 11.
+Finished parsing coefficients: [1.0]
+Coefficients parsed from mrcc_preamble.dat: [1.0]
+
+Running MRCC Energy Calculation(s)...
+READ mode: Using 1 coefficient(s) for energy combination
+Coefficients: [1.0]
+=============================================================================
+COMPUTING MRCC ENERGY/GRADIENT (v4)
+  Mode: Energy, readgradpy='NONE'
+  Parallelism: MPI=1, OMP=1
+  Memory: 1 GB (Total)
+  Coefficients: [1.0]
+  Preamble: mrcc_preamble.dat, End: mrcc_ending.dat
+  Atoms: 3
+-----------------------------------------------------------------------------
+Setting MRCC environment (OMP_NUM_THREADS=1, MKL_NUM_THREADS=1, etc.)...
+  Environment variables set.
+Loading MRCC module environment (if applicable)...
+Attempting to load module: MRCC_2024/MRCC_INTEL_sandy_patched
+Module 'MRCC_2024/MRCC_INTEL_sandy_patched' loaded successfully.
+  MRCC module loaded.
+Using scratch path base: /tmp
+Parsing Gaussian input: Gau-central.EIn
+  Header: Atoms=3, OptFlag=0, Charge=0, Multiplicity=1
+  Parsing geometry lines (Symbol X Y Z):
+    O       0.0000000000     0.0000000000     0.0000000000
+    H       0.0000000000     1.4307248770     1.1069751076
+    H       0.0000000000    -1.4307248770     1.1069751076
+Gaussian input parsing finished successfully.
+Geometry parsed: 3 atoms, Charge=0, Multiplicity=1
+Parsing MRCC sections from 'mrcc_preamble.dat' and 'mrcc_ending.dat'...
+Parsing MRCC preamble file: mrcc_preamble.dat
+  Entered !scheme block at line 5.
+  Warning: Nested '!scheme' detected at line 9. Ignoring.
+  Exited !scheme block at line 11.
+  Found preamble section marker: '!SECTION1' at line 13
+    Set energy pattern for section '!SECTION1' to '***FINAL HARTREE-FOCK ENERGY:' at line 14
+Parsing MRCC ending file: mrcc_ending.dat
+
+--- Parsed MRCC Sections Summary (v4 Logic) ---
+  Section Key: '!SECTION1'
+    Energy Pattern: '***FINAL HARTREE-FOCK ENERGY:'
+    Preamble Lines: 7
+    Ending Lines:   0
+  Section Key: 'default'
+    Energy Pattern: '***FINAL MRCC ENERGY:'
+    Preamble Lines: 5
+    Ending Lines:   1
+---------------------------------------------
+Planning 1 MRCC calculation(s) based on 1 coefficient(s).
+
+--- Preparing MRCC Calculation 1/1 ---
+  Using specific section content for '!SECTION1'
+  Using Full Energy String Pattern: '***FINAL HARTREE-FOCK ENERGY:' (from section key '!SECTION1')
+Created MRCC input file 'MINP_1' for section '!SECTION1'.
+  Settings: MPI Tasks = 1, Memory = 1024 MB/Task
+
+--- Starting MRCC Run 1 ---
+  Scratch Dir: /tmp/mrcc-1080530-1
+  Input File (source): MINP_1
+  Output File (target): mrcc_output_1.out
+  MPI Procs: 1, OMP Threads: 1
+  Full Energy String Pattern: '***FINAL HARTREE-FOCK ENERGY:'
+  Created/Ensured scratch directory exists.
+  Copied MINP_1 -> /tmp/mrcc-1080530-1/MINP
+  Changed working directory to scratch.
+  Executing command: dmrcc MINP > mrcc_output_1.out
+  MRCC execution completed successfully.
+  Processing output file: mrcc_output_1.out
+    Searching for full energy string (case-insensitive): '***FINAL HARTREE-FOCK ENERGY:'
+    Found matching line (473): '***FINAL HARTREE-FOCK ENERGY:        -74.9629311742941695 [AU]'
+      Potential values after pattern: [':', '-74.9629311742941695', '[AU]']
+      Item ':' is not a float, skipping.
+      Successfully extracted energy: -74.962931174294 (from item '-74.9629311742941695')
+  Copying results back to original directory...
+    Copied mrcc_output_1.out -> /home/barone/lcrisci_vb/MyBin/ExternalDev/Examples/ParallelTest/Iterations/Iteration_1/task_central/mrcc_output_1.out
+  Changed back to original directory: /home/barone/lcrisci_vb/MyBin/ExternalDev/Examples/ParallelTest/Iterations/Iteration_1/task_central
+--- Finished MRCC Run 1 ---
+
+--- Combining Calculation Results ---
+  Combining 1 results.
+  Calc 1 (Coef=1.0000): E_raw=-74.9629311743 => E_contrib=-74.9629311743
+----------------------------------
+Final Combined Energy: -74.962931174294
+Restoring original environment variables...
+  Environment restore attempt finished (5 variables checked/restored).
+=============================================================================
+
+FINAL SINGLE MRCC ENERGY = -74.962931174294
+
+Writing results to Gaussian output file: energy_output.dat
+  Energy, Dipole Line: -74.962931174294,      0.000000000000,      0.000000000000,      0.000000000000
+Output writing complete.
+*****************************************************************************
+SCRIPT EXECUTION FINISHED
+*****************************************************************************
+MRCC External Script Finished.
+Executing MRCC External Script (v4)...
+*****************************************************************************
+STARTING PARSING OF ARGUMENTS
+Found Gaussian input file via glob: Gau-central.EIn
+
+--- Parsed Arguments ---
+  mem (Total GB):           1
+  readgradpy:               READ
+  MRCC OpenMP threads:      1
+  MRCC MPI tasks:           1
+  MRCC Preamble file:       mrcc_preamble.dat
+  MRCC End file:            mrcc_ending.dat
+  Layer:                    R
+  Gaussian Input file:      Gau-central.EIn
+  Gaussian Output file:     energy_output.dat
+------------------------
+
+Parsing Gaussian input: Gau-central.EIn
+  Header: Atoms=3, OptFlag=0, Charge=0, Multiplicity=1
+  Parsing geometry lines (Symbol X Y Z):
+    O       0.0000000000     0.0000000000     0.0000000000
+    H       0.0000000000     1.4307248770     1.1069751076
+    H       0.0000000000    -1.4307248770     1.1069751076
+Gaussian input parsing finished successfully.
+Gaussian input parsing successful: 3 atoms, charge=0, multiplicity=1, OptFlag=0
+*****************************************************************************
+PARSING COMPLETED - GEOMETRY (Bohr)
+  O       0.0000000000     0.0000000000     0.0000000000
+  H       0.0000000000     1.4307248770     1.1069751076
+  H       0.0000000000    -1.4307248770     1.1069751076
+(Total 3 atoms)
+*****************************************************************************
+Parsing coefficients from mrcc_preamble.dat (comment='!')
+  Entered !scheme section at line 5.
+    Line 6: Comment line has no numeric values after '!': '! Definisce i coefficienti per combinare le energie/gradienti.'
+    Line 7: Comment line has no numeric values after '!': '! Il numero di coefficienti DEVE corrispondere al numero di calcoli.'
+    Line 8: Comment line has no numeric values after '!': '! In questo caso, 3 calcoli -> 3 coefficienti.'
+  Warning: Nested '!scheme' detected at line 9. Ignoring inner start.
+    Line 10: Found coefficient(s): [1.0]
+  Exited !scheme section at line 11.
+Finished parsing coefficients: [1.0]
+Coefficients parsed from mrcc_preamble.dat: [1.0]
+
+Running MRCC Energy Calculation(s)...
+READ mode: Using 1 coefficient(s) for energy combination
+Coefficients: [1.0]
+=============================================================================
+COMPUTING MRCC ENERGY/GRADIENT (v4)
+  Mode: Energy, readgradpy='NONE'
+  Parallelism: MPI=1, OMP=1
+  Memory: 1 GB (Total)
+  Coefficients: [1.0]
+  Preamble: mrcc_preamble.dat, End: mrcc_ending.dat
+  Atoms: 3
+-----------------------------------------------------------------------------
+Setting MRCC environment (OMP_NUM_THREADS=1, MKL_NUM_THREADS=1, etc.)...
+  Environment variables set.
+Loading MRCC module environment (if applicable)...
+Attempting to load module: MRCC_2024/MRCC_INTEL_sandy_patched
+Module 'MRCC_2024/MRCC_INTEL_sandy_patched' loaded successfully.
+  MRCC module loaded.
+Using scratch path base: /tmp
+Parsing Gaussian input: Gau-central.EIn
+  Header: Atoms=3, OptFlag=0, Charge=0, Multiplicity=1
+  Parsing geometry lines (Symbol X Y Z):
+    O       0.0000000000     0.0000000000     0.0000000000
+    H       0.0000000000     1.4307248770     1.1069751076
+    H       0.0000000000    -1.4307248770     1.1069751076
+Gaussian input parsing finished successfully.
+Geometry parsed: 3 atoms, Charge=0, Multiplicity=1
+Parsing MRCC sections from 'mrcc_preamble.dat' and 'mrcc_ending.dat'...
+Parsing MRCC preamble file: mrcc_preamble.dat
+  Entered !scheme block at line 5.
+  Warning: Nested '!scheme' detected at line 9. Ignoring.
+  Exited !scheme block at line 11.
+  Found preamble section marker: '!SECTION1' at line 13
+    Set energy pattern for section '!SECTION1' to '***FINAL HARTREE-FOCK ENERGY:' at line 14
+Parsing MRCC ending file: mrcc_ending.dat
+
+--- Parsed MRCC Sections Summary (v4 Logic) ---
+  Section Key: '!SECTION1'
+    Energy Pattern: '***FINAL HARTREE-FOCK ENERGY:'
+    Preamble Lines: 7
+    Ending Lines:   0
+  Section Key: 'default'
+    Energy Pattern: '***FINAL MRCC ENERGY:'
+    Preamble Lines: 5
+    Ending Lines:   1
+---------------------------------------------
+Planning 1 MRCC calculation(s) based on 1 coefficient(s).
+
+--- Preparing MRCC Calculation 1/1 ---
+  Using specific section content for '!SECTION1'
+  Using Full Energy String Pattern: '***FINAL HARTREE-FOCK ENERGY:' (from section key '!SECTION1')
+Created MRCC input file 'MINP_1' for section '!SECTION1'.
+  Settings: MPI Tasks = 1, Memory = 1024 MB/Task
+
+--- Starting MRCC Run 1 ---
+  Scratch Dir: /tmp/mrcc-1080529-1
+  Input File (source): MINP_1
+  Output File (target): mrcc_output_1.out
+  MPI Procs: 1, OMP Threads: 1
+  Full Energy String Pattern: '***FINAL HARTREE-FOCK ENERGY:'
+  Created/Ensured scratch directory exists.
+  Copied MINP_1 -> /tmp/mrcc-1080529-1/MINP
+  Changed working directory to scratch.
+  Executing command: dmrcc MINP > mrcc_output_1.out
+  MRCC execution completed successfully.
+  Processing output file: mrcc_output_1.out
+    Searching for full energy string (case-insensitive): '***FINAL HARTREE-FOCK ENERGY:'
+    Found matching line (473): '***FINAL HARTREE-FOCK ENERGY:        -74.9629311742941695 [AU]'
+      Potential values after pattern: [':', '-74.9629311742941695', '[AU]']
+      Item ':' is not a float, skipping.
+      Successfully extracted energy: -74.962931174294 (from item '-74.9629311742941695')
+  Copying results back to original directory...
+    Copied mrcc_output_1.out -> /home/barone/lcrisci_vb/MyBin/ExternalDev/Examples/ParallelTest/Iterations/Iteration_1/task_central/mrcc_output_1.out
+  Changed back to original directory: /home/barone/lcrisci_vb/MyBin/ExternalDev/Examples/ParallelTest/Iterations/Iteration_1/task_central
+--- Finished MRCC Run 1 ---
+
+--- Combining Calculation Results ---
+  Combining 1 results.
+  Calc 1 (Coef=1.0000): E_raw=-74.9629311743 => E_contrib=-74.9629311743
+----------------------------------
+Final Combined Energy: -74.962931174294
+Restoring original environment variables...
+  Environment restore attempt finished (5 variables checked/restored).
+=============================================================================
+
+FINAL SINGLE MRCC ENERGY = -74.962931174294
+
+Writing results to Gaussian output file: energy_output.dat
+  Energy, Dipole Line: -74.962931174294,      0.000000000000,      0.000000000000,      0.000000000000
+Output writing complete.
+*****************************************************************************
+SCRIPT EXECUTION FINISHED
+*****************************************************************************
+MRCC External Script Finished.
+Executing MRCC External Script (v4)...
+*****************************************************************************
+STARTING PARSING OF ARGUMENTS
+Found Gaussian input file via glob: Gau-atom_1_ixyz_3_down.EIn
+
+--- Parsed Arguments ---
+  mem (Total GB):           1
+  readgradpy:               READ
+  MRCC OpenMP threads:      1
+  MRCC MPI tasks:           1
+  MRCC Preamble file:       mrcc_preamble.dat
+  MRCC End file:            mrcc_ending.dat
+  Layer:                    R
+  Gaussian Input file:      Gau-atom_1_ixyz_3_down.EIn
+  Gaussian Output file:     energy_output.dat
+------------------------
+
+Parsing Gaussian input: Gau-atom_1_ixyz_3_down.EIn
+  Header: Atoms=3, OptFlag=0, Charge=0, Multiplicity=1
+  Parsing geometry lines (Symbol X Y Z):
+    O       0.0000000000     0.0000000000     0.2195052954
+    H       0.0000000000     1.4307248770    -0.8855800861
+    H       0.0000000000    -1.4307248770    -0.8855800861
+Gaussian input parsing finished successfully.
+Gaussian input parsing successful: 3 atoms, charge=0, multiplicity=1, OptFlag=0
+*****************************************************************************
+PARSING COMPLETED - GEOMETRY (Bohr)
+  O       0.0000000000     0.0000000000     0.2195052954
+  H       0.0000000000     1.4307248770    -0.8855800861
+  H       0.0000000000    -1.4307248770    -0.8855800861
+(Total 3 atoms)
+*****************************************************************************
+Parsing coefficients from mrcc_preamble.dat (comment='!')
+  Entered !scheme section at line 5.
+    Line 6: Comment line has no numeric values after '!': '! Definisce i coefficienti per combinare le energie/gradienti.'
+    Line 7: Comment line has no numeric values after '!': '! Il numero di coefficienti DEVE corrispondere al numero di calcoli.'
+    Line 8: Comment line has no numeric values after '!': '! In questo caso, 3 calcoli -> 3 coefficienti.'
+  Warning: Nested '!scheme' detected at line 9. Ignoring inner start.
+    Line 10: Found coefficient(s): [1.0]
+  Exited !scheme section at line 11.
+Finished parsing coefficients: [1.0]
+Coefficients parsed from mrcc_preamble.dat: [1.0]
+
+Running MRCC Energy Calculation(s)...
+READ mode: Using 1 coefficient(s) for energy combination
+Coefficients: [1.0]
+=============================================================================
+COMPUTING MRCC ENERGY/GRADIENT (v4)
+  Mode: Energy, readgradpy='NONE'
+  Parallelism: MPI=1, OMP=1
+  Memory: 1 GB (Total)
+  Coefficients: [1.0]
+  Preamble: mrcc_preamble.dat, End: mrcc_ending.dat
+  Atoms: 3
+-----------------------------------------------------------------------------
+Setting MRCC environment (OMP_NUM_THREADS=1, MKL_NUM_THREADS=1, etc.)...
+  Environment variables set.
+Loading MRCC module environment (if applicable)...
+Attempting to load module: MRCC_2024/MRCC_INTEL_sandy_patched
+Module 'MRCC_2024/MRCC_INTEL_sandy_patched' loaded successfully.
+  MRCC module loaded.
+Using scratch path base: /tmp
+Parsing Gaussian input: Gau-atom_1_ixyz_3_down.EIn
+  Header: Atoms=3, OptFlag=0, Charge=0, Multiplicity=1
+  Parsing geometry lines (Symbol X Y Z):
+    O       0.0000000000     0.0000000000     0.2195052954
+    H       0.0000000000     1.4307248770    -0.8855800861
+    H       0.0000000000    -1.4307248770    -0.8855800861
+Gaussian input parsing finished successfully.
+Geometry parsed: 3 atoms, Charge=0, Multiplicity=1
+Parsing MRCC sections from 'mrcc_preamble.dat' and 'mrcc_ending.dat'...
+Parsing MRCC preamble file: mrcc_preamble.dat
+  Entered !scheme block at line 5.
+  Warning: Nested '!scheme' detected at line 9. Ignoring.
+  Exited !scheme block at line 11.
+  Found preamble section marker: '!SECTION1' at line 13
+    Set energy pattern for section '!SECTION1' to '***FINAL HARTREE-FOCK ENERGY:' at line 14
+Parsing MRCC ending file: mrcc_ending.dat
+
+--- Parsed MRCC Sections Summary (v4 Logic) ---
+  Section Key: '!SECTION1'
+    Energy Pattern: '***FINAL HARTREE-FOCK ENERGY:'
+    Preamble Lines: 7
+    Ending Lines:   0
+  Section Key: 'default'
+    Energy Pattern: '***FINAL MRCC ENERGY:'
+    Preamble Lines: 5
+    Ending Lines:   1
+---------------------------------------------
+Planning 1 MRCC calculation(s) based on 1 coefficient(s).
+
+--- Preparing MRCC Calculation 1/1 ---
+  Using specific section content for '!SECTION1'
+  Using Full Energy String Pattern: '***FINAL HARTREE-FOCK ENERGY:' (from section key '!SECTION1')
+Created MRCC input file 'MINP_1' for section '!SECTION1'.
+  Settings: MPI Tasks = 1, Memory = 1024 MB/Task
+
+--- Starting MRCC Run 1 ---
+  Scratch Dir: /tmp/mrcc-1181012-1
+  Input File (source): MINP_1
+  Output File (target): mrcc_output_1.out
+  MPI Procs: 1, OMP Threads: 1
+  Full Energy String Pattern: '***FINAL HARTREE-FOCK ENERGY:'
+  Created/Ensured scratch directory exists.
+  Copied MINP_1 -> /tmp/mrcc-1181012-1/MINP
+  Changed working directory to scratch.
+  Executing command: dmrcc MINP > mrcc_output_1.out
+  MRCC execution completed successfully.
+  Processing output file: mrcc_output_1.out
+    Searching for full energy string (case-insensitive): '***FINAL HARTREE-FOCK ENERGY:'
+    Found matching line (473): '***FINAL HARTREE-FOCK ENERGY:        -74.9628120383656977 [AU]'
+      Potential values after pattern: [':', '-74.9628120383656977', '[AU]']
+      Item ':' is not a float, skipping.
+      Successfully extracted energy: -74.962812038366 (from item '-74.9628120383656977')
+  Copying results back to original directory...
+    Copied mrcc_output_1.out -> /home/barone/lcrisci_vb/MyBin/ExternalDev/Examples/ParallelTest/Iterations/Iteration_1/task_atom_1_ixyz_3_down/mrcc_output_1.out
+  Changed back to original directory: /home/barone/lcrisci_vb/MyBin/ExternalDev/Examples/ParallelTest/Iterations/Iteration_1/task_atom_1_ixyz_3_down
+--- Finished MRCC Run 1 ---
+
+--- Combining Calculation Results ---
+  Combining 1 results.
+  Calc 1 (Coef=1.0000): E_raw=-74.9628120384 => E_contrib=-74.9628120384
+----------------------------------
+Final Combined Energy: -74.962812038366
+Restoring original environment variables...
+  Environment restore attempt finished (5 variables checked/restored).
+=============================================================================
+
+FINAL SINGLE MRCC ENERGY = -74.962812038366
+
+Writing results to Gaussian output file: energy_output.dat
+  Energy, Dipole Line: -74.962812038366,      0.000000000000,      0.000000000000,      0.000000000000
+Output writing complete.
+*****************************************************************************
+SCRIPT EXECUTION FINISHED
+*****************************************************************************
+MRCC External Script Finished.
+Executing MRCC External Script (v4)...
+*****************************************************************************
+STARTING PARSING OF ARGUMENTS
+Found Gaussian input file via glob: Gau-atom_2_ixyz_2_up.EIn
+
+--- Parsed Arguments ---
+  mem (Total GB):           1
+  readgradpy:               READ
+  MRCC OpenMP threads:      1
+  MRCC MPI tasks:           1
+  MRCC Preamble file:       mrcc_preamble.dat
+  MRCC End file:            mrcc_ending.dat
+  Layer:                    R
+  Gaussian Input file:      Gau-atom_2_ixyz_2_up.EIn
+  Gaussian Output file:     energy_output.dat
+------------------------
+
+Parsing Gaussian input: Gau-atom_2_ixyz_2_up.EIn
+  Header: Atoms=3, OptFlag=0, Charge=0, Multiplicity=1
+  Parsing geometry lines (Symbol X Y Z):
+    O       0.0000000000     0.0000000000     0.2213950215
+    H       0.0000000000     1.4326146031    -0.8855800861
+    H       0.0000000000    -1.4307248770    -0.8855800861
+Gaussian input parsing finished successfully.
+Gaussian input parsing successful: 3 atoms, charge=0, multiplicity=1, OptFlag=0
+*****************************************************************************
+PARSING COMPLETED - GEOMETRY (Bohr)
+  O       0.0000000000     0.0000000000     0.2213950215
+  H       0.0000000000     1.4326146031    -0.8855800861
+  H       0.0000000000    -1.4307248770    -0.8855800861
+(Total 3 atoms)
+*****************************************************************************
+Parsing coefficients from mrcc_preamble.dat (comment='!')
+  Entered !scheme section at line 5.
+    Line 6: Comment line has no numeric values after '!': '! Definisce i coefficienti per combinare le energie/gradienti.'
+    Line 7: Comment line has no numeric values after '!': '! Il numero di coefficienti DEVE corrispondere al numero di calcoli.'
+    Line 8: Comment line has no numeric values after '!': '! In questo caso, 3 calcoli -> 3 coefficienti.'
+  Warning: Nested '!scheme' detected at line 9. Ignoring inner start.
+    Line 10: Found coefficient(s): [1.0]
+  Exited !scheme section at line 11.
+Finished parsing coefficients: [1.0]
+Coefficients parsed from mrcc_preamble.dat: [1.0]
+
+Running MRCC Energy Calculation(s)...
+READ mode: Using 1 coefficient(s) for energy combination
+Coefficients: [1.0]
+=============================================================================
+COMPUTING MRCC ENERGY/GRADIENT (v4)
+  Mode: Energy, readgradpy='NONE'
+  Parallelism: MPI=1, OMP=1
+  Memory: 1 GB (Total)
+  Coefficients: [1.0]
+  Preamble: mrcc_preamble.dat, End: mrcc_ending.dat
+  Atoms: 3
+-----------------------------------------------------------------------------
+Setting MRCC environment (OMP_NUM_THREADS=1, MKL_NUM_THREADS=1, etc.)...
+  Environment variables set.
+Loading MRCC module environment (if applicable)...
+Attempting to load module: MRCC_2024/MRCC_INTEL_sandy_patched
+Module 'MRCC_2024/MRCC_INTEL_sandy_patched' loaded successfully.
+  MRCC module loaded.
+Using scratch path base: /tmp
+Parsing Gaussian input: Gau-atom_2_ixyz_2_up.EIn
+  Header: Atoms=3, OptFlag=0, Charge=0, Multiplicity=1
+  Parsing geometry lines (Symbol X Y Z):
+    O       0.0000000000     0.0000000000     0.2213950215
+    H       0.0000000000     1.4326146031    -0.8855800861
+    H       0.0000000000    -1.4307248770    -0.8855800861
+Gaussian input parsing finished successfully.
+Geometry parsed: 3 atoms, Charge=0, Multiplicity=1
+Parsing MRCC sections from 'mrcc_preamble.dat' and 'mrcc_ending.dat'...
+Parsing MRCC preamble file: mrcc_preamble.dat
+  Entered !scheme block at line 5.
+  Warning: Nested '!scheme' detected at line 9. Ignoring.
+  Exited !scheme block at line 11.
+  Found preamble section marker: '!SECTION1' at line 13
+    Set energy pattern for section '!SECTION1' to '***FINAL HARTREE-FOCK ENERGY:' at line 14
+Parsing MRCC ending file: mrcc_ending.dat
+
+--- Parsed MRCC Sections Summary (v4 Logic) ---
+  Section Key: '!SECTION1'
+    Energy Pattern: '***FINAL HARTREE-FOCK ENERGY:'
+    Preamble Lines: 7
+    Ending Lines:   0
+  Section Key: 'default'
+    Energy Pattern: '***FINAL MRCC ENERGY:'
+    Preamble Lines: 5
+    Ending Lines:   1
+---------------------------------------------
+Planning 1 MRCC calculation(s) based on 1 coefficient(s).
+
+--- Preparing MRCC Calculation 1/1 ---
+  Using specific section content for '!SECTION1'
+  Using Full Energy String Pattern: '***FINAL HARTREE-FOCK ENERGY:' (from section key '!SECTION1')
+Created MRCC input file 'MINP_1' for section '!SECTION1'.
+  Settings: MPI Tasks = 1, Memory = 1024 MB/Task
+
+--- Starting MRCC Run 1 ---
+  Scratch Dir: /tmp/mrcc-1181013-1
+  Input File (source): MINP_1
+  Output File (target): mrcc_output_1.out
+  MPI Procs: 1, OMP Threads: 1
+  Full Energy String Pattern: '***FINAL HARTREE-FOCK ENERGY:'
+  Created/Ensured scratch directory exists.
+  Copied MINP_1 -> /tmp/mrcc-1181013-1/MINP
+  Changed working directory to scratch.
+  Executing command: dmrcc MINP > mrcc_output_1.out
+  MRCC execution completed successfully.
+  Processing output file: mrcc_output_1.out
+    Searching for full energy string (case-insensitive): '***FINAL HARTREE-FOCK ENERGY:'
+    Found matching line (469): '***FINAL HARTREE-FOCK ENERGY:        -74.9629757955475640 [AU]'
+      Potential values after pattern: [':', '-74.9629757955475640', '[AU]']
+      Item ':' is not a float, skipping.
+      Successfully extracted energy: -74.962975795548 (from item '-74.9629757955475640')
+  Copying results back to original directory...
+    Copied mrcc_output_1.out -> /home/barone/lcrisci_vb/MyBin/ExternalDev/Examples/ParallelTest/Iterations/Iteration_1/task_atom_2_ixyz_2_up/mrcc_output_1.out
+  Changed back to original directory: /home/barone/lcrisci_vb/MyBin/ExternalDev/Examples/ParallelTest/Iterations/Iteration_1/task_atom_2_ixyz_2_up
+--- Finished MRCC Run 1 ---
+
+--- Combining Calculation Results ---
+  Combining 1 results.
+  Calc 1 (Coef=1.0000): E_raw=-74.9629757955 => E_contrib=-74.9629757955
+----------------------------------
+Final Combined Energy: -74.962975795548
+Restoring original environment variables...
+  Environment restore attempt finished (5 variables checked/restored).
+=============================================================================
+
+FINAL SINGLE MRCC ENERGY = -74.962975795548
+
+Writing results to Gaussian output file: energy_output.dat
+  Energy, Dipole Line: -74.962975795548,      0.000000000000,      0.000000000000,      0.000000000000
+Output writing complete.
+*****************************************************************************
+SCRIPT EXECUTION FINISHED
+*****************************************************************************
+MRCC External Script Finished.
+Executing MRCC External Script (v4)...
+*****************************************************************************
+STARTING PARSING OF ARGUMENTS
+Found Gaussian input file via glob: Gau-atom_2_ixyz_3_up.EIn
+
+--- Parsed Arguments ---
+  mem (Total GB):           1
+  readgradpy:               READ
+  MRCC OpenMP threads:      1
+  MRCC MPI tasks:           1
+  MRCC Preamble file:       mrcc_preamble.dat
+  MRCC End file:            mrcc_ending.dat
+  Layer:                    R
+  Gaussian Input file:      Gau-atom_2_ixyz_3_up.EIn
+  Gaussian Output file:     energy_output.dat
+------------------------
+
+Parsing Gaussian input: Gau-atom_2_ixyz_3_up.EIn
+  Header: Atoms=3, OptFlag=0, Charge=0, Multiplicity=1
+  Parsing geometry lines (Symbol X Y Z):
+    O       0.0000000000     0.0000000000     0.2213950215
+    H       0.0000000000     1.4307248770    -0.8836903600
+    H       0.0000000000    -1.4307248770    -0.8855800861
+Gaussian input parsing finished successfully.
+Gaussian input parsing successful: 3 atoms, charge=0, multiplicity=1, OptFlag=0
+*****************************************************************************
+PARSING COMPLETED - GEOMETRY (Bohr)
+  O       0.0000000000     0.0000000000     0.2213950215
+  H       0.0000000000     1.4307248770    -0.8836903600
+  H       0.0000000000    -1.4307248770    -0.8855800861
+(Total 3 atoms)
+*****************************************************************************
+Parsing coefficients from mrcc_preamble.dat (comment='!')
+  Entered !scheme section at line 5.
+    Line 6: Comment line has no numeric values after '!': '! Definisce i coefficienti per combinare le energie/gradienti.'
+    Line 7: Comment line has no numeric values after '!': '! Il numero di coefficienti DEVE corrispondere al numero di calcoli.'
+    Line 8: Comment line has no numeric values after '!': '! In questo caso, 3 calcoli -> 3 coefficienti.'
+  Warning: Nested '!scheme' detected at line 9. Ignoring inner start.
+    Line 10: Found coefficient(s): [1.0]
+  Exited !scheme section at line 11.
+Finished parsing coefficients: [1.0]
+Coefficients parsed from mrcc_preamble.dat: [1.0]
+
+Running MRCC Energy Calculation(s)...
+READ mode: Using 1 coefficient(s) for energy combination
+Coefficients: [1.0]
+=============================================================================
+COMPUTING MRCC ENERGY/GRADIENT (v4)
+  Mode: Energy, readgradpy='NONE'
+  Parallelism: MPI=1, OMP=1
+  Memory: 1 GB (Total)
+  Coefficients: [1.0]
+  Preamble: mrcc_preamble.dat, End: mrcc_ending.dat
+  Atoms: 3
+-----------------------------------------------------------------------------
+Setting MRCC environment (OMP_NUM_THREADS=1, MKL_NUM_THREADS=1, etc.)...
+  Environment variables set.
+Loading MRCC module environment (if applicable)...
+Attempting to load module: MRCC_2024/MRCC_INTEL_sandy_patched
+Module 'MRCC_2024/MRCC_INTEL_sandy_patched' loaded successfully.
+  MRCC module loaded.
+Using scratch path base: /tmp
+Parsing Gaussian input: Gau-atom_2_ixyz_3_up.EIn
+  Header: Atoms=3, OptFlag=0, Charge=0, Multiplicity=1
+  Parsing geometry lines (Symbol X Y Z):
+    O       0.0000000000     0.0000000000     0.2213950215
+    H       0.0000000000     1.4307248770    -0.8836903600
+    H       0.0000000000    -1.4307248770    -0.8855800861
+Gaussian input parsing finished successfully.
+Geometry parsed: 3 atoms, Charge=0, Multiplicity=1
+Parsing MRCC sections from 'mrcc_preamble.dat' and 'mrcc_ending.dat'...
+Parsing MRCC preamble file: mrcc_preamble.dat
+  Entered !scheme block at line 5.
+  Warning: Nested '!scheme' detected at line 9. Ignoring.
+  Exited !scheme block at line 11.
+  Found preamble section marker: '!SECTION1' at line 13
+    Set energy pattern for section '!SECTION1' to '***FINAL HARTREE-FOCK ENERGY:' at line 14
+Parsing MRCC ending file: mrcc_ending.dat
+
+--- Parsed MRCC Sections Summary (v4 Logic) ---
+  Section Key: '!SECTION1'
+    Energy Pattern: '***FINAL HARTREE-FOCK ENERGY:'
+    Preamble Lines: 7
+    Ending Lines:   0
+  Section Key: 'default'
+    Energy Pattern: '***FINAL MRCC ENERGY:'
+    Preamble Lines: 5
+    Ending Lines:   1
+---------------------------------------------
+Planning 1 MRCC calculation(s) based on 1 coefficient(s).
+
+--- Preparing MRCC Calculation 1/1 ---
+  Using specific section content for '!SECTION1'
+  Using Full Energy String Pattern: '***FINAL HARTREE-FOCK ENERGY:' (from section key '!SECTION1')
+Created MRCC input file 'MINP_1' for section '!SECTION1'.
+  Settings: MPI Tasks = 1, Memory = 1024 MB/Task
+
+--- Starting MRCC Run 1 ---
+  Scratch Dir: /tmp/mrcc-1414394-1
+  Input File (source): MINP_1
+  Output File (target): mrcc_output_1.out
+  MPI Procs: 1, OMP Threads: 1
+  Full Energy String Pattern: '***FINAL HARTREE-FOCK ENERGY:'
+  Created/Ensured scratch directory exists.
+  Copied MINP_1 -> /tmp/mrcc-1414394-1/MINP
+  Changed working directory to scratch.
+  Executing command: dmrcc MINP > mrcc_output_1.out
+  MRCC execution completed successfully.
+  Processing output file: mrcc_output_1.out
+    Searching for full energy string (case-insensitive): '***FINAL HARTREE-FOCK ENERGY:'
+    Found matching line (469): '***FINAL HARTREE-FOCK ENERGY:        -74.9628716368649464 [AU]'
+      Potential values after pattern: [':', '-74.9628716368649464', '[AU]']
+      Item ':' is not a float, skipping.
+      Successfully extracted energy: -74.962871636865 (from item '-74.9628716368649464')
+  Copying results back to original directory...
+    Copied mrcc_output_1.out -> /home/barone/lcrisci_vb/MyBin/ExternalDev/Examples/ParallelTest/Iterations/Iteration_1/task_atom_2_ixyz_3_up/mrcc_output_1.out
+  Changed back to original directory: /home/barone/lcrisci_vb/MyBin/ExternalDev/Examples/ParallelTest/Iterations/Iteration_1/task_atom_2_ixyz_3_up
+--- Finished MRCC Run 1 ---
+
+--- Combining Calculation Results ---
+  Combining 1 results.
+  Calc 1 (Coef=1.0000): E_raw=-74.9628716369 => E_contrib=-74.9628716369
+----------------------------------
+Final Combined Energy: -74.962871636865
+Restoring original environment variables...
+  Environment restore attempt finished (5 variables checked/restored).
+=============================================================================
+
+FINAL SINGLE MRCC ENERGY = -74.962871636865
+
+Writing results to Gaussian output file: energy_output.dat
+  Energy, Dipole Line: -74.962871636865,      0.000000000000,      0.000000000000,      0.000000000000
+Output writing complete.
+*****************************************************************************
+SCRIPT EXECUTION FINISHED
+*****************************************************************************
+MRCC External Script Finished.
+Executing MRCC External Script (v4)...
+*****************************************************************************
+STARTING PARSING OF ARGUMENTS
+Found Gaussian input file via glob: Gau-atom_2_ixyz_2_down.EIn
+
+--- Parsed Arguments ---
+  mem (Total GB):           1
+  readgradpy:               READ
+  MRCC OpenMP threads:      1
+  MRCC MPI tasks:           1
+  MRCC Preamble file:       mrcc_preamble.dat
+  MRCC End file:            mrcc_ending.dat
+  Layer:                    R
+  Gaussian Input file:      Gau-atom_2_ixyz_2_down.EIn
+  Gaussian Output file:     energy_output.dat
+------------------------
+
+Parsing Gaussian input: Gau-atom_2_ixyz_2_down.EIn
+  Header: Atoms=3, OptFlag=0, Charge=0, Multiplicity=1
+  Parsing geometry lines (Symbol X Y Z):
+    O       0.0000000000     0.0000000000     0.2213950215
+    H       0.0000000000     1.4288351509    -0.8855800861
+    H       0.0000000000    -1.4307248770    -0.8855800861
+Gaussian input parsing finished successfully.
+Gaussian input parsing successful: 3 atoms, charge=0, multiplicity=1, OptFlag=0
+*****************************************************************************
+PARSING COMPLETED - GEOMETRY (Bohr)
+  O       0.0000000000     0.0000000000     0.2213950215
+  H       0.0000000000     1.4288351509    -0.8855800861
+  H       0.0000000000    -1.4307248770    -0.8855800861
+(Total 3 atoms)
+*****************************************************************************
+Parsing coefficients from mrcc_preamble.dat (comment='!')
+  Entered !scheme section at line 5.
+    Line 6: Comment line has no numeric values after '!': '! Definisce i coefficienti per combinare le energie/gradienti.'
+    Line 7: Comment line has no numeric values after '!': '! Il numero di coefficienti DEVE corrispondere al numero di calcoli.'
+    Line 8: Comment line has no numeric values after '!': '! In questo caso, 3 calcoli -> 3 coefficienti.'
+  Warning: Nested '!scheme' detected at line 9. Ignoring inner start.
+    Line 10: Found coefficient(s): [1.0]
+  Exited !scheme section at line 11.
+Finished parsing coefficients: [1.0]
+Coefficients parsed from mrcc_preamble.dat: [1.0]
+
+Running MRCC Energy Calculation(s)...
+READ mode: Using 1 coefficient(s) for energy combination
+Coefficients: [1.0]
+=============================================================================
+COMPUTING MRCC ENERGY/GRADIENT (v4)
+  Mode: Energy, readgradpy='NONE'
+  Parallelism: MPI=1, OMP=1
+  Memory: 1 GB (Total)
+  Coefficients: [1.0]
+  Preamble: mrcc_preamble.dat, End: mrcc_ending.dat
+  Atoms: 3
+-----------------------------------------------------------------------------
+Setting MRCC environment (OMP_NUM_THREADS=1, MKL_NUM_THREADS=1, etc.)...
+  Environment variables set.
+Loading MRCC module environment (if applicable)...
+Attempting to load module: MRCC_2024/MRCC_INTEL_sandy_patched
+Module 'MRCC_2024/MRCC_INTEL_sandy_patched' loaded successfully.
+  MRCC module loaded.
+Using scratch path base: /tmp
+Parsing Gaussian input: Gau-atom_2_ixyz_2_down.EIn
+  Header: Atoms=3, OptFlag=0, Charge=0, Multiplicity=1
+  Parsing geometry lines (Symbol X Y Z):
+    O       0.0000000000     0.0000000000     0.2213950215
+    H       0.0000000000     1.4288351509    -0.8855800861
+    H       0.0000000000    -1.4307248770    -0.8855800861
+Gaussian input parsing finished successfully.
+Geometry parsed: 3 atoms, Charge=0, Multiplicity=1
+Parsing MRCC sections from 'mrcc_preamble.dat' and 'mrcc_ending.dat'...
+Parsing MRCC preamble file: mrcc_preamble.dat
+  Entered !scheme block at line 5.
+  Warning: Nested '!scheme' detected at line 9. Ignoring.
+  Exited !scheme block at line 11.
+  Found preamble section marker: '!SECTION1' at line 13
+    Set energy pattern for section '!SECTION1' to '***FINAL HARTREE-FOCK ENERGY:' at line 14
+Parsing MRCC ending file: mrcc_ending.dat
+
+--- Parsed MRCC Sections Summary (v4 Logic) ---
+  Section Key: '!SECTION1'
+    Energy Pattern: '***FINAL HARTREE-FOCK ENERGY:'
+    Preamble Lines: 7
+    Ending Lines:   0
+  Section Key: 'default'
+    Energy Pattern: '***FINAL MRCC ENERGY:'
+    Preamble Lines: 5
+    Ending Lines:   1
+---------------------------------------------
+Planning 1 MRCC calculation(s) based on 1 coefficient(s).
+
+--- Preparing MRCC Calculation 1/1 ---
+  Using specific section content for '!SECTION1'
+  Using Full Energy String Pattern: '***FINAL HARTREE-FOCK ENERGY:' (from section key '!SECTION1')
+Created MRCC input file 'MINP_1' for section '!SECTION1'.
+  Settings: MPI Tasks = 1, Memory = 1024 MB/Task
+
+--- Starting MRCC Run 1 ---
+  Scratch Dir: /tmp/mrcc-1414389-1
+  Input File (source): MINP_1
+  Output File (target): mrcc_output_1.out
+  MPI Procs: 1, OMP Threads: 1
+  Full Energy String Pattern: '***FINAL HARTREE-FOCK ENERGY:'
+  Created/Ensured scratch directory exists.
+  Copied MINP_1 -> /tmp/mrcc-1414389-1/MINP
+  Changed working directory to scratch.
+  Executing command: dmrcc MINP > mrcc_output_1.out
+  MRCC execution completed successfully.
+  Processing output file: mrcc_output_1.out
+    Searching for full energy string (case-insensitive): '***FINAL HARTREE-FOCK ENERGY:'
+    Found matching line (469): '***FINAL HARTREE-FOCK ENERGY:        -74.9628846739069559 [AU]'
+      Potential values after pattern: [':', '-74.9628846739069559', '[AU]']
+      Item ':' is not a float, skipping.
+      Successfully extracted energy: -74.962884673907 (from item '-74.9628846739069559')
+  Copying results back to original directory...
+    Copied mrcc_output_1.out -> /home/barone/lcrisci_vb/MyBin/ExternalDev/Examples/ParallelTest/Iterations/Iteration_1/task_atom_2_ixyz_2_down/mrcc_output_1.out
+  Changed back to original directory: /home/barone/lcrisci_vb/MyBin/ExternalDev/Examples/ParallelTest/Iterations/Iteration_1/task_atom_2_ixyz_2_down
+--- Finished MRCC Run 1 ---
+
+--- Combining Calculation Results ---
+  Combining 1 results.
+  Calc 1 (Coef=1.0000): E_raw=-74.9628846739 => E_contrib=-74.9628846739
+----------------------------------
+Final Combined Energy: -74.962884673907
+Restoring original environment variables...
+  Environment restore attempt finished (5 variables checked/restored).
+=============================================================================
+
+FINAL SINGLE MRCC ENERGY = -74.962884673907
+
+Writing results to Gaussian output file: energy_output.dat
+  Energy, Dipole Line: -74.962884673907,      0.000000000000,      0.000000000000,      0.000000000000
+Output writing complete.
+*****************************************************************************
+SCRIPT EXECUTION FINISHED
+*****************************************************************************
+MRCC External Script Finished.
+Executing MRCC External Script (v4)...
+*****************************************************************************
+STARTING PARSING OF ARGUMENTS
+Found Gaussian input file via glob: Gau-atom_2_ixyz_3_down.EIn
+
+--- Parsed Arguments ---
+  mem (Total GB):           1
+  readgradpy:               READ
+  MRCC OpenMP threads:      1
+  MRCC MPI tasks:           1
+  MRCC Preamble file:       mrcc_preamble.dat
+  MRCC End file:            mrcc_ending.dat
+  Layer:                    R
+  Gaussian Input file:      Gau-atom_2_ixyz_3_down.EIn
+  Gaussian Output file:     energy_output.dat
+------------------------
+
+Parsing Gaussian input: Gau-atom_2_ixyz_3_down.EIn
+  Header: Atoms=3, OptFlag=0, Charge=0, Multiplicity=1
+  Parsing geometry lines (Symbol X Y Z):
+    O       0.0000000000     0.0000000000     0.2213950215
+    H       0.0000000000     1.4307248770    -0.8874698122
+    H       0.0000000000    -1.4307248770    -0.8855800861
+Gaussian input parsing finished successfully.
+Gaussian input parsing successful: 3 atoms, charge=0, multiplicity=1, OptFlag=0
+*****************************************************************************
+PARSING COMPLETED - GEOMETRY (Bohr)
+  O       0.0000000000     0.0000000000     0.2213950215
+  H       0.0000000000     1.4307248770    -0.8874698122
+  H       0.0000000000    -1.4307248770    -0.8855800861
+(Total 3 atoms)
+*****************************************************************************
+Parsing coefficients from mrcc_preamble.dat (comment='!')
+  Entered !scheme section at line 5.
+    Line 6: Comment line has no numeric values after '!': '! Definisce i coefficienti per combinare le energie/gradienti.'
+    Line 7: Comment line has no numeric values after '!': '! Il numero di coefficienti DEVE corrispondere al numero di calcoli.'
+    Line 8: Comment line has no numeric values after '!': '! In questo caso, 3 calcoli -> 3 coefficienti.'
+  Warning: Nested '!scheme' detected at line 9. Ignoring inner start.
+    Line 10: Found coefficient(s): [1.0]
+  Exited !scheme section at line 11.
+Finished parsing coefficients: [1.0]
+Coefficients parsed from mrcc_preamble.dat: [1.0]
+
+Running MRCC Energy Calculation(s)...
+READ mode: Using 1 coefficient(s) for energy combination
+Coefficients: [1.0]
+=============================================================================
+COMPUTING MRCC ENERGY/GRADIENT (v4)
+  Mode: Energy, readgradpy='NONE'
+  Parallelism: MPI=1, OMP=1
+  Memory: 1 GB (Total)
+  Coefficients: [1.0]
+  Preamble: mrcc_preamble.dat, End: mrcc_ending.dat
+  Atoms: 3
+-----------------------------------------------------------------------------
+Setting MRCC environment (OMP_NUM_THREADS=1, MKL_NUM_THREADS=1, etc.)...
+  Environment variables set.
+Loading MRCC module environment (if applicable)...
+Attempting to load module: MRCC_2024/MRCC_INTEL_sandy_patched
+Module 'MRCC_2024/MRCC_INTEL_sandy_patched' loaded successfully.
+  MRCC module loaded.
+Using scratch path base: /tmp
+Parsing Gaussian input: Gau-atom_2_ixyz_3_down.EIn
+  Header: Atoms=3, OptFlag=0, Charge=0, Multiplicity=1
+  Parsing geometry lines (Symbol X Y Z):
+    O       0.0000000000     0.0000000000     0.2213950215
+    H       0.0000000000     1.4307248770    -0.8874698122
+    H       0.0000000000    -1.4307248770    -0.8855800861
+Gaussian input parsing finished successfully.
+Geometry parsed: 3 atoms, Charge=0, Multiplicity=1
+Parsing MRCC sections from 'mrcc_preamble.dat' and 'mrcc_ending.dat'...
+Parsing MRCC preamble file: mrcc_preamble.dat
+  Entered !scheme block at line 5.
+  Warning: Nested '!scheme' detected at line 9. Ignoring.
+  Exited !scheme block at line 11.
+  Found preamble section marker: '!SECTION1' at line 13
+    Set energy pattern for section '!SECTION1' to '***FINAL HARTREE-FOCK ENERGY:' at line 14
+Parsing MRCC ending file: mrcc_ending.dat
+
+--- Parsed MRCC Sections Summary (v4 Logic) ---
+  Section Key: '!SECTION1'
+    Energy Pattern: '***FINAL HARTREE-FOCK ENERGY:'
+    Preamble Lines: 7
+    Ending Lines:   0
+  Section Key: 'default'
+    Energy Pattern: '***FINAL MRCC ENERGY:'
+    Preamble Lines: 5
+    Ending Lines:   1
+---------------------------------------------
+Planning 1 MRCC calculation(s) based on 1 coefficient(s).
+
+--- Preparing MRCC Calculation 1/1 ---
+  Using specific section content for '!SECTION1'
+  Using Full Energy String Pattern: '***FINAL HARTREE-FOCK ENERGY:' (from section key '!SECTION1')
+Created MRCC input file 'MINP_1' for section '!SECTION1'.
+  Settings: MPI Tasks = 1, Memory = 1024 MB/Task
+
+--- Starting MRCC Run 1 ---
+  Scratch Dir: /tmp/mrcc-1690350-1
+  Input File (source): MINP_1
+  Output File (target): mrcc_output_1.out
+  MPI Procs: 1, OMP Threads: 1
+  Full Energy String Pattern: '***FINAL HARTREE-FOCK ENERGY:'
+  Created/Ensured scratch directory exists.
+  Copied MINP_1 -> /tmp/mrcc-1690350-1/MINP
+  Changed working directory to scratch.
+  Executing command: dmrcc MINP > mrcc_output_1.out
+  MRCC execution completed successfully.
+  Processing output file: mrcc_output_1.out
+    Searching for full energy string (case-insensitive): '***FINAL HARTREE-FOCK ENERGY:'
+    Found matching line (469): '***FINAL HARTREE-FOCK ENERGY:        -74.9629895897920449 [AU]'
+      Potential values after pattern: [':', '-74.9629895897920449', '[AU]']
+      Item ':' is not a float, skipping.
+      Successfully extracted energy: -74.962989589792 (from item '-74.9629895897920449')
+  Copying results back to original directory...
+    Copied mrcc_output_1.out -> /home/barone/lcrisci_vb/MyBin/ExternalDev/Examples/ParallelTest/Iterations/Iteration_1/task_atom_2_ixyz_3_down/mrcc_output_1.out
+  Changed back to original directory: /home/barone/lcrisci_vb/MyBin/ExternalDev/Examples/ParallelTest/Iterations/Iteration_1/task_atom_2_ixyz_3_down
+--- Finished MRCC Run 1 ---
+
+--- Combining Calculation Results ---
+  Combining 1 results.
+  Calc 1 (Coef=1.0000): E_raw=-74.9629895898 => E_contrib=-74.9629895898
+----------------------------------
+Final Combined Energy: -74.962989589792
+Restoring original environment variables...
+  Environment restore attempt finished (5 variables checked/restored).
+=============================================================================
+
+FINAL SINGLE MRCC ENERGY = -74.962989589792
+
+Writing results to Gaussian output file: energy_output.dat
+  Energy, Dipole Line: -74.962989589792,      0.000000000000,      0.000000000000,      0.000000000000
+Output writing complete.
+*****************************************************************************
+SCRIPT EXECUTION FINISHED
+*****************************************************************************
+MRCC External Script Finished.

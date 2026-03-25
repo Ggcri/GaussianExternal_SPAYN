@@ -1,0 +1,5 @@
+Iteration: 8
+Output file: /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/CH4_Td/test_matrix_debug.EOut
+Central energy: -76.123456789
+Number of atoms: 5
+Timestamp: 2025-09-10 00:37:26

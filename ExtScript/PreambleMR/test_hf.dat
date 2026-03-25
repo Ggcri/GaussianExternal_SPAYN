@@ -1,0 +1,32 @@
+!scheme
+!  1.0 1.0 -1.0
+!end
+
+!SECTION1
+energy_pattern=***FINAL HARTREE-FOCK ENERGY:
+calc=rhf
+basis=sto-3g
+symm=off
+
+
+
+
+!SECTION2
+energy_pattern=***FINAL HARTREE-FOCK ENERGY:
+calc=rhf
+basis=sto-3g
+dens=2
+symm=off
+
+
+!SECTION3
+energy_pattern=***FINAL HARTREE-FOCK ENERGY:
+calc=rhf
+basis=sto-3g
+dens=2
+symm=off
+
+
+
+
+

@@ -1,0 +1,5 @@
+Iteration: 1
+Output file: /local/scratch/lcrisci_vb/test01Parall_Gaussian_70683.pbs.village.sns.it/Gau-2181699.EOu
+Central energy: -227.889422374239
+Number of atoms: 12
+Timestamp: 2025-09-10 17:50:11

@@ -1,0 +1,33 @@
+%chk=test_parall.chk
+%nprocs=1
+#p opt(nomicro) output=pickett External="CentralExt molpro_project $PRMOL/test.dat $ENDMOL/ending_revdsd.dat 1 100 READ  parall 7"  
+
+title
+
+0 1
+ C                 -0.00000000    0.00000000   -0.00000000
+ H                 -0.00000000   -0.00000000    1.06792879
+ H                 -0.00000000   -1.00685292   -0.35597626
+ H                 -0.87196021    0.50342646   -0.35597626
+ H                  0.87196021    0.50342646   -0.35597626
+
+
+--link1--
+%chk=test_parall.chk
+%nprocs=98
+%mem=280GB
+#p opt output=pickett revdsdpbep86/gen
+
+title
+
+0 1
+ C                 -0.00000000    0.00000000   -0.00000000
+ H                 -0.00000000   -0.00000000    1.06792879
+ H                 -0.00000000   -1.00685292   -0.35597626
+ H                 -0.87196021    0.50342646   -0.35597626
+ H                  0.87196021    0.50342646   -0.35597626
+
+@/home/barone/lcrisci_vb/SUSPENDED_PROJECTS/Project_Emilio/Imid-H2O-complexes/FINAL_HL_Imid-H2O/3F12red.gbs
+
+
+

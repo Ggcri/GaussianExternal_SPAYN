@@ -1,0 +1,118 @@
+# ============================================
+# MPI CONFIG - Configurazione Multi-Nodale
+# ============================================
+#
+# Formato:
+#   - Variabili in cima: nome = valore
+#   - [setup]: Comandi bash globali (applicati a TUTTE le code)
+#   - [queue.NOME]: Configurazione coda (nodes, queue_name, etc.)
+#   - [queue.NOME.setup]: Comandi bash specifici per quella coda
+#
+# Le variabili possono essere usate come ${nome_variabile}
+#
+
+# ============================================
+# VARIABILI
+# ============================================
+external_module = ExtMod.module
+
+# ============================================
+# SETUP GLOBALE (applicato a tutte le code)
+# ============================================
+[setup]
+module load ${external_module}
+module load molpro/2025.3
+module load gdv28/gdv28_AMD_zen3
+export SCRATCH="/local/scratch/$USER/parall_$PBS_JOBID"
+export TMPDIR=$SCRATCH
+export GAUSS_SCRDIR="/local/scratch/$USER/Gaussian_$PBS_JOBID"
+mkdir $SCRATCH
+mkdir $GAUSS_SCRDIR
+cleanup() {
+      echo "=== CLEANUP: Removing scratch directories ==="
+      rm -rf "$SCRATCH" "$GAUSS_SCRDIR"
+      echo "=== CLEANUP: Done ==="
+  }
+trap cleanup EXIT
+
+
+[master]
+  participates = true
+  nthreads = 1
+# ============================================
+# CODA: default (esempio semplice)
+# ============================================
+#[queue.default]
+#nodes = 1
+#queue_name = q02matrix
+#mem=120gb
+#ppn=16
+#
+## Setup specifico per questa coda (opzionale)
+#[queue.default.setup]
+
+# ============================================
+# ESEMPIO: Configurazione multi-coda
+# ============================================
+# Decommenta le sezioni seguenti per usare piu' code
+#
+#
+
+[queue.fast]
+ nodes = 1
+ queue_name = q02matrix
+ nprocs = 8           # Core per energy calculation (override)
+ mem_energy = 32GB    # Memory per energy calculation (override)
+ ppn = 9             # PPN per PBS allocation
+ mem = 40gb          # Memory per PBS allocation
+
+[queue.large]
+nodes = 1
+queue_name = q07hugo
+nprocs = 14          # Override: 32 core per energia
+mem_energy = 80GB   # Override: 120GB per energia
+ppn = 16
+mem = 100tb
+
+
+# [queue.short]
+# nodes = 1
+# queue_name = q02matrix
+# mem = 120gb
+# ppn=16
+#
+# [queue.medium]
+# nodes = 1
+# queue_name = q02matrix
+# mem = 120gb
+# ppn=16
+
+#
+# [queue.short.setup]
+# module load molpro/2022.1
+#
+# [queue.long]
+# nodes = 2
+# queue_name = q07hugo
+#
+# [queue.long.setup]
+# module load gaussian/g16
+# source /path/to/custom_env.sh
+
+# ============================================
+# DISTRIBUZIONE TASK (opzionale)
+# ============================================
+[distribution]
+strategy = round_robin
+# Opzioni: round_robin, proportional
+
+# ============================================
+# IMPOSTAZIONI COORDINATOR (opzionale)
+# ============================================
+[coordinator]
+poll_interval = 30
+# timeout_hours = 0 significa nessun timeout
+timeout_hours = 0
+scheduler = auto        # auto, pbs, slurm (default: auto-detect)
+# account =             # SLURM --account (optional, required on CINECA)
+# qos =                 # SLURM --qos (optional)

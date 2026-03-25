@@ -1,0 +1,11 @@
+#!/bin/bash
+# Wrapper script for CentralExt.py
+# Uses EXT_PYTHON_PATH environment variable if set, otherwise defaults to python3
+#
+# Usage: Set EXT_PYTHON_PATH in your environment/modulefile:
+#   export EXT_PYTHON_PATH="/path/to/python3.12"
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PYTHON_EXE="${EXT_PYTHON_PATH:-python3}"
+
+exec "$PYTHON_EXE" -u "$SCRIPT_DIR/CentralExt.py" "$@"

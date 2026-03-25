@@ -1,0 +1,31 @@
+include /path/to/3F12basis
+{rhf,so-sci}
+{ccsd(t)-f12b,df_basis=avdz-f12/mp2fit,df_basis_exch=avdz-f12/jkfit,ri_basis=avdz/jkfit}
+ccsd_energy = energy
+
+{forces}
+
+basis=cc-pwcvtz
+
+{rhf,so-sci}
+{mp2}
+
+mp2_fc = energy
+
+{forces}
+
+{rhf,so-sci}
+{mp2;core}
+mp2_ae = energy
+
+{forces}
+
+! Composite energy calculation according to scheme, without hf_energy
+exe_energy = ccsd_energy + mp2_ae - mp2_fc
+
+!fakekey
+! nosymm freq=step=10
+
+!normalmode
+!symmetry=A1
+!stepsize_scale=1.0

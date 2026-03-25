@@ -1,0 +1,21 @@
+! ============================================================
+! Reference Force Constant Strategy
+! ============================================================
+! Uses a reference force constant with 1/4 power law scaling.
+!
+! Formula:
+!   alpha_k = ref_scale * (reference_fc / lambda_k)^(1/4)
+!
+! Where:
+!   lambda_k     = force constant of mode k (Eh/Bohr^2)
+!   reference_fc = reference force constant (Eh/Bohr^2)
+!   ref_scale    = displacement scale in Bohr (default: 0.02)
+! ============================================================
+
+!normalmode
+!symmetry=auto
+!reference_fc=0.5
+!ref_scale=0.03
+
+!fakekey
+! scf=xqc level="b3lyp/6-31g(d,p)"

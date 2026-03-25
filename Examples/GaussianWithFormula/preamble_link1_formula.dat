@@ -1,0 +1,11 @@
+!scheme
+! 1.0 2.0 copy[1,0.5]
+!formula
+! e=exp(c1*e1/100) + c3*e1 + abs(c2*e2/100)
+!end
+--link1--
+#P hf/sto-3g force
+--link1--
+#P mp2/sto-3g force
+--link1--
+#P ccsd/sto-3g force

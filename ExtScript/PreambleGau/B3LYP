@@ -1,0 +1,5 @@
+!scheme
+! 1.0 
+!formula
+! e=c1*e1
+#P b3lyp/6-31g(d,p) scf=xqc

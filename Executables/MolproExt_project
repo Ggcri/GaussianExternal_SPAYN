@@ -1,0 +1,1219 @@
+#!/shared/apps/python/3.9.16/bin/python3.9 -u
+# The following python script should 
+# 0. Parse the gaussian informations given as input DONE
+# 1. Take in input the gaussian geometry DONE
+# 2. Compute the distance between reacting atoms DONE
+# 3. Take from somewhere the polynomial coefficient to extrapolate the HF exchange value DONE
+# 4. Compute the MC-PDFT with exchange extrapolated DONE
+# 5. Write in output the output file in gaussian format DONE
+
+import concurrent.futures
+import sys
+import re
+import os
+import numpy as np
+import glob
+import shlex
+import subprocess
+import time
+import shutil
+
+# Ensure the elecext utilities can be imported when running this
+# script directly from the Executables directory.
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+PARENT_DIR = os.path.abspath(os.path.join(CURRENT_DIR, ".."))
+if PARENT_DIR not in sys.path:
+    sys.path.insert(0, PARENT_DIR)
+
+from elecext import GauInpParser, combine_gradients, write_output, Logger, parse_scheme_and_formula, evaluate_custom_formula, validate_formula_syntax, resolve_path_with_env
+from elecext.guess_manager import GuessManager
+
+def main():
+    # Store original working directory to ensure proper log file placement
+    original_dir = os.getcwd()
+    
+    # Check if we're running in parallel mode (called from CentralExt in task directory)
+    # Task directories have names like "task_central", "task_atom_1_ixyz_2_up", etc.
+    cwd_basename = os.path.basename(original_dir)
+    in_parallel_mode = cwd_basename.startswith("task_")
+    
+    # Create log file in the current directory (task directory when parallel)
+    # The Logger class will convert this to absolute path automatically
+    logger = Logger("external.log")
+    global print
+    print = logger.log
+    
+    # Check if the number of arguments is correct (including the script name)
+
+#  PARSE THE GAUSSIAN INFORMATIONS GIVEN AS INPUT
+    # Arguments are accessed by indexes in sys.argv
+    preamble_file = resolve_path_with_env(sys.argv[1])
+    end_file = resolve_path_with_env(sys.argv[2])
+    nprocs = sys.argv[3]
+    mem = sys.argv[4]
+    readgradpy = sys.argv[5]
+    layer = sys.argv[6]
+    logger.header("MolproExt_project", nprocs, mem)
+    # Check if a gaussian input is already present, if not read from
+    # command line.
+    files = glob.glob('Gau*EIn')
+    if files:
+        # Find the last created file by checking the creation time
+        last_created_file = max(files, key=os.path.getctime)
+        GauInput = last_created_file
+    else:
+        GauInput = sys.argv[7]
+    GauOutput = sys.argv[8]
+
+    
+
+
+
+    geom,atoms,spin,charge,OptFlag = GauInpParser(GauInput, spin_offset=-1)
+
+    # GUESS REUSE: Read environment variables set by CentralExt
+    guess_reuse_mode = os.environ.get('GUESS_REUSE_MODE')
+    guess_num_sections = os.environ.get('GUESS_NUM_SECTIONS')
+    guess_iteration_num = os.environ.get('GUESS_ITERATION_NUM')
+    guess_is_central = os.environ.get('GUESS_IS_CENTRAL_TASK') == '1'
+
+    guess_mode_for_input = None
+    guess_config_for_compute = None
+    num_sections_int = 0
+
+    if guess_reuse_mode and guess_reuse_mode != 'none':
+        guess_mode_for_input = guess_reuse_mode
+        num_sections_int = int(guess_num_sections) if guess_num_sections else 0
+
+        guess_config_for_compute = {
+            'enabled': True,
+            'iteration_num': int(guess_iteration_num) if guess_iteration_num else 1,
+            'num_sections': num_sections_int,
+            'is_central_task': guess_is_central
+        }
+
+    create_input(preamble_file,end_file,nprocs,mem,spin,charge,geom,
+                 guess_mode=guess_mode_for_input,num_sections=num_sections_int if guess_mode_for_input else None)
+   
+    enter_time = time.time()
+    if OptFlag == 0:
+        Energy,dipole = compute_energy(nprocs,mem,guess_config=guess_config_for_compute)
+        logger.log_energy(Energy)
+        write_output(GauOutput,Energy,dipole)
+    elif OptFlag == 1:
+        import shutil
+        scratch_path = os.getenv('SCRATCH', '/tmp')
+        if readgradpy.upper() == "READ":
+            # Parse scheme and formula using the new advanced parsing logic
+            operations, formula = parse_scheme_and_formula(preamble_file, "molpro")
+
+            Energy, dipole, Gradient = compute_energy(nprocs, mem, True, "READ", operations, atoms, formula, guess_config=guess_config_for_compute)
+            logger.log_energy(Energy)
+            logger.log_gradients(1, [Gradient])
+            # Copy qmolpro.out* from job scratch and clean up
+            # Use EXACT path (no glob wildcard) to avoid prefix-match bug:
+            # glob("molpro-123*") would also match molpro-1234 from another process.
+            job_id = os.getpid()
+            job_scratch_dir = os.path.join(scratch_path, f"molpro-{job_id}")
+            if os.path.isdir(job_scratch_dir):
+                numbered_files = glob.glob(os.path.join(job_scratch_dir, 'qmolpro.out*'))
+                for nf in numbered_files:
+                    dest = os.path.join(original_dir, os.path.basename(nf))
+                    if not os.path.exists(dest):
+                        try:
+                            shutil.copy2(nf, dest)
+                        except Exception:
+                            pass
+                try:
+                    shutil.rmtree(job_scratch_dir)
+                except Exception as e:
+                    print(f'Failed to delete {job_scratch_dir}. Reason: {e}')
+        else:
+            Energy,dipole,Gradient = compute_energy(nprocs,mem,True,readgradpy.upper(),operations=[],atoms=atoms,formula=None,guess_config=guess_config_for_compute)
+            logger.log_energy(Energy)
+            logger.log_gradients(1, [Gradient])
+            # Copy qmolpro.out* from job scratch and clean up
+            job_id = os.getpid()
+            job_scratch_dir = os.path.join(scratch_path, f"molpro-{job_id}")
+            if os.path.isdir(job_scratch_dir):
+                numbered_files = glob.glob(os.path.join(job_scratch_dir, 'qmolpro.out*'))
+                for nf in numbered_files:
+                    dest = os.path.join(original_dir, os.path.basename(nf))
+                    if not os.path.exists(dest):
+                        try:
+                            shutil.copy2(nf, dest)
+                        except Exception:
+                            pass
+                try:
+                    shutil.rmtree(job_scratch_dir)
+                except Exception as e:
+                    print(f'Failed to delete {job_scratch_dir}. Reason: {e}')
+
+
+        write_output(GauOutput,Energy,dipole,Gradient)
+
+
+def inject_guess_directives(ending_content, num_sections, mode):
+    """
+    Inject file directives after each !MethodN marker for guess reuse.
+
+    Parameters
+    ----------
+    ending_content : str
+        Original ending file content (where Molpro method definitions are)
+    num_sections : int
+        Total number of !MethodN markers expected
+    mode : str
+        'write' | 'read' | 'read_write' - controls how files are used
+
+    Returns
+    -------
+    str
+        Modified ending content with file directives injected
+
+    Notes
+    -----
+    - Injects immediately after !MethodN marker
+    - file,2 for wavefunction (orbitals + CI vectors)
+    - file,1 for integrals (optional but recommended)
+    - Case-insensitive matching of !Method markers
+    - Molpro method definitions are in ending file, not preamble
+    """
+    import re
+
+    lines = ending_content.split('\n')
+    output_lines = []
+
+    for line in lines:
+        output_lines.append(line)
+
+        # Check for !MethodN marker (case-insensitive)
+        match = re.match(r'^\s*!Method(\d+)', line, re.IGNORECASE)
+        if match:
+            section_num = int(match.group(1))
+            # Inject file directives immediately after marker
+            output_lines.append(f"file,2,section_{section_num}.wfu")
+            output_lines.append(f"file,1,section_{section_num}.int")
+
+    injected_content = '\n'.join(output_lines)
+    return injected_content
+
+
+def parse_zmat_keyword(ending_file):
+    """Check if !zmat keyword is present in !normalmode section of ending file.
+
+    Args:
+        ending_file: Path to ending.dat file
+
+    Returns:
+        bool: True if !zmat is found in !normalmode section, False otherwise
+    """
+    try:
+        with open(ending_file, 'r') as f:
+            lines = f.readlines()
+
+        in_normalmode = False
+        for line in lines:
+            line_stripped = line.strip().lower()
+            if line_stripped == '!normalmode' or line_stripped.startswith('!normalmode '):
+                in_normalmode = True
+                continue
+            if in_normalmode:
+                if line_stripped == '!zmat':
+                    return True
+                elif line_stripped.startswith('!'):
+                    # Continue parsing other !normalmode keywords
+                    continue
+                elif line_stripped and not line_stripped.startswith('#'):
+                    # End of !normalmode section (non-comment, non-empty line without !)
+                    break
+        return False
+    except Exception:
+        return False
+
+
+def create_input(preamble_file,end_file,nprocs,mem,spin,charge,geom,
+                 guess_mode=None,num_sections=None):
+     """
+     Create Molpro input file with optional guess file directives.
+
+     NEW PARAMETERS:
+         guess_mode : str, optional
+             None (no guess), 'write', 'read', or 'read_write'
+         num_sections : int, optional
+             Number of !MethodN markers in ending file (required if guess_mode set)
+     """
+     # Check if Z-matrix mode is requested (only for parall_n tasks)
+     use_zmat = parse_zmat_keyword(end_file)
+
+     if use_zmat:
+         # Import gcutil for Z-matrix generation
+         from elecext.gcutil import write_zmat_molpro, distance_matrix
+
+         # Parse geometry from geom list (format: "Element x y z" in Bohr)
+         coords_bohr = []
+         atomnames = []
+         for g in geom:
+             parts = g.split()
+             atomnames.append(parts[0])
+             coords_bohr.append([float(parts[1]), float(parts[2]), float(parts[3])])
+
+         # Convert Bohr to Angstrom (gcutil expects Angstrom)
+         BOHR_TO_ANGSTROM = 0.529177210903
+         coords_angstrom = np.array(coords_bohr) * BOHR_TO_ANGSTROM
+
+         # Generate distance matrix
+         distmat = distance_matrix(coords_angstrom)
+
+         # Generate Z-matrix geometry block (with symmetry exploitation)
+         zmat_block = write_zmat_molpro(
+             coords_angstrom,
+             distmat,
+             atomnames,
+             use_symmetry=True,
+             return_string=True
+         )
+
+         # Z-matrix format: NO noorient, NO geomtyp=xyz, NO bohr
+         # (Z-matrix specifies units directly in variable definitions)
+         geom_string = f"""{zmat_block}
+Set,spin = {spin}
+Set,charge = {charge}
+      """
+     else:
+         # Original XYZ format (unchanged)
+         formatted_geom = "\n".join(geom)
+         geom_string=f"""geomtyp=xyz
+noorient
+bohr
+geometry={{
+{len(geom)}
+Title
+{formatted_geom}
+}}
+Set,spin = {spin}
+Set,charge = {charge}
+      """
+     with open(preamble_file,'r') as preamble:
+      preamble_string =  preamble.read()
+
+     with open(end_file,'r') as ending:
+      ending_string =  ending.read()
+
+     # ============================================================================
+     # CRITICAL: Remove 'expec' keywords for displacement tasks
+     # In frequency calculations, only task_central should compute dipole moments
+     # ============================================================================
+     cwd_basename = os.path.basename(os.getcwd())
+     is_displacement_task = (cwd_basename.startswith("task_") and cwd_basename != "task_central")
+
+     if is_displacement_task:
+         ending_string_original = ending_string
+         ending_string = remove_expec_keywords(ending_string)
+
+     # Inject guess directives if guess_mode is active (into ending, not preamble)
+     if guess_mode and num_sections:
+         ending_string = inject_guess_directives(ending_string, num_sections, guess_mode)
+
+     with open('qmolpro.com','w') as molproinput:
+      molproinput.write(preamble_string)
+      molproinput.write(geom_string)
+      molproinput.write(ending_string)
+
+# Note: parse_coefficients function removed - now using parse_scheme_and_formula from elecext
+
+
+
+def get_dir_size_in_gb(path):
+    total_size = 0
+    # Controlla se il percorso esiste, altrimenti restituisce 0
+    if not os.path.exists(path):
+        return 0.0
+
+    for dirpath, dirnames, filenames in os.walk(path):
+        for f in filenames:
+            fp = os.path.join(dirpath, f)
+            # Aggiungi la dimensione del file solo se non è un link simbolico
+            if not os.path.islink(fp):
+                total_size += os.path.getsize(fp)
+    return total_size / (1024 * 1024 * 1024) # Converte in GB
+
+
+def parse_dipole_from_xml(xml_path, method_name=None):
+    """
+    Extract dipole moment from Molpro XML output (already in atomic units).
+
+    Parameters
+    ----------
+    xml_path : str
+        Path to qmolpro.xml file
+    method_name : str, optional
+        Method name to match (e.g., 'CCSD', 'RKS'). If None, extracts first dipole found.
+
+    Returns
+    -------
+    list of float
+        Dipole moment components [dx, dy, dz] in atomic units (e·bohr)
+        Returns [0.0, 0.0, 0.0] if dipole not found in XML
+
+    Notes
+    -----
+    - Molpro XML provides dipole moment in ATOMIC UNITS (e·bohr), not Debye
+    - Gaussian External format also expects atomic units
+    - NO conversion needed - values are returned as-is from XML
+    """
+    try:
+        # Read entire XML file for multiline property parsing
+        with open(xml_path, 'r') as f:
+            xml_content = f.read()
+
+        # Build regex pattern for dipole property (handles multiline attributes)
+        # Pattern matches: <property name="Dipole moment" ... method="METHOD" ... value="X Y Z".../>
+        if method_name:
+            # Match specific method
+            pattern = rf'<property[^>]*name="Dipole moment"[^>]*method="{re.escape(method_name)}"[^>]*value="([^"]+)"'
+        else:
+            # Match first dipole found
+            pattern = r'<property[^>]*name="Dipole moment"[^>]*value="([^"]+)"'
+
+        match = re.search(pattern, xml_content, re.DOTALL)
+        if match:
+            value_str = match.group(1)
+            values = value_str.split()
+            if len(values) >= 3:
+                # XML already in atomic units - no conversion needed
+                dipole_au = [float(values[i]) for i in range(3)]
+                return dipole_au
+
+    except FileNotFoundError:
+        print(f"DIPOLE WARNING: XML file not found: {xml_path}")
+    except Exception as e:
+        print(f"DIPOLE WARNING: Error parsing XML: {e}")
+
+    # Fallback to zero if not found
+    return [0.0, 0.0, 0.0]
+
+
+def remove_expec_keywords(text_content):
+    """
+    Remove 'expec' keyword from Molpro input text while preserving the rest of the line.
+
+    This function is critical for frequency calculations: displacement tasks
+    should NOT compute dipole moments (only task_central should).
+
+    Parameters
+    ----------
+    text_content : str
+        Original Molpro input text (from ending.dat)
+
+    Returns
+    -------
+    str
+        Cleaned text with expec keywords removed from lines (lines preserved)
+
+    Notes
+    -----
+    - Removes only the 'expec' keyword, not the entire line
+    - Handles various formats: 'expec', '; expec', ',expec', 'expec,relax', etc.
+    - Cleans up dangling punctuation after removal
+    - Preserves all other Molpro directives
+
+    Examples
+    --------
+    Input:  "{ccsd; expec}\\n{forces}"
+    Output: "{ccsd}\\n{forces}"
+
+    Input:  "{ccsd; expec,relax}"
+    Output: "{ccsd}"
+    """
+    lines = text_content.split('\n')
+    cleaned_lines = []
+
+    for line in lines:
+        original_line = line
+
+        # Check if line contains 'expec' keyword (case-insensitive, word boundary)
+        if re.search(r'\bexpec\b', line, re.IGNORECASE):
+            # Remove 'expec' and related variations
+            # Patterns to remove (in order):
+            # 1. "; expec,relax" or ";expec,relax"
+            # 2. ", expec,relax" or ",expec,relax"
+            # 3. "; expec" or ";expec"
+            # 4. ", expec" or ",expec"
+            # 5. "expec,relax"
+            # 6. "expec"
+
+            # Remove expec with optional trailing comma+word (e.g., expec,relax)
+            line = re.sub(r'[;,]?\s*expec\b[,]?\s*\w*', '', line, flags=re.IGNORECASE)
+
+            # Clean up multiple spaces
+            line = re.sub(r'\s+', ' ', line)
+
+            # Clean up dangling semicolons or commas before closing brace
+            line = re.sub(r'[;,]\s*}', '}', line)
+
+            # Clean up double semicolons or commas
+            line = re.sub(r'[;,]\s*[;,]', ';', line)
+
+        cleaned_lines.append(line)
+
+    return '\n'.join(cleaned_lines)
+
+
+#  COMPUTE THE FINAL ENERGY
+def compute_energy(nprocs,mem,OptFlag=False,readgradpy='NONE',operations=[],atoms=None,formula=None,guess_config=None):
+    import os
+    import sys
+    import random
+    import shutil
+    test_mode = os.environ.get('EXT_TEST_MODE')
+
+    def create_unique_molpro_dir():
+        """Crea una directory molpro_tmp_<PID> con nome univoco basato sul PID.
+
+        Uses the process PID instead of a random number to guarantee
+        uniqueness across concurrent MolproExt_project processes sharing
+        the same $SCRATCH filesystem.
+        """
+        dir_name = f"molpro_tmp_{os.getpid()}"
+        os.makedirs(dir_name, exist_ok=True)
+        return dir_name
+
+
+    last_gradients = []
+    dipole = [0.0, 0.0, 0.0]
+    nprocs=int(nprocs)
+    
+    # Parse memory - handle units like "1GB" or just "1"
+    if isinstance(mem, str) and mem.upper().endswith('GB'):
+        mem = int(mem[:-2])  # Remove 'GB' suffix
+    else:
+        mem = int(mem)
+    
+    # reserve some memory for the system (i.e. 2 GB for buffer I/O))
+    mem=int(mem-0.1*mem)
+        # Convert memory from GB to megawords (MW)
+    mem_mb = int(mem * 1024)  # Convert GB to MB
+    mem_mw = int(mem_mb // (8 * nprocs))  # Convert MB to MW, considering 8 bytes per word
+
+
+
+    file_to_move="qmolpro.com"
+    unique_dir = create_unique_molpro_dir()
+    original_dir = os.getcwd()
+
+    # Get scratch directory
+    scratch_path = os.getenv('SCRATCH', '/tmp')
+
+    # Create scratch directory for this calculation
+    scratch_calc_dir = os.path.join(scratch_path, unique_dir)
+    os.makedirs(scratch_calc_dir, exist_ok=True)
+
+    if os.path.exists(file_to_move):
+        # Copy the input file to both local and scratch directories
+        local_destination = os.path.join(unique_dir, os.path.basename(file_to_move))
+        scratch_destination = os.path.join(scratch_calc_dir, os.path.basename(file_to_move))
+
+        shutil.move(file_to_move, local_destination)
+        shutil.copy2(local_destination, scratch_destination)
+    else:
+        exit()
+
+    # Change to scratch directory for molpro execution
+    try:
+        os.chdir(scratch_calc_dir)
+    except OSError as e:
+        print(f"ERROR: Failed to change to scratch directory {scratch_calc_dir}: {e}")
+        raise
+
+    # GUESS REUSE: Setup symlinks for reading previous iteration guess
+    # NOTE: This must be done AFTER changing to scratch directory
+    if guess_config and guess_config.get('enabled', False):
+        try:
+            gm = GuessManager()
+            iteration_num = guess_config['iteration_num']
+            num_sections = guess_config['num_sections']
+
+            # Create scratch directories for current iteration
+            section_dirs = gm.create_iteration_scratch(iteration_num, num_sections)
+
+            # Setup symlinks if not first iteration
+            if iteration_num > 1:
+                gm.setup_read_symlinks(
+                    source_iteration=iteration_num - 1,
+                    num_sections=num_sections,
+                    target_dir=scratch_calc_dir  # Use scratch directory for symlinks
+                )
+
+        except Exception as e:
+            print(f"GUESS REUSE WARNING: Failed to setup guess management: {e}")
+
+    if test_mode:
+        # Create mock output files
+        Energy = -76.123456789  # Mock energy for testing
+
+        # Create mock qmolpro.out file
+        with open('qmolpro.out', 'w') as molproout:
+            molproout.write("Molpro test output\n")
+            molproout.write(f"EXE_ENERGY={Energy}\n")
+            molproout.write("End of test output\n")
+        
+        # Create mock XML file for gradients and dipoles if needed
+        if OptFlag:
+            # Create simple mock XML with predictable gradients and dipoles
+            with open('qmolpro.xml', 'w') as xmlfile:
+                xmlfile.write('<?xml version="1.0" encoding="UTF-8"?>\n')
+                xmlfile.write('<molpro>\n')
+                # Create mock gradients and dipoles - simple values for testing
+                for grad_num in range(3):  # Create 3 gradient blocks for testing
+                    # Add dipole moment property (in Debye for testing)
+                    # Test values: Method 1: (1.0, 0.5, 0.2), Method 2: (0.8, 0.4, 0.1), Method 3: (1.2, 0.6, 0.3)
+                    dipole_x = 1.0 + grad_num * 0.2
+                    dipole_y = 0.5 + grad_num * 0.1
+                    dipole_z = 0.2 + grad_num * 0.1
+                    method_name = f"TEST_METHOD_{grad_num+1}"
+                    xmlfile.write(f'<property name="Dipole moment" method="{method_name}" '
+                                  f'principal="true" stateSymmetry="1" stateNumber="1" stateMultiplicity="1"\n')
+                    xmlfile.write(f'  value="{dipole_x} {dipole_y} {dipole_z}"/>\n')
+
+                    # Add gradient block
+                    xmlfile.write('<gradient>\n')
+                    if atoms:
+                        for atom in range(atoms):
+                            # Create predictable gradient values for testing
+                            gx = (grad_num + 1) * 0.001 + atom * 0.0001
+                            gy = (grad_num + 1) * 0.002 + atom * 0.0001
+                            gz = (grad_num + 1) * 0.003 + atom * 0.0001
+                            xmlfile.write(f'  {gx:.10f}  {gy:.10f}  {gz:.10f}\n')
+                    else:
+                        # Default 3 atoms for testing
+                        for atom in range(3):
+                            gx = (grad_num + 1) * 0.001 + atom * 0.0001
+                            gy = (grad_num + 1) * 0.002 + atom * 0.0001
+                            gz = (grad_num + 1) * 0.003 + atom * 0.0001
+                            xmlfile.write(f'  {gx:.10f}  {gy:.10f}  {gz:.10f}\n')
+                    xmlfile.write('</gradient>\n')
+                xmlfile.write('</molpro>\n')
+        else:
+            # Energy-only mode: create XML with just dipole (no gradient)
+            with open('qmolpro.xml', 'w') as xmlfile:
+                xmlfile.write('<?xml version="1.0" encoding="UTF-8"?>\n')
+                xmlfile.write('<molpro>\n')
+                # Test dipole: (0.5, 0.3, 0.1) Debye
+                xmlfile.write('<property name="Dipole moment" method="TEST_METHOD" '
+                              'principal="true" stateSymmetry="1" stateNumber="1" stateMultiplicity="1"\n')
+                xmlfile.write('  value="0.5 0.3 0.1"/>\n')
+                xmlfile.write('</molpro>\n')
+
+        molpro_returncode = 0  # Test mode always succeeds
+    else:
+        # Normal execution
+        # Create job-specific scratch directory to avoid conflicts with concurrent calculations
+        job_id = os.getpid()
+        base_scratch = os.getenv('SCRATCH', '/tmp')
+        scratch_dir = os.path.join(base_scratch, f"molpro-{job_id}")
+        os.makedirs(scratch_dir, exist_ok=True)
+
+        command = f"molpro -s -n {nprocs}  -m {mem_mw}m qmolpro.com --output qmolpro.out -W {scratch_dir}  -D {scratch_dir}"
+
+        # Check PBS-related variables
+        pbs_vars = ['PBS_NODEFILE', 'PBS_NP', 'PBS_NUM_NODES', 'PBS_NUM_PPN',
+                    'PBS_JOBID', 'PBS_ENVIRONMENT', 'NCPUS']
+        pbs_found = False
+        for var in pbs_vars:
+            value = os.environ.get(var)
+            if value:
+                pbs_found = True
+                break
+
+        # Create modified environment for subprocess
+        env_for_subprocess = os.environ.copy()
+
+        # Remove LD_LIBRARY_PATH to prevent library conflicts with Molpro's
+        # bundled MPI (same approach as pymolpro).  When LD_LIBRARY_PATH
+        # contains paths from the parent process (e.g. Gaussian or conda),
+        # Molpro's MPI ranks may load an incompatible libmpi, causing COMEX
+        # shared-memory initialization to deadlock.
+        env_for_subprocess.pop('LD_LIBRARY_PATH', None)
+
+        # If we're in PBS and want to limit processes
+        if pbs_found:
+            # Check if requested processes differ from PBS allocation
+            # The actual PBS allocation is determined by counting lines in PBS_NODEFILE
+            original_nodefile = os.environ.get('PBS_NODEFILE')
+            pbs_allocated_procs = None
+
+            # Count actual processes from PBS_NODEFILE (each line = 1 process)
+            if original_nodefile and os.path.exists(original_nodefile):
+                try:
+                    with open(original_nodefile, 'r') as f:
+                        pbs_allocated_procs = len(f.readlines())
+                except Exception as e:
+                    pass
+
+            if pbs_allocated_procs and int(nprocs) != pbs_allocated_procs:
+
+                # THREAD-SAFE SOLUTION: Create a modified PBS_NODEFILE with correct number of entries
+                # Strategy:
+                # 1. Read original PBS_NODEFILE to get node name(s)
+                # 2. Create a new file with node name repeated 'nprocs' times
+                # 3. Set PBS_NODEFILE environment variable to point to new file
+                # 4. Clean up after Molpro execution
+                if original_nodefile and os.path.exists(original_nodefile):
+                    try:
+                        # Step 1: Read the original PBS_NODEFILE
+                        with open(original_nodefile, 'r') as f:
+                            nodes = f.readlines()
+
+                        if not nodes:
+                            raise ValueError("PBS_NODEFILE is empty")
+
+                        # Get the node name (first line, stripped of whitespace)
+                        node_name = nodes[0].strip()
+
+                        # Step 2: Create a new PBS_NODEFILE in current working directory
+                        # Use a unique name based on PID and timestamp to avoid collisions
+                        pid = os.getpid()
+                        timestamp = int(time.time() * 1000000)  # microseconds
+                        new_nodefile_name = f"pbs_nodefile_{pid}_{timestamp}_{nprocs}procs"
+                        new_nodefile_path = os.path.join(os.getcwd(), new_nodefile_name)
+
+                        # Step 3: Write node name 'nprocs' times to the new file
+                        with open(new_nodefile_path, 'w') as f:
+                            for i in range(int(nprocs)):
+                                f.write(f"{node_name}\n")
+
+                        # Step 4: Update environment variables to use the new nodefile
+                        env_for_subprocess['PBS_NODEFILE'] = new_nodefile_path
+                        env_for_subprocess['PBS_NP'] = str(nprocs)
+
+                        # Execute Molpro with modified environment
+                        result = subprocess.run(shlex.split(command), env=env_for_subprocess)
+                        molpro_returncode = result.returncode
+
+                        # Step 5: Cleanup - remove the temporary nodefile
+                        try:
+                            if os.path.exists(new_nodefile_path):
+                                os.unlink(new_nodefile_path)
+                        except Exception as cleanup_error:
+                            pass
+
+                    except Exception as e:
+                        # Fallback: remove PBS variables (less safe but works)
+                        if 'PBS_NODEFILE' in env_for_subprocess:
+                            del env_for_subprocess['PBS_NODEFILE']
+                        if 'PBS_NP' in env_for_subprocess:
+                            del env_for_subprocess['PBS_NP']
+                        if 'PBS_NUM_PPN' in env_for_subprocess:
+                            del env_for_subprocess['PBS_NUM_PPN']
+                        result = subprocess.run(shlex.split(command), env=env_for_subprocess)
+                        molpro_returncode = result.returncode
+                else:
+                    # No PBS_NODEFILE to modify, just update PBS_NP
+                    env_for_subprocess['PBS_NP'] = str(nprocs)
+                    result = subprocess.run(shlex.split(command), env=env_for_subprocess)
+                    molpro_returncode = result.returncode
+            else:
+                result = subprocess.run(shlex.split(command), env=env_for_subprocess)
+                molpro_returncode = result.returncode
+        else:
+            # Not in PBS environment
+            result = subprocess.run(shlex.split(command), env=env_for_subprocess)
+            molpro_returncode = result.returncode
+
+        # === EARLY DIAGNOSTIC COPY ===
+        # Immediately copy all qmolpro.out* files from scratch to local dir
+        # BEFORE any parsing or cleanup, because the scratch filesystem may
+        # disappear at any time (e.g., OOM killer, node eviction, tmpfs wipe).
+        local_calc_dir_early = os.path.join(original_dir, unique_dir)
+        for _src_dir in [scratch_calc_dir] + ([scratch_dir] if 'scratch_dir' in locals() else []):
+            try:
+                if os.path.isdir(_src_dir):
+                    for _f in os.listdir(_src_dir):
+                        if _f.startswith('qmolpro.out'):
+                            _src = os.path.join(_src_dir, _f)
+                            _dst = os.path.join(local_calc_dir_early, _f)
+                            if not os.path.exists(_dst):
+                                shutil.copy2(_src, _dst)
+            except (OSError, FileNotFoundError):
+                pass  # scratch already gone — nothing we can do
+
+        # Initialize Energy before attempting to read output file
+        Energy = None
+
+        # Try to read energy from output file
+        # If file doesn't exist (Molpro failed before creating output), catch the error
+        try:
+            with open ('qmolpro.out','r') as molproout:
+                for line in molproout:
+                # Check if the line contains the target string
+                    if 'EXE_ENERGY' in line:
+                # Split the line to extract the floating-point number
+                        parts = line.split('=')[1].split()
+
+                # Convert the extracted part to a floating-point number and store it in a variable
+                        Energy = float(parts[0])
+                        break  # Exit the loop after finding the target line
+        except FileNotFoundError:
+            print("ERROR: qmolpro.out not found - Molpro calculation failed before producing output")
+            print("       This typically indicates a catastrophic failure (bad input, memory error, crash)")
+            # Mark as failed to trigger file preservation logic below
+            calculation_failed = True
+            molpro_returncode = -999  # Sentinel value to indicate missing output file
+
+    # Detect if Molpro calculation failed
+    if 'calculation_failed' not in locals():
+        calculation_failed = False
+
+    # Check 1: Non-zero return code
+    if molpro_returncode != 0:
+        print(f"WARNING: Molpro returned non-zero exit code: {molpro_returncode}")
+        calculation_failed = True
+
+    # Check 2: Presence of numbered output files (qmolpro.out_001, etc.)
+    # These files indicate Molpro restarts or failures
+    # Search in both scratch_calc_dir (CWD) and scratch_dir (-W/-D directory)
+    numbered_outputs = [f for f in glob.glob(os.path.join(scratch_calc_dir, 'qmolpro.out*'))
+                        if os.path.basename(f) != 'qmolpro.out']
+    if not test_mode and 'scratch_dir' in locals():
+        numbered_outputs += [f for f in glob.glob(os.path.join(scratch_dir, 'qmolpro.out*'))
+                             if os.path.basename(f) != 'qmolpro.out']
+    if numbered_outputs:
+        calculation_failed = True
+
+    # GUESS REUSE: Organize output files and cleanup old iterations
+    if guess_config and guess_config.get('enabled', False):
+        is_central_task = guess_config.get('is_central_task', False)
+        if is_central_task:
+            try:
+                gm = GuessManager()
+                iteration_num = guess_config['iteration_num']
+                num_sections = guess_config['num_sections']
+
+                # Move output files to scratch directories
+                moved_files = gm.organize_output_files(
+                    source_dir=scratch_calc_dir,  # Use scratch directory as source
+                    iteration_num=iteration_num,
+                    num_sections=num_sections
+                )
+
+                # Cleanup previous iteration if not first
+                if iteration_num > 1:
+                    cleanup_success = gm.cleanup_iteration(iteration_num - 1)
+
+            except Exception as e:
+                print(f"GUESS REUSE WARNING: Failed to organize/cleanup guess files: {e}")
+
+    # Copy output files from scratch back to local directory
+    local_calc_dir = os.path.join(original_dir, unique_dir)
+
+    # Copy all relevant output files
+    if calculation_failed:
+        # FAILURE MODE: Copy ALL qmolpro.* files to preserve error information
+        # NOTE: The early diagnostic copy above already saved qmolpro.out* right
+        # after the subprocess returned.  This block picks up anything the early
+        # copy might have missed (e.g. qmolpro.xml, qmolpro.com) and is robust
+        # against the scratch directory having disappeared in the meantime.
+        scratch_dirs_to_scan = [scratch_calc_dir]
+        if not test_mode and 'scratch_dir' in locals():
+            scratch_dirs_to_scan.append(scratch_dir)
+
+        for _src_dir in scratch_dirs_to_scan:
+            try:
+                if not os.path.isdir(_src_dir):
+                    continue
+                for item in os.listdir(_src_dir):
+                    src_path = os.path.join(_src_dir, item)
+                    dst_path = os.path.join(local_calc_dir, item)
+                    if os.path.isfile(src_path) and not os.path.exists(dst_path):
+                        try:
+                            shutil.copy2(src_path, dst_path)
+                        except Exception as e:
+                            print(f"ERROR copying {item} from {_src_dir}: {e}")
+            except (OSError, FileNotFoundError) as e:
+                print(f"WARNING: scratch dir {_src_dir} inaccessible during failure copy: {e}")
+
+        # Print last lines of qmolpro.out for immediate error diagnosis
+        qmolpro_out = os.path.join(local_calc_dir, 'qmolpro.out')
+        if os.path.exists(qmolpro_out):
+            try:
+                with open(qmolpro_out, 'r') as f:
+                    out_lines = f.readlines()
+                last_lines = out_lines[-30:] if len(out_lines) > 30 else out_lines
+                print(f"\n--- Last lines of qmolpro.out ---")
+                for line in last_lines:
+                    print(line, end='')
+                print(f"\n--- End of qmolpro.out ---")
+            except Exception:
+                pass
+
+        # List diagnostic files that were saved
+        saved_diag = [f for f in os.listdir(local_calc_dir)
+                       if f.startswith('qmolpro.out')]
+        if saved_diag:
+            print(f"\nDiagnostic files saved to {local_calc_dir}:")
+            for f in sorted(saved_diag):
+                print(f"  {f}")
+
+        # Print informative error message and exit
+        print(f"\n{'='*70}")
+        print(f"ERROR: Molpro calculation failed!")
+        print(f"  Exit code: {molpro_returncode}")
+        print(f"  Output directory: {local_calc_dir}")
+        print(f"  Check the output files in the directory above for error details.")
+        print(f"{'='*70}\n")
+        sys.exit(1)
+    else:
+        # SUCCESS MODE: Standard file copying (existing behavior)
+        output_files = ['qmolpro.out', 'qmolpro.xml']
+        for output_file in output_files:
+            scratch_file = os.path.join(scratch_calc_dir, output_file)
+            local_file = os.path.join(local_calc_dir, output_file)
+            if os.path.exists(scratch_file):
+                shutil.copy2(scratch_file, local_file)
+
+        # Copy any additional output files (original behavior)
+        try:
+            for item in os.listdir(scratch_calc_dir):
+                if item not in ['qmolpro.com', 'qmolpro.out', 'qmolpro.xml']:
+                    scratch_item = os.path.join(scratch_calc_dir, item)
+                    local_item = os.path.join(local_calc_dir, item)
+                    if os.path.isfile(scratch_item):
+                        shutil.copy2(scratch_item, local_item)
+        except (OSError, FileNotFoundError) as e:
+            print(f"WARNING: scratch dir inaccessible during success copy: {e}")
+
+    if OptFlag:
+# In questo caso devi settare il gradiente a 0 senza fare il calcolo delle forze
+# serve per fare uno scan rigido
+        if readgradpy.upper() == 'SCAN':
+            grad = [[0.0, 0.0, 0.0] for _ in range(atoms)]
+
+            # Extract dipole from XML if available
+            try:
+                xml_path = os.path.join(local_calc_dir, 'qmolpro.xml')
+                if os.path.exists(xml_path):
+                    dipole = parse_dipole_from_xml(xml_path, method_name=None)
+            except Exception as e:
+                pass
+
+            return Energy,dipole,grad
+
+
+#  optg,savegrd=gradient,maxit=2
+        if readgradpy.upper() == 'NONE':
+            # Change to local directory to read the copied output files
+            try:
+                os.chdir(local_calc_dir)
+            except OSError as e:
+                print(f"ERROR: Failed to change to local calc directory {local_calc_dir}: {e}")
+                raise
+            
+            with open('testgradient', 'r') as file:
+                lines = file.readlines()
+
+                grad_coord = lines[2:]
+                grad = []
+                # Print the gradients from the last block
+                for line in grad_coord:
+                    parts = line.split()
+                    grad.append(parts[-3:])
+
+                # Old version
+                grad = [[float(element)*(-0.0194469) for element in sublist] for sublist in grad]
+
+                # Extract dipole from XML if available (we're already in local_calc_dir)
+                try:
+                    if os.path.exists('qmolpro.xml'):
+                        dipole = parse_dipole_from_xml('qmolpro.xml', method_name=None)
+                except Exception as e:
+                    pass
+
+                try:
+                    os.chdir(original_dir)
+                except OSError as e:
+                    print(f"ERROR: Failed to restore to original directory {original_dir}: {e}")
+                    raise
+                #os.rmdir(unique_dir)
+                return Energy,dipole,grad
+
+        elif readgradpy.upper() == 'READ':
+            # Use the new operations and formula from parse_scheme_and_formula
+            parsed_scheme_operations = operations
+
+            # Count actual gradients needed for calculations
+            num_actual_gradients_to_read = 0
+            for op_type, *_ in parsed_scheme_operations:
+                if op_type == 'coeff':
+                    num_actual_gradients_to_read += 1
+
+            # Read gradients from XML (change to local directory first)
+            try:
+                os.chdir(local_calc_dir)
+            except OSError as e:
+                print(f"ERROR: Failed to change to local calc directory {local_calc_dir}: {e}")
+                raise
+            
+            actual_gradients_from_xml = []
+            if num_actual_gradients_to_read > 0: # Read XML only if there are 'coeff' gradients
+                with open('qmolpro.xml', 'r') as file:
+                    xml_lines = file.readlines()
+
+                in_gradient_section = False
+                current_gradient_xml_data = []
+                gradients_read_count = 0
+
+                for line_xml in xml_lines:
+                    line_xml = line_xml.strip()
+                    if '<gradient' in line_xml:
+                        in_gradient_section = True
+                        current_gradient_xml_data = []
+                        continue
+                    elif '</gradient>' in line_xml:
+                        in_gradient_section = False
+                        actual_gradients_from_xml.append(np.array(current_gradient_xml_data))
+                        gradients_read_count += 1
+                        if gradients_read_count >= num_actual_gradients_to_read:
+                            break
+
+                    if in_gradient_section and line_xml:
+                        values = line_xml.split()
+                        if len(values) == 3:
+                            current_gradient_xml_data.append([float(values[0]), float(values[1]), float(values[2])])
+
+                if len(actual_gradients_from_xml) < num_actual_gradients_to_read:
+                    raise ValueError(f"ERROR: Required {num_actual_gradients_to_read} actual gradients, but found only {len(actual_gradients_from_xml)} in qmolpro.xml.")
+
+            # ============================================================================
+            # DIPOLE MOMENT EXTRACTION FROM XML
+            # ============================================================================
+            # Extract dipole moments from XML (one per method, in same order as gradients)
+            # Note: parse_dipole_from_xml with method_name=None extracts dipoles in order
+            actual_dipoles_from_xml = []
+            if num_actual_gradients_to_read > 0:
+                # Re-read XML to extract dipole moments
+                # For each !MethodN calculation, extract the corresponding dipole
+                with open('qmolpro.xml', 'r') as file:
+                    xml_content = file.read()
+
+                # Find all dipole moment property lines
+                dipole_pattern = r'<property name="Dipole moment".*?value="([^"]+)"'
+                dipole_matches = re.findall(dipole_pattern, xml_content)
+
+                DEBYE_TO_AU = 0.393430307  # Conversion factor
+
+                for idx, dipole_value_str in enumerate(dipole_matches[:num_actual_gradients_to_read]):
+                    values = dipole_value_str.split()
+                    if len(values) >= 3:
+                        # Convert from Debye to atomic units
+                        dipole_au = [float(values[i]) * DEBYE_TO_AU for i in range(3)]
+                        actual_dipoles_from_xml.append(dipole_au)
+                    else:
+                        actual_dipoles_from_xml.append([0.0, 0.0, 0.0])
+
+                # Check if we got enough dipoles
+                while len(actual_dipoles_from_xml) < num_actual_gradients_to_read:
+                    actual_dipoles_from_xml.append([0.0, 0.0, 0.0])
+
+            # Gradient combination logic with formula support
+            grad = []
+
+            if parsed_scheme_operations and formula:
+                # Use custom formula evaluation
+                # Extract coefficient values for formula evaluation
+                coeff_values = []
+                for op in parsed_scheme_operations:
+                    if op[0] == 'coeff':
+                        coeff_values.append(op[1])
+                    elif op[0] == 'copy':
+                        coeff_values.append(op[2])  # Store coefficient for formula
+
+                # Validate formula if present
+                validate_formula_syntax(formula, len(actual_gradients_from_xml), len(coeff_values))
+
+                # Evaluate formula for gradients
+                if actual_gradients_from_xml:
+                    combined_gradient_np = evaluate_custom_formula(formula, actual_gradients_from_xml, coeff_values)
+                    grad = combined_gradient_np.tolist()
+                else:
+                    # No gradients to evaluate
+                    grad = [[0.0, 0.0, 0.0] for _ in range(atoms)] if atoms is not None else []
+
+            elif not parsed_scheme_operations:
+                # Empty scheme, return zero gradient if 'atoms' is known
+                grad = [[0.0, 0.0, 0.0] for _ in range(atoms)] if atoms is not None else []
+            else:
+                # Standard linear combination (backward compatibility)
+                
+                # Determine gradient shape
+                gradient_shape = None
+                if actual_gradients_from_xml:
+                    gradient_shape = actual_gradients_from_xml[0].shape
+                elif atoms is not None:
+                    gradient_shape = (atoms, 3)
+                else:
+                    raise ValueError("Cannot determine gradient structure: 'atoms' not specified and no actual gradients to infer shape.")
+
+                combined_gradient_np = np.zeros(gradient_shape, dtype=float)
+                current_actual_gradient_idx = 0
+
+                for op_details in parsed_scheme_operations:
+                    op_type = op_details[0]
+
+                    if op_type == 'coeff':
+                        if current_actual_gradient_idx >= len(actual_gradients_from_xml):
+                            raise IndexError(f"Logic error: trying to access actual gradient {current_actual_gradient_idx + 1} but only {len(actual_gradients_from_xml)} were loaded.")
+                        coeff_val = op_details[1]
+                        gradient_to_apply = actual_gradients_from_xml[current_actual_gradient_idx]
+                        combined_gradient_np += coeff_val * gradient_to_apply
+                        current_actual_gradient_idx += 1
+                    elif op_type == 'copy':
+                        if not actual_gradients_from_xml:
+                            raise ValueError("Cannot execute 'copy': no actual gradients calculated to copy from.")
+
+                        source_idx_1_based = op_details[1]
+                        coeff_val = op_details[2]
+
+                        if not (1 <= source_idx_1_based <= len(actual_gradients_from_xml)):
+                            raise ValueError(f"Invalid source index for 'copy': {source_idx_1_based}. "
+                                             f"Available actual gradients: from 1 to {len(actual_gradients_from_xml)}.")
+
+                        gradient_to_apply = actual_gradients_from_xml[source_idx_1_based - 1] # Convert to 0-based index
+                        combined_gradient_np += coeff_val * gradient_to_apply
+
+                grad = combined_gradient_np.tolist()
+
+            # ============================================================================
+            # DIPOLE MOMENT COMBINATION (same formula/scheme as gradients)
+            # ============================================================================
+
+            # Combine dipoles using same operations as gradients (component-wise)
+            if parsed_scheme_operations and formula:
+                # Use custom formula evaluation for dipole components
+                if actual_dipoles_from_xml:
+                    # Convert dipoles to numpy array for formula evaluation
+                    dipoles_array = np.array(actual_dipoles_from_xml)  # Shape: (num_methods, 3)
+
+                    # Evaluate formula component-wise (x, y, z separately)
+                    combined_dipole = np.zeros(3)
+                    for component_idx in range(3):
+                        component_dipoles = dipoles_array[:, component_idx:component_idx+1]  # Shape: (num_methods, 1)
+                        combined_component = evaluate_custom_formula(formula, component_dipoles, coeff_values)
+                        combined_dipole[component_idx] = combined_component[0]
+
+                    dipole = combined_dipole.tolist()
+                else:
+                    dipole = [0.0, 0.0, 0.0]
+
+            elif not parsed_scheme_operations:
+                # Empty scheme, return zero dipole
+                dipole = [0.0, 0.0, 0.0]
+
+            else:
+                # Standard linear combination (backward compatibility)
+
+                combined_dipole = np.zeros(3, dtype=float)
+                current_actual_dipole_idx = 0
+
+                for op_details in parsed_scheme_operations:
+                    op_type = op_details[0]
+
+                    if op_type == 'coeff':
+                        if current_actual_dipole_idx >= len(actual_dipoles_from_xml):
+                            dipole_to_apply = np.array([0.0, 0.0, 0.0])
+                        else:
+                            dipole_to_apply = np.array(actual_dipoles_from_xml[current_actual_dipole_idx])
+
+                        coeff_val = op_details[1]
+                        combined_dipole += coeff_val * dipole_to_apply
+                        current_actual_dipole_idx += 1
+
+                    elif op_type == 'copy':
+                        if not actual_dipoles_from_xml:
+                            dipole_to_apply = np.array([0.0, 0.0, 0.0])
+                        else:
+                            source_idx_1_based = op_details[1]
+                            coeff_val = op_details[2]
+
+                            if not (1 <= source_idx_1_based <= len(actual_dipoles_from_xml)):
+                                dipole_to_apply = np.array([0.0, 0.0, 0.0])
+                            else:
+                                dipole_to_apply = np.array(actual_dipoles_from_xml[source_idx_1_based - 1])
+
+                            combined_dipole += coeff_val * dipole_to_apply
+
+                dipole = combined_dipole.tolist()
+
+            # IMPORTANT: Must restore to original directory BEFORE cleaning up scratch
+            try:
+                os.chdir(original_dir)
+            except OSError as e:
+                print(f"ERROR: Failed to restore to original directory {original_dir}: {e}")
+                raise
+
+            # NOW safely clean up scratch directory after we've left it
+            if os.path.exists(scratch_calc_dir):
+                try:
+                    shutil.rmtree(scratch_calc_dir)
+                except Exception as e:
+                    pass
+            return Energy, dipole, grad
+        else:
+            ### To use this feature in the ending.dat you should put a table like
+#{ TABLE, finalgradient_x,finalgradient_y,finalgradient_z;
+#SAVE,new,gradients.py;}
+            ### and you should specify the gradients file, in this case gradients in the external input
+            import sys
+            import os
+            sys.path.append(f'{os.getcwd()}')
+
+            grad_mod = __import__(readgradpy)
+            grad = grad_mod.molpro_table_values
+
+            # IMPORTANT: Must restore to original directory BEFORE cleaning up scratch
+            try:
+                os.chdir(original_dir)
+            except OSError as e:
+                print(f"ERROR: Failed to restore to original directory {original_dir}: {e}")
+                raise
+
+            # NOW safely clean up scratch directory after we've left it
+            if os.path.exists(scratch_calc_dir):
+                try:
+                    shutil.rmtree(scratch_calc_dir)
+                except Exception as e:
+                    pass
+            return Energy,dipole,grad
+    else:
+        # ============================================================================
+        # ENERGY-ONLY CALCULATION (OptFlag=False)
+        # Extract dipole moment from XML if available
+        # ============================================================================
+        # Change to local directory to read XML
+        try:
+            xml_path = os.path.join(local_calc_dir, 'qmolpro.xml')
+            if os.path.exists(xml_path):
+                dipole = parse_dipole_from_xml(xml_path, method_name=None)
+        except Exception as e:
+            pass
+
+        # IMPORTANT: Must change back to original directory BEFORE deleting scratch
+        # Otherwise we'll be trying to delete the directory we're currently in!
+        try:
+            os.chdir(original_dir)
+        except OSError as e:
+            print(f"ERROR: Failed to restore to original directory {original_dir}: {e}")
+            raise
+
+        # NOW we can safely clean up scratch directory after changing out of it
+        if os.path.exists(scratch_calc_dir):
+            try:
+                shutil.rmtree(scratch_calc_dir)
+            except Exception as e:
+                pass
+
+        return Energy,dipole
+
+if __name__ == "__main__":
+    main()
+

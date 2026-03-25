@@ -1,0 +1,317 @@
+#!/shared/apps/python/3.9.16/bin/python3.9 -u
+# The following python script should 
+# 0. Parse the gaussian informations given as input DONE
+# 1. Take in input the gaussian geometry DONE
+# 2. Compute the distance between reacting atoms DONE
+# 3. Take from somewhere the polynomial coefficient to extrapolate the HF exchange value DONE
+# 4. Compute the MC-PDFT with exchange extrapolated DONE
+# 5. Write in output the output file in gaussian format DONE
+
+import concurrent.futures
+import sys
+import os
+import numpy as np
+import glob
+import shlex
+import subprocess
+import time
+
+def main():
+    # Check if the number of arguments is correct (including the script name)
+
+#  PARSE THE GAUSSIAN INFORMATIONS GIVEN AS INPUT
+    # Arguments are accessed by indexes in sys.argv
+    print(77*'*') 
+    print("STARTING PARSING")
+#    preamble_file= sys.argv[1]
+#    end_file = sys.argv[2]
+#    nprocs = sys.argv[3]
+#    mem = sys.argv[4]
+#    readgradpy = sys.argv[5]
+#    layer = sys.argv[6]
+    # Check if a gaussian input is already present, if not read from 
+    # command line.
+    func=sys.argv[1]
+    basis=sys.argv[2]
+    ref_file=sys.argv[3]
+    layer=sys.argv[4]
+
+
+    files = glob.glob('Gau*EIn')
+    if files:
+        # Find the last created file by checking the creation time
+        last_created_file = max(files, key=os.path.getctime)
+        print(f"The last created file that starts with 'Gau' and ends with 'EIn' is: {last_created_file}")
+        GauInput = last_created_file
+    else:
+        GauInput = sys.argv[5]
+        print("No files matching the pattern were found.")
+    GauOutput = sys.argv[6]
+    print(f"Layer: {layer}")
+    print(f"Gaussian Input: {GauInput}")
+    print(f"Gaussian Output: {GauOutput}")
+
+    
+
+
+
+    geom,atoms,spin,charge,OptFlag = GauInpParser(GauInput)
+    print('gaussian parsing completed')
+
+    print(77*'*')
+    print('PARSING COMPLETED')
+    print('Gaussian input geoms') 
+    #with open(GauInput,'r') as temp:
+        #for line in temp.readlines(): 
+            #parts = line.split()  # Split the string into individual components
+            #print("{:2} {:15.10f} {:15.10f} {:15.10f}".format(parts[0], float(parts[1]), float(parts[2]), float(parts[3])))
+        #print (temp.readlines())
+        #print(temp)
+
+    print(77*'*')
+
+    print('Geom processes') 
+    for line in geom:
+        parts = line.split()  # Split the string into individual components
+        print("{:2} {:15.10f} {:15.10f} {:15.10f}".format(parts[0], float(parts[1]), float(parts[2]), float(parts[3])))
+    print(77*'*')
+
+######################################################################
+# routine for the retrieve of index and reference potential
+
+    index_file = "index.tmp"
+
+# Step 1: Check if index.tmp exists, create if not, initialize with 1
+    if not os.path.exists(index_file):
+        index_value = 1
+        with open(index_file, "w") as f:
+            f.write(str(index_value))
+    else:
+        # Step 2: Read the current value, increment it, and update the file
+        with open(index_file, "r+") as f:
+            index_value = int(f.read().strip()) + 1
+            f.seek(0)
+            f.write(str(index_value))
+            f.truncate()
+
+    # Print the updated index value
+    print(f"Updated index value: {index_value}")
+
+    # Step 3: Read the ref_file (name should be defined beforehand)
+
+    if os.path.exists(ref_file):
+        with open(RefFile, "r") as f:
+        lines = f.readlines()
+
+        if 0 < index_value <= len(lines):
+            selected_line = lines[index_value - 1].strip()  # Get the correct line
+
+            # Extract columns (assuming space separation)
+            columns = selected_line.split()
+
+            if len(columns) >= 4:
+                ref_en = columns[3]  # Fourth column
+                print(f"Energy at line {index_value}: {ref_en}")
+            else:
+                print("Error: Line does not contain enough columns.")
+        else:
+            print("Error: Index out of range.")
+    else:
+        print(f"Reference file {ref_file} does not exist.")   
+
+
+# routine for the retrieve of index and reference potential
+######################################################################
+    enter_time = time.time()
+    Energy,dipole,hf_x = compute_energy(geom,basis,func,spin,charge,ref_en)
+    print(f'ENERGY = {Energy}')
+    print(f'HF_exchange = {hf_x}')
+    write_output(GauOutput,Energy,dipole)
+    write_output(GauOutput,Energy,dipole,Gradient)
+    exit_time = time.time()
+    elapsed_time = exit_time - enter_time
+    hours, remainder = divmod(elapsed_time, 3600)
+    minutes, seconds = divmod(remainder, 60)
+    print(f"Time taken: {int(hours)} hours, {int(minutes)} minutes, {seconds:.2f} seconds")
+        
+
+    print(77*'*')
+    print('MOVING TO NEXT COMPUTATION')
+    print(77*'*')
+
+    
+def create_input(preamble_file,end_file,nprocs,mem,spin,charge,geom):
+     formatted_geom = "\n".join(geom)
+     geom_string=f"""geomtyp=xyz
+noorient
+bohr
+geometry={{ 
+{len(geom)}
+Title
+{formatted_geom}
+}}
+Set,spin = {spin}
+Set,charge = {charge}
+      """
+     with open(preamble_file,'r') as preamble: 
+      preamble_string =  preamble.read()
+
+     with open(end_file,'r') as ending: 
+      ending_string =  ending.read()
+
+     with open('qmolpro.com','w') as molproinput:
+      molproinput.write(preamble_string)
+      molproinput.write(geom_string)
+      molproinput.write(ending_string)
+
+# TO COMBINE THE COEFFICIENTS
+def parse_coefficients(preamble_file):
+    coefficients = []
+    with open(preamble_file, 'r') as file:
+        lines = file.readlines()
+        for idx, line in enumerate(lines):
+            if line.strip() == "!scheme":
+                for i in range(idx + 1, len(lines)):
+                    next_line = lines[i].strip()
+                    if next_line.startswith("!"):
+                        next_line = next_line[1:].strip()
+                        coefficients = list(map(float, next_line.split()))
+                        break
+                break
+    return coefficients
+
+# To combine coefficients and gradients
+
+def combine_gradients(coefficients, gradients):
+    combined_gradient = np.zeros_like(gradients[0], dtype=float)
+    for i, coef in enumerate(coefficients):
+        combined_gradient += coef * gradients[i]
+    return combined_gradient
+
+#  TAKE THE GAUSSSIAN GEOMETRY AS INPUT
+def GauInpParser(GauInput):
+    """THIS FUNCTION SIMPLY TAKES IN INPUT THE GAUSSIAN INPUT FILE AND STORE ALL THE 
+    INFORMATION NEEDE TO WRITE, LATER, A .XYZ FILE. """
+    geom = []
+    with open(GauInput,'r') as file: 
+        content = file.readlines() 
+        #print('Content is')
+        #print(content[0])
+        atoms = int ( content[0].split()[0] )
+        charge = int ( content[0].split()[2] )
+        spin = int ( content[0].split()[3] ) - 1
+        opt_flag = int (  content[0].split()[1] )
+        
+
+
+    atomic_symbols = {
+    '1': 'H',    # Hydrogen
+    '2': 'He',   # Helium
+    '3': 'Li',   # Lithium
+    '4': 'Be',   # Beryllium
+    '5': 'B',    # Boron
+    '6': 'C',    # Carbon
+    '7': 'N',    # Nitrogen
+    '8': 'O',    # Oxygen
+    '9': 'F',    # Fluorine
+    '10': 'Ne',  # Neon
+    '11': 'Na',  # Sodium
+    '12': 'Mg',  # Magnesium
+    '13': 'Al',  # Aluminum
+    '14': 'Si',  # Silicon
+    '15': 'P',   # Phosphorus
+    '16': 'S',   # Sulfur
+    '17': 'Cl',  # Chlorine
+    '18': 'Ar',  # Argon
+    '19': 'K',   # Potassium
+    '20': 'Ca'   # Calcium
+    # 
+}
+    #geom = [
+    #' '.join([atomic_symbols[line.split()[0]]] + [str(float(coord) * 0.529177) for coord in line.split()[1:4]])
+    #for line in content[1:atoms+1]
+    #]
+    geom = [
+    ' '.join([atomic_symbols[line.split()[0]]] + [str(float(coord) ) for coord in line.split()[1:4]])
+    for line in content[1:atoms+1]
+    ]
+
+
+
+
+
+
+    return geom, atoms,spin,charge,opt_flag
+
+
+#def write_output(GauOutput,energy,dipole_moment = [0.0, 0.0, 0.0],Gradient=None) :
+#    line = "{:20.12f},{:20.12f},{:20.12f},{:20.12f},\n".format(energy, *dipole_moment)
+#    with open(GauOutput, 'w') as file:
+#        file.write(line)
+#        if Gradient is not None:
+#            for grad in Gradient:
+#                file.write(",".join(f"{g:20.12f}" for g in grad) + ",\n")
+#                print(",".join(f"{g:20.12f}" for g in grad) + "\n")
+#
+def write_output(GauOutput, energy, dipole_moment=[0.0, 0.0, 0.0], Gradient=None):
+    # Write energy and dipole moment (with a single comma between energy and the first dipole component)
+    line = "{:20.12f},{:20.12f},{:20.12f},{:20.12f}\n".format(energy, *dipole_moment)
+
+    with open(GauOutput, 'w') as file:
+        file.write(line)
+
+        if Gradient is not None:
+            # Write each gradient without commas, properly formatted
+            for grad in Gradient:
+                file.write("".join(f"{g:20.12f}" for g in grad) + "\n")
+                print(" ".join(f"{g:20.12f}" for g in grad) )  # Optional: print to console for debugging
+
+#  COMPUTE THE FINAL ENERGY
+def compute_energy(geom,basis,func,spin,charge,hf_x,ref_en,act_ele=0,act_orb=0,inf_en=0.0): 
+    from pyscf import gto 
+    from pyscf import dft 
+    # Deal with pyscf geometry formatting 
+    
+
+    structured_list = []
+    for entry in geom:
+        parts = entry.split()  # Split each string by spaces
+        atom_symbol = parts[0]  # The first part is the atomic symbol
+        coordinates = tuple(map(float, parts[1:]))  # Convert the remaining parts to floats and make them a tuple
+        structured_list.append([atom_symbol, coordinates])  # Append the structured sublist
+
+    mol = gto.Mole()
+    mol.basis = basis
+    mol.spin = spin
+    mol.charge = charge
+    mol.atom = structured_list
+    mol.build()
+
+# Retrieve of the reference potential 
+
+# HF exchange calibration 
+    try:
+        mf = scf.ROHF(mol).newton()
+        Dipole = [0.0, 0.0, 0.0]
+        mf.kernel()
+
+
+        my_otxc = 'ft' + mcpdft.hyb(f'{ func }', hf_x)
+        mc = mcpdft.CASSCF (mf, f'ftblyp', act_ele, act_orb)
+        mc.otxc = my_otxc
+        mc.run()
+        Energy  = mc.e_tot
+        # TODO controlla se effettivamente questo e lo scaling da fare
+        Energy -= inf_en
+    except Exception as e: 
+        with open('Report_file.out','a') as reportfile: 
+            reportfile.write(f"An error occurred: {e}")
+            Energy = 10.0
+
+
+    return Energy,Dipole,hf_x
+
+if __name__ == "__main__":
+    main()
+
+

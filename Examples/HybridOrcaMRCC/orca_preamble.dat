@@ -1,0 +1,14 @@
+# SCHEME_START
+# 1.0
+# SCHEME_END
+
+! DLPNO-CCSD(T)-F12D TightPNO TightSCF RIJK PModel EnGrad NumGrad # Metodo e impostazioni globali
+! cc-pVTZ-F12                                             # Set di base orbitale
+
+%basis
+  AuxJK  "cc-pVTZ/JK"                                    # Base ausiliaria per Coulomb/Scambio (RIJCOSX) [3, 4]
+  AuxC   "cc-pVTZ-F12-OptRI"                             # Base ausiliaria RI per la correlazione (ottimizzata per F12) [3, 5]
+  CABS   "cc-pVTZ-F12-CABS"                              # Base ausiliaria complementare per F12 [3, 6]
+end
+
+

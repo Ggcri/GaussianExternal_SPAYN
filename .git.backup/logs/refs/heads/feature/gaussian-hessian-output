@@ -1,0 +1,7 @@
+0000000000000000000000000000000000000000 196fd3b26e4e0103ffd4d32daac73e8f97a99c35 Luigi Crisci <luigi.crisci@sns.it> 1762608298 +0100	branch: Created from HEAD
+196fd3b26e4e0103ffd4d32daac73e8f97a99c35 d01bfdf06ec69c1a57fab52a393a1f6898bf65c2 Luigi Crisci <luigi.crisci@sns.it> 1762608635 +0100	commit: Implement Hessian output for Gaussian frequency calculations
+d01bfdf06ec69c1a57fab52a393a1f6898bf65c2 66a0dcb1c511b6c20fd78eec25b835b1028f17c3 Luigi Crisci <luigi.crisci@sns.it> 1762611894 +0100	merge feature/ErrorDependentStepSize: Merge made by the 'ort' strategy.
+66a0dcb1c511b6c20fd78eec25b835b1028f17c3 4e44ffcf8879d18280b88b9a9ccbf6cc4245d97d Luigi Crisci <luigi.crisci@sns.it> 1762612119 +0100	commit: Fix: Maintain backward compatibility in write_output format
+4e44ffcf8879d18280b88b9a9ccbf6cc4245d97d 73aefe4ea8422a241cc6950a4a86edcdd460beeb Luigi Crisci <luigi.crisci@sns.it> 1762612219 +0100	commit: Fix: Restore original write_output format, only append Hessian sections
+73aefe4ea8422a241cc6950a4a86edcdd460beeb 14bd87f91e32975d8715319ab0b5192148272c7e Luigi Crisci <luigi.crisci@sns.it> 1762612848 +0100	commit: Add Hessian output to normal_mode_debug.txt
+14bd87f91e32975d8715319ab0b5192148272c7e 070611a41f60e66320387701719bf2e6652519b4 Luigi Crisci <luigi.crisci@sns.it> 1762612871 +0100	commit: Implement append_hessian_to_debug_file function

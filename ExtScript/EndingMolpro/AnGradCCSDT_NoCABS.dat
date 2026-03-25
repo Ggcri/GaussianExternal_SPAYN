@@ -1,0 +1,28 @@
+basis=cc-pvqz-f12
+{rhf,so}
+HF_QZ = energy
+forces
+
+basis=cc-pvdz-f12
+{rhf,so}
+HF_DZ = energy
+forces
+
+
+to_patch =  HF_QZ - HF_DZ
+
+include /home/barone/lcrisci_vb/MolproProcedures/basis/TrdRowElements_3F12
+{rhf,so}
+
+
+{df-ccsd(t)-f12b,df_basis=avdz-f12/mp2fit,df_basis_exch=avdz-f12/jkfit,ri_basis=avdz/jkfit}
+ccsd_energy = energy
+{forces}
+
+
+
+
+exe_energy = ccsd_energy + to_patch 
+ 
+
+---

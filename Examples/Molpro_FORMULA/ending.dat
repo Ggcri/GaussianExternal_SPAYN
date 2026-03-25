@@ -1,0 +1,9 @@
+! Simple ending file for Molpro formula tests
+
+! Save gradients for testing
+{forces
+print,gradient,1
+table,gradient
+save,gradient}
+
+! End of calculation

@@ -1,0 +1,28 @@
+! ============================================================
+! Error-Dependent Displacement Strategy (RECOMMENDED)
+! ============================================================
+! Adapts step size based on the energy precision of the method.
+! Uses mass-free (coordinate-agnostic) formulation by default.
+!
+! Central difference (twoside, default):
+!   h = (3 * dE * s0 / lambda)^(1/3)
+!
+! Forward difference (oneside):
+!   h = sqrt(dE / lambda)
+!
+! Where:
+!   lambda = Cartesian force constant (Eh/Bohr^2)
+!   s0     = characteristic length (default: 0.1 Bohr)
+!   dE     = energy error estimate (Hartree)
+!
+! To use one-sided mode, pass "oneside" on the command line:
+!   External="CE mol preamble.dat ending.dat 8 16GB READ parall_n oneside 4"
+! ============================================================
+
+!normalmode
+!symmetry=auto
+!reference_fc=error_dependent
+!energy_error_grad=1e-10
+
+!fakekey
+! scf=xqc level="b3lyp/6-31g(d,p)"

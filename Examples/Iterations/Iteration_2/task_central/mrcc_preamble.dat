@@ -1,0 +1,52 @@
+! ============================================================
+! Esempio di mrcc_preamble.dat per 3 calcoli sequenziali
+! ============================================================
+
+! --- Blocco !scheme per i coefficienti ---
+! Definisce i coefficienti per combinare le energie/gradienti.
+! Il numero di coefficienti DEVE corrispondere al numero di calcoli.
+! In questo caso, 3 calcoli -> 3 coefficienti.
+!scheme
+  ! 1.0     ! Coefficiente per il calcolo di default (HF)
+  ! -1.0     ! Coefficiente per il calcolo di default (HF)
+  ! 1.0     ! Coefficiente per il calcolo di default (HF)
+!end
+
+!SECTION1
+energy_pattern=Total CCSD(F12*)(T*) energy + MP2 [au]:
+denscorr=1
+calc=LCCSD(T)
+localcc=2021
+dft=userd
+1
+1.0 HFx
+1
+1.0 ECMD_PBEc
+
+scfalg=locfit1
+
+basis=aug-cc-pVDZ
+dfbasis_scf=aug-cc-pVDZ-RI
+dfbasis_cor=aug-cc-pVDZ-RI
+numgrad=on
+
+!SECTION2
+energy_pattern=MP2 energy [au]:
+basis=cc-pwcvtz
+calc=MP2
+ovirt=MP2
+lnoepsv=1e-6
+numgrad=on
+
+!SECTION3
+energy_pattern=MP2-F12 energy [au]:
+basis=cc-pwcvtz
+calc=MP2
+core=corr
+ovirt=MP2
+lnoepsv=1e-6
+numgrad=on
+
+
+
+

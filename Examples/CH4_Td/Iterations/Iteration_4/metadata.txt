@@ -1,0 +1,5 @@
+Iteration: 4
+Output file: /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/CH4_Td/test_td_DEBUG.EOut
+Central energy: -76.123456789
+Number of atoms: 5
+Timestamp: 2025-09-10 00:18:49

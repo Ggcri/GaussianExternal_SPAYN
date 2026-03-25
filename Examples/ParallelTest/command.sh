@@ -1,0 +1,1 @@
+CentralExt mrcc 1 READ 1 1 mrcc_preamble.dat mrcc_ending.dat parall 2 R /home/barone/lcrisci_vb/MyBin/ExternalDev/Examples/ParallelTest/test_input.EIn /home/barone/lcrisci_vb/MyBin/ExternalDev/Examples/ParallelTest/test_input.EOut 

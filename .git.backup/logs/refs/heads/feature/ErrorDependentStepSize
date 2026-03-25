@@ -1,0 +1,5 @@
+0000000000000000000000000000000000000000 196fd3b26e4e0103ffd4d32daac73e8f97a99c35 Luigi Crisci <luigi.crisci@sns.it> 1762381310 +0100	branch: Created from HEAD
+196fd3b26e4e0103ffd4d32daac73e8f97a99c35 d33a29a5b64e3e89e2a84adfa5760ec564144ac7 Luigi Crisci <luigi.crisci@sns.it> 1762427093 +0100	commit: First implementation of formulas
+d33a29a5b64e3e89e2a84adfa5760ec564144ac7 2dcac14170dbac90adba2846f73a218a00be3d99 Luigi Crisci <luigi.crisci@sns.it> 1762438890 +0100	commit: New error dependence step implemented
+2dcac14170dbac90adba2846f73a218a00be3d99 5d92963255c5caba12703cd5ef8815cb3d5dc923 Luigi Crisci <luigi.crisci@sns.it> 1762453163 +0100	commit: new feature for gaussian executable detection
+5d92963255c5caba12703cd5ef8815cb3d5dc923 ecd36f0275a698b9ab14307cbae72a8f888e2014 Luigi Crisci <luigi.crisci@sns.it> 1762468183 +0100	commit: Some tests added but the implementation is ok

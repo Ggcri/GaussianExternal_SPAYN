@@ -1,0 +1,280 @@
+#!/shared/apps/python/3.9.16/bin/python3.9 -u
+# The following python script should 
+# 0. Parse the gaussian informations given as input DONE
+# 1. Take in input the gaussian geometry DONE
+# 2. Compute the distance between reacting atoms DONE
+# 3. Take from somewhere the polynomial coefficient to extrapolate the HF exchange value DONE
+# 4. Compute the MC-PDFT with exchange extrapolated DONE
+# 5. Write in output the output file in gaussian format DONE
+
+import concurrent.futures
+import sys
+import os
+import numpy as np
+import glob
+import shlex
+import subprocess
+import time
+
+# Ensure the elecext utilities can be imported when running this
+# script directly from the Executables directory.
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+PARENT_DIR = os.path.abspath(os.path.join(CURRENT_DIR, ".."))
+if PARENT_DIR not in sys.path:
+    sys.path.insert(0, PARENT_DIR)
+
+from elecext import GauInpParser, parse_coefficients, combine_gradients, write_output, Logger, resolve_path_with_env
+
+def main():
+    logger = Logger("external.log")
+    global print
+    print = logger.log
+    # Check if the number of arguments is correct (including the script name)
+
+#  PARSE THE GAUSSIAN INFORMATIONS GIVEN AS INPUT
+    # Arguments are accessed by indexes in sys.argv
+    preamble_file = resolve_path_with_env(sys.argv[1])
+    end_file = resolve_path_with_env(sys.argv[2])
+    nprocs = sys.argv[3]
+    mem = sys.argv[4]
+    readgradpy = sys.argv[5]
+    layer = sys.argv[6]
+    logger.header("OrcaExt", nprocs, mem)
+    # Check if a gaussian input is already present, if not read from
+    # command line.
+    files = glob.glob('Gau*EIn')
+    if files:
+        last_created_file = max(files, key=os.path.getctime)
+        GauInput = last_created_file
+    else:
+        GauInput = sys.argv[7]
+    GauOutput = sys.argv[8]
+
+    
+
+
+
+    geom,atoms,spin,charge,OptFlag = GauInpParser(GauInput)
+
+
+    create_input(preamble_file,end_file,nprocs,mem,spin,charge,geom)
+   
+    enter_time = time.time()
+    if OptFlag == 0: 
+        Energy,dipole = compute_energy(nprocs,mem)
+        logger.log_energy(Energy)
+        write_output(GauOutput,Energy,dipole)
+    elif OptFlag == 1:
+        import shutil
+        scratch_path = os.getenv('SCRATCH')
+        if readgradpy.upper() == "READ":
+            coefficients = parse_coefficients(preamble_file, "orca")
+            Energy,dipole,Gradient = compute_energy(nprocs,mem,True,"READ",coefficients,atoms)
+            logger.log_energy(Energy)
+            logger.log_gradients(1, [Gradient])
+            # Clean scratch directory
+            if scratch_path and os.path.isdir(scratch_path):
+                for filename in os.listdir(scratch_path):
+                    file_path = os.path.join(scratch_path, filename)
+                    try:
+                        if os.path.isfile(file_path) or os.path.islink(file_path):
+                            os.unlink(file_path)
+                        elif os.path.isdir(file_path):
+                            shutil.rmtree(file_path)
+                    except Exception as e:
+                        print(f'Failed to delete {file_path}. Reason: {e}')
+        else:
+            Energy,dipole,Gradient = compute_energy(nprocs,mem,True,readgradpy.upper(),atoms=atoms)
+            logger.log_energy(Energy)
+            logger.log_gradients(1, [Gradient])
+            # Clean scratch directory
+            if scratch_path and os.path.isdir(scratch_path):
+                for filename in os.listdir(scratch_path):
+                    file_path = os.path.join(scratch_path, filename)
+                    try:
+                        if os.path.isfile(file_path) or os.path.islink(file_path):
+                            os.unlink(file_path)
+                        elif os.path.isdir(file_path):
+                            shutil.rmtree(file_path)
+                    except Exception as e:
+                        print(f'Failed to delete {file_path}. Reason: {e}')
+
+        write_output(GauOutput,Energy,dipole,Gradient)
+
+    
+def create_input(preamble_file,end_file,nprocs,mem,spin,charge,geom):
+    
+     formatted_geom = "\n".join(geom)
+     geom_string=f"""
+! Bohrs
+*xyz {charge} {spin} 
+{formatted_geom}
+*
+      """
+     with open(preamble_file,'r') as preamble: 
+      preamble_string =  preamble.read()
+
+     with open(end_file,'r') as ending: 
+      ending_string =  ending.read().lstrip()
+
+     with open('orcainp.inp','w') as molproinput:
+      molproinput.write(preamble_string)
+      molproinput.write(geom_string)
+      molproinput.write(ending_string)
+
+
+#   Here I should change the computation run of orca, add the memory at the end of the input file, taking into account the number of procs
+#   and how the energy and gradient is retrieved. 
+
+def compute_energy(nprocs,mem,OptFlag=False,readgradpy='NONE',coefficients=[],atoms=None):
+    import os
+    import sys
+    test_mode = os.environ.get('EXT_TEST_MODE')
+    last_gradients = []
+    dipole = [0.0, 0.0, 0.0]
+    nprocs=int(nprocs)
+    mem=int(mem)
+    # reserve some memory for the system (i.e. 2 GB for buffer I/O))
+    mem_mb = int(mem * 1024)//(nprocs)  # Convert GB to MB
+    parall_line =  f"%PAL NPROCS {nprocs} END\n"
+    maxcore_line = f"%maxcore {mem_mb}\n"
+
+    # Read the existing content of the file
+    with open("orcainp.inp", "r") as file:
+        content = file.readlines()
+
+    # Insert the new line at the top
+    content.insert(0, parall_line)
+    content.insert(1, maxcore_line)
+
+# Write the modified content back to the file
+    with open("orcainp.inp", "w") as file:
+        file.writelines(content)
+
+
+    orca_path = 'orcadir'
+    path_to_orca = os.environ.get(orca_path)
+    input_file = os.path.join(os.getcwd(),'orcainp.inp')
+    #command = f"molpro -s -n {nprocs} -t 1 -m {mem_mw}m orcainp.inp --output orcainp.out -I {os.getenv('SCRATCH')} -d {os.getenv('SCRATCH')} -W {os.getenv('SCRATCH')}"
+    command = f"{path_to_orca}/orca {input_file} > orcainp.out "
+    if os.path.exists("orcainp.out") and not test_mode:
+        os.remove("orcainp.out")
+    if not test_mode:
+        subprocess.run(command,shell=True)
+
+    # Initialize Energy before attempting to read output file
+    Energy = None
+
+    # Try to read energy from output file
+    # If file doesn't exist (ORCA failed before creating output), raise informative error
+    try:
+        with open ('orcainp.out','r') as orcaout:
+            for line in orcaout:
+                if 'FINAL SINGLE POINT ENERGY' in line:
+                # Split the line by whitespace
+                    parts = line.split()
+
+                # Extract the last element (energy value)
+                    Energy = float(parts[-1])
+
+                    break  # Exit the loop after finding the target line
+    except FileNotFoundError:
+        print("ERROR: orcainp.out not found - ORCA calculation failed before producing output")
+        raise FileNotFoundError(
+            "ORCA output file 'orcainp.out' not found. "
+            "The calculation likely failed before creating output. "
+            "Check ORCA input file and execution environment."
+        )
+
+    if OptFlag:
+
+
+# In questo caso devi settare il gradiente a 0 senza fare il calcolo delle forze
+# serve per fare uno scan rigido 
+        if readgradpy.upper() == 'SCAN': 
+            grad = [[0.0, 0.0, 0.0] for _ in range(atoms)]
+            return Energy,dipole,grad
+
+
+#  optg,savegrd=gradient,maxit=2
+        if readgradpy.upper() == 'NONE':
+
+
+            #### todo leggere il gradiente e fare conversione per la conversione nelle unita richieste dall'external
+            with open('orcainp.out', 'r') as file:
+                lines = file.readlines()
+
+            grad = []
+            capture = False  # Flag to start capturing gradients
+
+            for line in lines:
+                if "CARTESIAN GRADIENT" in line:
+                    capture = True  # Start capturing gradient data
+                    continue  # Skip the header line
+
+                if capture:
+                    if "Difference to translation invariance" in line:
+                        break  # Stop reading when we reach this section
+
+                    parts = line.split()
+
+                    if len(parts) >= 5:  # Ensure the line contains atomic data
+                        grad.append([float(parts[3]), float(parts[4]), float(parts[5])])
+
+                    if len(grad) == atoms:  # Stop reading if we have read all atoms
+                        break
+
+            return Energy, dipole, grad
+#####
+        elif readgradpy.upper() == 'READ':
+            num_gradients = len(coefficients)
+            gradients_sets = []
+            with open('qmolpro.xml', 'r') as file:
+                lines = file.readlines()
+
+        # Extract gradient values from the XML file manually
+            in_gradient_section = False
+            current_gradient = []
+            gradients_count = 0
+
+            for line in lines:
+                line = line.strip()
+                if '<gradient' in line:
+                    in_gradient_section = True
+                    current_gradient = []
+                    continue
+                elif '</gradient>' in line:
+                    in_gradient_section = False
+                    gradients_sets.append(np.array(current_gradient))
+                    gradients_count += 1
+                    if gradients_count >= num_gradients:
+                        break
+
+                if in_gradient_section and line:
+                    values = line.split()
+                    if len(values) == 3:
+                        current_gradient.append([float(values[0]), float(values[1]), float(values[2])])
+
+            if len(gradients_sets) < num_gradients:
+                print(f"WARNING: Requested {num_gradients} gradients, but only found {len(gradients_sets)} in the XML.")
+
+            # Combine gradients based on coefficients
+            grad = combine_gradients(coefficients, gradients_sets).tolist()
+
+            return Energy,dipole,grad
+        else:
+            # Read gradients from custom python module
+            import sys
+            import os
+            sys.path.append(f'{os.getcwd()}')
+
+            grad_mod = __import__(readgradpy)
+            grad = grad_mod.molpro_table_values
+            return Energy,dipole,grad
+    else:
+        return Energy,dipole
+
+if __name__ == "__main__":
+    main()
+
+

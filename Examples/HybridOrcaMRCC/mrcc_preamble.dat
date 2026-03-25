@@ -1,0 +1,11 @@
+! scheme
+! 0.0 
+
+! Default section (first HF calculation)
+basis=sto-3g
+calc=HF
+core=corr
+dens=2
+scfmaxit=100
+energy_pattern=Hartree-fock
+

@@ -1,0 +1,40 @@
+
+mass,iso ! to be sure most abundant isotopes are used
+
+basis={
+  default=VDZ-F12
+  Br=VDZ-PP-F12
+  I=VDZ-PP-F12
+  Kr=VDZ-PP-F12
+
+  set,jkfit,context=jkfit
+  default=avdz/jkfit
+  O=avdz/jkfit
+  Br=vdz-pp/jkfit
+  I=vdz-pp/jkfit
+  Kr=vdz-pp/jkfit
+
+  set,mp2fit,context=mp2fit
+  default=avdz/mp2fit
+  O=avdz/mp2fit
+  Br=vdz-pp/mp2fit
+  I=vdz-pp/mp2fit
+  Kr=vdz-pp/mp2fit
+}
+!!!!  cDFTc=0.4210
+!!!!  cXHF=0.69
+!!!!  c2ab=0.5922
+!!!!  c2ss=0.0636
+!!!!  {DF-ks,pbex,p86;dh,cXHF,1.00-cDFTc}
+!!!!  EKS=ENERGY;
+!!!!  
+!!!!  DF-mp2-f12,ksfock,scsfacs=c2ab/(1.00-cDFTc),scsfact=c2ss/(1.00-cDFTc)
+!!!!  PT2=(EMP2_SCS - ENERGR)
+!!!!  TOTAL_ENERGY=EKS+PT2
+!!!!  
+!!!!  exe_energy=TOTAL_ENERGY
+
+  {hf,so-sci} 
+  {DF-MP2-F12}
+  exe_energy=energy
+

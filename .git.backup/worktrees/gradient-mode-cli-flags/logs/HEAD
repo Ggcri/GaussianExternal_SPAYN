@@ -1,0 +1,9 @@
+0000000000000000000000000000000000000000 34f15394bbfb623b0bb64c76f0b5ca1418e2fa53 Luigi Crisci <luigi.crisci@sns.it> 1761423790 +0200	
+34f15394bbfb623b0bb64c76f0b5ca1418e2fa53 34f15394bbfb623b0bb64c76f0b5ca1418e2fa53 Luigi Crisci <luigi.crisci@sns.it> 1761423791 +0200	reset: moving to HEAD
+34f15394bbfb623b0bb64c76f0b5ca1418e2fa53 13694dc7e14d8cd8aea50e2e00e4ececba44536f Luigi Crisci <luigi.crisci@sns.it> 1761424577 +0200	commit: Remove check_oneside_flag() and use_adaptive_oneside from parall.py
+13694dc7e14d8cd8aea50e2e00e4ececba44536f cc3dffa13437ea827cbebf7f1d9891f5760251d4 Luigi Crisci <luigi.crisci@sns.it> 1761473737 +0100	commit: Remove adaptive gradient logic from run_fake_freq_for_normal_modes
+cc3dffa13437ea827cbebf7f1d9891f5760251d4 f84ba5b228fa0b28b5b081121b6805f73a8cd67b Luigi Crisci <luigi.crisci@sns.it> 1761474037 +0100	commit: fix: remove check_oneside_flag from imports in normal_modes.py
+f84ba5b228fa0b28b5b081121b6805f73a8cd67b 745adeb5641b6aaa6eff282acaad06eb5ba0d947 Luigi Crisci <luigi.crisci@sns.it> 1761474408 +0100	commit: Add gradient mode CLI flags and fix broken callers
+745adeb5641b6aaa6eff282acaad06eb5ba0d947 5fba43b40df2a6516b2987ef440e897446bdb2f9 Luigi Crisci <luigi.crisci@sns.it> 1761475314 +0100	commit: Add gradient mode CLI flags for parall_n and remove adaptive logic
+5fba43b40df2a6516b2987ef440e897446bdb2f9 49f3343bd9b1cc44fd814d89ab784cb12b824fb7 Luigi Crisci <luigi.crisci@sns.it> 1761476004 +0100	commit: test: update tests for CLI-based gradient mode flags
+49f3343bd9b1cc44fd814d89ab784cb12b824fb7 d85ce9a05c5df3988f92b3129493d98c4d19c2fb Luigi Crisci <luigi.crisci@sns.it> 1761476498 +0100	commit: docs: update CLAUDE.md for gradient mode CLI flags

@@ -1,0 +1,477 @@
+#!/shared/apps/python/3.9.16/bin/python3.9 -u
+# The following python script should 
+# 0. Parse the gaussian informations given as input DONE
+# 1. Take in input the gaussian geometry DONE
+# 2. Compute the distance between reacting atoms DONE
+# 3. Take from somewhere the polynomial coefficient to extrapolate the HF exchange value DONE
+# 4. Compute the MC-PDFT with exchange extrapolated DONE
+# 5. Write in output the output file in gaussian format DONE
+
+import concurrent.futures
+import sys
+import re
+import os
+import numpy as np
+import glob
+import shlex
+import subprocess
+import time
+
+# Ensure the elecext utilities can be imported when running this
+# script directly from the Executables directory.
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+PARENT_DIR = os.path.abspath(os.path.join(CURRENT_DIR, ".."))
+if PARENT_DIR not in sys.path:
+    sys.path.insert(0, PARENT_DIR)
+
+from elecext import GauInpParser, combine_gradients, write_output, Logger, resolve_path_with_env
+
+def main():
+    logger = Logger("external.log")
+    global print
+    print = logger.log
+    # Check if the number of arguments is correct (including the script name)
+
+#  PARSE THE GAUSSIAN INFORMATIONS GIVEN AS INPUT
+    # Arguments are accessed by indexes in sys.argv
+    print(77*'*') 
+    print("STARTING PARSING")
+    preamble_file = resolve_path_with_env(sys.argv[1])
+    end_file = resolve_path_with_env(sys.argv[2])
+    nprocs = sys.argv[3]
+    mem = sys.argv[4]
+    readgradpy = sys.argv[5]
+    layer = sys.argv[6]
+    logger.header("MolproExt_GA_proj", nprocs, mem)
+    # Check if a gaussian input is already present, if not read from 
+    # command line.
+    files = glob.glob('Gau*EIn')
+    if files:
+        # Find the last created file by checking the creation time
+        last_created_file = max(files, key=os.path.getctime)
+        print(f"The last created file that starts with 'Gau' and ends with 'EIn' is: {last_created_file}")
+        GauInput = last_created_file
+    else:
+        GauInput = sys.argv[7]
+        print("No files matching the pattern were found.")
+    GauOutput = sys.argv[8]
+    print(f"Preamble file: {preamble_file}")
+    print(f"End file: {end_file}")
+    print(f"Number of processors: {nprocs}")
+    print(f"Memory allocation: {mem}")
+    print(f"Read Gradient Python Script: {readgradpy}")
+    print(f"Layer: {layer}")
+    print(f"Gaussian Input: {GauInput}")
+    print(f"Gaussian Output: {GauOutput}")
+
+    
+
+
+
+    geom,atoms,spin,charge,OptFlag = GauInpParser(GauInput, spin_offset=-1)
+    print('gaussian parsing completed')
+
+    print(77*'*')
+    print('PARSING COMPLETED')
+    print('Gaussian input geoms') 
+    #with open(GauInput,'r') as temp:
+        #for line in temp.readlines(): 
+            #parts = line.split()  # Split the string into individual components
+            #print("{:2} {:15.10f} {:15.10f} {:15.10f}".format(parts[0], float(parts[1]), float(parts[2]), float(parts[3])))
+        #print (temp.readlines())
+        #print(temp)
+
+    print(77*'*')
+
+    print('Geom processes') 
+    for line in geom:
+        parts = line.split()  # Split the string into individual components
+        print("{:2} {:15.10f} {:15.10f} {:15.10f}".format(parts[0], float(parts[1]), float(parts[2]), float(parts[3])))
+    print(77*'*')
+
+
+    create_input(preamble_file,end_file,nprocs,mem,spin,charge,geom)
+   
+    enter_time = time.time()
+    if OptFlag == 0: 
+        Energy,dipole = compute_energy(nprocs,mem)
+        logger.log_energy(Energy)
+        write_output(GauOutput,Energy,dipole)
+    elif OptFlag == 1:
+        import shutil
+        scratch_path = os.getenv('SCRATCH')
+        if readgradpy.upper() == "READ":
+            coefficients = parse_coefficients(preamble_file)
+
+            print(77*'*')
+            print(f"OPERAZIONI DELLO SCHEMA LETTE (da main): {coefficients}")
+            if not coefficients:
+                print("ATTENZIONE: Lo schema dei coefficienti/operazioni è vuoto!")
+            else:
+                print(f"NUMERO TOTALE DI OPERAZIONI NELLO SCHEMA: {len(coefficients)}")
+            print(77*'*')
+
+            Energy, dipole, Gradient = compute_energy(nprocs, mem, True, "READ", coefficients, atoms)
+            logger.log_energy(Energy)
+            logger.log_gradients(1, [Gradient])
+            print(77*'*')
+            size_gb = get_dir_size_in_gb(scratch_path)
+            print(f'Disk space used by "{scratch_path}": {size_gb:.2f} GB')
+            print('SCRATCH CLEANING...')
+            if scratch_path and os.path.isdir(scratch_path):
+                for filename in os.listdir(scratch_path):
+                    file_path = os.path.join(scratch_path, filename)
+                    try:
+                        if os.path.isfile(file_path) or os.path.islink(file_path):
+                            os.unlink(file_path)  # Rimuovi i file o i link simbolici
+                        elif os.path.isdir(file_path):
+                            shutil.rmtree(file_path)  # Rimuovi le sottodirectory e i loro contenuti
+                    except Exception as e:
+                        print(f'Failed to delete {file_path}. Reason: {e}')
+            print(77*'*')
+        else:
+            Energy,dipole,Gradient = compute_energy(nprocs,mem,True,readgradpy.upper(),atoms=atoms)
+            logger.log_energy(Energy)
+            logger.log_gradients(1, [Gradient])
+            print(77*'*')
+            size_gb = get_dir_size_in_gb(scratch_path)
+            print(f'Disk space used by "{scratch_path}": {size_gb:.2f} GB')
+            print('SCRATCH CLEANING...')
+            if scratch_path and os.path.isdir(scratch_path):
+                for filename in os.listdir(scratch_path):
+                    file_path = os.path.join(scratch_path, filename)
+                    try:
+                        if os.path.isfile(file_path) or os.path.islink(file_path):
+                            os.unlink(file_path)  # Rimuovi i file o i link simbolici
+                        elif os.path.isdir(file_path):
+                            shutil.rmtree(file_path)  # Rimuovi le sottodirectory e i loro contenuti
+                    except Exception as e:
+                        print(f'Failed to delete {file_path}. Reason: {e}')
+            print(77*'*')
+
+
+        print('GRADIENT COMPUTION TERMINATED')
+        write_output(GauOutput,Energy,dipole,Gradient)
+        exit_time = time.time()
+        elapsed_time = exit_time - enter_time
+        hours, remainder = divmod(elapsed_time, 3600)
+        minutes, seconds = divmod(remainder, 60)
+        print(f"Time taken: {int(hours)} hours, {int(minutes)} minutes, {seconds:.2f} seconds")
+        
+
+    print(77*'*')
+    print('MOVING TO NEXT COMPUTATION')
+    print(77*'*')
+
+    
+def create_input(preamble_file,end_file,nprocs,mem,spin,charge,geom):
+     formatted_geom = "\n".join(geom)
+     geom_string=f"""geomtyp=xyz
+noorient
+bohr
+GDIRECT
+geometry={{ 
+{len(geom)}
+Title
+{formatted_geom}
+}}
+Set,spin = {spin}
+Set,charge = {charge}
+      """
+     with open(preamble_file,'r') as preamble: 
+      preamble_string =  preamble.read()
+
+     with open(end_file,'r') as ending: 
+      ending_string =  ending.read()
+
+     with open('qmolpro.com','w') as molproinput:
+      molproinput.write(preamble_string)
+      molproinput.write(geom_string)
+      molproinput.write(ending_string)
+
+# TO COMBINE THE COEFFICIENTS
+def parse_coefficients(preamble_file): # Rinominata o modificata in loco
+    parsed_operations = []
+    # Regex per trovare "copy[indice,coefficiente]"
+    # Cattura l'indice (intero) e il coefficiente (float)
+    copy_regex = re.compile(r"copy\[\s*(\d+)\s*,\s*([-+]?\d*\.?\d+(?:[eE][-+]?\d+)?)\s*\]")
+
+    with open(preamble_file, 'r') as file:
+        lines = file.readlines()
+        for idx, line in enumerate(lines):
+            if line.strip() == "!scheme":
+                # Processa la riga successiva non vuota e non commentata
+                for i in range(idx + 1, len(lines)):
+                    scheme_line_content = lines[i].strip()
+                    if not scheme_line_content or scheme_line_content.startswith("#"): # Salta righe vuote o commenti
+                        continue
+                    if scheme_line_content.startswith("!"): # Questa è la nostra riga dello schema
+                        scheme_line_content = scheme_line_content[1:].strip() # Rimuovi '!' iniziale
+                        parts = scheme_line_content.split()
+                        for part_str in parts:
+                            match = copy_regex.fullmatch(part_str)
+                            if match:
+                                source_index = int(match.group(1))
+                                coeff_value = float(match.group(2))
+                                if source_index <= 0:
+                                    raise ValueError(f"L'indice 'copy' deve essere positivo: {part_str}")
+                                parsed_operations.append(('copy', source_index, coeff_value))
+                            else:
+                                try:
+                                    coeff_value = float(part_str)
+                                    parsed_operations.append(('coeff', coeff_value))
+                                except ValueError:
+                                    raise ValueError(f"Parte non valida nello schema: '{part_str}'. Deve essere un numero o 'copy[idx,coeff]'.")
+                        break # Trovata e processata la riga dello schema
+                break # Trovato !scheme
+    return parsed_operations
+
+
+
+def get_dir_size_in_gb(path):
+    total_size = 0
+    # Controlla se il percorso esiste, altrimenti restituisce 0
+    if not os.path.exists(path):
+        return 0.0
+
+    for dirpath, dirnames, filenames in os.walk(path):
+        for f in filenames:
+            fp = os.path.join(dirpath, f)
+            # Aggiungi la dimensione del file solo se non è un link simbolico
+            if not os.path.islink(fp):
+                total_size += os.path.getsize(fp)
+    return total_size / (1024 * 1024 * 1024) # Converte in GB
+
+
+#  COMPUTE THE FINAL ENERGY
+def compute_energy(nprocs,mem,OptFlag=False,readgradpy='NONE',coefficients=[],atoms=None): 
+    import os
+    import sys
+    import random
+    import shutil
+
+    def create_unique_molpro_dir():
+        """Crea una directory molpro_tmp_randomNumber con un nome univoco."""
+        base_name = "molpro_tmp_"
+        while True:
+            random_number = random.randint(10000, 99999) # Genera un numero a 5 cifre
+            dir_name = f"{base_name}{random_number}"
+            if not os.path.exists(dir_name):
+                os.makedirs(dir_name)
+                print(f"Creata directory univoca: {dir_name}")
+                return dir_name
+            else:
+                print(f"Directory {dir_name} esistente, provo con un altro numero.")
+
+
+    last_gradients = []
+    dipole = [0.0, 0.0, 0.0]
+    nprocs=int(nprocs)
+    mem=int(mem)
+    # reserve some memory for the system (i.e. 2 GB for buffer I/O))
+    mem=int(mem-0.1*mem)
+        # Convert memory from GB to megawords (MW)
+    mem_mb = int(mem * 1024)  # Convert GB to MB
+    mem_mw = int(mem_mb // (8 * nprocs))  # Convert MB to MW, considering 8 bytes per word
+
+
+
+    file_to_move="qmolpro.com"
+    unique_dir = create_unique_molpro_dir()
+    original_dir = os.getcwd()
+    if os.path.exists(file_to_move):
+        destination_path = os.path.join(unique_dir, os.path.basename(file_to_move))
+        shutil.move(file_to_move, destination_path)
+    else:
+        exit()
+
+    os.chdir(unique_dir)
+
+
+    command = f"molpro --ga-impl ga -s -n {nprocs} -t 1 -m {mem_mw}m qmolpro.com --output qmolpro.out -W {os.getenv('SCRATCH')}  -D {os.getenv('SCRATCH')}"
+    print(command)
+    subprocess.run(shlex.split(command))
+    
+    with open ('qmolpro.out','r') as molproout:
+        for line in molproout:
+        # Check if the line contains the target string
+            if 'EXE_ENERGY' in line:
+        # Split the line to extract the floating-point number
+                parts = line.split('=')[1].split()
+                
+        # Convert the extracted part to a floating-point number and store it in a variable
+                Energy = float(parts[0])
+                break  # Exit the loop after finding the target line
+    print(' Energy post processing done:')
+    print(Energy)
+
+    if OptFlag:
+        print("OPT FLAG DETECTED")
+
+
+# In questo caso devi settare il gradiente a 0 senza fare il calcolo delle forze
+# serve per fare uno scan rigido 
+        if readgradpy.upper() == 'SCAN': 
+            grad = [[0.0, 0.0, 0.0] for _ in range(atoms)]
+            return Energy,dipole,grad
+
+
+#  optg,savegrd=gradient,maxit=2
+        if readgradpy.upper() == 'NONE':
+
+
+            with open('testgradient', 'r') as file:
+                lines = file.readlines()
+
+                grad_coord = lines[2:]
+                grad = []
+                # Print the gradients from the last block
+                for line in grad_coord:
+                    parts = line.split()
+                    grad.append(parts[-3:])
+
+                print("Read gradient from MOLPRO")
+                for sublist in grad:
+                    print("{:12.6f} {:12.6f} {:12.6f}".format(*[float(x) for x in sublist]))
+                # Old version
+                grad = [[float(element)*(-0.0194469) for element in sublist] for sublist in grad]
+                
+                print("Read gradient from MOLPRO CONVERTED")
+                for sublist in grad:
+                    print("{:12.6f} {:12.6f} {:12.6f}".format(*sublist))
+                os.chdir(original_dir)
+                #os.rmdir(unique_dir)
+                return Energy,dipole,grad
+
+        elif readgradpy.upper() == 'READ':
+            # 'coefficients' qui è la lista di operazioni dalla nuova parse_coefficients
+            parsed_scheme_operations = coefficients # Rinomino per chiarezza
+
+            num_actual_gradients_to_read = 0
+            for op_type, *_ in parsed_scheme_operations:
+                if op_type == 'coeff':
+                    num_actual_gradients_to_read += 1
+
+            print(77*'*')
+            print(f"Operazioni dello schema: {parsed_scheme_operations}")
+            print(f"Numero di calcoli di gradiente effettivi da leggere da XML: {num_actual_gradients_to_read}")
+            print("LETTURA GRADIENTI COMPOSITI DA XML")
+
+            actual_gradients_from_xml = []
+            if num_actual_gradients_to_read > 0: # Leggi XML solo se ci sono gradienti 'coeff'
+                with open('qmolpro.xml', 'r') as file:
+                    xml_lines = file.readlines() # Rinomino per evitare confusione con 'lines' da parse_coefficients
+
+                in_gradient_section = False
+                current_gradient_xml_data = []
+                gradients_read_count = 0
+
+                for line_xml in xml_lines:
+                    line_xml = line_xml.strip()
+                    if '<gradient' in line_xml:
+                        in_gradient_section = True
+                        current_gradient_xml_data = []
+                        continue
+                    elif '</gradient>' in line_xml:
+                        in_gradient_section = False
+                        actual_gradients_from_xml.append(np.array(current_gradient_xml_data))
+                        gradients_read_count += 1
+                        if gradients_read_count >= num_actual_gradients_to_read:
+                            break
+
+                    if in_gradient_section and line_xml:
+                        values = line_xml.split()
+                        if len(values) == 3:
+                            current_gradient_xml_data.append([float(values[0]), float(values[1]), float(values[2])])
+
+                if len(actual_gradients_from_xml) < num_actual_gradients_to_read:
+                    raise ValueError(f"ERRORE: Richiesti {num_actual_gradients_to_read} gradienti effettivi, ma trovati solo {len(actual_gradients_from_xml)} in qmolpro.xml.")
+
+            # Logica di combinazione nuova:
+            # La vecchia funzione combine_gradients(coefficients, gradients_sets) non è più usata qui.
+
+            grad = [] # Inizializza grad
+            if not parsed_scheme_operations:
+                # Schema vuoto, restituisce gradiente nullo se 'atoms' è noto
+                grad = [[0.0, 0.0, 0.0] for _ in range(atoms)] if atoms is not None else []
+            else:
+                # Determina la forma del gradiente
+                gradient_shape = None
+                if actual_gradients_from_xml: # Se ci sono gradienti effettivi letti
+                    gradient_shape = actual_gradients_from_xml[0].shape
+                elif atoms is not None: # Altrimenti, se 'atoms' è noto (es. solo 'copy' ma schema non vuoto)
+                                        # Questo caso è problematico se 'copy' si riferisce a gradienti inesistenti.
+                                        # Le verifiche successive lo rileveranno.
+                    gradient_shape = (atoms, 3)
+                else: # Non si può determinare la forma
+                    raise ValueError("Impossibile determinare la struttura del gradiente: 'atoms' non specificato e nessun gradiente effettivo da cui inferire la forma.")
+
+                combined_gradient_np = np.zeros(gradient_shape, dtype=float)
+                current_actual_gradient_idx = 0 # Indice per scorrere actual_gradients_from_xml
+
+                for op_details in parsed_scheme_operations:
+                    op_type = op_details[0]
+
+                    if op_type == 'coeff':
+                        if current_actual_gradient_idx >= len(actual_gradients_from_xml):
+                            raise IndexError(f"Errore logico: si tenta di accedere al gradiente effettivo {current_actual_gradient_idx + 1} ma solo {len(actual_gradients_from_xml)} sono stati caricati.")
+                        coeff_val = op_details[1]
+                        gradient_to_apply = actual_gradients_from_xml[current_actual_gradient_idx]
+                        combined_gradient_np += coeff_val * gradient_to_apply
+                        current_actual_gradient_idx += 1
+                    elif op_type == 'copy':
+                        if not actual_gradients_from_xml: # Non si può copiare se non ci sono gradienti effettivi
+                            raise ValueError("Impossibile eseguire 'copy': nessun gradiente effettivo calcolato da cui copiare.")
+
+                        source_idx_1_based = op_details[1]
+                        coeff_val = op_details[2]
+
+                        if not (1 <= source_idx_1_based <= len(actual_gradients_from_xml)):
+                            raise ValueError(f"Indice sorgente per 'copy' non valido: {source_idx_1_based}. "
+                                             f"Gradienti effettivi disponibili: da 1 a {len(actual_gradients_from_xml)}.")
+
+                        gradient_to_apply = actual_gradients_from_xml[source_idx_1_based - 1] # Converti a indice 0-based
+                        combined_gradient_np += coeff_val * gradient_to_apply
+
+                grad = combined_gradient_np.tolist()
+
+            print("GRADIENTI EFFETTIVI PROCESSATI (da XML):")
+            for i, gradient_set_np in enumerate(actual_gradients_from_xml):
+                print(f"Gradiente Effettivo {i + 1}:")
+                for row in gradient_set_np: # Stampa riga per riga per leggibilità
+                    print(" ".join(map(lambda x: f"{x:15.10f}", row)))
+
+
+            print("GRADIENTE FINALE COMBINATO:")
+            if grad: # Stampa solo se grad non è vuoto
+                for row in grad:
+                    print(" ".join(map(lambda x: f"{x:15.10f}", row)))
+            else:
+                print("Nessun gradiente finale combinato (schema vuoto o 'atoms' non specificato).")
+
+            # Il chdir e return erano già presenti e dovrebbero rimanere
+            os.chdir(original_dir)
+            return Energy, dipole, grad
+        else: 
+            ### To use this feature in the ending.dat you should put a table like
+#{ TABLE, finalgradient_x,finalgradient_y,finalgradient_z;
+#SAVE,new,gradients.py;}
+            ### and you should specify the gradients file, in this case gradients in the external input
+            print(f'The gradient will be read from python module { readgradpy }')
+            import sys
+            import os
+            sys.path.append(f'{os.getcwd()}')
+
+            grad_mod = __import__(readgradpy)
+            grad = grad_mod.molpro_table_values
+            print('READ GRADIENTS VALUES')
+            os.chdir(original_dir)
+            return Energy,dipole,grad
+    else:
+        os.chdir(original_dir)
+        return Energy,dipole
+
+if __name__ == "__main__":
+    main()
+
+

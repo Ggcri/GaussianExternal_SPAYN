@@ -1,0 +1,34 @@
+basis={
+default=cc-pwcvtz
+set,jkfit,context=jkfit
+default,avtz
+set,mp2fit,context=mp2fit
+default,avdz
+set,ri,context=jkfit
+default,avtz
+}
+
+
+
+{hf,so-sci} 
+{PNO-LMP2-F12;core}
+
+
+mp2_ae = energy
+
+
+! Composite energy calculation according to scheme, without hf_energy
+exe_energy =  mp2_ae 
+
+!normalmode
+!symmetry=all
+!reference_fc=minimax
+!minimax_range=0.001,0.01
+!minimax_low_freq_threshold=400.0
+!minimax_exponential_max_displacement=0.04
+
+!fakekey
+! scf=xqc 
+
+
+

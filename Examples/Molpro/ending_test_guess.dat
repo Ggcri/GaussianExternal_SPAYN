@@ -1,0 +1,16 @@
+!Method1
+{hf;
+wf,10,1,0}
+
+EXE_ENERGY=energy
+
+!Method2
+{mp2}
+
+EXE_ENERGY=energy
+
+!Method3
+{ccsd(t)}
+
+EXE_ENERGY=energy
+---

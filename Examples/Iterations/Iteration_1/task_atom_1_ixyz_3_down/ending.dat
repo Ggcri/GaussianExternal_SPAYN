@@ -1,0 +1,4 @@
+basis=sto-3g
+{rhf}
+energy_hf = energy
+exe_energy = energy_hf

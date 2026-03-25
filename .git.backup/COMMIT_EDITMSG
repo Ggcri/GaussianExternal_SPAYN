@@ -1,0 +1,3 @@
+Implement append_hessian_to_debug_file function
+
+Add function to write Hessian to normal_mode_debug.txt in Gaussian .fchk format

@@ -1,0 +1,27 @@
+! ============================================================
+! Minimax Displacement Strategy
+! ============================================================
+! Optimizes step size to maximize the minimum safety margin
+! across a frequency range [omega_min, 5000] cm^-1.
+!
+! Formula:
+!   h = dq_ref * sqrt(omega_ref / |omega|)
+!
+! Where:
+!   omega_ref = sqrt(omega_min * 5000)   (geometric mean, cm^-1)
+!   dq_ref    = (dq_max + dq_min) / [sqrt(omega_ref/omega_min) + sqrt(omega_ref/5000)]
+!
+! Default bounds: dq in [1e-4, 1e-3] Bohr, omega_min = 100 cm^-1
+!
+! Optional parameters (uncomment to customize):
+!   !minimax_range=1e-4,1e-3
+!   !minimax_low_freq_threshold=100
+!   !minimax_exponential_max_displacement=0.01
+! ============================================================
+
+!normalmode
+!symmetry=auto
+!reference_fc=minimax
+
+!fakekey
+! scf=xqc level="b3lyp/6-31g(d,p)"

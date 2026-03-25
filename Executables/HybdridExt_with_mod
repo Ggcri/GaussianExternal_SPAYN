@@ -1,0 +1,1241 @@
+#!/shared/apps/python/3.9.16/bin/python3.9 -u
+# HybridExt - A Gaussian External script that combines Orca and MRCC calculations
+# Main functions:
+# 1. Parse Gaussian input and extract molecular structure
+# 2. Create input files for both Orca and MRCC
+# 3. Run both programs to obtain energies and gradients
+# 4. Combine the gradients using specified coefficients
+# 5. Return the combined results to Gaussian
+
+import sys
+import os
+import numpy as np
+import glob
+import shlex
+import subprocess
+import time
+import shutil
+
+# Ensure the elecext utilities can be imported when running this
+# script directly from the Executables directory.
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+PARENT_DIR = os.path.abspath(os.path.join(CURRENT_DIR, ".."))
+if PARENT_DIR not in sys.path:
+    sys.path.insert(0, PARENT_DIR)
+
+from elecext import GauInpParser, write_output, parse_coefficients, Logger, resolve_path_with_env
+
+def main():
+    logger = Logger("external.log")
+    global print
+    print = logger.log
+    # Parse command line arguments from Gaussian
+    print(77*'*')
+    print("STARTING PARSING")
+
+    # Basic arguments (similar to existing externals)
+    orca_preamble_file = resolve_path_with_env(sys.argv[1])
+    orca_end_file = resolve_path_with_env(sys.argv[2])
+    nprocs = sys.argv[3]  # Total processors
+    mem = sys.argv[4]     # Total memory in GB
+    readgradpy = sys.argv[5]
+    logger.header("HybdridExt_with_mod", nprocs, mem)
+
+    # New MRCC-specific arguments
+    mrcc_omp_procs = sys.argv[6]   # OpenMP threads for MRCC
+    mrcc_mpi_procs = sys.argv[7]   # MPI tasks for MRCC
+    mrcc_preamble_file = resolve_path_with_env(sys.argv[8])
+    mrcc_end_file = resolve_path_with_env(sys.argv[9])
+
+    # Layer parameter moved to the end of the fixed parameters
+    layer = sys.argv[11]
+
+    # Find Gaussian input file
+    files = glob.glob('Gau*EIn')
+    if files:
+        last_created_file = max(files, key=os.path.getctime)
+        print(f"The last created file that starts with 'Gau' and ends with 'EIn' is: {last_created_file}")
+        GauInput = last_created_file
+    else:
+        GauInput = sys.argv[12]
+        print("No files matching the pattern were found.")
+
+    GauOutput = sys.argv[13]
+
+    # Print arguments for debugging
+    print(f"Orca Preamble file: {orca_preamble_file}")
+    print(f"Orca End file: {orca_end_file}")
+    print(f"Number of processors: {nprocs}")
+    print(f"Memory allocation: {mem}")
+    print(f"Read Gradient Python Script: {readgradpy}")
+    print(f"MRCC OpenMP processes: {mrcc_omp_procs}")
+    print(f"MRCC MPI processes: {mrcc_mpi_procs}")
+    print(f"MRCC Preamble file: {mrcc_preamble_file}")
+    print(f"MRCC End file: {mrcc_end_file}")
+    print(f"Layer: {layer}")
+    print(f"Gaussian Input: {GauInput}")
+    print(f"Gaussian Output: {GauOutput}")
+
+    # Parse Gaussian input to extract geometry and properties
+    geom, atoms, spin, charge, OptFlag = GauInpParser(GauInput)
+    print('Gaussian parsing completed')
+
+    print(77*'*')
+    print('PARSING COMPLETED')
+    print('Geometry processed')
+    for line in geom:
+        parts = line.split()  # Split the string into individual components
+        print("{:2} {:15.10f} {:15.10f} {:15.10f}".format(parts[0], float(parts[1]), float(parts[2]), float(parts[3])))
+    print(77*'*')
+
+    # Create Orca input file
+    create_orca_input(orca_preamble_file, orca_end_file, nprocs, mem, spin, charge, geom)
+
+    # MRCC input files will be created based on sections during the calculation
+
+    # Record start time
+    enter_time = time.time()
+
+    # Check if we need energy-only or gradient calculation
+    if OptFlag == 0:
+        # Energy-only calculation
+        orca_energy, orca_dipole = compute_orca_energy(nprocs, mem)
+        mrcc_energy, mrcc_dipole = compute_mrcc_energy(
+            mrcc_mpi_procs,
+            mrcc_omp_procs,
+            mem,
+            GauInput,
+            mrcc_preamble_file=mrcc_preamble_file,
+            mrcc_end_file=mrcc_end_file
+        )
+
+        # Parse coefficients for energy combination
+        orca_coefficients = parse_coefficients(orca_preamble_file, "orca")
+        mrcc_coefficients = parse_coefficients(mrcc_preamble_file, "mrcc")
+
+        print(f"Orca energy: {orca_energy}, MRCC energy: {mrcc_energy}")
+        print(f"Orca coefficients: {orca_coefficients}, MRCC coefficients: {mrcc_coefficients}")
+
+        # Apply coefficients directly for composite methods
+        combined_energy = 0.0
+        combined_dipole = [0.0, 0.0, 0.0]
+
+        # Apply orca coefficient to orca energy
+        if orca_coefficients:
+            combined_energy = orca_energy * orca_coefficients[0]
+            combined_dipole = [d * orca_coefficients[0] for d in orca_dipole]
+        else:
+            # Default to coefficient of 1.0 if none specified
+            combined_energy = orca_energy
+            combined_dipole = orca_dipole.copy()
+
+        # Apply mrcc coefficient to mrcc energy
+        if mrcc_coefficients:
+            combined_energy += mrcc_energy * mrcc_coefficients[0]
+            combined_dipole = [combined_dipole[i] + mrcc_dipole[i] * mrcc_coefficients[0] for i in range(3)]
+
+        logger.log_energy(combined_energy)
+        write_output(GauOutput, combined_energy, combined_dipole)
+
+    elif OptFlag == 1:
+        # Gradient calculation
+        scratch_path = os.getenv('SCRATCH')
+
+        if readgradpy.upper() == "READ":
+            # Parse coefficients for gradient combination
+            orca_coefficients = parse_coefficients(orca_preamble_file, "orca")
+            mrcc_coefficients = parse_coefficients(mrcc_preamble_file, "mrcc")
+
+            print(77*'*')
+            print(f"NUMBER OF ORCA COEFFICIENTS: {len(orca_coefficients)}")
+            print(f"ORCA COEFFICIENTS ARE: {orca_coefficients}")
+            print(f"NUMBER OF MRCC COEFFICIENTS: {len(mrcc_coefficients)}")
+            print(f"MRCC COEFFICIENTS ARE: {mrcc_coefficients}")
+
+            # Run calculations and get gradients
+            orca_energy, orca_dipole, orca_gradient = compute_orca_energy(nprocs, mem, True, "NONE", orca_coefficients, atoms)
+            mrcc_energy, mrcc_dipole, mrcc_gradient = compute_mrcc_energy(
+                mrcc_mpi_procs,
+                mrcc_omp_procs,
+                mem,
+                GauInput,
+                True,
+                "NONE",
+                mrcc_coefficients,
+                atoms,
+                mrcc_preamble_file,
+                mrcc_end_file
+            )
+
+            # Initialize the combined results - start with zeros
+            combined_energy = 0.0
+            combined_dipole = [0.0, 0.0, 0.0]
+            combined_gradient = [[0.0, 0.0, 0.0] for _ in range(atoms)]
+
+            # ================================================================================
+# COMBINING RESULTS FROM ORCA AND MRCC
+#
+# Note: Both orca_energy/gradient and mrcc_energy/gradient already have their respective
+# coefficients applied within their compute functions. We simply need to add them together.
+# ================================================================================
+            print("\n" + 77*"#")
+            print("COMBINING RESULTS FROM ORCA AND MRCC")
+            print(77*"#")
+
+# Initialize combined values
+            combined_energy = 0.0
+            combined_dipole = [0.0, 0.0, 0.0]
+            combined_gradient = [[0.0, 0.0, 0.0] for _ in range(atoms)]
+
+# Add ORCA contribution (already scaled by coefficients in compute_orca_energy)
+            print("\nORCA CONTRIBUTION (PRE-SCALED):")
+            print(f"  • Energy: {orca_energy:15.10f}")
+            print(f"  • Original coefficients used: {orca_coefficients}")
+            combined_energy += orca_energy
+
+# Add dipole moments
+            for i in range(3):
+                combined_dipole[i] += orca_dipole[i]
+
+# Add MRCC contribution (already scaled by coefficients in compute_mrcc_energy)
+            print("\nMRCC CONTRIBUTION (PRE-SCALED):")
+            print(f"  • Energy: {mrcc_energy:15.10f}")
+            print(f"  • Original coefficients used: {mrcc_coefficients}")
+            combined_energy += mrcc_energy
+
+# Add dipole moments
+            for i in range(3):
+                combined_dipole[i] += mrcc_dipole[i]
+
+# Combine gradients - simple addition since both already have coefficients applied
+            print("\nCOMBINING GRADIENTS:")
+            print("  • Adding pre-scaled gradients from both programs")
+
+            for atom_idx in range(atoms):
+                for coord_idx in range(3):
+                    combined_gradient[atom_idx][coord_idx] = orca_gradient[atom_idx][coord_idx] + mrcc_gradient[atom_idx][coord_idx]
+
+# Print summary of combined results
+            print("\nFINAL COMBINED RESULTS:")
+            print(f"  • Total energy: {combined_energy:15.10f}")
+            print(f"  • Dipole: [{combined_dipole[0]:10.6f}, {combined_dipole[1]:10.6f}, {combined_dipole[2]:10.6f}]")
+            print(f"  • Gradient examples (first 3 atoms):")
+
+# Print comparison of individual and combined gradients for the first few atoms
+            for i in range(min(3, atoms)):
+                print(f"    Atom {i+1}:")
+                print(f"      ORCA:     {orca_gradient[i][0]:15.10f} {orca_gradient[i][1]:15.10f} {orca_gradient[i][2]:15.10f}")
+                print(f"      MRCC:     {mrcc_gradient[i][0]:15.10f} {mrcc_gradient[i][1]:15.10f} {mrcc_gradient[i][2]:15.10f}")
+                print(f"      Combined: {combined_gradient[i][0]:15.10f} {combined_gradient[i][1]:15.10f} {combined_gradient[i][2]:15.10f}")
+
+            print("\n" + 77*"=")
+
+
+
+
+            # Clean scratch directory
+            print("\n" + 77*"*")
+            print("SCRATCH CLEANING...")
+            clean_scratch(scratch_path)
+            print(77*"*")
+        else:
+            # Handle other gradient calculation methods
+            orca_energy, orca_dipole, orca_gradient = compute_orca_energy(nprocs, mem, True, readgradpy.upper(), atoms=atoms)
+            mrcc_energy, mrcc_dipole, mrcc_gradient = compute_mrcc_energy(
+                mrcc_mpi_procs,
+                mrcc_omp_procs,
+                mem,
+                GauInput,
+                True,
+                readgradpy.upper(),
+                atoms=atoms,
+                mrcc_preamble_file=mrcc_preamble_file,
+                mrcc_end_file=mrcc_end_file
+            )
+
+            # Default to equal weights
+            combined_energy = (orca_energy + mrcc_energy) 
+            combined_dipole = [(orca_dipole[i] + mrcc_dipole[i]) / 2.0 for i in range(3)]
+            combined_gradient = combine_method_gradients(orca_gradient, mrcc_gradient, 1, 1)
+
+            # Clean scratch directory
+            print(77*'*')
+            print('SCRATCH CLEANING...')
+            clean_scratch(scratch_path)
+            print(77*'*')
+
+        logger.log_energy(combined_energy)
+        logger.log_gradients(1, [orca_gradient, mrcc_gradient], combined_gradient)
+        write_output(GauOutput, combined_energy, combined_dipole, combined_gradient)
+
+        # Calculate elapsed time
+        exit_time = time.time()
+        elapsed_time = exit_time - enter_time
+        hours, remainder = divmod(elapsed_time, 3600)
+        minutes, seconds = divmod(remainder, 60)
+        print(f"Time taken: {int(hours)} hours, {int(minutes)} minutes, {seconds:.2f} seconds")
+
+    print(77*'*')
+    print('MOVING TO NEXT COMPUTATION')
+    print(77*'*')
+
+def clean_scratch(scratch_path):
+    """Helper function to clean the scratch directory"""
+    if scratch_path and os.path.isdir(scratch_path):
+        for filename in os.listdir(scratch_path):
+            file_path = os.path.join(scratch_path, filename)
+            try:
+                if os.path.isfile(file_path) or os.path.islink(file_path):
+                    os.unlink(file_path)  # Remove files or symbolic links
+                elif os.path.isdir(file_path):
+                    shutil.rmtree(file_path)  # Remove subdirectories and their contents
+            except Exception as e:
+                print(f'Failed to delete {file_path}. Reason: {e}')
+
+def create_orca_input(preamble_file, end_file, nprocs, mem, spin, charge, geom):
+    """Create Orca input file using the provided geometry and parameters"""
+    formatted_geom = "\n".join(geom)
+    geom_string = f"""
+! Bohrs
+*xyz {charge} {spin}
+{formatted_geom}
+*
+    """
+    with open(preamble_file, 'r') as preamble:
+        preamble_string = preamble.read()
+
+    with open(end_file, 'r') as ending:
+        ending_string = ending.read().lstrip()
+
+    with open('orcainp.inp', 'w') as orcainput:
+        orcainput.write(preamble_string)
+        orcainput.write(geom_string)
+        orcainput.write(ending_string)
+
+def create_mrcc_input(section_id, preamble_sections, ending_sections, mpi_procs, omp_procs, mem, spin, charge, geom):
+    """
+    Create MRCC input file (MINP) for a specific section using the provided geometry and parameters
+
+    Args:
+        section_id: The section identifier (e.g., "default", "!SECTION1")
+        preamble_sections: Dictionary of preamble section content
+        ending_sections: Dictionary of ending section content
+        Other parameters as before
+
+    Returns:
+        Path to the created MINP file
+    """
+    # Convert geometry to MRCC format - using xyz format
+    formatted_geom = "\n".join(geom)
+
+    # MRCC format for geometry
+    geom_string = f"""
+unit=bohr
+geom=xyz
+{len(geom)}
+Title
+{formatted_geom}
+
+
+charge={charge}
+mult={spin}
+"""
+
+    # Get the appropriate sections content or use default if not found
+    preamble_content = preamble_sections.get(section_id, preamble_sections.get("default", []))
+    ending_content = ending_sections.get(section_id, ending_sections.get("default", []))
+
+    # Join the content lists into strings
+    preamble_string = "".join(preamble_content)
+    ending_string = "".join(ending_content)
+
+    # Calculate memory per MPI task
+    mpi_procs = int(mpi_procs)
+    total_mem = int(mem)
+    mem_per_task = total_mem // mpi_procs
+
+    # Create a section-specific MINP file name
+    if section_id == "default":
+        minp_file = 'MINP'
+    else:
+        # Extract section number or use a sanitized version of the section_id
+        if section_id.startswith("!SECTION"):
+            section_num = section_id.replace("!SECTION", "")
+            minp_file = f'MINP_{section_num}'
+        else:
+            # Sanitize section_id to create a valid filename
+            minp_file = f'MINP_{section_id.replace("#", "").replace(" ", "_")}'
+
+    # Create MINP file with proper memory and parallelization settings
+    with open(minp_file, 'w') as mrcc_input:
+        # Add MPI tasks and memory settings at the beginning
+        mrcc_input.write(f"mpitasks={mpi_procs}\n")
+        mrcc_input.write(f"mem={mem_per_task}GB\n")
+        mrcc_input.write(preamble_string)
+        mrcc_input.write(geom_string)
+        mrcc_input.write(ending_string)
+
+    print(f"Created MRCC input file {minp_file} with {mpi_procs} MPI tasks and {mem_per_task} MB memory per task")
+    return minp_file
+
+
+
+
+def parse_mrcc_sections(preamble_file, end_file):
+    """
+    Parse the MRCC preamble and ending files to extract sections for multiple computations.
+    Sections are marked with !SECTION1, !SECTION2, etc. using MRCC's comment style.
+    Also extracts energy pattern for each section.
+    """
+    preamble_sections = {}
+    ending_sections = {}
+    energy_patterns = {}
+
+    # Parse preamble file
+    with open(preamble_file, 'r') as file:
+        current_section = "default"
+        preamble_sections[current_section] = []
+        energy_patterns[current_section] = "MRCC"  # Default energy pattern
+
+        for line in file:
+            line_stripped = line.strip()
+
+            # Check if line defines a new section - using MRCC's "!" comment style
+            if line_stripped.startswith("!SECTION"):
+                current_section = line_stripped
+                preamble_sections[current_section] = []
+                # Important: carry forward the previous section's pattern by default
+                energy_patterns[current_section] = energy_patterns.get("default", "MRCC")
+                print(f"Found MRCC section: {current_section}")
+            elif line_stripped.startswith("energy_pattern="):
+                # Energy pattern line found
+                energy_pattern = line_stripped.split("=")[1].strip()
+                energy_patterns[current_section] = energy_pattern
+                print(f"Found energy pattern for section {current_section}: {energy_pattern}")
+                # Don't add this line to the preamble content
+            else:
+                # Add all other lines to the current section's content
+                preamble_sections[current_section].append(line)
+
+    # Parse ending file
+    with open(end_file, 'r') as file:
+        current_section = "default"
+        ending_sections[current_section] = []
+
+        for line in file:
+            line_stripped = line.strip()
+
+            # Check if line defines a new section
+            if line_stripped.startswith("!SECTION"):
+                current_section = line_stripped
+                ending_sections[current_section] = []
+                print(f"Found MRCC ending section: {current_section}")
+            else:
+                ending_sections[current_section].append(line)
+
+    # Debug output
+    print("\nParsed MRCC Sections Summary:")
+    print("----------------------------")
+    for section in preamble_sections.keys():
+        print(f"Section: {section}")
+        print(f"  Energy pattern: {energy_patterns.get(section, 'MRCC')}")
+        print(f"  Content lines: {len(preamble_sections[section])}")
+
+    return preamble_sections, ending_sections, energy_patterns
+
+def combine_method_gradients(orca_gradient, mrcc_gradient, orca_coef, mrcc_coef):
+    """Combine gradients from Orca and MRCC using specified coefficients"""
+    if len(orca_gradient) != len(mrcc_gradient):
+        print(f"WARNING: Gradient sizes do not match! Orca: {len(orca_gradient)}, MRCC: {len(mrcc_gradient)}")
+        # Use the smaller size to avoid index errors
+        min_size = min(len(orca_gradient), len(mrcc_gradient))
+        combined_gradient = []
+        for i in range(min_size):
+            combined_grad = [
+                orca_gradient[i][j] * orca_coef + mrcc_gradient[i][j] * mrcc_coef
+                for j in range(len(orca_gradient[i]))
+            ]
+            combined_gradient.append(combined_grad)
+    else:
+        # Combine gradients using linear combination with coefficients
+        combined_gradient = []
+        for i in range(len(orca_gradient)):
+            combined_grad = [
+                orca_gradient[i][j] * orca_coef + mrcc_gradient[i][j] * mrcc_coef
+                for j in range(len(orca_gradient[i]))
+            ]
+            combined_gradient.append(combined_grad)
+
+    return combined_gradient
+
+def compute_orca_energy(nprocs, mem, OptFlag=False, readgradpy='NONE', coefficients=[], atoms=None):
+    """Compute energy and optionally gradients using ORCA
+
+    Args:
+        nprocs: Number of processors for ORCA
+        mem: Memory in GB
+        OptFlag: Whether to compute gradients
+        readgradpy: Method for reading gradients
+        coefficients: List of coefficients for scaling energy/gradients
+        atoms: Number of atoms in molecule
+
+    Returns:
+        Energy, dipole, and optionally gradients with coefficients applied
+    """
+    import os
+    import sys
+    import subprocess
+
+    print(77*"=")
+    print(f"ORCA CALCULATION STARTING")
+    print(f"Parameters: nprocs={nprocs}, mem={mem}GB, OptFlag={OptFlag}, readgradpy={readgradpy}")
+    print(f"Coefficients: {coefficients}")
+    def unload_module(module_name):
+        # Call modulecmd in python mode to get commands that update the environment
+        result = subprocess.run(
+            ['modulecmd', 'python', 'unload', module_name],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+        if result.returncode != 0:
+            print(f"Error unloading {module_name}: {result.stderr}")
+        else:
+            # Execute the output so that the environment is updated in the current interpreter
+            exec(result.stdout, globals())
+
+    def load_module(module_name):
+        """Load a module using modulecmd in Python mode."""
+        result = subprocess.run(
+            ['modulecmd', 'python', 'load', module_name],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True
+        )
+        if result.returncode != 0:
+            print(f"Error loading {module_name}: {result.stderr}")
+        else:
+            # Execute the Python code returned by modulecmd to update the environment.
+            exec(result.stdout, globals())
+
+# Unload the modules
+    unload_module("MRCC_2024/MRCC_INTEL_sandy")
+    unload_module("intel/compiler/latest")
+    unload_module("intel/compiler-rt/latest")
+    unload_module("intel/tbb/latest")
+    load_module("Orca/Orca_last")
+
+
+
+    dipole = [0.0, 0.0, 0.0]
+    nprocs = int(nprocs)
+    mem = int(mem)
+
+    # Calculate memory per process for ORCA
+    mem_mb = int(mem * 1024) // nprocs  # Convert GB to MB
+
+    # Add parallelization and memory settings to the input file
+    parall_line = f"%PAL NPROCS {nprocs} END\n"
+    maxcore_line = f"%maxcore {mem_mb}\n"
+
+    # Read the existing content of the file
+    with open("orcainp.inp", "r") as file:
+        content = file.readlines()
+
+    # Insert the new lines at the top
+    content.insert(0, parall_line)
+    content.insert(1, maxcore_line)
+
+    # Write the modified content back to the file
+    with open("orcainp.inp", "w") as file:
+        file.writelines(content)
+
+    # Get path to ORCA executable from environment
+    orca_path = 'ORCADIR'
+    path_to_orca = os.environ.get(orca_path)
+    input_file = os.path.join(os.getcwd(), 'orcainp.inp')
+
+    # Run ORCA
+    command = f"{path_to_orca}/orca {input_file} > orcainp.out"
+    print(command)
+
+    if os.path.exists("orcainp.out"):
+        os.remove("orcainp.out")
+
+
+    subprocess.run(command, shell=True)
+
+    print('ORCA RUN COMPLETED')
+
+    # Extract energy from output - UPDATED to handle multiple formats
+    Energy = 0.0
+    with open('orcainp.out', 'r') as orcaout:
+        for line in orcaout:
+            # Try multiple patterns for energy extraction
+            if 'FINAL SINGLE POINT ENERGY' in line:
+                parts = line.split()
+                Energy = float(parts[-1])
+                break
+            elif 'Energy             :' in line:
+                # Format: Energy             :   -74.9616419031065391 Eh
+                parts = line.split(':')
+                if len(parts) >= 2:
+                    energy_str = parts[1].strip().split()[0]  # Get first value after colon
+                    try:
+                        Energy = float(energy_str)
+                        break
+                    except ValueError:
+                        pass
+
+    print('ORCA RAW ENERGY VALUE:')
+    print(f"  • Raw energy = {Energy}")
+
+    # Apply coefficient to energy if provided
+    raw_energy = Energy
+    if coefficients and len(coefficients) > 0:
+        print(f"  • Applying coefficient {coefficients[0]} to energy")
+        Energy = Energy * coefficients[0]
+        print(f"  • Scaled energy = {Energy}")
+    else:
+        print("  • No coefficients provided, using raw energy value")
+
+    print(f"  • Raw energy: {raw_energy}")
+    print(f"  • Final energy: {Energy}")
+
+    # Handle gradient calculation if needed
+    if OptFlag:
+        print("OPT FLAG DETECTED")
+
+        # Handle special case for rigid scan
+        if readgradpy.upper() == 'SCAN':
+            grad = [[0.0, 0.0, 0.0] for _ in range(atoms)]
+            return Energy, dipole, grad
+
+        # Handle normal gradient extraction - UPDATED for the format you provided
+        if readgradpy.upper() == 'NONE':
+            import re
+            print(77*'-')
+            print(f'GRADIENT EXTRACTION: Processing {atoms} atoms')
+            print(77*'-')
+
+            # Extract gradient from ORCA output
+            grad = []
+
+            try:
+                with open('orcainp.out', 'r') as file:
+                    content = file.read()
+
+                print("✓ ORCA output file read successfully")
+
+                # Find the gradient section directly - looking for this exact pattern
+                pattern = re.compile(r'-+\s*\n\s*CARTESIAN GRADIENT(?:\s*\(NUMERICAL\))?\s*\n-+\s*\n?',re.IGNORECASE)
+
+                match = pattern.search(content)
+                if match:
+                    print("✓ CARTESIAN GRADIENT section located")
+                    # Get the text after the header
+                    gradient_section = content[match.end():]
+
+                    # Split into lines and remove a leading dashed line or blank line if present
+                    gradient_lines_raw = gradient_section.split('\n')
+                    if gradient_lines_raw and set(gradient_lines_raw[0].strip()) == set("-"):
+                        gradient_lines_raw = gradient_lines_raw[1:]
+                    if gradient_lines_raw and not gradient_lines_raw[0].strip():
+                        gradient_lines_raw = gradient_lines_raw[1:]
+                    
+                    grad = []            # List to hold gradient data
+                    gradient_lines = []  # List for nicely formatted output
+                    
+                    # Process each line until a blank line or a line with "Difference to" is encountered
+                    for line in gradient_lines_raw:
+                        if not line.strip() or "Difference to" in line:
+                            break
+
+                        # Parse the line - e.g., "   1   O   :   -0.000000000    0.000000000   -0.058619732"
+                        if ':' in line:
+                            parts = line.split(':')
+                            atom_info = parts[0].strip()
+                            try:
+                                values = parts[1].strip().split()
+                                if len(values) >= 3:
+                                    x = float(values[0])
+                                    y = float(values[1])
+                                    z = float(values[2])
+                                    grad.append([x, y, z])
+                                    gradient_lines.append(f"  Atom {atom_info}: {x:15.10f} {y:15.10f} {z:15.10f}")
+                            except (ValueError, IndexError) as e:
+                                print(f"! Error parsing gradient line '{line.strip()}': {e}")
+
+                    # Display the extracted gradients
+                    if gradient_lines:
+                        print(f"\n✓ Successfully extracted gradients for {len(grad)} atoms:")
+                        print("\n".join(gradient_lines))
+                    else:
+                        print("! No gradient data found after section header")
+                else:
+                    print("! CARTESIAN GRADIENT section not found")
+
+
+
+            except Exception as e:
+                print(f"! Exception during file processing: {e}")
+
+            print(77*'-')
+            print(f"GRADIENT EXTRACTION SUMMARY:")
+            print(f"  • Expected atoms: {atoms}")
+            print(f"  • Extracted gradients: {len(grad)}")
+
+            # Return empty gradient if we didn't find anything
+            if not grad and atoms > 0:
+                print("! WARNING: No gradients found - returning zero gradients for all atoms")
+                grad = [[0.0, 0.0, 0.0] for _ in range(atoms)]
+            elif len(grad) != atoms:
+                print(f"! WARNING: Found {len(grad)} gradients but expected {atoms} - check results carefully")
+            else:
+                print("✓ Gradient extraction completed successfully")
+
+            # Store raw gradients for reporting
+            raw_gradients = [row[:] for row in grad]  # Deep copy
+
+            # Apply coefficient to gradients if provided
+            if coefficients and len(coefficients) > 0:
+                coef = coefficients[0]
+                print(f"  • Applying coefficient {coef} to gradients")
+
+                for i in range(len(grad)):
+                    for j in range(len(grad[i])):
+                        grad[i][j] = grad[i][j] * coef
+
+            # Print comparison of raw and scaled gradients
+            print("\nGRADIENT SCALING REPORT:")
+            print(f"  • Coefficient applied: {coefficients[0] if coefficients and len(coefficients) > 0 else 'None'}")
+            for i in range(min(5, len(grad))):  # Print first 5 atoms as example
+                print(f"  • Atom {i+1}:")
+                print(f"    - Raw: {raw_gradients[i][0]:15.10f} {raw_gradients[i][1]:15.10f} {raw_gradients[i][2]:15.10f}")
+                print(f"    - Scaled: {grad[i][0]:15.10f} {grad[i][1]:15.10f} {grad[i][2]:15.10f}")
+            if len(grad) > 5:
+                print(f"  • ... and {len(grad)-5} more atoms")
+
+            print(77*'-')
+            return Energy, dipole, grad
+
+        # Handle other gradient options
+        else:
+            print(f'The gradient will be read from python module {readgradpy}')
+            sys.path.append(f'{os.getcwd()}')
+
+            try:
+                grad_mod = __import__(readgradpy)
+                grad = grad_mod.orca_gradient_values
+                print('READ GRADIENTS VALUES')
+
+                # Store raw gradients for reporting
+                raw_gradients = [row[:] for row in grad]  # Deep copy
+
+                # Apply coefficient to gradients if provided
+                if coefficients and len(coefficients) > 0:
+                    coef = coefficients[0]
+                    print(f"  • Applying coefficient {coef} to custom gradients")
+
+                    for i in range(len(grad)):
+                        for j in range(len(grad[i])):
+                            grad[i][j] = grad[i][j] * coef
+
+                # Print comparison
+                print("\nGRADIENT SCALING REPORT (CUSTOM GRADIENTS):")
+                print(f"  • Coefficient applied: {coefficients[0] if coefficients and len(coefficients) > 0 else 'None'}")
+                for i in range(min(5, len(grad))):  # Print first 5 atoms as example
+                    print(f"  • Atom {i+1}:")
+                    print(f"    - Raw: {raw_gradients[i][0]:15.10f} {raw_gradients[i][1]:15.10f} {raw_gradients[i][2]:15.10f}")
+                    print(f"    - Scaled: {grad[i][0]:15.10f} {grad[i][1]:15.10f} {grad[i][2]:15.10f}")
+
+                return Energy, dipole, grad
+            except Exception as e:
+                print(f"Error importing gradient module: {e}")
+                # Fallback to zero gradients
+                grad = [[0.0, 0.0, 0.0] for _ in range(atoms)]
+                return Energy, dipole, grad
+
+    else:
+        # For energy-only calculations, just return the energy and dipole
+        print(f"ORCA CALCULATION SUMMARY:")
+        print(f"  • Raw energy: {raw_energy}")
+        print(f"  • Final energy: {Energy}")
+        print(77*"=")
+        return Energy, dipole
+
+def run_single_mrcc_calculation(minp_file, output_file, mpi_procs, omp_procs, mem, scratch_path, atoms=None, energy_pattern="MRCC"):
+    """
+    Run a single MRCC calculation using the specified MINP file
+
+    Args:
+        minp_file: Path to the MINP input file
+        output_file: Name for the output file
+        mpi_procs: Number of MPI processes
+        omp_procs: Number of OpenMP threads
+        mem: Total memory in GB
+        scratch_path: Path to scratch directory
+        atoms: Number of atoms (for fallback gradient generation)
+        energy_pattern: The energy pattern to look for in the output (e.g., "MRCC", "CCSD(T)", "MP2")
+
+    Returns:
+        Tuple of (energy, gradient)
+    """
+    import os
+
+    mpi_procs = int(mpi_procs)
+    omp_procs = int(omp_procs)
+
+    # Set up environment variables for MRCC
+    os.environ['OMP_NUM_THREADS'] = str(omp_procs)
+    os.environ['MKL_NUM_THREADS'] = str(omp_procs)
+    os.environ['I_MPI_PIN'] = 'on'
+    os.environ['I_MPI_PIN_DOMAIN'] = 'numa'
+    os.environ['OMP_PROC_BIND'] = 'close'
+    os.environ['OMP_PLACES'] = 'cores'
+
+    # Setup scratch directory for this specific calculation
+    job_id = os.getpid()  # Use process ID as job ID
+    run_id = os.path.basename(minp_file).replace("MINP", "").strip("_")
+    if not run_id:
+        run_id = "default"
+    scratch_dir = f"{scratch_path}/mrcc-{job_id}-{run_id}"
+    os.makedirs(scratch_dir, exist_ok=True)
+
+    print(f"Setting up MRCC calculation in {scratch_dir}")
+
+    # Copy input files to scratch
+    shutil.copy(minp_file, f"{scratch_dir}/MINP")  # Always use MINP as the filename in scratch
+    if os.path.exists("GENBAS"):
+        shutil.copy("GENBAS", f"{scratch_dir}/")
+
+    # Change to scratch directory
+    original_dir = os.getcwd()
+    os.chdir(scratch_dir)
+
+    # Run MRCC
+
+
+    command = f"dmrcc {minp_file} > {output_file}"
+    print(f"Running MRCC in {scratch_dir}: {command}")
+    subprocess.run(command, shell=True)
+
+    # Extract energy from output using the specified pattern
+
+
+    import re
+
+    energy_pattern_str = f"***FINAL {energy_pattern.upper()} ENERGY:"
+    print(f"Looking for energy pattern: '{energy_pattern_str}'")
+    energy = None
+
+    with open(output_file, 'r') as f:
+        for line in f:
+            if energy_pattern_str in line:
+                # Extract numerical value using regex for robustness
+                match = re.search(r"([-]?\d+\.\d+)", line)
+                if match:
+                    energy = float(match.group(1))
+                    print(f"Found energy with pattern '{energy_pattern}': {energy}")
+                    break
+
+        if energy is None:
+            print("Energy pattern not found in file.")
+
+
+    # Extract gradient - UPDATED to match the specified format
+    gradient = []
+    in_gradient_section = False
+
+    try:
+        with open(output_file, 'r') as f:
+            lines = f.readlines()
+
+            for i, line in enumerate(lines):
+                if "Cartesian gradient in original orientation [au]:" in line:
+                    in_gradient_section = True
+                    continue  # Skip the header line
+
+                if in_gradient_section:
+                    # Check if we've reached the end of the gradient section
+                    if not line.strip() or not any(c.isdigit() for c in line):
+                        break
+
+                    parts = line.split()
+                    if len(parts) >= 5:  # Should have at least [index, element, x, y, z]
+                        try:
+                            # Format should be: "    1  O      0.0338250311    -0.0217577615    -0.0425981185"
+                            x = float(parts[2])
+                            y = float(parts[3])
+                            z = float(parts[4])
+                            gradient.append([x, y, z])
+                        except (ValueError, IndexError):
+                            print(f"Warning: Could not parse gradient line: {line.strip()}")
+
+                    if len(gradient) == atoms:
+                        # We've got all the atoms we need
+                        break
+
+        print(f"Read gradient from MRCC for {minp_file}")
+        for i, sublist in enumerate(gradient):
+            print(f"Atom {i+1}: {sublist[0]:12.6f} {sublist[1]:12.6f} {sublist[2]:12.6f}")
+
+    except Exception as e:
+        print(f"Error reading gradient from output file: {e}")
+        if atoms is not None:
+            gradient = [[0.0, 0.0, 0.0] for _ in range(atoms)]
+
+    # If gradient is empty but we have atoms, create a zero gradient
+    if not gradient and atoms is not None:
+        print(f"No gradient found in output, using zero gradient")
+        gradient = [[0.0, 0.0, 0.0] for _ in range(atoms)]
+
+    # Copy output files back to original directory
+    for file in [output_file, "gradient"]:
+        if os.path.exists(file):
+            # Create target filenames that include the run_id to avoid overwriting
+            target_file = file if file == output_file else f"{file}_{run_id}"
+            shutil.copy(file, os.path.join(original_dir, target_file))
+
+    # Return to original directory
+    os.chdir(original_dir)
+
+    return energy, gradient
+
+def compute_mrcc_energy(mpi_procs, omp_procs, mem, GauInput, OptFlag=False, readgradpy='NONE', coefficients=[], atoms=None, mrcc_preamble_file=None, mrcc_end_file=None):
+    """
+    energy_pattern=CCSD(T)
+    calc=CCSD(T)
+    basis=cc-pVTZ
+    mem_max=1000
+
+    ! Scheme for gradient combination - list of coefficients for each calculation
+    !scheme
+    ! 1.0 -0.25
+
+    !SECTION1
+    energy_pattern=MP2
+    calc=MP2
+    basis=cc-pVTZ
+
+    !SECTION2
+    energy_pattern=CCSD
+    calc=CCSD
+    basis=cc-pVDZ
+
+
+    The ending file should match the same section format:
+
+    Compute energy and optionally gradients using MRCC, supporting multiple sequential calculations
+
+    This function runs multiple MRCC calculations based on the number of coefficients and sections
+    in the preamble and ending files.
+    """
+    import os
+    import subprocess
+    import sys
+
+    print(77*"=")
+    print(f"MRCC CALCULATION STARTING")
+    print(f"Parameters: mpi_procs={mpi_procs}, omp_procs={omp_procs}, mem={mem}GB, OptFlag={OptFlag}")
+    print(f"Coefficients: {coefficients}")
+
+    def store_and_set_env(nprocs):
+        """
+        Store current environment variable values, then set new ones.
+        
+        This function does two things:
+          1. It saves the current values of the selected environment variables.
+          2. It sets new values:
+             - OMP_NUM_THREADS and MKL_NUM_THREADS are set to nprocs.
+             - Other variables are set to fixed values.
+             - Additionally, it 'sources' an external script to update the environment.
+        
+        Returns:
+          A dictionary with the original values.
+        """
+        # List of variables we want to store and later restore
+        keys = [
+            "OMP_NUM_THREADS",
+            "MKL_NUM_THREADS",
+            "I_MPI_PIN",
+            "I_MPI_PIN_DOMAIN",
+            "OMP_PROC_BIND",
+            "OMP_PLACES"
+        ]
+        # Save the current values (or None if not set)
+        saved_env = {key: os.environ.get(key) for key in keys}
+        
+        # Set the new values
+        os.environ["OMP_NUM_THREADS"] = str(omp_procs)
+        os.environ["MKL_NUM_THREADS"] = str(omp_procs)
+        os.environ["I_MPI_PIN"] = "on"
+        os.environ["I_MPI_PIN_DOMAIN"] = "numa"
+        os.environ["OMP_PROC_BIND"] = "close"
+        os.environ["OMP_PLACES"] = "cores"
+        
+        # Source the external vars.sh script.
+        # Note: Sourcing a script in a subprocess does not affect the current process,
+        # so we simulate this by capturing the environment after sourcing.
+#        cmd = (
+#            "bash -c 'source /shared/apps/intel/2023/mpi/latest/env/vars.sh "
+#            "-i_mpi_library_kind=release_mt -i_mpi_ofi_internal=0 && env'"
+#        )
+#        proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True, executable="/bin/bash")
+#        output, _ = proc.communicate()
+#        for line in output.decode().splitlines():
+#            if '=' in line:
+#                key, value = line.split("=", 1)
+#                os.environ[key] = value  # update environment with values from the script
+#        
+        return saved_env
+
+    def restore_env(saved_env):
+        """
+        Restore the environment variables from the provided dictionary.
+        
+        For variables that were not set originally (i.e. value is None),
+        the variable is removed from os.environ.
+        """
+        for key, value in saved_env.items():
+            if value is None:
+                os.environ.pop(key, None)
+            else:
+                os.environ[key] = value
+
+
+    def unload_module(module_name):
+        # Call modulecmd in python mode to get commands that update the environment
+        result = subprocess.run(
+            ['modulecmd', 'python', 'unload', module_name],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+        if result.returncode != 0:
+            print(f"Error unloading {module_name}: {result.stderr}")
+        else:
+            # Execute the output so that the environment is updated in the current interpreter
+            exec(result.stdout, globals())
+
+    def load_module(module_name):
+        """Load a module using modulecmd in Python mode."""
+        result = subprocess.run(
+            ['modulecmd', 'python', 'load', module_name],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True
+        )
+        if result.returncode != 0:
+            print(f"Error loading {module_name}: {result.stderr}")
+        else:
+            # Execute the Python code returned by modulecmd to update the environment.
+            exec(result.stdout, globals())
+
+# Unload the modules
+    unload_module("Orca/Orca_last")
+    load_module("MRCC_2024/MRCC_INTEL_sandy")
+
+# Setting up the stage of environment variables
+    for key in ["OMP_NUM_THREADS", "MKL_NUM_THREADS", "OMP_PROC_BIND", "OMP_PLACES"]:
+        print(f"{key}: {os.environ.get(key)}")
+    
+    # Store current environment values and set new ones.
+    saved_env = store_and_set_env(omp_procs)
+
+    for key in ["OMP_NUM_THREADS", "MKL_NUM_THREADS", "OMP_PROC_BIND", "OMP_PLACES"]:
+        print(f"{key}: {os.environ.get(key)}")
+
+
+    # Default dipole moment (MRCC may not provide this)
+    dipole = [0.0, 0.0, 0.0]
+
+    # Get scratch path
+    scratch_path = os.getenv('SCRATCH', '/tmp')
+
+    # Parse MRCC sections if files are provided
+    if mrcc_preamble_file and mrcc_end_file:
+        preamble_sections, ending_sections, energy_patterns = parse_mrcc_sections(mrcc_preamble_file, mrcc_end_file)
+        print('ENERGY PATTERNS DEBUG STRING')
+        print(energy_patterns)
+    else:
+        # Use empty default sections if files not provided
+        preamble_sections = {"default": []}
+        ending_sections = {"default": []}
+        energy_patterns = {"default": "MRCC"}
+
+    # Determine how many calculations to run based on coefficients or sections
+    if len(coefficients) > 0:
+        num_calculations = len(coefficients)
+        print(f"Running {num_calculations} MRCC calculations based on coefficients")
+    else:
+        # Count section entries that match !SECTION pattern
+        section_count = sum(1 for key in preamble_sections.keys() if key.startswith("!SECTION"))
+        num_calculations = max(1, section_count)  # At least 1 calculation (default)
+        print(f"Running {num_calculations} MRCC calculations based on sections")
+
+    # Container for energies and gradients from all calculations
+    energies = []
+    gradients = []
+    raw_energies = []
+    raw_gradients = []
+
+    # Run sequential MRCC calculations
+    for i in range(num_calculations):
+        section_id = f"!SECTION{i}" if i > 0 else "default"
+        print(f"Setting up MRCC calculation {i+1}/{num_calculations}, section: {section_id}")
+
+        # Get energy pattern for this section
+        energy_pattern = energy_patterns.get(section_id, "MRCC")
+#        print('SECOND DEBUG SECTION') 
+#        print(energy_pattern) 
+#        print(section_id)
+#        print('SECOND DEBUG SECTION END') 
+
+        print(f"Using energy pattern for section {section_id}: {energy_pattern}")
+        geom, atoms, spin, charge, OptFlag = GauInpParser(GauInput)
+
+        # Create MINP file for this calculation
+        minp_file = create_mrcc_input(
+            section_id,
+            preamble_sections,
+            ending_sections,
+            mpi_procs,
+            omp_procs,
+            mem,
+            spin,
+            charge,
+            geom
+        )
+
+        # Skip gradient calculation for energy-only runs
+        if not OptFlag:
+            energy, _ = run_single_mrcc_calculation(
+                minp_file,
+                f"mrcc_output_{i+1}.out",
+                mpi_procs,
+                omp_procs,
+                mem,
+                scratch_path,
+                energy_pattern=energy_pattern
+            )
+            raw_energies.append(energy)
+
+            # Apply coefficient if available
+            if i < len(coefficients):
+                coef = coefficients[i]
+                print(f"Calculation {i+1}: Raw energy = {energy}, Coefficient = {coef}")
+                scaled_energy = energy * coef
+                print(f"Calculation {i+1}: Scaled energy = {scaled_energy}")
+                energies.append(scaled_energy)
+            else:
+                print(f"Calculation {i+1}: Raw energy = {energy}, No coefficient applied")
+                energies.append(energy)
+
+        else:
+            energy, gradient = run_single_mrcc_calculation(
+                minp_file,
+                f"mrcc_output_{i+1}.out",
+                mpi_procs,
+                omp_procs,
+                mem,
+                scratch_path,
+                atoms,
+                energy_pattern=energy_pattern
+            )
+            raw_energies.append(energy)
+            raw_gradients.append([row[:] for row in gradient])  # Deep copy
+
+            # Apply coefficient if available
+            if i < len(coefficients):
+                coef = coefficients[i]
+                print(f"Calculation {i+1}: Raw energy = {energy}, Coefficient = {coef}")
+                scaled_energy = energy * coef
+                print(f"Calculation {i+1}: Scaled energy = {scaled_energy}")
+
+                # Scale gradient
+                scaled_gradient = []
+                for atom_grad in gradient:
+                    scaled_atom_grad = [val * coef for val in atom_grad]
+                    scaled_gradient.append(scaled_atom_grad)
+
+                energies.append(scaled_energy)
+                gradients.append(scaled_gradient)
+
+                # Print example gradient scaling for debugging
+                if gradient:
+                    print(f"Gradient scaling example (first atom):")
+                    print(f"  Raw: {gradient[0][0]:15.10f} {gradient[0][1]:15.10f} {gradient[0][2]:15.10f}")
+                    print(f"  Scaled: {scaled_gradient[0][0]:15.10f} {scaled_gradient[0][1]:15.10f} {scaled_gradient[0][2]:15.10f}")
+            else:
+                print(f"Calculation {i+1}: Raw energy = {energy}, No coefficient applied")
+                energies.append(energy)
+                gradients.append(gradient)
+
+    # Process results based on coefficients for energy-only calculation
+    if not OptFlag:
+        # Directly return the sum of scaled energies
+        combined_energy = sum(energies)
+
+        print("\nMRCC ENERGY SUMMARY:")
+        print(f"Raw energies: {raw_energies}")
+        print(f"Scaled energies: {energies}")
+        print(f"Combined energy: {combined_energy}")
+        print(77*"=")
+
+        restore_env(saved_env)
+        return combined_energy, dipole
+
+    # Process results for gradient calculation
+    else:
+        # Special case for rigid scan
+        restore_env(saved_env)
+        if readgradpy.upper() == 'SCAN':
+            combined_gradient = [[0.0, 0.0, 0.0] for _ in range(atoms)]
+            return energies[0] if energies else 0.0, dipole, combined_gradient
+
+        # If we have scaled gradients, we combine them by adding
+        if gradients:
+            # Initialize with zeros
+            ref_size = len(gradients[0]) if gradients else atoms
+            combined_gradient = [[0.0, 0.0, 0.0] for _ in range(ref_size)]
+            combined_energy = sum(energies)
+
+            # Sum up all the scaled gradients
+            for grad in gradients:
+                for atom_idx in range(len(grad)):
+                    for coord_idx in range(3):
+                        combined_gradient[atom_idx][coord_idx] += grad[atom_idx][coord_idx]
+
+            print("\nMRCC GRADIENT SUMMARY:")
+            print(f"Number of combined gradients: {len(gradients)}")
+            print(f"Raw energies: {raw_energies}")
+            print(f"Scaled energies: {energies}")
+            print(f"Combined energy: {combined_energy}")
+            restore_env(saved_env)
+
+            # Print example of gradient combination
+            if combined_gradient and len(raw_gradients) > 0:
+                print("\nGradient combination example (first atom):")
+                for i, raw_grad in enumerate(raw_gradients):
+                    if raw_grad:
+                        coef = coefficients[i] if i < len(coefficients) else 1.0
+                        print(f"  Input {i+1} (coef={coef}): {raw_grad[0][0]:15.10f} {raw_grad[0][1]:15.10f} {raw_grad[0][2]:15.10f}")
+                print(f"  Combined: {combined_gradient[0][0]:15.10f} {combined_gradient[0][1]:15.10f} {combined_gradient[0][2]:15.10f}")
+
+        else:
+            combined_gradient = [[0.0, 0.0, 0.0] for _ in range(atoms)]
+            combined_energy = sum(energies) if energies else 0.0
+
+            print("\nMRCC CALCULATION WARNING:")
+            print("No gradients were obtained from calculations")
+            print(f"Using zero gradients and energy: {combined_energy}")
+            restore_env(saved_env)
+
+        print(77*"=")
+        restore_env(saved_env)
+        return combined_energy, dipole, combined_gradient
+
+
+if __name__ == "__main__":
+    main()

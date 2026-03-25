@@ -1,0 +1,47 @@
+! ============================================================
+! Esempio di mrcc_preamble.dat per 2 calcoli sequenziali
+! ============================================================
+
+! --- Blocco !scheme per i coefficienti ---
+! Definisce i coefficienti per combinare le energie/gradienti.
+! Il numero di coefficienti DEVE corrispondere al numero di calcoli.
+! In questo caso, 2 calcoli -> 2 coefficienti.
+!scheme
+  1.0     ! Coefficiente per il calcolo SECTION1
+  1.0     ! Coefficiente per il calcolo SECTION2
+!end
+
+!SECTION1
+energy_pattern=Density-based correction [au]:
+energy_pattern=CABS singles correction [au]:
+calc=DF-CCSD(T)
+dft=userd
+3
+0.3100 PBEx
+0.4296 P86
+0.6900 HFx
+1
+0.5000 ECMD_PBEc
+
+grid_sm=ta1
+
+basis=cc-pVDZ-F12
+denscorr=2
+
+
+
+
+!SECTION2
+energy_pattern=KS energy + MP2 correction [au]:
+basis=cc-pVDZ-F12
+
+calc=scf
+dft=user
+5
+0.3100 PBEx
+0.4296 P86
+0.6900 HFx
+0.5785 MP2s
+0.0799 MP2t
+
+scfiguess=off

@@ -1,0 +1,2133 @@
+#!/shared/apps/python/3.9.16/bin/python3.9 -u
+# MRCC_Ext - A Gaussian External script for MRCC calculations
+# Main functions:
+# 1. Parse Gaussian input and extract molecular structure
+# 2. Create input files for MRCC (handling multiple sections if defined)
+# 3. Run MRCC program(s) to obtain energy and gradients
+# 4. Return the results to Gaussian
+# v4: Corrected energy parsing logic to use full user-provided string.
+#     Corrected coefficient parsing to handle leading whitespace.
+#     Ensured preamble parsing handles explicit sections correctly.
+
+import sys
+import os
+import numpy as np
+import glob
+import shlex
+import subprocess
+import time
+import shutil
+import re # Import regular expressions module
+
+def resolve_path_with_env(path):
+    """
+    Resolve file paths that may contain environment variables.
+    
+    If the path starts with '$', treat it as an environment variable reference
+    and resolve it to the actual path.
+    
+    Args:
+        path (str): File path that may start with '$VAR_NAME'
+        
+    Returns:
+        str: Resolved absolute path
+        
+    Raises:
+        ValueError: If environment variable is not set or resolved path doesn't exist
+    """
+    if not path.startswith('$'):
+        # Regular path, return as-is (but make it absolute if relative)
+        return os.path.abspath(path)
+    
+    # Extract environment variable name (everything after '$' until first '/')
+    if '/' in path:
+        env_var, rest_of_path = path[1:].split('/', 1)
+        rest_of_path = '/' + rest_of_path
+    else:
+        env_var = path[1:]
+        rest_of_path = ''
+    
+    # Get environment variable value
+    env_value = os.environ.get(env_var)
+    if env_value is None:
+        raise ValueError(f"Environment variable '{env_var}' is not set for path: {path}")
+    
+    # Construct the resolved path
+    resolved_path = os.path.join(env_value, rest_of_path.lstrip('/'))
+    resolved_path = os.path.abspath(resolved_path)
+    
+    # Verify the resolved path exists
+    if not os.path.exists(resolved_path):
+        raise ValueError(f"Resolved path does not exist: {resolved_path} (from ${env_var}{rest_of_path})")
+    
+    return resolved_path
+
+def main():
+    """
+    Main function to handle the Gaussian external call for MRCC.
+    Parses arguments, prepares inputs, runs MRCC, and writes output for Gaussian.
+    """
+    # Parse command line arguments from Gaussian
+
+    # Check for parall mode and adjust argument positions
+    parall_mode = False
+    for i, arg in enumerate(sys.argv):
+        if arg.lower() == 'parall' and i+1 < len(sys.argv):
+            parall_mode = True
+            break
+
+    # Adjust expected argument count and parsing based on mode
+    if parall_mode:
+        expected_args = 12  # script_name + 11 arguments (including parall and nthreads)
+        if len(sys.argv) < expected_args:
+            print("Error: Insufficient command line arguments provided for parallel mode.")
+            print(f"Expected {expected_args-1} arguments, but received {len(sys.argv)-1}.")
+            print("Expected arguments: mem, readgradpy, mrcc_omp_procs, mrcc_mpi_procs, mrcc_preamble_file, mrcc_end_file, parall, nthreads, layer, GauInput_fallback, GauOutput")
+            print("Received arguments:", sys.argv[1:])
+            sys.exit(1)
+        
+        # Parse with offset: skip positions 7-8 (parall, nthreads)
+        mem: str = sys.argv[1]              # Total memory in GB (e.g., "16")
+        readgradpy: str = sys.argv[2]       # Gradient reading flag ("READ", "NONE", "SCAN")
+        mrcc_omp_procs: str = sys.argv[3]   # OpenMP threads for MRCC
+        mrcc_mpi_procs: str = sys.argv[4]   # MPI tasks for MRCC
+        mrcc_preamble_file: str = resolve_path_with_env(sys.argv[5])# Path to MRCC preamble input section file
+        mrcc_end_file: str = resolve_path_with_env(sys.argv[6])    # Path to MRCC ending input section file
+        # Skip sys.argv[7] (parall) and sys.argv[8] (nthreads)
+        layer: str = sys.argv[9]            # Layer identifier (e.g., 'H', 'M', 'L' - currently unused in MRCC logic)
+        GauInput_fallback: str = sys.argv[10]# Fallback path for Gaussian input file (e.g. Gau-1234.EIn)
+        GauOutput: str = sys.argv[11]       # Path for Gaussian output file (e.g., Gau-1234.Ext)
+    else:
+        expected_args = 10  # script_name + 9 arguments
+        if len(sys.argv) < expected_args:
+            print("Error: Insufficient command line arguments provided.")
+            print(f"Expected {expected_args-1} arguments, but received {len(sys.argv)-1}.")
+            print("Expected arguments: mem, readgradpy, mrcc_omp_procs, mrcc_mpi_procs, mrcc_preamble_file, mrcc_end_file, layer, GauInput_fallback, GauOutput")
+            print("Received arguments:", sys.argv[1:])
+            sys.exit(1)
+        
+        # Normal mode - standard positions
+        mem: str = sys.argv[1]              # Total memory in GB (e.g., "16")
+        readgradpy: str = sys.argv[2]       # Gradient reading flag ("READ", "NONE", "SCAN")
+        mrcc_omp_procs: str = sys.argv[3]   # OpenMP threads for MRCC
+        mrcc_mpi_procs: str = sys.argv[4]   # MPI tasks for MRCC
+        mrcc_preamble_file: str = resolve_path_with_env(sys.argv[5])# Path to MRCC preamble input section file
+        mrcc_end_file: str = resolve_path_with_env(sys.argv[6])    # Path to MRCC ending input section file
+        layer: str = sys.argv[7]            # Layer identifier (e.g., 'H', 'M', 'L' - currently unused in MRCC logic)
+        GauInput_fallback: str = sys.argv[8]# Fallback path for Gaussian input file (e.g. Gau-1234.EIn)
+        GauOutput: str = sys.argv[9]        # Path for Gaussian output file (e.g., Gau-1234.Ext)
+
+    # Find the actual Gaussian input file using glob pattern
+    # Gaussian often creates files like Gau-PID.EIn
+    files = glob.glob('Gau*.EIn')
+    if files:
+        # Find the most recently created file matching the pattern
+        last_created_file = max(files, key=os.path.getctime)
+        GauInput = last_created_file
+    else:
+        # If glob fails, use the fallback path provided as argument
+        GauInput = GauInput_fallback
+
+    # Parse Gaussian input file to get molecular details
+    try:
+        geom, atoms, spin, charge, OptFlag = GauInpParser(GauInput)
+    except Exception as e:
+        print(f"Fatal Error: Failed to parse Gaussian input file '{GauInput}'. Error: {e}")
+        sys.exit(1) # Cannot proceed without geometry info
+
+    # Record start time for performance monitoring
+    enter_time = time.time()
+
+    # Parse coefficients and formula for MRCC calculations from the preamble file
+    # Uses the new parse_scheme_and_formula function
+    mrcc_operations, mrcc_formula = parse_scheme_and_formula(mrcc_preamble_file, "mrcc") # Use '!' comment char
+    
+    # For backward compatibility, also create a simple coefficients list
+    mrcc_coefficients = []
+    for op in mrcc_operations:
+        if op[0] == 'coeff':
+            mrcc_coefficients.append(op[1])
+        elif op[0] == 'copy':
+            mrcc_coefficients.append(op[2])  # Add coefficient part for counting
+
+    # Determine calculation type based on OptFlag from Gaussian input
+    if OptFlag == 0:
+        # --- Energy-only calculation ---
+
+        # Determine coefficients based on readgradpy flag
+        if readgradpy.upper() == "READ":
+            coeffs_to_use = mrcc_coefficients
+        else:
+            coeffs_to_use = [1.0]
+        
+        # Call the main MRCC computation function for energy
+        mrcc_energy, mrcc_dipole, _ = compute_mrcc_energy( # Gradient is ignored here
+            mrcc_mpi_procs,
+            mrcc_omp_procs,
+            mem,
+            GauInput, # Pass GauInput for geometry parsing inside
+            OptFlag=False, # Explicitly set OptFlag
+            coefficients=coeffs_to_use, # Use determined coefficients
+            atoms=atoms, # Pass atoms count
+            mrcc_preamble_file=mrcc_preamble_file,
+            mrcc_end_file=mrcc_end_file,
+            operations=mrcc_operations, # Pass operations for advanced combination
+            formula=mrcc_formula # Pass custom formula if available
+        )
+
+        # The energy returned is already the final combined/scaled value
+        final_energy = mrcc_energy
+        final_dipole = mrcc_dipole # Usually [0,0,0] from MRCC wrapper
+
+        # Write the final energy and dipole to the Gaussian output file
+        write_output(GauOutput, final_energy, final_dipole)
+
+    elif OptFlag == 1:
+        # --- Gradient calculation ---
+
+        # Get scratch path, default to /tmp if environment variable not set
+        scratch_path = os.getenv('SCRATCH', '/tmp')
+
+        # The 'readgradpy' flag determines coefficient usage and gradient handling
+        if readgradpy.upper() in ["READ", "NONE", "SCAN"]:
+
+            # Determine coefficients based on readgradpy flag
+            if readgradpy.upper() == "READ":
+                coeffs_to_use = mrcc_coefficients
+            elif readgradpy.upper() in ["NONE", "SCAN"]:
+                coeffs_to_use = [1.0]
+
+            # Call the main MRCC computation function for gradient
+            mrcc_energy, mrcc_dipole, mrcc_gradient = compute_mrcc_energy(
+                mrcc_mpi_procs,
+                mrcc_omp_procs,
+                mem,
+                GauInput, # Pass GauInput for geometry parsing inside
+                OptFlag=True, # Explicitly set OptFlag
+                readgradpy=readgradpy.upper(), # Pass flag for internal handling (e.g., SCAN)
+                coefficients=coeffs_to_use, # Use determined coefficients
+                atoms=atoms, # Pass atoms count, crucial for gradient
+                mrcc_preamble_file=mrcc_preamble_file,
+                mrcc_end_file=mrcc_end_file,
+                operations=mrcc_operations, # Pass operations for advanced combination
+                formula=mrcc_formula # Pass custom formula if available
+            )
+
+            # Results are already combined/scaled by the compute function
+            final_energy = mrcc_energy
+            final_dipole = mrcc_dipole
+            final_gradient = mrcc_gradient
+
+            # Final cleanup of any remaining scratch directories
+            job_id = os.getpid()
+            scratch_pattern = os.path.join(scratch_path, f"mrcc-{job_id}-*")
+            remaining_dirs = glob.glob(scratch_pattern)
+            if remaining_dirs:
+                clean_scratch_pattern(scratch_pattern)
+
+        else:
+             # Handle unexpected readgradpy values if necessary
+             print(f"Error: Unsupported readgradpy flag '{readgradpy}'. Expected 'READ', 'NONE', or 'SCAN'.")
+             # Decide how to handle: exit or try default behavior? Exiting is safer.
+             sys.exit(1)
+
+        # Write final energy, dipole, and gradient to Gaussian output file
+        write_output(GauOutput, final_energy, final_dipole, final_gradient)
+
+    else:
+        # Handle invalid OptFlag value
+        print(f"Error: Invalid OptFlag value '{OptFlag}' received from Gaussian. Expected 0 (Energy) or 1 (Gradient).")
+        sys.exit(1)
+
+# --- Helper Functions ---
+
+def clean_scratch_pattern(pattern):
+    """Cleans directories matching a glob pattern."""
+    for path in glob.glob(pattern):
+        try:
+            if os.path.isdir(path):
+                shutil.rmtree(path)
+            elif os.path.isfile(path) or os.path.islink(path):
+                 os.unlink(path) # Should not happen with dir pattern but handle just in case
+        except Exception as e:
+            pass
+
+
+def determine_scratch_dependencies_for_all_sections(scratch_dependencies, num_calculations):
+    """
+    Determine which scratch directories need to be preserved based on dependencies.
+    
+    Args:
+        scratch_dependencies (dict): Maps section_id to source section number
+        num_calculations (int): Total number of calculations to be performed
+        
+    Returns:
+        dict: Maps section number to list of dependent section numbers
+    """
+    # Build reverse dependency map: source_section -> [list of dependent sections]
+    preserve_until = {}
+    
+    for target_section_key, source_section_num in scratch_dependencies.items():
+        # Extract target section number from key (e.g., "!SECTION2" -> 2)
+        import re
+        match = re.match(r"!SECTION(\d+)", target_section_key)
+        if match:
+            target_section_num = int(match.group(1))
+            
+            # Add to preserve list
+            if source_section_num not in preserve_until:
+                preserve_until[source_section_num] = []
+            preserve_until[source_section_num].append(target_section_num)
+    
+    return preserve_until
+
+
+def should_preserve_scratch(section_num, preserve_until, current_calculation_index):
+    """
+    Determine if a scratch directory should be preserved based on dependencies.
+    
+    Args:
+        section_num (int): Section number whose scratch we're considering
+        preserve_until (dict): Maps section numbers to list of dependent sections
+        current_calculation_index (int): Current calculation index (1-based)
+        
+    Returns:
+        bool: True if scratch should be preserved, False if it can be deleted
+    """
+    if section_num not in preserve_until:
+        # No dependencies, can be deleted
+        return False
+    
+    # Check if any dependent calculations are still pending
+    dependent_sections = preserve_until[section_num]
+    max_dependent = max(dependent_sections)
+    
+    # Preserve if there are still dependent calculations to come
+    return current_calculation_index < max_dependent
+
+
+def selective_scratch_cleanup(scratch_path, job_id, section_num, preserve_until, current_calculation_index):
+    """
+    Selectively clean up scratch directories based on dependencies.
+    
+    Args:
+        scratch_path (str): Base scratch directory path
+        job_id (int): Job process ID
+        section_num (int): Section number of the scratch to potentially clean
+        preserve_until (dict): Dependency map
+        current_calculation_index (int): Current calculation index
+    """
+    # Determine scratch directory name
+    # Always use the section number for consistency
+    run_id = str(section_num)
+    scratch_dir = os.path.join(scratch_path, f"mrcc-{job_id}-{run_id}")
+    
+    if should_preserve_scratch(section_num, preserve_until, current_calculation_index):
+        pass  # Preserving scratch directory for future calculations
+    else:
+        # Safe to delete this scratch directory
+        if os.path.exists(scratch_dir):
+            try:
+                shutil.rmtree(scratch_dir)
+            except Exception as e:
+                pass
+
+
+def copy_scratch_directory(source_scratch_dir, target_scratch_dir):
+    """
+    Copy all contents from source scratch directory to target scratch directory.
+    
+    Args:
+        source_scratch_dir (str): Path to the source scratch directory
+        target_scratch_dir (str): Path to the target scratch directory
+    
+    Returns:
+        bool: True if copy was successful, False otherwise
+    """
+    try:
+        if not os.path.exists(source_scratch_dir):
+            print(f"    Warning: Source scratch directory '{source_scratch_dir}' does not exist. Skipping copy.")
+            return False
+        
+        if not os.path.isdir(source_scratch_dir):
+            print(f"    Warning: Source scratch path '{source_scratch_dir}' is not a directory. Skipping copy.")
+            return False
+        
+        # Create target directory if it doesn't exist
+        os.makedirs(target_scratch_dir, exist_ok=True)
+
+        # Copy all contents from source to target
+        for item in os.listdir(source_scratch_dir):
+            source_item = os.path.join(source_scratch_dir, item)
+            target_item = os.path.join(target_scratch_dir, item)
+
+            if os.path.isfile(source_item):
+                shutil.copy2(source_item, target_item)  # copy2 preserves metadata
+            elif os.path.isdir(source_item):
+                shutil.copytree(source_item, target_item, dirs_exist_ok=True)
+
+        return True
+        
+    except Exception as e:
+        print(f"    Error copying scratch directory from '{source_scratch_dir}' to '{target_scratch_dir}': {e}")
+        return False
+
+
+def create_mrcc_input(section_id, preamble_sections, ending_sections, mpi_procs, omp_procs, mem, spin, charge, geom):
+    """
+    Create MRCC input file (MINP) for a specific section using the provided geometry and parameters.
+
+    Args:
+        section_id (str): The section identifier (e.g., "default", "!SECTION1"). This key is used
+                          to retrieve content from preamble_sections and ending_sections.
+        preamble_sections (dict): Dictionary mapping section_id to list of preamble content lines.
+        ending_sections (dict): Dictionary mapping section_id to list of ending content lines.
+        mpi_procs (str): Number of MPI processes for MRCC.
+        omp_procs (str): Number of OMP threads per MPI process for MRCC.
+        mem (str): Total memory available in GB (e.g., "16").
+        spin (int): Multiplicity (e.g., 1 for singlet, 2 for doublet).
+        charge (int): Charge of the molecule.
+        geom (list): List of geometry strings (e.g., "C    0.0000000000   0.0000000000   0.0000000000").
+
+    Returns:
+        tuple: (minp_file, use_mpi)
+            - minp_file (str): Path to the created MINP file (e.g., "MINP", "MINP_1").
+            - use_mpi (bool): True if MPI is requested for this section, False otherwise.
+    """
+    # --- Geometry Formatting ---
+    # Assumes geom list is already formatted correctly (Symbol X Y Z)
+    formatted_geom = "\n".join(geom)
+    num_atoms = len(geom)
+
+    # MRCC input format for geometry section
+    geom_string = f"""
+unit=bohr
+geom=xyz
+{num_atoms}
+Title AutoGenerated by MRCC_Ext Script
+{formatted_geom}
+
+
+charge={charge}
+mult={spin}
+"""
+
+    # --- Section Content Retrieval ---
+    # Get the content for the specified section_id. Fallback to 'default' if the specific ID isn't found.
+    preamble_content = preamble_sections.get(section_id, preamble_sections.get("default", []))
+    ending_content = ending_sections.get(section_id, ending_sections.get("default", []))
+
+    # --- MPI Detection and Processing ---
+    # Check if 'mpi' keyword is present in preamble content (case-insensitive)
+    use_mpi = False
+    processed_preamble_lines = []
+    
+    for line in preamble_content:
+        line_lower = line.lower()
+        if 'mpi' in line_lower:
+            use_mpi = True
+            # Replace 'mpi' with actual mpitasks directive
+            # This handles cases like "mpi" appearing anywhere in the line
+            processed_line = line_lower.replace('mpi', f'mpitasks={mpi_procs}')
+            processed_preamble_lines.append(processed_line)
+        else:
+            processed_preamble_lines.append(line)
+    
+    # Join the processed preamble lines and ending lines into single strings
+    preamble_string = "".join(processed_preamble_lines)
+    ending_string = "".join(ending_content)
+
+    # --- Parallelization and Memory Calculation ---
+    try:
+        mpi_procs_int = int(mpi_procs)
+        if mpi_procs_int <= 0:
+            print("Warning: MPI processes count is zero or negative, setting to 1 for memory calculation.")
+            mpi_procs_int = 1
+    except ValueError:
+        print(f"Warning: Invalid value for mpi_procs '{mpi_procs}', setting to 1 for memory calculation.")
+        mpi_procs_int = 1
+
+    try:
+        # Handle memory format like "120GB", "16GB", etc.
+        mem_str = mem.upper().replace('GB', '').replace('G', '').strip()
+        total_mem_gb = float(mem_str)
+        if total_mem_gb <= 0:
+             print(f"Warning: Invalid total memory '{mem}', using 1 GB as default.")
+             total_mem_gb = 1.0
+    except ValueError:
+         print(f"Warning: Invalid value for total memory '{mem}', using 1 GB as default.")
+         total_mem_gb = 1.0
+
+    # Calculate memory per MPI task in MB (MRCC 'mem' keyword often expects MB)
+    mem_per_task_gb = total_mem_gb / mpi_procs_int
+    mem_per_task_mb = int(mem_per_task_gb * 1024) # Convert GB per task to MB
+
+    # Ensure a reasonable minimum memory allocation
+    min_mem_mb = 100 # Set a minimum threshold (e.g., 100 MB)
+    if mem_per_task_mb < min_mem_mb:
+        print(f"Warning: Calculated memory per task ({mem_per_task_mb} MB) is below minimum ({min_mem_mb} MB). Setting to {min_mem_mb} MB.")
+        mem_per_task_mb = min_mem_mb
+
+    # --- MINP Filename Generation ---
+    # Create a unique filename for this section's input
+    if section_id == "default":
+        minp_file = 'MINP' # Standard name for the first/default calculation
+    else:
+        # Try to extract number from "!SECTION<number>"
+        match = re.match(r"!SECTION(\d+)", section_id, re.IGNORECASE)
+        if match:
+            section_num = match.group(1)
+            minp_file = f'MINP_{section_num}'
+        else:
+            # Sanitize the section_id if it's not in the expected format
+            sanitized_id = re.sub(r'[^\w.-]', '_', section_id).strip('_') # Replace non-alphanumeric with underscore
+            minp_file = f'MINP_{sanitized_id}' if sanitized_id else 'MINP_unknown'
+
+    # --- Check for MP2 computation ---
+    is_mp2_calc = False
+    full_keywords = preamble_string + "\n" + ending_string
+    for line in full_keywords.splitlines():
+        line_clean = line.strip().lower()
+        # Simple check for 'calc=' at the beginning
+        if line_clean.startswith('calc='):
+            equal_pos = line_clean.find('=')
+            if equal_pos != -1:
+                calc_value = line_clean[equal_pos+1:].strip()
+                # Check if 'mp2' is in the value part
+                if 'mp2' in calc_value:
+                    is_mp2_calc = True
+                    break # Found it, stop searching
+
+    # --- Write MINP File ---
+    try:
+        with open(minp_file, 'w') as mrcc_input:
+            # Write memory (and optionally mpitasks) based on calc type and use_mpi flag
+            if is_mp2_calc:
+                total_mem_mb = mem_per_task_mb * mpi_procs_int
+                mrcc_input.write(f"mem={total_mem_mb}MB\n")
+            else:
+                # Only write mpitasks if MPI is requested for this section
+                if use_mpi:
+                    mrcc_input.write(f"mpitasks={mpi_procs_int}\n")
+                    mrcc_input.write(f"mem={mem_per_task_mb}MB\n")
+                else:
+                    # For non-MPI sections, use total memory since all will run on single process
+                    total_mem_mb = mem_per_task_mb * mpi_procs_int
+                    mrcc_input.write(f"mem={total_mem_mb}MB\n")
+
+            # Write the main content blocks
+            mrcc_input.write(preamble_string)
+            mrcc_input.write(geom_string)
+            mrcc_input.write(ending_string)
+
+        return minp_file, use_mpi
+
+    except IOError as e:
+        print(f"Error: Failed to write MRCC input file '{minp_file}': {e}")
+        raise # Re-raise the exception
+
+# ==============================================================================
+# == CORRECTED parse_coefficients Function ==
+# ==============================================================================
+def parse_scheme_and_formula(preamble_file, program='mrcc'):
+    """
+    Parse coefficients and formula from a preamble file marked within a !scheme ... !end block.
+    Supports both simple coefficients and copy[index,coeff] operations like MolproExt_project.
+    Also extracts custom formula if present after !formula marker.
+
+    Args:
+        preamble_file (str): Path to the preamble file.
+        program (str): Program type ('mrcc', 'molpro' use '!', others default to '#').
+
+    Returns:
+        tuple: (parsed_operations, formula)
+            - parsed_operations (list): List of operation tuples: ('coeff', value) or ('copy', source_index, coefficient)
+            - formula (str or None): Custom formula string if found, None otherwise
+    """
+    parsed_operations = []
+    formula = None
+    comment_char = '!' if program.lower() in ['mrcc', 'molpro'] else '#'
+    in_scheme_section = False
+    
+    # Regex for finding "copy[index,coefficient]"
+    # Captures the index (integer) and coefficient (float)
+    copy_regex = re.compile(r"copy\[\s*(\d+)\s*,\s*([-+]?\d*\.?\d+(?:[eE][-+]?\d+)?)\s*\]")
+
+    try:
+        with open(preamble_file, 'r') as file:
+            lines = file.readlines()
+            for idx, line in enumerate(lines):
+                line_strip = line.strip()
+
+                # Detect start of scheme block (case-insensitive)
+                if '!scheme' in line_strip.lower():
+                    if in_scheme_section:
+                         pass  # Nested scheme, ignore
+                    else:
+                         in_scheme_section = True
+                    continue
+
+                # Detect end of scheme block (case-insensitive)
+                if '!end' in line_strip.lower():
+                    if not in_scheme_section:
+                         pass  # End outside scheme, ignore
+                    else:
+                         in_scheme_section = False
+                    break # Exit scheme processing
+
+                # Process lines within the scheme section
+                if in_scheme_section:
+                    # Check for formula marker
+                    if line_strip.lower() == '!formula':
+                        # Look for formula on the next non-empty, non-comment line
+                        for i in range(idx + 1, len(lines)):
+                            formula_line_content = lines[i].strip()
+                            if not formula_line_content or formula_line_content.startswith('#'):
+                                continue
+                            if formula_line_content.startswith('!') and not formula_line_content.lower().startswith('!end'):
+                                # This is our formula line
+                                formula = formula_line_content[1:].strip()  # Remove '!' prefix
+                                # Skip the formula line in subsequent processing by marking it as processed
+                                lines[i] = '# FORMULA_PROCESSED\n'
+                                break
+                        continue
+
+                    # Check if the stripped line starts with the comment character (for coefficients)
+                    if line_strip.startswith(comment_char):
+                        # Extract text *after* the comment character
+                        value_part = line_strip[len(comment_char):].strip()
+                        if not value_part: # Skip empty comments like '!'
+                            continue
+
+                        # Parse coefficients and copy operations
+                        parts = value_part.split()
+                        for part_str in parts:
+                            match = copy_regex.fullmatch(part_str)
+                            if match:
+                                source_index = int(match.group(1))
+                                coeff_value = float(match.group(2))
+                                if source_index <= 0:
+                                    raise ValueError(f"Copy index must be positive: {part_str}")
+                                parsed_operations.append(('copy', source_index, coeff_value))
+                            else:
+                                try:
+                                    coeff_value = float(part_str)
+                                    parsed_operations.append(('coeff', coeff_value))
+                                    print(f"    Line {idx+1}: Found coefficient: {coeff_value}")
+                                except ValueError:
+                                    # Check if it's the start of an inline comment and stop parsing this line
+                                    if part_str.startswith('#') or part_str.startswith('!'):
+                                        break
+                                    raise ValueError(f"Invalid part in scheme: '{part_str}'. Must be a number or 'copy[idx,coeff]'.")
+
+    except FileNotFoundError:
+        print(f"Warning: Preamble file '{preamble_file}' not found for scheme parsing.")
+    except Exception as e:
+        print(f"Error reading or parsing scheme from '{preamble_file}': {e}")
+
+    # If no operations were found within a valid !scheme block, return default
+    if not parsed_operations:
+         print(f"Info: No operations found in scheme. Using default coefficient [1.0].")
+         return [('coeff', 1.0)], formula
+    else:
+        print(f"Finished parsing scheme: {parsed_operations}")
+        if formula:
+            print(f"Found formula: {formula}")
+        return parsed_operations, formula
+
+
+def parse_coefficients(preamble_file, program='mrcc'):
+    """
+    Legacy function for backward compatibility.
+    Parses coefficients and returns a simple list for existing code.
+    """
+    parsed_operations, _ = parse_scheme_and_formula(preamble_file, program)
+    
+    # Convert to old format for backward compatibility
+    coefficients = []
+    for op in parsed_operations:
+        if op[0] == 'coeff':
+            coefficients.append(op[1])
+        elif op[0] == 'copy':
+            # For backward compatibility, we can't properly handle copy operations
+            # in the old format, so we'll add the coefficient as-is
+            coefficients.append(op[2])
+    
+    return coefficients
+# ==============================================================================
+# == END OF CORRECTED parse_coefficients ==
+# ==============================================================================
+
+
+def evaluate_custom_formula(formula, energies, coefficients):
+    """
+    Safely evaluate a custom formula for combining energies and gradients.
+    
+    Args:
+        formula (str): Formula string (e.g., "e=exp(c1*e1)+log(c2*e2)+c3*e3")
+        energies (list): List of energy values or gradient arrays
+        coefficients (list): List of coefficient values
+        
+    Returns:
+        float or numpy.ndarray: Evaluated result (scalar for energies, array for gradients)
+    """
+    import ast
+    import operator
+    import numpy as np
+    
+    # Define allowed functions
+    safe_functions = {
+        'exp': np.exp,
+        'log': np.log,
+        'log10': np.log10,
+        'sqrt': np.sqrt,
+        'sin': np.sin,
+        'cos': np.cos,
+        'tan': np.tan,
+        'abs': np.abs,
+        'pow': np.power,
+        'pi': np.pi,
+        'e': np.e
+    }
+    
+    # Define allowed operators
+    safe_operators = {
+        ast.Add: operator.add,
+        ast.Sub: operator.sub,
+        ast.Mult: operator.mul,
+        ast.Div: operator.truediv,
+        ast.Pow: operator.pow,
+        ast.USub: operator.neg,
+        ast.UAdd: operator.pos,
+    }
+    
+    class FormulaEvaluator(ast.NodeVisitor):
+        def __init__(self, variables):
+            self.variables = variables
+            
+        def visit_BinOp(self, node):
+            left = self.visit(node.left)
+            right = self.visit(node.right)
+            op = safe_operators.get(type(node.op))
+            if op is None:
+                raise ValueError(f"Unsupported operator: {type(node.op).__name__}")
+            return op(left, right)
+            
+        def visit_UnaryOp(self, node):
+            operand = self.visit(node.operand)
+            op = safe_operators.get(type(node.op))
+            if op is None:
+                raise ValueError(f"Unsupported unary operator: {type(node.op).__name__}")
+            return op(operand)
+            
+        def visit_Call(self, node):
+            func_name = node.func.id if isinstance(node.func, ast.Name) else None
+            if func_name not in safe_functions:
+                raise ValueError(f"Unsupported function: {func_name}")
+            
+            args = [self.visit(arg) for arg in node.args]
+            return safe_functions[func_name](*args)
+            
+        def visit_Name(self, node):
+            if node.id in self.variables:
+                return self.variables[node.id]
+            else:
+                raise ValueError(f"Unknown variable: {node.id}")
+                
+        def visit_Constant(self, node):
+            return node.value
+            
+        def visit_Num(self, node):  # For Python < 3.8 compatibility
+            return node.n
+            
+        def generic_visit(self, node):
+            raise ValueError(f"Unsupported AST node: {type(node).__name__}")
+    
+    try:
+        # Parse the formula (remove 'e=' prefix if present)
+        if '=' in formula:
+            formula = formula.split('=', 1)[1].strip()
+        
+        # Create variable mapping
+        variables = {}
+        
+        # Add energy variables (e1, e2, e3, ...)
+        for i, energy in enumerate(energies, 1):
+            variables[f'e{i}'] = energy
+            
+        # Add coefficient variables (c1, c2, c3, ...)
+        for i, coeff in enumerate(coefficients, 1):
+            variables[f'c{i}'] = coeff
+            
+        # Parse and evaluate the formula
+        tree = ast.parse(formula, mode='eval')
+        evaluator = FormulaEvaluator(variables)
+        result = evaluator.visit(tree.body)
+
+        return result
+        
+    except Exception as e:
+        print(f"ERROR: Formula evaluation failed: {e}")
+        print(f"Formula: {formula}")
+        print(f"Available variables: e1-e{len(energies)}, c1-c{len(coefficients)}")
+        raise ValueError(f"Formula evaluation error: {e}")
+
+
+def validate_formula_syntax(formula, num_energies, num_coefficients):
+    """
+    Validate formula syntax before evaluation.
+    
+    Args:
+        formula (str): Formula string to validate
+        num_energies (int): Number of energy values available
+        num_coefficients (int): Number of coefficients available
+        
+    Returns:
+        bool: True if valid, raises ValueError if invalid
+    """
+    import ast
+    
+    try:
+        # Remove 'e=' prefix if present
+        if '=' in formula:
+            formula = formula.split('=', 1)[1].strip()
+            
+        # Parse the formula
+        tree = ast.parse(formula, mode='eval')
+        
+        # Check for valid variable names
+        allowed_functions = ['exp', 'log', 'log10', 'sqrt', 'sin', 'cos', 'tan', 'abs', 'pow']
+        allowed_constants = ['pi', 'e']
+        
+        class VariableChecker(ast.NodeVisitor):
+            def __init__(self, max_e, max_c):
+                self.max_e = max_e
+                self.max_c = max_c
+                self.variables_used = set()
+                
+            def visit_Name(self, node):
+                var_name = node.id
+                self.variables_used.add(var_name)
+                
+                if var_name.startswith('e') and len(var_name) > 1:
+                    try:
+                        idx = int(var_name[1:])
+                        if idx < 1 or idx > self.max_e:
+                            raise ValueError(f"Energy variable {var_name} out of range (1-{self.max_e})")
+                    except ValueError as e:
+                        if "invalid literal" in str(e):
+                            raise ValueError(f"Invalid energy variable name: {var_name}")
+                        raise
+                elif var_name.startswith('c') and len(var_name) > 1:
+                    try:
+                        idx = int(var_name[1:])
+                        if idx < 1 or idx > self.max_c:
+                            raise ValueError(f"Coefficient variable {var_name} out of range (1-{self.max_c})")
+                    except ValueError as e:
+                        if "invalid literal" in str(e):
+                            raise ValueError(f"Invalid coefficient variable name: {var_name}")
+                        raise
+                elif var_name not in allowed_constants:  # Allow mathematical constants
+                    # Check if it's being used as a function (handled in visit_Call)
+                    # For standalone names, only allow known constants
+                    if var_name not in allowed_functions:
+                        raise ValueError(f"Unknown variable: {var_name}")
+                    
+                self.generic_visit(node)
+                
+            def visit_Call(self, node):
+                # Function calls are allowed for certain mathematical functions
+                if isinstance(node.func, ast.Name):
+                    func_name = node.func.id
+                    if func_name not in allowed_functions:
+                        raise ValueError(f"Unknown function: {func_name}")
+                
+                # Visit arguments
+                for arg in node.args:
+                    self.visit(arg)
+        
+        checker = VariableChecker(num_energies, num_coefficients)
+        checker.visit(tree)
+
+        return True
+        
+    except SyntaxError as e:
+        raise ValueError(f"Formula syntax error: {e}")
+    except Exception as e:
+        raise ValueError(f"Formula validation error: {e}")
+
+
+def parse_mrcc_sections(preamble_file, end_file):
+    """
+    Parse MRCC preamble and ending files to extract content for different calculation sections.
+    Sections are identified by markers like "!SECTION1", "!SECTION2".
+    Also extracts "energy_pattern=<pattern>" definitions within each section.
+    Also extracts "!cpscr <source_section>" commands to copy scratch directories.
+    Correctly skips scheme blocks and includes relevant keywords.
+
+    Args:
+        preamble_file (str): Path to the preamble file.
+        end_file (str): Path to the ending file.
+
+    Returns:
+        tuple: (preamble_sections, ending_sections, energy_patterns, scratch_dependencies)
+            - preamble_sections (dict): Maps section_id (e.g., "default", "!SECTION1") to list of content lines.
+            - ending_sections (dict): Maps section_id to list of content lines.
+            - energy_patterns (dict): Maps section_id to list of energy pattern strings (e.g., ["***FINAL HF ENERGY:", "Other pattern"]).
+            - scratch_dependencies (dict): Maps section_id to source section number for scratch copying (e.g., {"!SECTION2": 1}).
+    """
+    preamble_sections = {"default": []}
+    ending_sections = {"default": []}
+    # Default pattern now less meaningful, as user provides full string via energy_pattern=
+    # Changed to support multiple patterns per section
+    energy_patterns = {"default": ["***FINAL MRCC ENERGY:"]}
+    # Dictionary to store scratch directory copy dependencies
+    scratch_dependencies = {}
+
+    def _parse_section_file(filepath, sections_dict, file_type):
+        """Internal helper to parse one file (preamble or ending)."""
+        current_section_id = "default"
+        # Ensure default section exists in the dictionary being populated
+        if current_section_id not in sections_dict:
+            sections_dict[current_section_id] = []
+
+        current_patterns = energy_patterns.get("default", []).copy() # Inherit default patterns initially
+        in_scheme_block = False # State variable to track if inside !scheme...!end
+
+        try:
+            with open(filepath, 'r') as file:
+                for line_num, line in enumerate(file, 1):
+                    # print(f"DEBUG LINE {line_num}: '{line.rstrip()}'") # Optional detailed debug
+                    line_stripped = line.strip()
+
+                    # --- Handle Scheme Block ---
+                    # Check for start of scheme block (case-insensitive)
+                    if '!scheme' in line_stripped.lower():
+                        if not in_scheme_block:
+                            in_scheme_block = True
+                        continue # Skip the !scheme line itself
+
+                    # Check for end of scheme block (case-insensitive)
+                    if '!end' in line_stripped.lower():
+                        if in_scheme_block:
+                             in_scheme_block = False
+                        continue # Skip the !end line itself
+
+                    # Skip ALL lines while inside the scheme block
+                    if in_scheme_block:
+                        continue
+                    # --- End Scheme Block Handling ---
+
+                    # Detect new section marker (case-insensitive check)
+                    if line_stripped.startswith("!") and "SECTION" in line_stripped.upper():
+                        current_section_id = line_stripped # Use the exact marker line as the key
+                        if current_section_id not in sections_dict:
+                             sections_dict[current_section_id] = []
+                        # For preamble, also initialize/update energy pattern tracking
+                        if file_type == "preamble":
+                             # Initialize new section with empty patterns (no inheritance)
+                             energy_patterns[current_section_id] = []
+                             current_patterns = []
+                        continue # Skip adding the marker line itself to content
+
+                    # Detect energy pattern definition (only in preamble, case-insensitive key)
+                    # Now expects the full string, e.g., energy_pattern=***FINAL HF ENERGY:
+                    # MODIFIED: Support multiple patterns per section by appending to list
+                    if file_type == "preamble" and line_stripped.lower().startswith("energy_pattern="):
+                        parts = line_stripped.split("=", 1)
+                        if len(parts) == 2:
+                            pattern = parts[1].strip() # Get the full string provided by user
+                            if pattern:
+                                # Initialize section patterns list if not exists
+                                if current_section_id not in energy_patterns:
+                                    energy_patterns[current_section_id] = []
+                                # Append pattern to list (supporting multiple patterns per section)
+                                energy_patterns[current_section_id].append(pattern)
+                                current_patterns = energy_patterns[current_section_id].copy() # Update current patterns for inheritance by subsequent sections
+                                print(f"    Added energy pattern for section '{current_section_id}': '{pattern}' at line {line_num}")
+                                print(f"    Section '{current_section_id}' now has {len(energy_patterns[current_section_id])} pattern(s)")
+                            else:
+                                print(f"    Warning: Empty energy pattern definition ignored for section '{current_section_id}' at line {line_num}.")
+                        else:
+                             print(f"    Warning: Malformed energy pattern definition at line {line_num}: '{line_stripped}'")
+                        continue # Skip adding the 'energy_pattern=' line to the section content
+
+                    # Detect scratch copy command (only in preamble, case-insensitive)
+                    # Expects format: !cpscr <source_section_number>
+                    if file_type == "preamble" and line_stripped.lower().startswith("!cpscr"):
+                        parts = line_stripped.split()
+                        if len(parts) >= 2:
+                            try:
+                                source_section = int(parts[1])
+                                if source_section > 0:
+                                    scratch_dependencies[current_section_id] = source_section
+                                    print(f"    Added scratch copy dependency for section '{current_section_id}': copy from section {source_section} at line {line_num}")
+                                else:
+                                    print(f"    Warning: Invalid source section number '{parts[1]}' in !cpscr command at line {line_num}. Must be positive integer.")
+                            except ValueError:
+                                print(f"    Warning: Invalid source section number '{parts[1]}' in !cpscr command at line {line_num}. Must be integer.")
+                        else:
+                            print(f"    Warning: Malformed !cpscr command at line {line_num}: '{line_stripped}'. Expected format: !cpscr <source_section_number>")
+                        continue # Skip adding the '!cpscr' line to the section content
+
+                    # --- Add Regular Lines ---
+                    # If we reach here, the line is not a marker, not scheme content,
+                    # and not an energy_pattern line. Add the original line (with whitespace/newline)
+                    # to the content list for the current section.
+                    if current_section_id in sections_dict:
+                         sections_dict[current_section_id].append(line)
+                    else:
+                         print(f"Internal Warning: Section key '{current_section_id}' not found in {file_type}_dict while parsing line {line_num}. Line ignored: '{line.strip()}'")
+
+        except FileNotFoundError:
+            print(f"Warning: MRCC {file_type} file '{filepath}' not found. Using empty default section.")
+            sections_dict["default"] = [] # Ensure default exists even if file not found
+            if file_type == "preamble": energy_patterns["default"] = ["***FINAL MRCC ENERGY:"] # Reset pattern too
+        except Exception as e:
+            print(f"Error parsing MRCC {file_type} file '{filepath}': {e}")
+            # Reset to empty default on error for safety
+            sections_dict.clear()
+            sections_dict["default"] = []
+            if file_type == "preamble":
+                 energy_patterns.clear()
+                 energy_patterns["default"] = ["***FINAL MRCC ENERGY:"]
+
+    # Parse both files using the helper
+    _parse_section_file(preamble_file, preamble_sections, "preamble")
+    _parse_section_file(end_file, ending_sections, "ending")
+
+    # --- Summary Debug Output ---
+    print("\n--- Parsed MRCC Sections Summary (v4 Logic) ---")
+    all_section_ids = sorted(list(set(preamble_sections.keys()) | set(ending_sections.keys())))
+    for section_id in all_section_ids:
+        preamble_lines = len(preamble_sections.get(section_id, []))
+        ending_lines = len(ending_sections.get(section_id, []))
+        patterns = energy_patterns.get(section_id, ["N/A (Using Default/Inherited)"])
+        print(f"  Section Key: '{section_id}'")
+        if len(patterns) == 1:
+            print(f"    Energy Pattern: '{patterns[0]}'")
+        else:
+            print(f"    Energy Patterns ({len(patterns)}):")
+            for i, pattern in enumerate(patterns, 1):
+                print(f"      {i}. '{pattern}'")
+        print(f"    Preamble Lines: {preamble_lines}")
+        print(f"    Ending Lines:   {ending_lines}")
+        # Show scratch dependencies if any
+        if section_id in scratch_dependencies:
+            source_section = scratch_dependencies[section_id]
+            print(f"    Scratch Dependency: Copy from section {source_section}")
+    
+    # Summary of all scratch dependencies
+    if scratch_dependencies:
+        print("\n--- Scratch Copy Dependencies Summary ---")
+        for target_section, source_section in scratch_dependencies.items():
+            print(f"  {target_section} -> Copy from section {source_section}")
+        print("----------------------------------------")
+    else:
+        print("\n--- No Scratch Dependencies Found ---")
+    
+    print("---------------------------------------------")
+
+    return preamble_sections, ending_sections, energy_patterns, scratch_dependencies
+
+# ==============================================================================
+# == CORRECTED run_single_mrcc_calculation Function ==
+# ==============================================================================
+def run_single_mrcc_calculation(minp_file, output_file, mpi_procs, omp_procs, mem, scratch_path, atoms=None, energy_patterns=None, use_mpi=True):
+    """
+    Run a single MRCC calculation within a dedicated scratch directory.
+    Uses corrected energy parsing logic based on full user-provided string.
+
+    Args:
+        minp_file (str): Path to the MINP input file generated for this specific run.
+        output_file (str): Desired name for the output file (e.g., "mrcc_output_1.out").
+        mpi_procs (str): Number of MPI processes.
+        omp_procs (str): Number of OpenMP threads per process.
+        mem (str): Total memory (GB, for context).
+        scratch_path (str): Base path for scratch directories.
+        atoms (int, optional): Number of atoms, required for gradient parsing.
+        energy_patterns (list): List of energy pattern strings to search for (e.g., ["***FINAL HF ENERGY:", "Other pattern"]).
+                                If None, defaults to ["***FINAL MRCC ENERGY:"].
+        use_mpi (bool, optional): True if MPI is requested for this calculation, False for OpenMP-only. Default: True.
+
+    Returns:
+        tuple: (energy, gradient)
+            - energy (float | None): Sum of all extracted energy values from matching patterns, or None if no patterns found/error.
+            - gradient (list | None): List of [x, y, z] gradient components per atom,
+                                      or None if not requested/found/error.
+    """
+    # Parameter validation and default handling
+    if energy_patterns is None:
+        energy_patterns = ["***FINAL MRCC ENERGY:"]
+    elif not isinstance(energy_patterns, list):
+        raise TypeError("energy_patterns must be a list of strings")
+    elif len(energy_patterns) == 0:
+        raise ValueError("energy_patterns cannot be empty")
+    
+    energy = None
+    gradient = None # Initialize gradient to None
+    test_mode = os.environ.get('EXT_TEST_MODE')
+
+    # --- Environment Setup for OpenMP/MPI ---
+    # Save original environment variables for restoration later
+    saved_env = {}
+    env_keys_to_manage = ["OMP_NUM_THREADS", "MKL_NUM_THREADS"]
+    
+    try:
+        omp_procs_int = int(omp_procs)
+        if omp_procs_int <= 0: omp_procs_int = 1
+    except ValueError:
+        omp_procs_int = 1
+        print(f"  Warning: Invalid omp_procs '{omp_procs}', using 1.")
+    
+    try:
+        mpi_procs_int = int(mpi_procs)
+        if mpi_procs_int <= 0: mpi_procs_int = 1
+    except ValueError:
+        mpi_procs_int = 1
+        print(f"  Warning: Invalid mpi_procs '{mpi_procs}', using 1.")
+    
+    # Calculate effective OpenMP threads based on MPI usage
+    if use_mpi:
+        effective_omp_threads = omp_procs_int
+        print(f"  MPI mode: using {mpi_procs_int} MPI tasks with {omp_procs_int} OMP threads each")
+    else:
+        effective_omp_threads = omp_procs_int * mpi_procs_int
+        print(f"  OpenMP-only mode: using {effective_omp_threads} OMP threads ({omp_procs_int} x {mpi_procs_int})")
+    
+    # Store original values and set new environment variables
+    for key in env_keys_to_manage:
+        saved_env[key] = os.environ.get(key)
+        os.environ[key] = str(effective_omp_threads)
+        print(f"  Set {key}={effective_omp_threads}")
+
+    # --- Setup Scratch Directory ---
+    job_id = os.getpid()
+    run_id_match = re.search(r'MINP(?:_(\w+))?$', os.path.basename(minp_file))
+    run_id = run_id_match.group(1) if run_id_match and run_id_match.group(1) else "default"
+    run_scratch_dir = os.path.join(scratch_path, f"mrcc-{job_id}-{run_id}")
+
+    print(f"\n--- Starting MRCC Run {run_id} ---")
+    print(f"  Scratch Dir: {run_scratch_dir}")
+    print(f"  Input File (source): {minp_file}")
+    print(f"  Output File (target): {output_file}")
+    print(f"  MPI Procs: {mpi_procs}, OMP Threads: {omp_procs} (Effective: {effective_omp_threads})")
+    print(f"  MPI Mode: {'Enabled' if use_mpi else 'Disabled'}")
+    if len(energy_patterns) == 1:
+        print(f"  Energy String Pattern: '{energy_patterns[0]}'")
+    else:
+        print(f"  Energy String Patterns ({len(energy_patterns)}):")
+        for i, pattern in enumerate(energy_patterns, 1):
+            print(f"    {i}. '{pattern}'")
+    if atoms: print(f"  Expecting Gradient for {atoms} atoms")
+
+    original_dir = os.getcwd() # Store current directory
+
+    try:
+        if not test_mode:
+            os.makedirs(run_scratch_dir, exist_ok=True)
+            print(f"  Created/Ensured scratch directory exists.")
+
+            # Copy input files to scratch
+            target_minp_path = os.path.join(run_scratch_dir, "MINP")
+            shutil.copy(minp_file, target_minp_path)
+            print(f"  Copied {minp_file} -> {target_minp_path}")
+            genbas_source = os.path.join(original_dir, "GENBAS")
+            if os.path.exists(genbas_source):
+                shutil.copy(genbas_source, run_scratch_dir)
+                print(f"  Copied GENBAS -> {run_scratch_dir}")
+
+            # Change to the scratch directory for execution
+            os.chdir(run_scratch_dir)
+            print(f"  Changed working directory to scratch.")
+
+            # --- Execute MRCC ---
+            command = f"dmrcc MINP > {output_file}"
+            print(f"  Executing command: {command}")
+            process = subprocess.run(command, shell=True, capture_output=True, text=True)
+
+            if process.returncode != 0:
+                print(f"  ERROR: MRCC execution failed! Return Code: {process.returncode}")
+                print("  --- MRCC STDOUT (Last 1000 chars) ---")
+                print(process.stdout[-1000:])
+                print("  --- MRCC STDERR ---")
+                print(process.stderr)
+                
+                # Copy output file for debugging even when execution failed
+                print("  Copying failed output file for debugging...")
+                target_output_path = os.path.join(original_dir, f"{output_file}_FAILED")
+                try:
+                    if os.path.exists(output_file):
+                        shutil.copy(output_file, target_output_path)
+                        print(f"    Copied failed output: {output_file} -> {target_output_path}")
+                    else:
+                        print(f"    Warning: Output file {output_file} not found in scratch directory")
+                except Exception as e:
+                    print(f"    ERROR copying failed output file: {e}")
+                
+                # Also copy MINP input file for debugging
+                try:
+                    minp_debug_path = os.path.join(original_dir, f"MINP_failed_{run_id}")
+                    if os.path.exists("MINP"):
+                        shutil.copy("MINP", minp_debug_path)
+                        print(f"    Copied failed input: MINP -> {minp_debug_path}")
+                except Exception as e:
+                    print(f"    ERROR copying failed MINP file: {e}")
+                
+                # Copy any other debug files that might be useful
+                debug_files = ["GENBAS", "basis", "fort.1", "fort.2", "TAPE21"]
+                for debug_file in debug_files:
+                    try:
+                        if os.path.exists(debug_file):
+                            debug_target = os.path.join(original_dir, f"{debug_file}_failed_{run_id}")
+                            shutil.copy(debug_file, debug_target)
+                            print(f"    Copied debug file: {debug_file} -> {debug_target}")
+                    except Exception as e:
+                        # Don't print errors for optional debug files to avoid spam
+                        pass
+                
+                return None, None
+            else:
+                print(f"  MRCC execution completed successfully.")
+        else:
+            run_scratch_dir = original_dir
+            print('  TEST MODE - skipping MRCC execution')
+            # Create fake output file for testing with all requested patterns
+            fake_output_content = ""
+            total_fake_energy = 0.0
+            
+            for pattern_idx, pattern in enumerate(energy_patterns):
+                # Generate realistic fake energies based on the pattern type
+                if "Density-based correction" in pattern:
+                    fake_energy = -0.022050486502 + (0.00001 * hash(run_id + str(pattern_idx)) % 100) / 1000000
+                elif "CABS singles correction" in pattern:
+                    fake_energy = -0.004324385437 + (0.00001 * hash(run_id + str(pattern_idx)) % 100) / 1000000
+                elif "KS energy + MP2 correction" in pattern:
+                    fake_energy = -73.450191474046 + (0.001 * hash(run_id + str(pattern_idx)) % 1000) / 1000000
+                else:
+                    # Default for other patterns
+                    fake_energy = -76.123456789 + (0.001 * hash(run_id + str(pattern_idx)) % 1000) / 1000000
+                
+                fake_output_content += f"{pattern}     {fake_energy:.12f} [AU]\n"
+                total_fake_energy += fake_energy
+                print(f'  TEST MODE: Pattern "{pattern}" -> {fake_energy:.12f}')
+            
+            with open(output_file, 'w') as f:
+                f.write(fake_output_content)
+            print(f'  TEST MODE: Created fake output with total energy {total_fake_energy:.12f}')
+
+        # --- Process Output File ---
+        if not os.path.exists(output_file):
+             print(f"  ERROR: Output file '{output_file}' not found after execution!")
+             return None, None
+
+        print(f"  Processing output file: {output_file}")
+        with open(output_file, 'r') as f:
+             output_content = f.read()
+
+        output_lines = output_content.splitlines() # Use splitlines() to handle different line endings
+
+                # --- MULTI-PATTERN Energy Extraction (v5) ---
+        if len(energy_patterns) == 1:
+            print(f"    Searching for energy pattern: '{energy_patterns[0]}'")
+        else:
+            print(f"    Searching for {len(energy_patterns)} energy patterns...")
+            for i, pattern in enumerate(energy_patterns, 1):
+                print(f"      {i}. '{pattern}'")
+        
+        extracted_energies = []  # Store all found energies
+        energy_sum = 0.0  # Sum of all extracted energies
+        
+        # Search for each pattern in the output
+        for pattern_idx, energy_pattern in enumerate(energy_patterns):
+            pattern_lower = energy_pattern.lower()  # Lowercase pattern once
+            pattern_found = False
+            
+            for line_num, line in enumerate(output_lines):
+                # Prepare line for comparison: remove leading/trailing whitespace and convert to lower case
+                line_compare = line.strip().lower()
+                # Check if the prepared line starts with the lowercased pattern
+                if line_compare.startswith(pattern_lower):
+                    print(f"    Found matching line for pattern {pattern_idx+1} ({line_num+1}): '{line.strip()}'")
+                    # Extract the part of the original line *after* the pattern
+                    # Use len(energy_pattern) which is the length of the original case pattern string
+                    value_part = line[len(energy_pattern):].strip()
+                    # Split the remaining part by whitespace
+                    potential_values = value_part.split()
+                    print(f"      Potential values after pattern: {potential_values}")
+                    
+                    pattern_energy = None
+                    for item in potential_values:
+                        try:
+                            # Attempt to convert the first item that looks like a number
+                            pattern_energy = float(item)
+                            print(f"      Successfully extracted energy: {pattern_energy:.12f} (from item '{item}')")
+                            break # Found the first float, stop checking items on this line
+                        except ValueError:
+                            # If it's not a float, ignore it and check the next item
+                            # This handles cases like "[AU]" appearing after the number
+                            print(f"      Item '{item}' is not a float, skipping.")
+                            continue
+                    
+                    if pattern_energy is not None:
+                        extracted_energies.append((energy_pattern, pattern_energy))
+                        energy_sum += pattern_energy
+                        pattern_found = True
+                        break # Found energy for this pattern, move to next pattern
+            
+            if not pattern_found:
+                print(f"    Warning: Energy pattern '{energy_pattern}' not found or no float followed it.")
+
+        # Final energy is the sum of all found energies
+        if extracted_energies:
+            energy = energy_sum
+            print(f"    Energy extraction summary:")
+            for pattern, value in extracted_energies:
+                print(f"      '{pattern}' = {value:.12f}")
+            print(f"    Total sum of energies: {energy:.12f}")
+        else:
+            energy = None
+            print(f"    Warning: No energy patterns were successfully extracted.")
+
+
+ #Numerical Cartesian gradient [au]:
+ #                  x                y                z
+ #   1  O      0.0000000737    -0.0000001051    -0.0000087347
+ #   2  H      0.0000002565    -0.0001705122     0.0000041409
+ #   3  H      0.0000003434     0.0001703505     0.0000041809
+
+        # --- Gradient Extraction (Unchanged) ---
+
+        if atoms is not None and atoms > 0:
+            print(f"    Searching for gradient ({atoms} atoms)...")
+            gradient_header = "Cartesian gradient in original orientation [au]:"
+            gradient_header_num = "Numerical Cartesian gradient [au]:"
+            gradient_lines = []
+            in_gradient_section = False
+            output_lines = output_content.splitlines()
+
+            for line in output_lines:
+                if gradient_header in line or gradient_header_num in line:
+                    in_gradient_section = True
+                    print("      Found gradient section header.")
+                    continue
+                if in_gradient_section:
+                    line_strip = line.strip()
+                    if not line_strip:
+                        print("      Reached end of gradient section (blank line).")
+                        break
+                    parts = line_strip.split()
+                    if len(parts) == 3 and parts[0].lower() == "x":
+                        continue
+                    if len(parts) >= 5:
+                        try:
+                            x = float(parts[-3])
+                            y = float(parts[-2])
+                            z = float(parts[-1])
+                            gradient_lines.append([x, y, z])
+                            if len(gradient_lines) == atoms:
+                                print(f"      Successfully read gradients for all {atoms} atoms.")
+                                gradient = gradient_lines
+                                break
+                        except (ValueError, IndexError):
+                            print(f"      Warning: Could not parse floats from gradient line: '{line_strip}'")
+                            in_gradient_section = False
+                            gradient_lines = None
+                            break
+                    else:
+                        print(f"      Reached end of gradient section (unexpected format): '{line_strip}'")
+                        break
+
+            if not gradient and in_gradient_section:
+                 print(f"    Warning: Found gradient section but read {len(gradient_lines) if gradient_lines else 0}/{atoms} lines successfully.")
+                 gradient = None
+            elif not in_gradient_section:
+                 print(f"    Gradient section header not found.")
+
+            if gradient is None:
+                print(f"    Gradient not successfully extracted. Creating zero gradient for {atoms} atoms.")
+                gradient = [[0.0, 0.0, 0.0] for _ in range(atoms)]
+
+        # --- Copy Results Back ---
+        if not test_mode:
+            print("  Copying results back to original directory...")
+            target_output_path = os.path.join(original_dir, output_file)
+            try:
+                shutil.copy(output_file, target_output_path)
+                print(f"    Copied {output_file} -> {target_output_path}")
+            except Exception as e:
+                print(f"    ERROR copying output file: {e}")
+
+            gradient_file_in_scratch = "gradient"
+            if os.path.exists(gradient_file_in_scratch):
+                target_gradient_path = os.path.join(original_dir, f"gradient_{run_id}")
+                try:
+                    shutil.copy(gradient_file_in_scratch, target_gradient_path)
+                    print(f"    Copied {gradient_file_in_scratch} -> {target_gradient_path}")
+                except Exception as e:
+                    print(f"    ERROR copying gradient file: {e}")
+
+    except Exception as e:
+        print(f"  !!! UNEXPECTED ERROR during MRCC run {run_id}: {e}")
+        energy = None
+        gradient = [[0.0, 0.0, 0.0] for _ in range(atoms)] if atoms else None
+
+    finally:
+        # --- Cleanup ---
+        os.chdir(original_dir)
+        print(f"  Changed back to original directory: {original_dir}")
+        
+        # Restore original environment variables
+        for key, original_value in saved_env.items():
+            if original_value is None:
+                # Variable wasn't set originally, remove it
+                if key in os.environ:
+                    del os.environ[key]
+                    print(f"  Removed {key} (was not set originally)")
+            else:
+                # Restore original value
+                os.environ[key] = original_value
+                print(f"  Restored {key}={original_value}")
+
+    print(f"--- Finished MRCC Run {run_id} ---")
+    return energy, gradient
+# ==============================================================================
+# == END OF CORRECTED run_single_mrcc_calculation ==
+# ==============================================================================
+
+
+
+def handle_custom_basis(minp_file_path: str, section_id: str) -> bool:
+    """
+    Controlla se 'basis=custom' è presente nel file MINP.
+    Se trovato, cerca il file basis_{section_id} e lo copia in GENBAS.
+
+    Args:
+        minp_file_path: Il percorso del file MINP da controllare.
+        section_id: L'ID della sezione, usato per costruire il nome del file basis.
+
+    Returns:
+        True se GENBAS è stato creato, False altrimenti.
+    """
+    genbas_created = False
+    basis_found = False
+    custom_basis_keyword = "basis=custom"
+    target_genbas_file = "GENBAS" # Nome del file di output standard per MRCC
+
+    try:
+        with open(minp_file_path, 'r') as f_minp:
+            for line in f_minp:
+                # Rimuove spazi bianchi iniziali/finali e converte in minuscolo per un confronto robusto
+                if line.strip().lower() == custom_basis_keyword:
+                    basis_found = True
+                    print(f"  Found '{custom_basis_keyword}' in {minp_file_path}.")
+                    break # Trovato, non serve leggere oltre
+
+        if basis_found:
+            # Extract section number from section_id (e.g., "!SECTION1" -> "1")
+            # This matches the logic in create_mrcc_input() (lines 591-594)
+            if section_id == "default":
+                basis_suffix = "default"
+            else:
+                match = re.match(r"!SECTION(\d+)", section_id, re.IGNORECASE)
+                if match:
+                    basis_suffix = match.group(1)  # Extract just the number
+                else:
+                    # Fallback: sanitize section_id if it's not in expected format
+                    basis_suffix = re.sub(r'[^\w.-]', '_', section_id).strip('_')
+
+            source_basis_file = f"basis_{basis_suffix}"
+            print(f"  Attempting to copy custom basis from '{source_basis_file}' to '{target_genbas_file}'...")
+            try:
+                # Copia il file basis specifico per questa section_id in GENBAS
+                shutil.copyfile(source_basis_file, target_genbas_file)
+                print(f"  Successfully copied '{source_basis_file}' to '{target_genbas_file}'.")
+                genbas_created = True
+            except FileNotFoundError:
+                print(f"  ERROR: Custom basis file '{source_basis_file}' not found!")
+                # Potresti voler gestire questo errore in modo più drastico, es. sollevando un'eccezione
+                # raise FileNotFoundError(f"Custom basis file '{source_basis_file}' not found!")
+            except OSError as e:
+                print(f"  ERROR: Could not copy '{source_basis_file}' to '{target_genbas_file}': {e}")
+                # Gestire altri errori di I/O (permessi, disco pieno, etc.)
+                # raise OSError(f"Could not copy '{source_basis_file}' to '{target_genbas_file}': {e}")
+            except Exception as e:
+                 print(f"  UNEXPECTED ERROR during basis file copy: {e}")
+                 # raise # Rilancia l'eccezione se vuoi interrompere l'esecuzione
+
+    except FileNotFoundError:
+        print(f"  ERROR: MINP file '{minp_file_path}' not found for basis check!")
+        # Gestire il caso in cui il file MINP non esista (anche se create_mrcc_input dovrebbe averlo creato)
+    except Exception as e:
+        print(f"  ERROR: Failed to read MINP file '{minp_file_path}' for basis check: {e}")
+
+    return genbas_created # Ritorna True solo se la copia è avvenuta con successo
+
+def compute_mrcc_energy(mpi_procs, omp_procs, mem, GauInput, OptFlag=False, readgradpy='NONE', coefficients=[], atoms=None, mrcc_preamble_file=None, mrcc_end_file=None, operations=None, formula=None):
+    """
+    Compute combined energy and optionally gradients using MRCC, handling multiple sequential calculations
+    defined by sections in input files and scaled by provided coefficients.
+    Supports copy operations and custom formula evaluation (v5).
+
+    Args:
+        mpi_procs (str): Number of MPI processes for MRCC.
+        omp_procs (str): Number of OpenMP threads per MPI process.
+        mem (str): Total memory allocated (e.g., "16").
+        GauInput (str): Path to the Gaussian input file (for parsing geometry).
+        OptFlag (bool): If True, compute gradients; otherwise, energy only.
+        readgradpy (str): Flag indicating gradient handling ('NONE', 'READ', 'SCAN').
+        coefficients (list): List of coefficients corresponding to each MRCC calculation section.
+        atoms (int, optional): Number of atoms in the system. Required if OptFlag is True.
+        mrcc_preamble_file (str, optional): Path to the MRCC preamble file with sections.
+        mrcc_end_file (str, optional): Path to the MRCC ending file with sections.
+        operations (list, optional): List of operation tuples for advanced combination (copy, coeff).
+        formula (str, optional): Custom formula string for non-linear combinations.
+
+    Returns:
+        tuple: (combined_energy, dipole, combined_gradient)
+            - combined_energy (float): Final combined/scaled energy.
+            - dipole (list): Dipole moment (currently always [0.0, 0.0, 0.0]).
+            - combined_gradient (list | None): Final combined/scaled gradient if OptFlag is True, else None.
+                                             Format: [[gx1, gy1, gz1], ...]. Returns zero gradient for 'SCAN'.
+    """
+    import os
+    test_mode = os.environ.get('EXT_TEST_MODE')
+
+    print(77*"=")
+    print(f"COMPUTING MRCC ENERGY/GRADIENT (v5 - Advanced Combination)")
+    print(f"  Mode: {'Gradient' if OptFlag else 'Energy'}, readgradpy='{readgradpy}'")
+    print(f"  Parallelism: MPI={mpi_procs}, OMP={omp_procs}")
+    print(f"  Memory: {mem} GB (Total)")
+    if operations:
+        print(f"  Operations: {operations}")
+    else:
+        print(f"  Coefficients: {coefficients}")
+    if formula:
+        print(f"  Formula: {formula}")
+    print(f"  Preamble: {mrcc_preamble_file}, End: {mrcc_end_file}")
+    if atoms: print(f"  Atoms: {atoms}")
+    print(77*"-")
+
+    # --- Environment Setup ---
+    saved_env = {} # To store original environment variables
+    try:
+        omp_procs_int = int(omp_procs)
+        if omp_procs_int <= 0: omp_procs_int = 1
+    except ValueError:
+        omp_procs_int = 1
+        print(f"Warning: Invalid omp_procs '{omp_procs}', using 1.")
+
+    print(f"Setting MRCC environment (OMP_NUM_THREADS={omp_procs_int}, MKL_NUM_THREADS={omp_procs_int}, etc.)...")
+    env_keys_to_set = [
+        "OMP_NUM_THREADS", "MKL_NUM_THREADS", "I_MPI_PIN",
+        "I_MPI_PIN_DOMAIN", "OMP_PROC_BIND", "OMP_PLACES"
+    ]
+    # Store original values and set new ones
+    for key in env_keys_to_set:
+        saved_env[key] = os.environ.get(key)
+        if key in ["OMP_NUM_THREADS", "MKL_NUM_THREADS"]:
+            os.environ[key] = str(omp_procs_int)
+        elif key == "I_MPI_PIN": os.environ[key] = "on"
+        elif key == "I_MPI_PIN_DOMAIN": os.environ[key] = "numa" # Example pinning
+        elif key == "OMP_PROC_BIND": os.environ[key] = "close"  # Example binding
+        elif key == "OMP_PLACES": os.environ[key] = "cores"    # Example placement
+    print("  Environment variables set.")
+
+    # --- Module Loading (Optional, adapt to your system) ---
+    try:
+        print("Loading MRCC module environment (if applicable)...")
+        # Example: load_module("MRCC/latest") # Assumes load_module is defined
+        load_module("MRCC_2025/MRCC_INTEL_sandy_2025") # Use the specific module needed
+        print("  MRCC module loaded.")
+    except NameError:
+        print("  Warning: 'load_module' function not defined. Skipping module loading.")
+    except Exception as e:
+        print(f"  Warning: Failed to load MRCC module - {e}. Continuing without module load.")
+
+    # --- Default Values & Setup ---
+    dipole = [0.0, 0.0, 0.0] # MRCC wrapper doesn't easily provide dipole
+    scratch_path = os.getenv('SCRATCH', '/tmp') # Base scratch path
+    print(f"Using scratch path base: {scratch_path}")
+
+    # --- Parse Geometry ---
+    # This needs to be done *before* the loop if geometry doesn't change between sections
+    try:
+        geom, current_atoms, spin, charge, _ = GauInpParser(GauInput)
+        # Ensure 'atoms' variable is correctly set, especially for gradients
+        if OptFlag and (atoms is None or atoms != current_atoms):
+            if atoms is not None: print(f"Warning: Overriding provided atom count ({atoms}) with value from {GauInput} ({current_atoms}).")
+            atoms = current_atoms
+        elif atoms is None:
+            atoms = current_atoms # Use parsed count even for energy-only
+        print(f"Geometry parsed: {atoms} atoms, Charge={charge}, Multiplicity={spin}")
+    except Exception as e:
+        print(f"FATAL ERROR: Cannot parse geometry from {GauInput}: {e}")
+        # Restore environment before exiting
+        _restore_environment(saved_env)
+        sys.exit(1)
+
+    # --- Parse MRCC Input Sections ---
+    if mrcc_preamble_file and mrcc_end_file:
+        print(f"Parsing MRCC sections from '{mrcc_preamble_file}' and '{mrcc_end_file}'...")
+        # *** Use the corrected parsing function ***
+        preamble_sections, ending_sections, energy_patterns, scratch_dependencies = parse_mrcc_sections(mrcc_preamble_file, mrcc_end_file)
+    else:
+        print("Warning: MRCC preamble or end file not provided. Using default section setup.")
+        preamble_sections = {"default": []}
+        ending_sections = {"default": []}
+        energy_patterns = {"default": "***FINAL MRCC ENERGY:"} # Default full pattern
+        scratch_dependencies = {}  # No dependencies when no files provided
+
+    # --- Determine Calculation Sequence ---
+    # Use operations if available, otherwise fall back to coefficients
+    if operations:
+        # Count actual calculations needed (only 'coeff' operations require new calculations)
+        num_actual_calculations = sum(1 for op in operations if op[0] == 'coeff')
+        print(f"Using advanced operations: {operations}")
+        print(f"Planning {num_actual_calculations} actual MRCC calculation(s) based on operations.")
+        
+        # Validate formula if present
+        if formula:
+            try:
+                # Extract coefficient values for formula validation
+                coeff_values = [op[1] if op[0] == 'coeff' else op[2] for op in operations]
+                validate_formula_syntax(formula, num_actual_calculations, len(coeff_values))
+                print(f"Formula validation successful for {num_actual_calculations} energies and {len(coeff_values)} coefficients.")
+            except Exception as e:
+                print(f"ERROR: Formula validation failed: {e}")
+                _restore_environment(saved_env)
+                sys.exit(1)
+        
+        num_calculations = num_actual_calculations
+    else:
+        # Legacy coefficient-based mode
+        num_calculations = len(coefficients)
+        if num_calculations == 0:
+            print("Warning: No coefficients parsed or provided. Defaulting to one calculation with coefficient 1.0.")
+            coefficients = [1.0]
+            num_calculations = 1
+        print(f"Planning {num_calculations} MRCC calculation(s) based on {len(coefficients)} coefficient(s).")
+
+    # --- Determine Scratch Preservation Strategy ---
+    # Build a map of which scratch directories need to be preserved based on dependencies
+    preserve_until = determine_scratch_dependencies_for_all_sections(scratch_dependencies, num_calculations)
+    if preserve_until:
+        print(f"\n--- Scratch Preservation Strategy ---")
+        for source_section, dependent_sections in preserve_until.items():
+            print(f"  Section {source_section} scratch needed by sections: {dependent_sections}")
+        print("--------------------------------------")
+    
+    # --- Run Sequential MRCC Calculations ---
+    calculation_results = [] # Stores results: dict per calculation
+    job_id = os.getpid()  # Get job ID for scratch directory naming
+
+    for i in range(num_calculations):
+        calc_index = i + 1
+        print(f"\n--- Preparing MRCC Calculation {calc_index}/{num_calculations} ---")
+
+        # Determine the target section ID for this index (!SECTION1, !SECTION2, ...)
+        # If only one calculation, target_section_id will be "!SECTION1"
+        target_section_id = f"!SECTION{calc_index}"
+
+        # Find the actual section key to use for input creation
+        # Use explicit !SECTION<N> if it exists, otherwise use "default" ONLY for the first calculation (index 1)
+        if target_section_id in preamble_sections or target_section_id in ending_sections:
+            actual_section_key = target_section_id
+            print(f"  Using specific section content for '{actual_section_key}'")
+        elif calc_index == 1 and "default" in preamble_sections:
+             actual_section_key = "default"
+             print(f"  Section '{target_section_id}' not found, using 'default' section content for calculation 1.")
+        else:
+             # Coefficient exists, but specific section missing and it's not calc 1 default case.
+             print(f"  ERROR: Section '{target_section_id}' not found in input files for coefficient {calc_index}.")
+             print(f"  Available preamble sections: {list(preamble_sections.keys())}")
+             print(f"  Available ending sections: {list(ending_sections.keys())}")
+             _restore_environment(saved_env)
+             sys.exit(f"Stopping due to missing section for coefficient {calc_index}.")
+
+        # Get the energy patterns (list of strings) for the section key being used
+        section_energy_patterns = energy_patterns.get(actual_section_key, energy_patterns.get("default", ["***FINAL MRCC ENERGY:"]))
+        if len(section_energy_patterns) == 1:
+            print(f"  Using Energy Pattern: '{section_energy_patterns[0]}' (from section key '{actual_section_key}')")
+        else:
+            print(f"  Using {len(section_energy_patterns)} Energy Patterns (from section key '{actual_section_key}'):")
+            for i, pattern in enumerate(section_energy_patterns, 1):
+                print(f"    {i}. '{pattern}'")
+
+        # Create the MINP input file for this calculation
+        try:
+            minp_file, use_mpi = create_mrcc_input(
+                actual_section_key, # Key for retrieving content
+                preamble_sections, ending_sections,
+                mpi_procs, omp_procs, mem,
+                spin, charge, geom
+            )
+            # to do, funzione che prende in input il file minp, controlla se non 
+            # c'e specificato il basis e copia il file basis_section_id in GENBAS
+            # e attiva una gflag che poi viene letta alla fine del run single coputation 
+            # e nel caso elimina il GENBAS. 
+            if minp_file: # Assicurati che minp_file sia stato creato
+                 genbas_was_created = handle_custom_basis(minp_file, actual_section_key)
+        except Exception as e:
+             print(f"FATAL ERROR: Failed to create MINP file for calculation {calc_index}: {e}")
+             _restore_environment(saved_env)
+             sys.exit(1)
+
+
+        # Define output filename
+        output_file = f"mrcc_output_{calc_index}.out"
+
+        # Check if this section needs to copy from a previous scratch directory
+        if actual_section_key in scratch_dependencies:
+            source_section_num = scratch_dependencies[actual_section_key]
+            source_section_id = f"!SECTION{source_section_num}"
+            
+            print(f"  Found scratch dependency: section '{actual_section_key}' needs content from section {source_section_num}")
+            
+            # Build source scratch directory path
+            job_id = os.getpid()
+            # Always use the section number for consistency with run_single_mrcc_calculation
+            source_run_id = str(source_section_num)
+            source_scratch_dir = os.path.join(scratch_path, f"mrcc-{job_id}-{source_run_id}")
+            
+            # Build target scratch directory path (will be created by run_single_mrcc_calculation)
+            # Always use the calculation index for consistency
+            target_run_id = str(calc_index)
+            target_scratch_dir = os.path.join(scratch_path, f"mrcc-{job_id}-{target_run_id}")
+            
+            print(f"  Attempting to copy scratch from section {source_section_num} to section {calc_index}")
+            if copy_scratch_directory(source_scratch_dir, target_scratch_dir):
+                print(f"  Successfully copied scratch directory for section {calc_index}")
+            else:
+                print(f"  Warning: Failed to copy scratch directory for section {calc_index}, continuing anyway")
+
+        # Run the single MRCC calculation using the corrected function
+        raw_energy, raw_gradient = run_single_mrcc_calculation(
+            minp_file, output_file,
+            mpi_procs, omp_procs, mem, scratch_path,
+            atoms if OptFlag else None, # Pass atoms only if gradient needed
+            energy_patterns=section_energy_patterns, # Pass the list of energy patterns
+            use_mpi=use_mpi # Pass the MPI flag determined from preamble content
+        )
+
+
+        # gestione genbas
+        if genbas_was_created:
+            try:
+                os.remove("GENBAS")
+                print(f"  Cleaned up temporary GENBAS file for calculation {calc_index}.")
+            except OSError as e:
+                # Avvisa se non è possibile rimuovere il file, ma non interrompere necessariamente
+                print(f"  WARNING: Could not remove temporary GENBAS file: {e}")
+
+        # Determine coefficient based on mode
+        if operations and i < len(operations):
+            # In operations mode, extract coefficient from the current operation
+            current_coeff = operations[i][1] if operations[i][0] == 'coeff' else 1.0
+        else:
+            # In legacy mode, use coefficients array, or fallback to 1.0
+            current_coeff = coefficients[i] if i < len(coefficients) else 1.0
+        
+        # Store results
+        calculation_results.append({
+            "index": calc_index,
+            "raw_energy": raw_energy, # This will be None if extraction failed
+            "raw_gradient": raw_gradient if OptFlag and raw_gradient is not None else [], # Store empty list if no grad
+            "coefficient": current_coeff,
+            "section_id_intended": target_section_id,
+            "section_key_used": actual_section_key,
+            "pattern_used": section_energy_patterns,
+            "output_file": output_file
+        })
+
+        # Check for calculation failure (energy is None)
+        if raw_energy is None:
+            pattern_desc = ', '.join(section_energy_patterns) if len(section_energy_patterns) > 1 else section_energy_patterns[0]
+            print(f"  WARNING: Calculation {calc_index} ({target_section_id}) failed or did not produce energy matching pattern(s): '{pattern_desc}'.")
+            # Option: Stop execution, or continue and use 0.0 energy? Using 0.0 for robustness.
+            calculation_results[-1]["raw_energy"] = 0.0
+            print("  Treating failed/missing energy as 0.0 for combination.")
+        
+        # --- Selective Scratch Cleanup ---
+        # Clean up scratch directory only if it's not needed by future calculations
+        print(f"\n  Checking scratch cleanup for section {calc_index}...")
+        selective_scratch_cleanup(scratch_path, job_id, calc_index, preserve_until, calc_index)
+
+    # --- Combine Results ---
+    print("\n--- Combining Calculation Results ---")
+    print(f"  Processing {len(calculation_results)} calculation results.")
+    
+    if operations and formula:
+        # Use custom formula evaluation
+        print(f"  Using custom formula: {formula}")
+        
+        # Extract energies and gradients for formula evaluation
+        raw_energies = []
+        raw_gradients = []
+        coeff_values = []
+        
+        current_calc_idx = 0
+        for op in operations:
+            if op[0] == 'coeff':
+                if current_calc_idx < len(calculation_results):
+                    result = calculation_results[current_calc_idx]
+                    raw_energies.append(result["raw_energy"])
+                    if OptFlag:
+                        raw_gradients.append(result["raw_gradient"])
+                    coeff_values.append(op[1])
+                    current_calc_idx += 1
+                else:
+                    print(f"ERROR: Not enough calculation results for coefficient operation")
+                    _restore_environment(saved_env)
+                    sys.exit(1)
+            elif op[0] == 'copy':
+                # Copy operations reference already computed values
+                source_idx = op[1] - 1  # Convert to 0-based index
+                if 0 <= source_idx < len(raw_energies):
+                    coeff_values.append(op[2])  # Store coefficient for formula
+                else:
+                    print(f"ERROR: Copy operation references invalid index: {op[1]}")
+                    _restore_environment(saved_env)
+                    sys.exit(1)
+        
+        try:
+            # Evaluate formula for energy
+            combined_energy = evaluate_custom_formula(formula, raw_energies, coeff_values)
+            print(f"  Formula evaluation result (energy): {combined_energy:.12f}")
+            
+            # Evaluate formula for gradients if needed
+            if OptFlag and raw_gradients:
+                import numpy as np
+                # Convert gradients to numpy arrays for element-wise operations
+                gradient_arrays = [np.array(grad) for grad in raw_gradients if grad]
+                if gradient_arrays:
+                    combined_gradient_np = evaluate_custom_formula(formula, gradient_arrays, coeff_values)
+                    combined_gradient = combined_gradient_np.tolist()
+                else:
+                    combined_gradient = [[0.0, 0.0, 0.0] for _ in range(atoms)] if atoms else None
+            else:
+                combined_gradient = [[0.0, 0.0, 0.0] for _ in range(atoms)] if OptFlag and atoms else None
+
+        except Exception as e:
+            print(f"ERROR: Formula evaluation failed: {e}")
+            _restore_environment(saved_env)
+            sys.exit(1)
+            
+    elif operations:
+        # Use operations-based combination (copy mechanism with linear combination)
+
+        combined_energy = 0.0
+        combined_gradient = [[0.0, 0.0, 0.0] for _ in range(atoms)] if OptFlag and atoms else None
+
+        # Create arrays to store actual calculation results
+        actual_energies = []
+        actual_gradients = []
+
+        # Extract actual calculation results (only from 'coeff' operations)
+        for result in calculation_results:
+            actual_energies.append(result["raw_energy"])
+            if OptFlag:
+                actual_gradients.append(result["raw_gradient"])
+        
+        # Process operations in sequence
+        for op_idx, op in enumerate(operations):
+            if op[0] == 'coeff':
+                # Find the next actual calculation result
+                # Use op_idx instead of operations.index(op) to handle duplicate operations
+                calc_idx = len([o for o in operations[:op_idx+1] if o[0] == 'coeff']) - 1
+                if calc_idx < len(actual_energies):
+                    coef = op[1]
+                    raw_e = actual_energies[calc_idx]
+                    raw_g = actual_gradients[calc_idx] if OptFlag and calc_idx < len(actual_gradients) else None
+                    
+                    # Combine energy
+                    scaled_e_contrib = raw_e * coef
+                    combined_energy += scaled_e_contrib
+
+                    # Combine gradient
+                    if OptFlag and combined_gradient is not None and raw_g and len(raw_g) == atoms:
+                        for atom_idx in range(atoms):
+                            for coord_idx in range(3):
+                                try:
+                                    grad_comp = float(raw_g[atom_idx][coord_idx])
+                                    scaled_g_contrib = grad_comp * coef
+                                    combined_gradient[atom_idx][coord_idx] += scaled_g_contrib
+                                except (ValueError, TypeError, IndexError):
+                                    pass
+                                    
+            elif op[0] == 'copy':
+                # Copy from a previous calculation
+                source_idx = op[1] - 1  # Convert to 0-based index
+                coef = op[2]
+                
+                if 0 <= source_idx < len(actual_energies):
+                    raw_e = actual_energies[source_idx]
+                    raw_g = actual_gradients[source_idx] if OptFlag and source_idx < len(actual_gradients) else None
+                    
+                    # Combine energy
+                    scaled_e_contrib = raw_e * coef
+                    combined_energy += scaled_e_contrib
+
+                    # Combine gradient
+                    if OptFlag and combined_gradient is not None and raw_g and len(raw_g) == atoms:
+                        for atom_idx in range(atoms):
+                            for coord_idx in range(3):
+                                try:
+                                    grad_comp = float(raw_g[atom_idx][coord_idx])
+                                    scaled_g_contrib = grad_comp * coef
+                                    combined_gradient[atom_idx][coord_idx] += scaled_g_contrib
+                                except (ValueError, TypeError, IndexError):
+                                    pass
+                else:
+                    print(f"    ERROR: Copy operation references invalid calculation index: {op[1]}")
+                    _restore_environment(saved_env)
+                    sys.exit(1)
+                    
+    else:
+        # Legacy coefficient-based combination
+
+        combined_energy = 0.0
+        combined_gradient = [[0.0, 0.0, 0.0] for _ in range(atoms)] if OptFlag and atoms else None
+
+        for result in calculation_results:
+            idx = result["index"]
+            coef = result["coefficient"]
+            raw_e = result["raw_energy"]
+            raw_g = result["raw_gradient"]
+
+            # Combine energy
+            scaled_e_contrib = raw_e * coef
+            combined_energy += scaled_e_contrib
+
+            # Combine gradient if applicable
+            if OptFlag and combined_gradient is not None:
+                if raw_g and len(raw_g) == atoms:
+                    for atom_idx in range(atoms):
+                        for coord_idx in range(3):
+                            try:
+                               grad_comp = float(raw_g[atom_idx][coord_idx])
+                               scaled_g_contrib = grad_comp * coef
+                               combined_gradient[atom_idx][coord_idx] += scaled_g_contrib
+                            except (ValueError, TypeError, IndexError):
+                                pass
+
+    # --- Handle Special Cases (SCAN mode returns zero gradient) ---
+    if OptFlag and readgradpy.upper() == 'SCAN':
+        combined_gradient = [[0.0, 0.0, 0.0] for _ in range(atoms)] if atoms else None
+
+    # --- Restore Environment ---
+    _restore_environment(saved_env)
+
+    return combined_energy, dipole, combined_gradient
+
+
+def _restore_environment(saved_env):
+     """Helper to restore environment variables."""
+     for key, value in saved_env.items():
+         try:
+             if value is None:
+                 # If original value was None (not set), remove it if it exists now
+                 if key in os.environ:
+                      del os.environ[key]
+             else:
+                 # If original value existed, restore it
+                 if os.environ.get(key) != value:
+                      os.environ[key] = value
+         except Exception as e:
+              print(f"  Warning: Failed to restore environment variable {key}: {e}")
+
+
+def GauInpParser(GauInput):
+    """
+    Parse Gaussian external input file (.EIn) to extract geometry (in Bohr),
+    number of atoms, charge, multiplicity, and optimization flag.
+
+    Args:
+        GauInput (str): Path to the Gaussian input file.
+
+    Returns:
+        tuple: (geom, atoms, spin, charge, opt_flag)
+            - geom (list): List of geometry strings, e.g., "C    0.0  0.0  0.0".
+            - atoms (int): Number of atoms.
+            - spin (int): Spin multiplicity.
+            - charge (int): Molecular charge.
+            - opt_flag (int): 0 for energy, 1 for gradient.
+
+    Raises:
+        FileNotFoundError: If GauInput file does not exist.
+        ValueError: If the file format is incorrect or data is missing.
+        IndexError: If lines or parts of lines are missing.
+    """
+    geom = []
+    atoms = 0
+    charge = 0
+    spin = 1 # Default multiplicity if not found
+    opt_flag = 0 # Default to energy calculation
+
+    try:
+        with open(GauInput, 'r') as file:
+            lines = file.readlines()
+
+            if not lines:
+                raise ValueError("Gaussian input file is empty.")
+
+            # --- Parse First Line ---
+            # Format: nAtoms OptFlag Charge Multiplicity
+            parts1 = lines[0].split()
+            if len(parts1) < 4:
+                raise ValueError(f"First line format error. Expected 4 values (nAtoms OptFlag Charge Spin), got {len(parts1)}: '{lines[0].strip()}'")
+            try:
+                atoms = int(parts1[0])
+                opt_flag = int(parts1[1])
+                charge = int(parts1[2])
+                spin = int(parts1[3])
+            except ValueError as e:
+                raise ValueError(f"Error parsing numeric values from first line: '{lines[0].strip()}'. Error: {e}")
+
+            if atoms <= 0:
+                raise ValueError(f"Invalid number of atoms parsed: {atoms}")
+
+            # Check if file has enough lines for geometry
+            if len(lines) < atoms + 1:
+                raise ValueError(f"File contains {len(lines)-1} geometry lines, but expected {atoms} based on header.")
+
+            # --- Parse Geometry Lines ---
+            # Format: AtomicNum X Y Z (Coords are in Bohr)
+            atomic_symbols_map = { # Add more elements as needed
+                 1: 'H',  2: 'He',  3: 'Li',  4: 'Be',  5: 'B',  6: 'C',  7: 'N',  8: 'O',
+                 9: 'F', 10: 'Ne', 11: 'Na', 12: 'Mg', 13: 'Al', 14: 'Si', 15: 'P', 16: 'S',
+                17: 'Cl', 18: 'Ar', 19: 'K', 20: 'Ca', 21: 'Sc', 22: 'Ti', 23: 'V', 24: 'Cr',
+                25: 'Mn', 26: 'Fe', 27: 'Co', 28: 'Ni', 29: 'Cu', 30: 'Zn', 31: 'Ga', 32: 'Ge',
+                33: 'As', 34: 'Se', 35: 'Br', 36: 'Kr', 37: 'Rb', 38: 'Sr', 39: 'Y', 40: 'Zr',
+                41: 'Nb', 42: 'Mo', 43: 'Tc', 44: 'Ru', 45: 'Rh', 46: 'Pd', 47: 'Ag', 48: 'Cd',
+                49: 'In', 50: 'Sn', 51: 'Sb', 52: 'Te', 53: 'I', 54: 'Xe', 55: 'Cs', 56: 'Ba',
+                # Lanthanides
+                57: 'La', 58: 'Ce', 59: 'Pr', 60: 'Nd', 61: 'Pm', 62: 'Sm', 63: 'Eu', 64: 'Gd',
+                65: 'Tb', 66: 'Dy', 67: 'Ho', 68: 'Er', 69: 'Tm', 70: 'Yb', 71: 'Lu',
+                # Actinides + Row 6 d-block
+                72: 'Hf', 73: 'Ta', 74: 'W', 75: 'Re', 76: 'Os', 77: 'Ir', 78: 'Pt', 79: 'Au',
+                80: 'Hg', 81: 'Tl', 82: 'Pb', 83: 'Bi', 84: 'Po', 85: 'At', 86: 'Rn',
+                # ... Add more if needed
+            }
+
+            geom = []
+            for i in range(1, atoms + 1):
+                line_index = i # Line number in file (1-based index for geometry)
+                parts = lines[line_index].split()
+                if len(parts) < 4:
+                    raise ValueError(f"Geometry line {line_index+1} format error. Expected 4 values (AtomNum X Y Z), got {len(parts)}: '{lines[line_index].strip()}'")
+                try:
+                    atomic_num = int(parts[0])
+                    x = float(parts[1])
+                    y = float(parts[2])
+                    z = float(parts[3])
+                except ValueError as e:
+                    raise ValueError(f"Error parsing numeric values from geometry line {line_index+1}: '{lines[line_index].strip()}'. Error: {e}")
+
+                # Get element symbol from atomic number
+                element_symbol = atomic_symbols_map.get(atomic_num, f'X{atomic_num}') # Use 'Xn' if symbol unknown
+                # Format: Symbol (left-aligned 3 chars), Coords (16 wide, 10 decimal places)
+                geom_line = f"{element_symbol:<3s} {x:16.10f} {y:16.10f} {z:16.10f}"
+                geom.append(geom_line)
+
+
+    except FileNotFoundError:
+        print(f"ERROR: Gaussian input file '{GauInput}' not found.")
+        raise # Re-raise the specific error
+    except (ValueError, IndexError) as e:
+        print(f"ERROR parsing Gaussian input file '{GauInput}': {e}")
+        raise # Re-raise the specific error
+    except Exception as e:
+         print(f"An unexpected error occurred during Gaussian input parsing: {e}")
+         raise # Re-raise unexpected errors
+
+    return geom, atoms, spin, charge, opt_flag
+
+
+def write_output(GauOutput, energy, dipole_moment=[0.0, 0.0, 0.0], Gradient=None):
+    """
+    Write the calculated energy, dipole moment, and optionally gradient
+    to the Gaussian external output file (.Ext).
+
+    Args:
+        GauOutput (str): Path to the Gaussian output file.
+        energy (float): Calculated energy (Hartree). Can be None if calculation failed.
+        dipole_moment (list): List of [dx, dy, dz] dipole components (atomic units).
+        Gradient (list | None): List of lists containing [gx, gy, gz] gradient components
+                                per atom (Hartree/Bohr), or None if not calculated.
+    """
+    try:
+        with open(GauOutput, 'w') as file:
+            # --- Write Energy and Dipole Line ---
+            # Format: Energy, DipoleX, DipoleY, DipoleZ (comma-separated)
+            # Use high precision format specifiers
+            try:
+                 # Handle case where energy calculation failed (energy is None)
+                 e_val = float(energy) if energy is not None else 0.0
+                 dx_val = float(dipole_moment[0])
+                 dy_val = float(dipole_moment[1])
+                 dz_val = float(dipole_moment[2])
+                 if energy is None:
+                      print("  Warning: Energy value is None, writing 0.0 to output.")
+            except (TypeError, ValueError, IndexError) as e:
+                 print(f"ERROR: Invalid energy or dipole values for output: E={energy}, D={dipole_moment}. Error: {e}")
+                 # Write dummy values to avoid Gaussian erroring out, but log the issue
+                 e_val, dx_val, dy_val, dz_val = 0.0, 0.0, 0.0, 0.0
+
+            line = "{:20.12f},{:20.12f},{:20.12f},{:20.12f}\n".format(
+                e_val, dx_val, dy_val, dz_val
+            )
+            file.write(line)
+
+            # --- Write Gradient Block (if provided) ---
+            if Gradient is not None:
+            # Write each gradient without commas, properly formatted
+                for grad in Gradient:
+                    file.write("".join(f"{g:20.12f}" for g in grad) + "\n")
+
+    except IOError as e:
+        print(f"FATAL ERROR: Cannot write to Gaussian output file '{GauOutput}': {e}")
+        # This is critical, script should probably exit if output cannot be written
+        sys.exit(1)
+    except Exception as e:
+        print(f"An unexpected error occurred during output writing: {e}")
+        # Consider exiting depending on severity
+        sys.exit(1)
+
+
+# --- Module Loading Helper (Example) ---
+# This needs to be adapted based on your specific HPC environment module system
+def load_module(module_name):
+    """Load an environment module using 'modulecmd python load'. (Requires module system)."""
+    try:
+        # Use subprocess to run 'modulecmd python load <module_name>'
+        # This command outputs Python code that modifies os.environ
+        result = subprocess.run(
+            ['modulecmd', 'python', 'load', module_name],
+            stdout=subprocess.PIPE, # Capture the output
+            stderr=subprocess.PIPE, # Capture errors
+            text=True,              # Work with text strings
+            check=True              # Raise CalledProcessError on non-zero exit code
+        )
+        # Execute the captured Python code in the current global scope
+        # This updates os.environ as if the module was loaded
+        exec(result.stdout, globals())
+    except FileNotFoundError:
+        print("ERROR: 'modulecmd' command not found. Is the environment module system initialized?")
+        # Depending on requirements, either raise error or just warn
+        # raise # Re-raise error if module loading is critical
+    except subprocess.CalledProcessError as e:
+        print(f"ERROR loading module '{module_name}':")
+        print(f"  Return Code: {e.returncode}")
+        print(f"  Stderr: {e.stderr.strip()}")
+        # raise # Re-raise error if module loading is critical
+    except Exception as e:
+        print(f"An unexpected error occurred in load_module for '{module_name}': {e}")
+        # raise # Re-raise error
+
+
+# --- Script Entry Point ---
+if __name__ == "__main__":
+    main()
+
+

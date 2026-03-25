@@ -1,0 +1,21 @@
+! ============================================================
+! Esempio di mrcc_preamble.dat per 3 calcoli sequenziali
+! ============================================================
+
+! --- Blocco !scheme per i coefficienti ---
+! Definisce i coefficienti per combinare le energie/gradienti.
+! Il numero di coefficienti DEVE corrispondere al numero di calcoli.
+! In questo caso, 3 calcoli -> 3 coefficienti.
+!scheme
+  ! 1.0     ! Coefficiente per il calcolo di default (HF)
+!end
+
+!SECTION1
+energy_pattern=***FINAL HARTREE-FOCK ENERGY:
+basis=sto-3g
+calc=HF
+
+
+
+
+

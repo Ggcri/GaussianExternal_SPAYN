@@ -1,0 +1,40 @@
+#!/bin/sh
+#PBS -N testmol
+#PBS -m ae
+#PBS -M luigi.crisci@sns.it
+#PBS -q q02hugo
+#PBS -l select=1:ncpus=16:mem=120GB:mpiprocs=16
+#PBS -P _pbs_project_default
+
+set +e
+
+module load gdv28/gdv28_AMD_zen3
+module load molpro/2024.1
+
+export SCRATCH="/local/scratch/$USER/testmol_$PBS_JOBID"
+export TMPDIR=$SCRATCH
+export GAUSS_SCRDIR="/local/scratch/$USER/testmol_Gaussian_$PBS_JOBID"
+export ELECEXT_PATH="/home/barone/lcrisci_vb/External/Executables"  
+export PATH="/home/barone/lcrisci_vb/External/Executables":$PATH
+export ENDMOL=/home/barone/lcrisci_vb/MyScript/EndingMolpro
+export PRMOL=/home/barone/lcrisci_vb/MyScript/PreambleMolpro
+
+export PGAU=/home/barone/lcrisci_vb/MyScript/PreambleGau
+export EGAU=/home/barone/lcrisci_vb/MyScript/EndingGau
+export EMR=/home/barone/lcrisci_vb/MyScript/EndingMR
+export PMR=/home/barone/lcrisci_vb/MyScript/PreambleMR
+
+mkdir -p $SCRATCH
+mkdir -p $GAUSS_SCRDIR
+echo "Created $SCRATCH"
+cd $PBS_O_WORKDIR
+touch JOB_ID_$PBS_JOBID
+touch NowRunning_Single
+
+gdv CH4_Td_opt.gjf
+rm NowRunning_Single 
+touch Completed_Single
+rm -r $SCRATCH
+rm -r $GAUSS_SCRDIR
+
+# cp -ar $SCRATCH/ $PBS_O_WORKDIR/

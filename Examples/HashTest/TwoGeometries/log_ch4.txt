@@ -1,0 +1,80 @@
+
+================================================================================
+GUESS REUSE: Molpro detected - setting up electronic guess management
+================================================================================
+SECTION COUNT: Detected 0 method section(s) in ending file
+GUESS REUSE: No method sections found, guess reuse disabled
+System hash computed: 7aea8301e8f266bd031c31f512ad77e6
+  Based on: 5 atoms, charge=0, spin=1
+  Preamble: 209 chars, Ending: 4 chars
+System hash for this calculation: 7aea8301e8f266bd031c31f512ad77e6
+
+
+================================================================================
+CHECKING FOR MIXED ANALYTICAL/NUMERICAL GRADIENT MODE
+================================================================================
+Analyzing sections in /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries/preamble.dat for gradient mode (comment='!')
+
+--- Section Analysis Summary ---
+  default: NUMERICAL (dens=0, lines=11)
+
+Total sections: 1
+Analytical sections (0): []
+Numerical sections (1): ['default']
+--------------------------------
+
+Mode Detection Results:
+  OptFlag (gradient requested): 1
+  Has analytical sections: False
+  Has numerical sections: True
+  Mixed mode activated: False
+  All analytical mode: False
+  All numerical mode: True
+================================================================================
+
+Checking Iteration_1 (standard mode)
+  → System hash MISMATCH!
+     Current:  7aea8301e8f266bd031c31f512ad77e6
+     Metadata: c82f44aae91365fcf14f3f4a95581345
+  → Different calculation detected, skipping
+No valid previous iteration with RMS_gradient found
+FAKE_FREQ CONVERSION: C Bohr=['0.0', '0.0', '0.0'] -> Angstrom=[0.0, 0.0, 0.0]
+FAKE_FREQ CONVERSION: H Bohr=['0.6291183578', '0.6291183578', '0.6291183578'] -> Angstrom=[0.3329150979084796, 0.3329150979084796, 0.3329150979084796]
+FAKE_FREQ CONVERSION: H Bohr=['-0.6291183578', '-0.6291183578', '0.6291183578'] -> Angstrom=[-0.3329150979084796, -0.3329150979084796, 0.3329150979084796]
+FAKE_FREQ CONVERSION: H Bohr=['-0.6291183578', '0.6291183578', '-0.6291183578'] -> Angstrom=[-0.3329150979084796, 0.3329150979084796, -0.3329150979084796]
+FAKE_FREQ CONVERSION: H Bohr=['0.6291183578', '-0.6291183578', '-0.6291183578'] -> Angstrom=[0.3329150979084796, -0.3329150979084796, -0.3329150979084796]
+Checking original directory for Gaussian input: /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries
+No Gaussian input file with External keyword found, using default route
+DEBUG TEST MODE: Current dir = /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries
+DEBUG TEST MODE: Looking for local fake log at: /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries/FAKE_FREQ/fake_freq_1.log
+DEBUG TEST MODE: Local fake log exists: True
+TEST MODE: Using local fake frequency log from /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries/FAKE_FREQ/fake_freq_1.log
+ADAPTIVE GRADIENT: !oneside keyword not detected - using two-sided central differences
+GEOMETRY CONVERSION: Task 'central' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.        0.        0.2094041], Angstrom = [0.         0.         0.11081188]
+GEOMETRY CONVERSION: Task 'atom_1_ixyz_1_up' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.00188973 0.         0.2094041 ], Angstrom = [0.001      0.         0.11081188]
+GEOMETRY CONVERSION: Task 'atom_1_ixyz_2_up' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.         0.00188973 0.2094041 ], Angstrom = [0.         0.001      0.11081188]
+GEOMETRY CONVERSION: Task 'atom_1_ixyz_3_up' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.         0.         0.21129383], Angstrom = [0.         0.         0.11181188]
+GEOMETRY CONVERSION: Task 'atom_1_ixyz_3_down' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.         0.         0.20751437], Angstrom = [0.         0.         0.10981188]
+GEOMETRY CONVERSION: Task 'atom_2_ixyz_1_up' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.        0.        0.2094041], Angstrom = [0.         0.         0.11081188]
+GEOMETRY CONVERSION: Task 'atom_2_ixyz_2_up' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.        0.        0.2094041], Angstrom = [0.         0.         0.11081188]
+GEOMETRY CONVERSION: Task 'atom_2_ixyz_2_down' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.        0.        0.2094041], Angstrom = [0.         0.         0.11081188]
+GEOMETRY CONVERSION: Task 'atom_2_ixyz_3_up' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.        0.        0.2094041], Angstrom = [0.         0.         0.11081188]
+GEOMETRY CONVERSION: Task 'atom_2_ixyz_3_down' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.        0.        0.2094041], Angstrom = [0.         0.         0.11081188]
+Two-sided gradient mode: requiring both 'up' and 'down' displacements
+✓ Extracted Input orientation (3 atoms)
+✓ Extracted Original coordinates (3 atoms)
+DEBUG: Preserved fake frequency log as FAKE_FREQ/fake_freq_4.log
+DEBUG: Expected atoms: 5
+DEBUG: Task central: 3 atoms
+ERROR: Geometry for task central has 3 atoms, expected 5
+ERROR: This indicates a parsing issue in parse_gradient_recipe_from_log

@@ -1,0 +1,12 @@
+***,H2O MP2 test
+memory,100,m
+gthresh,energy=1d-12,zero=1d-22,oneint=1d-22,twoint=1d-22
+geomtyp=xyz
+geometry={angstrom;nosym;noorient
+O 0.0 0.0 0.062
+H 0.0 0.4 -0.248
+H 0.0 -0.4 -0.248
+}
+basis=cc-pvdz
+{hf}
+{mp2}

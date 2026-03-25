@@ -1,0 +1,44 @@
+!scheme
+!  1.0     
+!  1.0    
+!end
+
+!SECTION1
+energy_pattern=CCSD(F12*)(T+) correlation energy [au]:
+energy_pattern=CABS singles correction [au]:
+calc=DF-CCSD(T)
+dft=userd
+3
+0.3100 PBEx
+0.4296 P86
+0.6900 HFx
+1
+0.5000 ECMD_PBEc
+
+grid_sm=ta1
+
+basis=cc-pVDZ-F12
+denscorr=2
+
+
+
+
+!SECTION2
+energy_pattern=KS energy + MP2 correction [au]:
+!cpscr 1
+basis=cc-pVDZ-F12
+calc=scf
+dft=user
+5
+0.3100 PBEx
+0.4296 P86
+0.6900 HFx
+0.5785 MP2s
+0.0799 MP2t
+
+
+
+
+scfiguess=off
+
+

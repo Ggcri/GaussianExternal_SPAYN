@@ -1,0 +1,26 @@
+# DBBSC-DH calculation for H2O using the PBE0-2 functional
+# The MP2 correlation energy must be calculated in a subsequent calculation 
+# using the scfiguess=off and dft=user keywords, including the MP2 contribution
+calc=DF-CCSD(T)
+dft=userd
+3
+0.3100 PBEx
+0.4296 P86
+0.6900 HFx
+1
+0.5000 ECMD_PBEc
+
+grid_sm=ta1
+
+basis=cc-pVDZ-F12
+denscorr=2
+
+mem=1GB
+
+unit=bohr
+geom=xyz
+3
+
+O     0.00000000    0.00000000   -0.12502304
+H     0.00000000    1.43266384    0.99210317
+H     0.00000000   -1.43266384    0.99210317

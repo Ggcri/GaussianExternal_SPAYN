@@ -1,0 +1,6 @@
+basis=cc-pvdz
+{hf,so-sci} 
+{df-mp2}
+forces
+
+exe_energy=energy

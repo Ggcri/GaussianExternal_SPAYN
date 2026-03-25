@@ -1,0 +1,11 @@
+default=cc-pwcvtz
+
+{hf,so-sci} 
+{MP2;core}
+force
+
+mp2_ae = energy
+
+
+! Composite energy calculation according to scheme, without hf_energy
+exe_energy =  mp2_ae 

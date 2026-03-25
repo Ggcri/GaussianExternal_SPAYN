@@ -1,0 +1,7 @@
+!scheme
+! copy[1,0.5] 1.5
+!formula
+! e=exp(c1*e1/100)+c2*e2
+!end
+
+#P mp2/6-31g

@@ -1,0 +1,59 @@
+%nproc=1
+%mem=1GB
+%chk=GauExternal_1.chk
+#P hf/sto-3g force
+
+Step 1 of composite scheme
+
+1 1
+C 0.0 0.0 0.0
+H 1.0 0.0 0.0
+H -1.0 0.0 0.0
+
+H 0
+sto-3g
+****
+C 0
+sto-3g
+****
+
+--link1--
+%nproc=1
+%mem=1GB
+%chk=GauExternal_2.chk
+#P mp2/sto-3g force
+
+Step 2 of composite scheme
+
+1 1
+C 0.0 0.0 0.0
+H 1.0 0.0 0.0
+H -1.0 0.0 0.0
+
+H 0
+6-31g
+****
+C 0
+6-31g
+****
+
+--link1--
+%nproc=1
+%mem=1GB
+%chk=GauExternal_3.chk
+#P ccsd/sto-3g force
+
+Step 3 of composite scheme
+
+1 1
+C 0.0 0.0 0.0
+H 1.0 0.0 0.0
+H -1.0 0.0 0.0
+
+H 0
+cc-pvdz
+****
+C 0
+cc-pvdz
+****
+

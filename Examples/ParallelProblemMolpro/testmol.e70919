@@ -1,0 +1,25 @@
+
+Module loaded, path to binaries is /shared/apps/molpro/2024.1/mpipr
+
+Traceback (most recent call last):
+  File "/home/barone/lcrisci_vb/External/Executables/CentralExt", line 576, in <module>
+    main()
+  File "/home/barone/lcrisci_vb/External/Executables/CentralExt", line 549, in main
+    if run_parallel_numerical_gradient():
+  File "/home/barone/lcrisci_vb/External/Executables/CentralExt", line 459, in run_parallel_numerical_gradient
+    calculated_energies = run_energy_tasks_in_parallel(
+  File "/home/barone/lcrisci_vb/External/elecext/parall.py", line 564, in run_energy_tasks_in_parallel
+    energy = fut.result()
+  File "/shared/apps/python/3.9.16/lib/python3.9/concurrent/futures/_base.py", line 439, in result
+    return self.__get_result()
+  File "/shared/apps/python/3.9.16/lib/python3.9/concurrent/futures/_base.py", line 391, in __get_result
+    raise self._exception
+  File "/shared/apps/python/3.9.16/lib/python3.9/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/barone/lcrisci_vb/External/elecext/parall.py", line 509, in run_single_point_energy
+    out_file = hooks["run"](inp_file)
+  File "/home/barone/lcrisci_vb/External/Executables/CentralExt", line 392, in run_calculation
+    result = subprocess.run([sys.executable, script_path] + energy_args, 
+  File "/shared/apps/python/3.9.16/lib/python3.9/subprocess.py", line 528, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/shared/apps/python/3.9.16/bin/python3.9', '/home/barone/lcrisci_vb/External/Executables/MolproExt_project', 'test.dat', 'ending_revdsd.dat', '1', '100', 'READ', 'R', 'Gau-atom_2_ixyz_3_down.EIn', 'energy_output.dat']' returned non-zero exit status 1.

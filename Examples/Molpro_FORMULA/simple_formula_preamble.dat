@@ -1,0 +1,20 @@
+! =======================================================
+! Test case for SIMPLE FORMULA in MolproExt_project
+! =======================================================
+! Test: Simple non-linear combination of two calculations
+! Expected: E_final = sqrt(c1*e1 + c2*e2)
+
+!scheme
+! 1.0 2.0
+!formula
+!e=sqrt(c1*e1 + c2*e2)
+!end
+
+basis=cc-pvdz
+memory,1000,m
+
+{hf
+wf,10,1,0}
+
+{mp2
+wf,10,1,0}

@@ -1,0 +1,9 @@
+Iteration: 1
+Output file: /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoMethods/output_b3lyp.EOut
+Central energy: -76.123456789
+Number of atoms: 3
+RMS_gradient: 0.01607011277295788
+System_hash: 6c56c69d1dc7bc7628b69de961b7e1c1
+Gradient_mode: two-sided
+Adaptive_oneside: disabled
+Timestamp: 2025-10-23 22:20:28

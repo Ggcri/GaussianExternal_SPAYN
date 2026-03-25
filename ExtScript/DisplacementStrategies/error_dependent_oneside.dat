@@ -1,0 +1,30 @@
+! ============================================================
+! Error-Dependent Displacement Strategy (One-Sided Variant)
+! ============================================================
+! Same as error_dependent.dat but uses forward differences.
+! Starts one-sided, switches to two-sided when RMS < 1e-3.
+!
+! Forward difference formula:
+!   h = sqrt(dE / lambda)
+!
+! Where:
+!   lambda = Cartesian force constant (Eh/Bohr^2)
+!   dE     = energy error estimate (Hartree)
+!
+! IMPORTANT: The "oneside" keyword goes on the COMMAND LINE,
+! not in this file. The ending.dat content is the same.
+!
+! Gaussian .gjf usage:
+!   External="CE mol preamble.dat ending.dat 8 16GB READ parall_n oneside 4"
+!
+! Compare with the default two-sided (central difference) mode:
+!   External="CE mol preamble.dat ending.dat 8 16GB READ parall_n 4"
+! ============================================================
+
+!normalmode
+!symmetry=auto
+!reference_fc=error_dependent
+!energy_error_grad=1e-10
+
+!fakekey
+! scf=xqc level="b3lyp/6-31g(d,p)"

@@ -1,0 +1,20 @@
+! =======================================================
+! Test case for TRANSCENDENTAL FORMULA in MolproExt_project
+! =======================================================
+! Test: Complex transcendental combination
+! Expected: E_final = exp(c1*e1) + log(abs(c2*e2))
+
+!scheme
+! 0.1 1.0
+!formula
+!e=exp(c1*e1) + log(abs(c2*e2))
+!end
+
+basis=cc-pvdz
+memory,1000,m
+
+{hf
+wf,10,1,0}
+
+{mp2
+wf,10,1,0}

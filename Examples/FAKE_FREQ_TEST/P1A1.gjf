@@ -1,0 +1,17 @@
+%chk=test_parall_mrcc.chk
+%nprocs=1
+#p opt(nomicro) output=pickett External="CentralExt mrcc 40 READ 14 1 $PMR/test_pr.dat $EMR/test_en.dat parall 7" 
+
+title
+
+0 1
+ O                  0.00000000    0.00000000   -0.11081188
+ H                  0.00000000   -0.78397589    0.44324751
+ H                 -0.00000000    0.78397589    0.44324751
+
+
+
+!fakekey 
+! nosymm freq=step=10
+
+

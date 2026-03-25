@@ -1,0 +1,18 @@
+! =======================================================
+! Test case for LINEAR combination in MolproExt_project
+! =======================================================
+! Test: Simple linear combination of two calculations
+! Expected: E_final = 2.0*E_hf + 0.5*E_mp2
+
+!scheme
+! 2.0 0.5
+!end
+
+basis=cc-pvdz
+memory,1000,m
+
+{hf
+wf,10,1,0}
+
+{mp2
+wf,10,1,0}

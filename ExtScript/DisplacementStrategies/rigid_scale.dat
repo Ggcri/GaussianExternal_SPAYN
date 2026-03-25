@@ -1,0 +1,18 @@
+! ============================================================
+! Rigid Scale Strategy
+! ============================================================
+! Uniform displacement for all modes (constant step size).
+!
+! Formula:
+!   alpha_k = ref_scale   (same value for every mode)
+!
+! Where:
+!   ref_scale = step size in Bohr
+! ============================================================
+
+!normalmode
+!symmetry=auto
+!ref_scale=0.03
+
+!fakekey
+! scf=xqc level="b3lyp/6-31g(d,p)"

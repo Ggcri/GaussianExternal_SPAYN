@@ -1,0 +1,231 @@
+
+================================================================================
+GUESS REUSE: Molpro detected - setting up electronic guess management
+================================================================================
+SECTION COUNT: Detected 0 method section(s) in ending file
+GUESS REUSE: No method sections found, guess reuse disabled
+System hash computed: b15fd3cbc5eed7988c1acde568867bf6
+  Based on: 3 atoms, charge=0, spin=1
+  Preamble: 209 chars, Ending: 4 chars
+System hash for this calculation: b15fd3cbc5eed7988c1acde568867bf6
+
+
+================================================================================
+CHECKING FOR MIXED ANALYTICAL/NUMERICAL GRADIENT MODE
+================================================================================
+Analyzing sections in /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries/preamble.dat for gradient mode (comment='!')
+
+--- Section Analysis Summary ---
+  default: NUMERICAL (dens=0, lines=11)
+
+Total sections: 1
+Analytical sections (0): []
+Numerical sections (1): ['default']
+--------------------------------
+
+Mode Detection Results:
+  OptFlag (gradient requested): 1
+  Has analytical sections: False
+  Has numerical sections: True
+  Mixed mode activated: False
+  All analytical mode: False
+  All numerical mode: True
+================================================================================
+
+Checking Iteration_1 (standard mode)
+  → System hash MISMATCH!
+     Current:  b15fd3cbc5eed7988c1acde568867bf6
+     Metadata: c82f44aae91365fcf14f3f4a95581345
+  → Different calculation detected, skipping
+No valid previous iteration with RMS_gradient found
+FAKE_FREQ CONVERSION: O Bohr=['0.01', '0.0', '0.117176334854'] -> Angstrom=[0.00529177210903, 0.0, 0.0620070460618757]
+FAKE_FREQ CONVERSION: H Bohr=['0.0', '0.755453076065', '-0.468705339414'] -> Angstrom=[0.0, 0.39976855176016857, -0.24802818424644446]
+FAKE_FREQ CONVERSION: H Bohr=['0.0', '-0.755453076065', '-0.468705339414'] -> Angstrom=[0.0, -0.39976855176016857, -0.24802818424644446]
+Checking original directory for Gaussian input: /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries
+No Gaussian input file with External keyword found, using default route
+DEBUG TEST MODE: Current dir = /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries
+DEBUG TEST MODE: Looking for local fake log at: /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries/FAKE_FREQ/fake_freq_1.log
+DEBUG TEST MODE: Local fake log exists: True
+TEST MODE: Using local fake frequency log from /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries/FAKE_FREQ/fake_freq_1.log
+ADAPTIVE GRADIENT: !oneside keyword not detected - using two-sided central differences
+GEOMETRY CONVERSION: Task 'central' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.        0.        0.2094041], Angstrom = [0.         0.         0.11081188]
+GEOMETRY CONVERSION: Task 'atom_1_ixyz_1_up' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.00188973 0.         0.2094041 ], Angstrom = [0.001      0.         0.11081188]
+GEOMETRY CONVERSION: Task 'atom_1_ixyz_2_up' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.         0.00188973 0.2094041 ], Angstrom = [0.         0.001      0.11081188]
+GEOMETRY CONVERSION: Task 'atom_1_ixyz_3_up' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.         0.         0.21129383], Angstrom = [0.         0.         0.11181188]
+GEOMETRY CONVERSION: Task 'atom_1_ixyz_3_down' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.         0.         0.20751437], Angstrom = [0.         0.         0.10981188]
+GEOMETRY CONVERSION: Task 'atom_2_ixyz_1_up' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.        0.        0.2094041], Angstrom = [0.         0.         0.11081188]
+GEOMETRY CONVERSION: Task 'atom_2_ixyz_2_up' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.        0.        0.2094041], Angstrom = [0.         0.         0.11081188]
+GEOMETRY CONVERSION: Task 'atom_2_ixyz_2_down' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.        0.        0.2094041], Angstrom = [0.         0.         0.11081188]
+GEOMETRY CONVERSION: Task 'atom_2_ixyz_3_up' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.        0.        0.2094041], Angstrom = [0.         0.         0.11081188]
+GEOMETRY CONVERSION: Task 'atom_2_ixyz_3_down' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.        0.        0.2094041], Angstrom = [0.         0.         0.11081188]
+Two-sided gradient mode: requiring both 'up' and 'down' displacements
+✓ Extracted Input orientation (3 atoms)
+✓ Extracted Original coordinates (3 atoms)
+DEBUG: Preserved fake frequency log as FAKE_FREQ/fake_freq_12.log
+DEBUG: Expected atoms: 3
+DEBUG: Task central: 3 atoms
+DEBUG: Task atom_1_ixyz_3_up: 3 atoms
+DEBUG: Task atom_1_ixyz_3_down: 3 atoms
+DEBUG: Task atom_2_ixyz_2_up: 3 atoms
+DEBUG: Task atom_2_ixyz_2_down: 3 atoms
+DEBUG: Task atom_2_ixyz_3_up: 3 atoms
+DEBUG: Task atom_2_ixyz_3_down: 3 atoms
+DEBUG: All geometries have correct atom count (3)
+
+================================================================================
+STANDARD NUMERICAL GRADIENT MODE (no dens=2 detected)
+================================================================================
+Created iteration directory: /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries/Iterations/Iteration_2
+INFO: This is iteration number 2
+INFO: Running numerical gradient calculation in iteration 2
+Running parallel energy calculations with 2 threads
+TASK SUBMISSION: Submitting 7 tasks
+  - Task: central
+  - Task: atom_1_ixyz_3_up
+  - Task: atom_1_ixyz_3_down
+  - Task: atom_2_ixyz_2_up
+  - Task: atom_2_ixyz_2_down
+  - Task: atom_2_ixyz_3_up
+  - Task: atom_2_ixyz_3_down
+PARALLEL EXECUTION: Starting with 2 workers
+PARALLEL EXECUTION: Total tasks to execute: 7
+PARALLEL EXECUTION: Submitted tasks: ['atom_1_ixyz_3_down', 'atom_1_ixyz_3_up', 'atom_2_ixyz_2_down', 'atom_2_ixyz_2_up', 'atom_2_ixyz_3_down', 'atom_2_ixyz_3_up', 'central']
+PARALLEL EXECUTION: Submitted 7 futures to executor
+UNIT CONVERSION: Task 'central' - Wrote .EIn file in Bohr
+  First atom: Angstrom = [0.         0.         0.11081188], Bohr = [0.        0.        0.2094041]
+THREAD-6107131904: Starting execution for task 'central'
+THREAD-6107131904: Task directory: /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries/Iterations/Iteration_2/task_central
+THREAD-6107131904: Input file: /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries/Iterations/Iteration_2/task_central/Gau-central.EIn
+THREAD-6107131904: Original working directory: /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries
+THREAD-6107131904: Test mode: True
+UNIT CONVERSION: Task 'atom_1_ixyz_3_up' - Wrote .EIn file in Bohr
+  First atom: Angstrom = [0.         0.         0.11181188], Bohr = [0.         0.         0.21129383]
+THREAD-6123958272: Starting execution for task 'atom_1_ixyz_3_up'
+THREAD-6123958272: Task directory: /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries/Iterations/Iteration_2/task_atom_1_ixyz_3_up
+THREAD-6123958272: Input file: /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries/Iterations/Iteration_2/task_atom_1_ixyz_3_up/Gau-atom_1_ixyz_3_up.EIn
+THREAD-6123958272: Original working directory: /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries
+THREAD-6123958272: Test mode: True
+THREAD-6107131904: TEST MODE: Created fake output for task central with energy -76.123456789
+THREAD-6107131904: TEST MODE: Output file created at /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries/Iterations/Iteration_2/task_central/energy_output.dat
+THREAD-6107131904: Already in original directory /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries
+THREAD-6123958272: TEST MODE: Created fake output for task atom_1_ixyz_3_up with energy -76.123356789
+THREAD-6123958272: TEST MODE: Output file created at /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries/Iterations/Iteration_2/task_atom_1_ixyz_3_up/energy_output.dat
+THREAD-6123958272: Already in original directory /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries
+PARALLEL EXECUTION: Task 'central' completed successfully with energy -76.123456789
+PARALLEL EXECUTION: Task 'atom_1_ixyz_3_up' completed successfully with energy -76.123356789
+UNIT CONVERSION: Task 'atom_1_ixyz_3_down' - Wrote .EIn file in Bohr
+  First atom: Angstrom = [0.         0.         0.10981188], Bohr = [0.         0.         0.20751437]
+THREAD-6107131904: Starting execution for task 'atom_1_ixyz_3_down'
+THREAD-6107131904: Task directory: /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries/Iterations/Iteration_2/task_atom_1_ixyz_3_down
+THREAD-6107131904: Input file: /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries/Iterations/Iteration_2/task_atom_1_ixyz_3_down/Gau-atom_1_ixyz_3_down.EIn
+THREAD-6107131904: Original working directory: /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries
+THREAD-6107131904: Test mode: True
+UNIT CONVERSION: Task 'atom_2_ixyz_2_up' - Wrote .EIn file in Bohr
+  First atom: Angstrom = [0.         0.         0.11081188], Bohr = [0.        0.        0.2094041]
+THREAD-6123958272: Starting execution for task 'atom_2_ixyz_2_up'
+THREAD-6123958272: Task directory: /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries/Iterations/Iteration_2/task_atom_2_ixyz_2_up
+THREAD-6123958272: Input file: /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries/Iterations/Iteration_2/task_atom_2_ixyz_2_up/Gau-atom_2_ixyz_2_up.EIn
+THREAD-6107131904: TEST MODE: Created fake output for task atom_1_ixyz_3_down with energy -76.123256789
+THREAD-6107131904: TEST MODE: Output file created at /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries/Iterations/Iteration_2/task_atom_1_ixyz_3_down/energy_output.dat
+THREAD-6107131904: Already in original directory /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries
+THREAD-6123958272: Original working directory: /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries
+THREAD-6123958272: Test mode: True
+THREAD-6123958272: TEST MODE: Created fake output for task atom_2_ixyz_2_up with energy -76.123406789
+THREAD-6123958272: TEST MODE: Output file created at /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries/Iterations/Iteration_2/task_atom_2_ixyz_2_up/energy_output.dat
+PARALLEL EXECUTION: Task 'atom_1_ixyz_3_down' completed successfully with energy -76.123256789
+THREAD-6123958272: Already in original directory /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries
+PARALLEL EXECUTION: Task 'atom_2_ixyz_2_up' completed successfully with energy -76.123406789
+UNIT CONVERSION: Task 'atom_2_ixyz_2_down' - Wrote .EIn file in Bohr
+  First atom: Angstrom = [0.         0.         0.11081188], Bohr = [0.        0.        0.2094041]
+THREAD-6107131904: Starting execution for task 'atom_2_ixyz_2_down'
+THREAD-6107131904: Task directory: /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries/Iterations/Iteration_2/task_atom_2_ixyz_2_down
+THREAD-6107131904: Input file: /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries/Iterations/Iteration_2/task_atom_2_ixyz_2_down/Gau-atom_2_ixyz_2_down.EIn
+THREAD-6107131904: Original working directory: /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries
+THREAD-6107131904: Test mode: True
+UNIT CONVERSION: Task 'atom_2_ixyz_3_up' - Wrote .EIn file in Bohr
+  First atom: Angstrom = [0.         0.         0.11081188], Bohr = [0.        0.        0.2094041]
+THREAD-6123958272: Starting execution for task 'atom_2_ixyz_3_up'
+THREAD-6123958272: Task directory: /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries/Iterations/Iteration_2/task_atom_2_ixyz_3_up
+THREAD-6123958272: Input file: /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries/Iterations/Iteration_2/task_atom_2_ixyz_3_up/Gau-atom_2_ixyz_3_up.EIn
+THREAD-6107131904: TEST MODE: Created fake output for task atom_2_ixyz_2_down with energy -76.123306789
+THREAD-6107131904: TEST MODE: Output file created at /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries/Iterations/Iteration_2/task_atom_2_ixyz_2_down/energy_output.dat
+THREAD-6107131904: Already in original directory /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries
+THREAD-6123958272: Original working directory: /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries
+THREAD-6123958272: Test mode: True
+PARALLEL EXECUTION: Task 'atom_2_ixyz_2_down' completed successfully with energy -76.123306789
+THREAD-6123958272: TEST MODE: Created fake output for task atom_2_ixyz_3_up with energy -76.123376789
+THREAD-6123958272: TEST MODE: Output file created at /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries/Iterations/Iteration_2/task_atom_2_ixyz_3_up/energy_output.dat
+THREAD-6123958272: Already in original directory /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries
+PARALLEL EXECUTION: Task 'atom_2_ixyz_3_up' completed successfully with energy -76.123376789
+UNIT CONVERSION: Task 'atom_2_ixyz_3_down' - Wrote .EIn file in Bohr
+  First atom: Angstrom = [0.         0.         0.11081188], Bohr = [0.        0.        0.2094041]
+THREAD-6107131904: Starting execution for task 'atom_2_ixyz_3_down'
+THREAD-6107131904: Task directory: /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries/Iterations/Iteration_2/task_atom_2_ixyz_3_down
+THREAD-6107131904: Input file: /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries/Iterations/Iteration_2/task_atom_2_ixyz_3_down/Gau-atom_2_ixyz_3_down.EIn
+THREAD-6107131904: Original working directory: /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries
+THREAD-6107131904: Test mode: True
+THREAD-6107131904: TEST MODE: Created fake output for task atom_2_ixyz_3_down with energy -76.123336789
+THREAD-6107131904: TEST MODE: Output file created at /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries/Iterations/Iteration_2/task_atom_2_ixyz_3_down/energy_output.dat
+THREAD-6107131904: Already in original directory /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries
+PARALLEL EXECUTION: Task 'atom_2_ixyz_3_down' completed successfully with energy -76.123336789
+PARALLEL EXECUTION: Completed tasks: ['atom_1_ixyz_3_down', 'atom_1_ixyz_3_up', 'atom_2_ixyz_2_down', 'atom_2_ixyz_2_up', 'atom_2_ixyz_3_down', 'atom_2_ixyz_3_up', 'central']
+PARALLEL EXECUTION: Failed tasks: []
+PARALLEL EXECUTION: All 7 tasks completed successfully
+TASK COMPLETION: Received 7 results
+  - Task central: Energy = -76.123456789
+  - Task atom_1_ixyz_3_up: Energy = -76.123356789
+  - Task atom_1_ixyz_3_down: Energy = -76.123256789
+  - Task atom_2_ixyz_2_up: Energy = -76.123406789
+  - Task atom_2_ixyz_2_down: Energy = -76.123306789
+  - Task atom_2_ixyz_3_up: Energy = -76.123376789
+  - Task atom_2_ixyz_3_down: Energy = -76.123336789
+WARNING: Using deprecated hardcoded rotation matrices
+Please provide input_geometry_bohr for auto-detection
+Point group: C02V
+Using identity rotation (no coordinate transformation)
+ADVANCED SYMMETRY: Using C02V point group with 4 operations
+ADVANCED SYMMETRY: C02V is abelian, using standard algorithm
+Using two-sided central differences for gradient calculation
+TWO-SIDED GRADIENT: Atom 1, Axis 3
+  Step (Bohr): 0.003779452249
+  Energy diff (E_up - E_down) (Hartree): -0.000100000000
+  Gradient (Hartree/Bohr): -0.026458860546
+TWO-SIDED GRADIENT: Atom 2, Axis 2
+  Step (Bohr): 0.003779452249
+  Energy diff (E_up - E_down) (Hartree): -0.000100000000
+  Gradient (Hartree/Bohr): -0.026458860548
+TWO-SIDED GRADIENT: Atom 2, Axis 3
+  Step (Bohr): 0.003779452249
+  Energy diff (E_up - E_down) (Hartree): -0.000040000000
+  Gradient (Hartree/Bohr): -0.010583544218
+SYMMETRY FALLBACK: Component (3,1) = -0.000000000 (no symmetry match found)
+  Used reference gradient directly (UFF value)
+SYMMETRY DETECTION: Component (3,2) = -1 * (2,2) [strict match]
+  Reference values: ref_val=-0.018219700, ref_comp=0.018219700
+  Applied gradient: 0.026458861 (from calculated: -0.026458861)
+SYMMETRY DETECTION: Component (3,3) = +1 * (2,3) [strict match]
+  Reference values: ref_val=-0.023730598, ref_comp=-0.023730598
+  Applied gradient: -0.010583544 (from calculated: -0.010583544)
+GRADIENT NORM: RMS = 1.607011e-02 Hartree/Bohr
+NUMERICAL WORKFLOW: Gradient shape: (3, 3)
+NUMERICAL WORKFLOW: Central energy: -76.123456789
+NUMERICAL WORKFLOW: RMS gradient norm: 0.01607011277295788
+
+DEBUG: Writing output to /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries/output_h2o_perturbed.EOut
+DEBUG: Current directory: /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries
+DEBUG: Central energy: -76.123456789
+DEBUG: Gradient shape: (3, 3)
+DEBUG: Output written successfully
+DEBUG: File exists: True
+SUCCESS: Parallel gradient calculation completed using iteration 2
+Task directories preserved in: /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/Examples/HashTest/TwoGeometries/Iterations/Iteration_2

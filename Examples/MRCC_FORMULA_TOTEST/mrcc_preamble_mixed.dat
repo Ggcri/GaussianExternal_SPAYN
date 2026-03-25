@@ -1,0 +1,27 @@
+! ============================================================
+! Test case for MIXED (Copy + Formula) mechanism in MRCC_ext v5
+! ============================================================
+! Test: Two calculations with copies combined using custom formula
+! Operations: HF calculation (c1=1.0), MP2 calculation (c2=2.0), copy HF with (c3=0.5)
+! Expected: E_final = exp(c1*e1/100) + log(abs(c2*e2/100)) + c3*e1
+
+!scheme
+! 1.0 2.0 copy[1,0.5]
+!formula
+!e=exp(c1*e1/100) + c3*e1 + abs(c2*e2/100)
+!end
+
+! Default section - fallback (not used with multiple sections)
+energy_pattern=***FINAL HARTREE-FOCK ENERGY:
+basis=sto-3g
+calc=HF
+
+!SECTION1
+energy_pattern=***FINAL HARTREE-FOCK ENERGY:
+basis=sto-3g
+calc=HF
+
+!SECTION2
+energy_pattern=***FINAL MP2 ENERGY:
+basis=sto-3g
+calc=MP2

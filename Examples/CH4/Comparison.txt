@@ -1,0 +1,32 @@
+Obtained Forces
+
+ -------------------------------------------------------------------
+ Center     Atomic                   Forces (Hartrees/Bohr)
+ Number     Number              X              Y              Z
+ -------------------------------------------------------------------
+      1        6          -0.000000000   -0.000000000   -0.000000000
+      2        1           0.012702143    0.012702143    0.012702143
+      3        1          -0.000000000    0.020742634    0.007333629
+      4        1           0.017963648   -0.010371317    0.007333629
+      5        1          -0.017963648   -0.010371317    0.007333628
+ -------------------------------------------------------------------
+
+ Reference forces
+
+ -------------------------------------------------------------------
+ Center     Atomic                   Forces (Hartrees/Bohr)
+ Number     Number              X              Y              Z
+ -------------------------------------------------------------------
+      1        6          -0.000000000    0.000000001    0.000000004
+      2        1          -0.000000000    0.000000000    0.022000885
+      3        1          -0.000000000   -0.020742637   -0.007333630
+      4        1          -0.017963651    0.010371318   -0.007333630
+      5        1           0.017963651    0.010371318   -0.007333630
+ -------------------------------------------------------------------
+
+ #Comment: 
+ If you compare the differences between the reference and the obtained forces there are two problems. The sign is NOT a problem, it depends on the rotation that the gaussian makes.  The REAL PROBLEMS are two:
+ 1. The coordinate 3 on atom 2 is different between the obtained and the reference
+ 2. There is something that is messing the symmetry management in the construction of the final gradients. For example, it is clear that the code interprets that the coordinate 1 and 2 on atom 2 is equal to coordinate 3 on atom 2 but this is wrong (as you can see from the reference potential) 
+
+ One possible source of error is the which Forces block is used to understand the symmetry relation in fake_freq.log file. The code should read just the last block or a the least the first one, related to the central_point but I don't know what it uses. 

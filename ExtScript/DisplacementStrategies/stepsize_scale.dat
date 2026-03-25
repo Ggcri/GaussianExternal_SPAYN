@@ -1,0 +1,20 @@
+! ============================================================
+! Stepsize Scale Strategy
+! ============================================================
+! Scales displacement inversely with the square root of the
+! force constant.
+!
+! Formula:
+!   alpha_k = stepsize_scale / sqrt(f_k)
+!
+! Where:
+!   f_k = force constant of mode k (mDyne/A)
+!   stepsize_scale = user-defined scale factor
+! ============================================================
+
+!normalmode
+!symmetry=auto
+!stepsize_scale=1.0
+
+!fakekey
+! scf=xqc level="b3lyp/6-31g(d,p)"

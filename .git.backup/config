@@ -1,0 +1,49 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+	ignorecase = true
+	precomposeunicode = true
+[remote "origin"]
+	url = https://github.com/Ggcri/External.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "main"]
+	remote = origin
+	merge = refs/heads/main
+[branch "ParallelNumGrad"]
+	remote = origin
+	merge = refs/heads/ParallelNumGrad
+[branch "GaussianDevelop"]
+	remote = origin
+	merge = refs/heads/GaussianDevelop
+[branch "SUB_NORMAL_ParallNumGrad"]
+	remote = origin
+	merge = refs/heads/SUB_NORMAL_ParallNumGrad
+[branch "NumAnMix_merged"]
+	remote = origin
+	merge = refs/heads/NumAnMix
+[branch "fix/hash-generation-geom-allcheck"]
+	remote = origin
+	merge = refs/heads/fix/hash-generation-geom-allcheck
+[branch "feature/frequency_computation"]
+	remote = origin
+	merge = refs/heads/feature/frequency_computation
+[branch "HessianWriteImplementation"]
+	remote = origin
+	merge = refs/heads/HessianWriteImplementation
+[branch "fix/NormModesDisplacement"]
+	remote = origin
+	merge = refs/heads/fix/NormModesDisplacement
+[branch "feature/minimax_exponential"]
+	remote = origin
+	merge = refs/heads/feature/minimax_exponential
+[branch "feature/fc_minimax"]
+	remote = origin
+	merge = refs/heads/feature/fc_minimax
+[branch "feature/ErrorDependentStepSize"]
+	remote = origin
+	merge = refs/heads/feature/ErrorDependentStepSize
+[branch "feature/gaussian-hessian-output"]
+	remote = origin
+	merge = refs/heads/feature/gaussian-hessian-output

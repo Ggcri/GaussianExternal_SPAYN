@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<molpro xmlns="http://www.molpro.net/schema/molpro-output"
+  xmlns:xsd="http://www.w3.org/1999/XMLSchema"
+  xmlns:cml="http://www.xml-cml.org/schema"
+  xmlns:stm="http://www.xml-cml.org/schema"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+ <job>
+  <stm:metadataList>
+   <stm:metadata name="dc:date" content="2025-09-14T23:21:34+02:00"/>
+   <stm:metadata name="dc:creator" content="lcrisci_vb"/>
+   <stm:metadata name="cmlm:insilico" content="Molpro"/>
+  </stm:metadataList>
+  <platform pid="2520730">
+   <version major="2024" minor="1" SHA="675817fde4514a4a933b69e420913a90cee4ef91"
+     integer_bits="64" parallelism="serial">
+    2024.1
+    <date year="2025" month="9" day="14" hour="23" minute="21" second="34">
+     2025-09-14T23:21:34
+    </date>
+   </version>
+   <licence id="vbarone"/>
+   <parallel processes="1" nodes="1" all_processes="1" openmp="1"/>
+   <dimensions natom="400" nvalence="500" nvalence_pno="1000" nbasis="12000" nstate="100"
+     nsymm="16" nrec="1024" nprim="2" ncol="100"/>
+  </platform>
+  <jobstep command="DF-KS-SCF" commandset="SCFPRO">
+   <cml:molecule>
+    <cml:symmetry pointGroup="C1">
+    </cml:symmetry>
+    <cml:atomArray>
+     <cml:atom id="a1" elementType="C" x3="0.0" y3="0.0" z3="0.0"/>
+     <cml:atom id="a2" elementType="H" x3="0.616568973765306" y3="0.617568973764975"
+       z3="0.616568973765306"/>
+     <cml:atom id="a3" elementType="H" x3="-0.616568973765306" y3="-0.616568973765306"
+       z3="0.616568973765306"/>
+     <cml:atom id="a4" elementType="H" x3="-0.616568973765306" y3="0.616568973765306"
+       z3="-0.616568973765306"/>
+     <cml:atom id="a5" elementType="H" x3="0.616568973765306" y3="-0.616568973765306"
+       z3="-0.616568973765306"/>
+    </cml:atomArray>
+    <cml:bondArray>
+     <cml:bond atomRefs2="a1 a2"/>
+     <cml:bond atomRefs2="a1 a3"/>
+     <cml:bond atomRefs2="a1 a4"/>
+     <cml:bond atomRefs2="a1 a5"/>
+    </cml:bondArray>
+   </cml:molecule>
+   <variables>
+    <variable name="_NGRID" type="xsd:double" units="AU" length="1">
+     <value>19994.0</value>
+    </variable>
+   </variables>
+   <property name="Energy" method="RKS" principal="true" stateSymmetry="1" stateNumber="1"
+     value="-40.3322111436262"/>
+   <property name="One-electron energy" method="RKS" value="-80.2935184276817"/>
+   <property name="Two-electron energy" method="RKS" value="28.4226399778496"/>
+   <property name="Kinetic energy" method="RKS" value="40.2714336395266"/>
+   <property name="Nuclear energy" method="RKS" value="13.711209145866"/>
+   <property name="Virial quotient" method="RKS" value="-1.00150919643546"/>
+   <property name="Dipole moment" method="RKS" principal="true" stateSymmetry="1"
+     stateNumber="1"
+     value="-0.135189425679628E-03 -0.855946815643159E-05 -0.135220310331928E-03"/>
+   <time start="23:21:34" end="23:22:20" cpu="2.09" system="6.42" real="46.37"/>
+   <storage units="megabyte" memory="87890.62" sf="0.0" df="30.92" eaf="0.0"/>
+   <summary overall_method="DF-KS/cc-pVDZ-F12"/>
+  </jobstep>
+  <jobstep command="DF-MP2" commandset="CCSD">
+   <property name="energy" method="Reference" stateSymmetry="1" stateNumber="1"
+     value="-40.3322111436262"/>
+   <property name="singlet pair energy" method="MP2" stateSymmetry="1" stateNumber="1"
+     value="-0.845339953407953E-01"/>
+   <property name="triplet pair energy" method="MP2" stateSymmetry="1" stateNumber="1"
+     value="-0.345539421543915E-01"/>
+   <property name="correlation energy" method="MP2" stateSymmetry="1" stateNumber="1"
+     value="-0.119087937495187"/>
+   <property name="total energy" method="MP2" principal="true" stateSymmetry="1"
+     stateNumber="1" value="-40.4512990811214"/>
+   <time start="23:22:20" end="23:22:22" cpu="0.04" system="0.01" real="1.96"/>
+   <storage units="megabyte" memory="87890.62" sf="0.0" df="30.92" eaf="0.0"/>
+   <summary overall_method="DF-MP2/cc-pVDZ-F12"/>
+  </jobstep>
+  <input>
+   <p>!scheme</p>
+   <p>!1.0</p>
+   <p>geomtyp=xyz</p>
+   <p>noorient</p>
+   <p>bohr</p>
+   <p>geometry={</p>
+   <p>5</p>
+   <p>Title</p>
+   <p>C 0.0 0.0 0.0</p>
+   <p>H 1.165146497358 1.167036223482 1.165146497358</p>
+   <p>H -1.165146497358 -1.165146497358 1.165146497358</p>
+   <p>H -1.165146497358 1.165146497358 -1.165146497358</p>
+   <p>H 1.165146497358 -1.165146497358 -1.165146497358</p>
+   <p>}</p>
+   <p>Set,spin = 0</p>
+   <p>Set,charge = 0</p>
+   <p>      basis=cc-pvdz-f12</p>
+   <p>cDFTc=0.4210</p>
+   <p>cXHF=0.69</p>
+   <p>c2ab=0.5922</p>
+   <p>c2ss=0.0636</p>
+   <p>{DF-ks,pbex,p86,gridthr=1d-6,gridthr=3d-7;dh,cXHF,1.00-cDFTc}</p>
+   <p>EKS=ENERGY;</p>
+   <p>DF-mp2,ksfock,scsfacs=c2ab/(1.00-cDFTc),scsfact=c2ss/(1.00-cDFTc)</p>
+   <p>PT2=(EMP2_SCS - ENERGR)*(1.00-cDFTc)</p>
+   <p>!For normal MP2-F12, we need not to multiply SCSMP2DZ with 0.5790</p>
+   <p>exe_energy=EKS+PT2</p>
+  </input>
+  <diagnostics warnings="0"/>
+ </job>
+</molpro>

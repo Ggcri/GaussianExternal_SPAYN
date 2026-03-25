@@ -1,0 +1,5 @@
+Iteration: 6
+Output file: /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/CH4/test_td_symmetry.EOut
+Central energy: -76.123456789
+Number of atoms: 5
+Timestamp: 2025-09-10 00:10:33

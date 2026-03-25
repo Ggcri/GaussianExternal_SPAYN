@@ -1,0 +1,10 @@
+@/example/path/to/include/basis/set/custom
+
+!fakekey
+! nosymm freq=step=10
+! scf=xqc level="b3lyp/6-31g*"
+
+!normalmode
+!symmetry=A1
+!stepsize_scale=1.0
+!reference_fc=0.5

@@ -1,0 +1,448 @@
+"""
+Hessian transformation from mass-weighted normal mode coordinates to Cartesian coordinates.
+
+This module computes the full Cartesian Hessian matrix from normal mode frequency data
+for Gaussian External interface output.
+
+Key transformation:
+    H_cartesian = L^T × H_Q × L (mass-weighted)
+    H_cartesian = unmass_weight(H_mw, atomic_masses) (final Cartesian)
+
+Where:
+    - H_Q: Diagonal Hessian in normal mode space (force constants from frequencies)
+    - L: Full eigenvector matrix including rotations, translations, and vibrations
+    - H_cartesian: Symmetric Hessian in Cartesian coordinates (Hartree/Bohr²)
+"""
+
+import numpy as np
+
+
+# Physical constants (from frequency_calculation.py)
+C_CM = 2.99792458e10          # Speed of light (cm/s)
+AMU2AU = 1822.888486209       # AMU to atomic units conversion
+CNUFAC = 2.194746313705e5     # Conversion factor: atomic units to cm⁻¹
+
+
+def freq_to_force_constant_au(freq_cm1, reduced_mass_uma):
+    """
+    Convert frequency to mass-weighted Hessian eigenvalue (d²E/dQ²) in atomic units.
+
+    This computes the eigenvalue of the mass-weighted Hessian matrix, NOT the
+    physical force constant k = μ × ω². The eigenvalue d²E/dQ² depends only on
+    frequency when using mass-weighted normal coordinates.
+
+    Formula: d²E/dQ² = (ω / CNUFAC)² × AMU2AU
+    where ω is frequency in cm⁻¹
+
+    Args:
+        freq_cm1: Frequency in cm⁻¹
+        reduced_mass_uma: Reduced mass in uma (amu) - NOT USED in calculation,
+                         kept for API compatibility
+
+    Returns:
+        d²E/dQ²: Eigenvalue of mass-weighted Hessian in Hartree/Bohr²
+
+    Notes:
+        - For imaginary frequencies (negative values), returns negative value
+        - This preserves the sign for transition states
+        - The reduced_mass_uma parameter is unused; d²E/dQ² depends only on frequency
+    """
+    # Convert frequency from cm⁻¹ to atomic units
+    omega_au = abs(freq_cm1) / CNUFAC
+
+    # Eigenvalue of mass-weighted Hessian: d²E/dQ² = ω² × AMU2AU
+    d2E_dQ2 = omega_au**2 * AMU2AU
+
+    # Preserve sign for imaginary frequencies
+    if freq_cm1 < 0:
+        d2E_dQ2 = -d2E_dQ2
+
+    return d2E_dQ2
+
+
+def construct_diagonal_hessian_Q(frequencies, reduced_masses, natoms):
+    """
+    Construct diagonal Hessian matrix in normal mode coordinates.
+
+    The Hessian is diagonal with:
+    - First (n_rot + 3) elements = 0.0 (rotations + translations)
+    - Remaining elements = force constants from frequencies (ordered)
+
+    Args:
+        frequencies: Array of vibrational frequencies (cm⁻¹), length 3N-6 or 3N-5
+        reduced_masses: Array of reduced masses (uma), same length as frequencies
+        natoms: Number of atoms
+
+    Returns:
+        H_Q: Diagonal Hessian matrix (3N × 3N) in Hartree/Bohr²
+
+    Notes:
+        - Automatically detects linearity from number of frequencies
+        - 3N-6 modes → non-linear molecule (3 rotations)
+        - 3N-5 modes → linear molecule (2 rotations)
+    """
+    n_coords = 3 * natoms
+    n_vib_modes = len(frequencies)
+
+    # Detect linearity
+    n_expected_nonlinear = 3 * natoms - 6
+    n_expected_linear = 3 * natoms - 5
+
+    if n_vib_modes == n_expected_linear:
+        n_rot = 2  # Linear molecule
+    elif n_vib_modes == n_expected_nonlinear:
+        n_rot = 3  # Non-linear molecule
+    else:
+        raise ValueError(
+            f"Unexpected number of vibrational modes: {n_vib_modes} "
+            f"for {natoms} atoms. Expected {n_expected_nonlinear} (non-linear) "
+            f"or {n_expected_linear} (linear)."
+        )
+
+    # Initialize diagonal Hessian
+    H_Q = np.zeros((n_coords, n_coords))
+
+    # Offset for rotations + translations (zeros come first)
+    offset = n_rot + 3
+
+    # Fill diagonal with force constants
+    for i, (freq, mu) in enumerate(zip(frequencies, reduced_masses)):
+        k_i = freq_to_force_constant_au(freq, mu)
+        H_Q[offset + i, offset + i] = k_i
+
+    return H_Q
+
+
+def construct_translational_eigenvectors(atomic_masses):
+    """
+    Construct mass-weighted eigenvectors for translational modes.
+
+    Translation eigenvectors are uniform motion in x, y, z directions,
+    mass-weighted and normalized.
+
+    Args:
+        atomic_masses: Array of atomic masses (uma), shape (natoms,)
+
+    Returns:
+        L_trans: Translational eigenvectors (3N, 3)
+
+    Notes:
+        - Column 0: X translation
+        - Column 1: Y translation
+        - Column 2: Z translation
+        - Each normalized to unit length
+    """
+    natoms = len(atomic_masses)
+    n_coords = 3 * natoms
+
+    L_trans = np.zeros((n_coords, 3))
+
+    for i in range(natoms):
+        sqrt_mass = np.sqrt(atomic_masses[i])
+
+        # X translation: (sqrt(m), 0, 0)
+        L_trans[3*i, 0] = sqrt_mass
+
+        # Y translation: (0, sqrt(m), 0)
+        L_trans[3*i + 1, 1] = sqrt_mass
+
+        # Z translation: (0, 0, sqrt(m))
+        L_trans[3*i + 2, 2] = sqrt_mass
+
+    # Normalize each column
+    for j in range(3):
+        norm = np.linalg.norm(L_trans[:, j])
+        if norm > 1e-10:
+            L_trans[:, j] /= norm
+
+    return L_trans
+
+
+def construct_rotational_eigenvectors(geometry_bohr, atomic_masses, n_rot):
+    """
+    Construct mass-weighted eigenvectors for rotational modes.
+
+    Rotation eigenvectors are constructed around center of mass axes.
+    For rotation around axis a: r_i × e_a, mass-weighted and normalized.
+
+    Args:
+        geometry_bohr: Atomic coordinates (natoms, 3) in Bohr
+        atomic_masses: Array of atomic masses (uma), shape (natoms,)
+        n_rot: Number of rotations (2 for linear, 3 for non-linear)
+
+    Returns:
+        L_rot: Rotational eigenvectors (3N, n_rot)
+
+    Notes:
+        - For non-linear (n_rot=3):
+          - Column 0: Rotation around X axis
+          - Column 1: Rotation around Y axis
+          - Column 2: Rotation around Z axis
+        - For linear (n_rot=2):
+          - Columns depend on molecular axis orientation
+          - Uses perpendicular axes to molecular axis
+    """
+    natoms = len(atomic_masses)
+    n_coords = 3 * natoms
+
+    # Compute center of mass
+    total_mass = np.sum(atomic_masses)
+    com = np.sum(geometry_bohr * atomic_masses[:, np.newaxis], axis=0) / total_mass
+
+    # Geometry relative to center of mass
+    geom_com = geometry_bohr - com
+
+    L_rot = np.zeros((n_coords, n_rot))
+
+    if n_rot == 3:
+        # Non-linear molecule: 3 rotations around X, Y, Z axes
+        for i in range(natoms):
+            sqrt_mass = np.sqrt(atomic_masses[i])
+            x, y, z = geom_com[i]
+
+            # Rotation around X axis: r × e_x = (0, -z, y)
+            L_rot[3*i:3*i+3, 0] = sqrt_mass * np.array([0, -z, y])
+
+            # Rotation around Y axis: r × e_y = (z, 0, -x)
+            L_rot[3*i:3*i+3, 1] = sqrt_mass * np.array([z, 0, -x])
+
+            # Rotation around Z axis: r × e_z = (-y, x, 0)
+            L_rot[3*i:3*i+3, 2] = sqrt_mass * np.array([-y, x, 0])
+
+    elif n_rot == 2:
+        # Linear molecule: 2 rotations perpendicular to molecular axis
+        # Identify molecular axis (principal moment of inertia axis)
+        # Simplified: use axis with maximum spread
+
+        # Compute inertia tensor
+        I = np.zeros((3, 3))
+        for i in range(natoms):
+            r = geom_com[i]
+            m = atomic_masses[i]
+            I += m * (np.dot(r, r) * np.eye(3) - np.outer(r, r))
+
+        # Find principal axes (eigenvectors of inertia tensor)
+        eigenvalues, eigenvectors = np.linalg.eigh(I)
+
+        # Molecular axis is the one with smallest moment (largest eigenvalue index)
+        # For linear molecules, two eigenvalues are large (perpendicular rotations)
+        # and one is near zero (along molecular axis)
+        mol_axis_idx = np.argmin(eigenvalues)
+        mol_axis = eigenvectors[:, mol_axis_idx]
+
+        # Get two perpendicular axes
+        perp_axes = [eigenvectors[:, j] for j in range(3) if j != mol_axis_idx]
+
+        # Construct rotational eigenvectors around perpendicular axes
+        for rot_idx, axis in enumerate(perp_axes):
+            for i in range(natoms):
+                sqrt_mass = np.sqrt(atomic_masses[i])
+                r = geom_com[i]
+                # r × axis
+                cross_prod = np.cross(r, axis)
+                L_rot[3*i:3*i+3, rot_idx] = sqrt_mass * cross_prod
+
+    # Normalize each column
+    for j in range(n_rot):
+        norm = np.linalg.norm(L_rot[:, j])
+        if norm > 1e-10:
+            L_rot[:, j] /= norm
+        else:
+            # If norm is zero, this rotation is not defined
+            # (can happen for very specific geometries)
+            pass
+
+    return L_rot
+
+
+def construct_full_L_matrix(eigenvectors_vib, geometry_bohr, atomic_masses):
+    """
+    Construct full eigenvector matrix including rotations, translations, and vibrations.
+
+    The full L matrix has columns ordered as: [rotations | translations | vibrations]
+    All eigenvectors are mass-weighted and normalized.
+
+    Args:
+        eigenvectors_vib: Vibrational eigenvectors from .fchk (natoms, 3, n_vib_modes)
+        geometry_bohr: Atomic coordinates (natoms, 3) in Bohr
+        atomic_masses: Array of atomic masses (uma), shape (natoms,)
+
+    Returns:
+        L_full: Full eigenvector matrix (3N, 3N)
+
+    Notes:
+        - Automatically detects linearity from shape of eigenvectors_vib
+        - Assumes eigenvectors_vib are already properly normalized
+    """
+    natoms = len(atomic_masses)
+    n_coords = 3 * natoms
+    n_vib_modes = eigenvectors_vib.shape[2]
+
+    # Detect linearity
+    n_expected_nonlinear = 3 * natoms - 6
+    n_expected_linear = 3 * natoms - 5
+
+    if n_vib_modes == n_expected_linear:
+        n_rot = 2  # Linear
+    elif n_vib_modes == n_expected_nonlinear:
+        n_rot = 3  # Non-linear
+    else:
+        raise ValueError(
+            f"Unexpected number of vibrational modes: {n_vib_modes} "
+            f"for {natoms} atoms."
+        )
+
+    # Reshape vibrational eigenvectors to (3N, n_vib_modes)
+    L_vib = eigenvectors_vib.reshape(n_coords, n_vib_modes)
+
+    # Construct rotational and translational eigenvectors
+    L_rot = construct_rotational_eigenvectors(geometry_bohr, atomic_masses, n_rot)
+    L_trans = construct_translational_eigenvectors(atomic_masses)
+
+    # Combine all eigenvectors: [rotations | translations | vibrations]
+    L_full = np.hstack([L_rot, L_trans, L_vib])
+
+    # Verify shape
+    assert L_full.shape == (n_coords, n_coords), \
+        f"L_full shape mismatch: {L_full.shape} != ({n_coords}, {n_coords})"
+
+    return L_full
+
+
+def unmass_weight_hessian(H_mw, atomic_masses):
+    """
+    Convert mass-weighted Hessian to Cartesian Hessian.
+
+    Formula: H_cart[ia, jb] = H_mw[ia, jb] / sqrt(m_i × m_j)
+
+    Args:
+        H_mw: Mass-weighted Hessian (3N, 3N)
+        atomic_masses: Array of atomic masses (uma), shape (natoms,)
+
+    Returns:
+        H_cart: Cartesian Hessian in Hartree/Bohr²
+
+    Notes:
+        Since eigenvectors L are constructed with sqrt(m_uma), the mass-weighting
+        factor here must also use uma (not atomic units) to maintain dimensional
+        consistency.
+    """
+    natoms = len(atomic_masses)
+    n_coords = 3 * natoms
+
+    H_cart = np.zeros((n_coords, n_coords))
+
+    for i in range(natoms):
+        for j in range(natoms):
+            # Mass-weighting factor: sqrt(m_i × m_j) in uma
+            factor = np.sqrt(atomic_masses[i] * atomic_masses[j])
+
+            # Convert 3×3 block
+            for a in range(3):
+                for b in range(3):
+                    ia = 3*i + a
+                    jb = 3*j + b
+                    H_cart[ia, jb] = H_mw[ia, jb] / factor if factor > 1e-10 else 0.0
+
+    return H_cart
+
+
+def transform_hessian_to_cartesian(H_Q, L_full, atomic_masses):
+    """
+    Transform Hessian from normal mode coordinates to Cartesian coordinates.
+
+    Steps:
+    1. H_mw = L^T × H_Q × L (mass-weighted Cartesian)
+    2. H_cart = unmass_weight(H_mw, atomic_masses) (true Cartesian)
+    3. Enforce symmetry: H_cart = (H_cart + H_cart.T) / 2
+
+    Args:
+        H_Q: Diagonal Hessian in normal mode space (3N, 3N)
+        L_full: Full eigenvector matrix (3N, 3N)
+        atomic_masses: Array of atomic masses (uma), shape (natoms,)
+
+    Returns:
+        H_cart: Symmetric Cartesian Hessian (3N, 3N) in Hartree/Bohr²
+    """
+    # Step 1: Transform to mass-weighted Cartesian
+    # H_mw = L^T @ H_Q @ L
+    H_mw = L_full.T @ H_Q @ L_full
+
+    # Step 2: Un-mass-weight to get Cartesian Hessian
+    H_cart = unmass_weight_hessian(H_mw, atomic_masses)
+
+    # Step 3: Enforce exact symmetry (numerical errors can break it)
+    H_cart = 0.5 * (H_cart + H_cart.T)
+
+    return H_cart
+
+
+def format_hessian_lower_triangular(H_cart):
+    """
+    Convert symmetric Hessian to lower triangular form for Gaussian output.
+
+    Format: Elements H[i,j] where i >= j, ordered as:
+    H[0,0], H[1,0], H[1,1], H[2,0], H[2,1], H[2,2], ...
+
+    Args:
+        H_cart: Symmetric Cartesian Hessian (3N, 3N)
+
+    Returns:
+        Array of lower triangular elements, length (3N*(3N+1))/2
+    """
+    n_coords = H_cart.shape[0]
+
+    lower_tri = []
+    for i in range(n_coords):
+        for j in range(i + 1):  # j from 0 to i (inclusive)
+            lower_tri.append(H_cart[i, j])
+
+    return np.array(lower_tri)
+
+
+def compute_hessian_from_all_modes(all_modes_data, geometry_bohr, atomic_masses):
+    """
+    Main entry point: Compute Cartesian Hessian from normal mode frequency data.
+
+    This function orchestrates the complete transformation from frequencies to
+    Cartesian Hessian in lower triangular format for Gaussian External output.
+
+    Args:
+        all_modes_data: Dictionary with keys:
+            - 'frequencies': Array of frequencies (cm⁻¹)
+            - 'reduced_masses': Array of reduced masses (uma)
+            - 'eigenvectors': Array (natoms, 3, n_modes) from .fchk
+        geometry_bohr: Central geometry (natoms, 3) in Bohr
+        atomic_masses: Array of atomic masses (uma), shape (natoms,)
+
+    Returns:
+        hessian_lt: Lower triangular Hessian array in Hartree/Bohr²
+                    Length: (3N*(3N+1))/2
+
+    Raises:
+        ValueError: If number of modes doesn't match expected values
+
+    Notes:
+        - Automatically handles linear vs non-linear molecules
+        - Handles imaginary frequencies (negative force constants)
+        - Output ready for direct write to Gaussian External format
+    """
+    # Extract data
+    frequencies = all_modes_data['frequencies']
+    reduced_masses = all_modes_data['reduced_masses']
+    eigenvectors_vib = all_modes_data['eigenvectors']
+    natoms = len(atomic_masses)
+
+    # Step 1: Construct diagonal Hessian in normal mode space
+    H_Q = construct_diagonal_hessian_Q(frequencies, reduced_masses, natoms)
+
+    # Step 2: Construct full eigenvector matrix
+    L_full = construct_full_L_matrix(eigenvectors_vib, geometry_bohr, atomic_masses)
+
+    # Step 3: Transform to Cartesian coordinates
+    H_cart = transform_hessian_to_cartesian(H_Q, L_full, atomic_masses)
+
+    # Step 4: Format as lower triangular for Gaussian
+    hessian_lt = format_hessian_lower_triangular(H_cart)
+
+    return hessian_lt

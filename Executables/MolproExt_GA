@@ -1,0 +1,322 @@
+#!/shared/apps/python/3.9.16/bin/python3.9 -u
+# The following python script should 
+# 0. Parse the gaussian informations given as input DONE
+# 1. Take in input the gaussian geometry DONE
+# 2. Compute the distance between reacting atoms DONE
+# 3. Take from somewhere the polynomial coefficient to extrapolate the HF exchange value DONE
+# 4. Compute the MC-PDFT with exchange extrapolated DONE
+# 5. Write in output the output file in gaussian format DONE
+
+import concurrent.futures
+import sys
+import os
+import numpy as np
+import glob
+import shlex
+import subprocess
+import time
+
+# Ensure the elecext utilities can be imported when running this
+# script directly from the Executables directory.
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+PARENT_DIR = os.path.abspath(os.path.join(CURRENT_DIR, ".."))
+if PARENT_DIR not in sys.path:
+    sys.path.insert(0, PARENT_DIR)
+
+from elecext import GauInpParser, parse_coefficients, combine_gradients, write_output, Logger, resolve_path_with_env
+
+def main():
+    logger = Logger("external.log")
+    global print
+    print = logger.log
+    # Check if the number of arguments is correct (including the script name)
+
+#  PARSE THE GAUSSIAN INFORMATIONS GIVEN AS INPUT
+    # Arguments are accessed by indexes in sys.argv
+    print(77*'*') 
+    print("STARTING PARSING")
+    preamble_file = resolve_path_with_env(sys.argv[1])
+    end_file = resolve_path_with_env(sys.argv[2])
+    nprocs = sys.argv[3]
+    mem = sys.argv[4]
+    readgradpy = sys.argv[5]
+    layer = sys.argv[6]
+    logger.header("MolproExt_GA", nprocs, mem)
+    # Check if a gaussian input is already present, if not read from 
+    # command line.
+    files = glob.glob('Gau*EIn')
+    if files:
+        # Find the last created file by checking the creation time
+        last_created_file = max(files, key=os.path.getctime)
+        print(f"The last created file that starts with 'Gau' and ends with 'EIn' is: {last_created_file}")
+        GauInput = last_created_file
+    else:
+        GauInput = sys.argv[7]
+        print("No files matching the pattern were found.")
+    GauOutput = sys.argv[8]
+    print(f"Preamble file: {preamble_file}")
+    print(f"End file: {end_file}")
+    print(f"Number of processors: {nprocs}")
+    print(f"Memory allocation: {mem}")
+    print(f"Read Gradient Python Script: {readgradpy}")
+    print(f"Layer: {layer}")
+    print(f"Gaussian Input: {GauInput}")
+    print(f"Gaussian Output: {GauOutput}")
+
+    
+
+
+
+    geom,atoms,spin,charge,OptFlag = GauInpParser(GauInput, spin_offset=-1)
+    print('gaussian parsing completed')
+
+    print(77*'*')
+    print('PARSING COMPLETED')
+    print('Gaussian input geoms') 
+    #with open(GauInput,'r') as temp:
+        #for line in temp.readlines(): 
+            #parts = line.split()  # Split the string into individual components
+            #print("{:2} {:15.10f} {:15.10f} {:15.10f}".format(parts[0], float(parts[1]), float(parts[2]), float(parts[3])))
+        #print (temp.readlines())
+        #print(temp)
+
+    print(77*'*')
+
+    print('Geom processes') 
+    for line in geom:
+        parts = line.split()  # Split the string into individual components
+        print("{:2} {:15.10f} {:15.10f} {:15.10f}".format(parts[0], float(parts[1]), float(parts[2]), float(parts[3])))
+    print(77*'*')
+
+
+    create_input(preamble_file,end_file,nprocs,mem,spin,charge,geom)
+   
+    enter_time = time.time()
+    if OptFlag == 0: 
+        Energy,dipole = compute_energy(nprocs,mem)
+        logger.log_energy(Energy)
+        write_output(GauOutput,Energy,dipole)
+    elif OptFlag == 1:
+        import shutil
+        scratch_path = os.getenv('SCRATCH')
+        if readgradpy.upper() == "READ":
+            coefficients = parse_coefficients(preamble_file, "molpro")
+            print(77*'*') 
+            print(f"NUMBER OF COEFFICIENTS: {len(coefficients)}")
+            print(f"COEFFICIENTS ARE: {coefficients}")
+            
+            Energy,dipole,Gradient = compute_energy(nprocs,mem,True,"READ",coefficients,atoms)
+            logger.log_energy(Energy)
+            logger.log_gradients(1, [Gradient])
+            # inserire metodo per clean della scratch
+            print(77*'*')
+            print('SCRATCH CLEANING...')
+            if scratch_path and os.path.isdir(scratch_path):
+                for filename in os.listdir(scratch_path):
+                    file_path = os.path.join(scratch_path, filename)
+                    try:
+                        if os.path.isfile(file_path) or os.path.islink(file_path):
+                            os.unlink(file_path)  # Rimuovi i file o i link simbolici
+                        elif os.path.isdir(file_path):
+                            shutil.rmtree(file_path)  # Rimuovi le sottodirectory e i loro contenuti
+                    except Exception as e:
+                        print(f'Failed to delete {file_path}. Reason: {e}')
+            print(77*'*')
+        else:
+            Energy,dipole,Gradient = compute_energy(nprocs,mem,True,readgradpy.upper(),atoms=atoms)
+            logger.log_energy(Energy)
+            logger.log_gradients(1, [Gradient])
+            print(77*'*')
+            print('SCRATCH CLEANING...')
+            if scratch_path and os.path.isdir(scratch_path):
+                for filename in os.listdir(scratch_path):
+                    file_path = os.path.join(scratch_path, filename)
+                    try:
+                        if os.path.isfile(file_path) or os.path.islink(file_path):
+                            os.unlink(file_path)  # Rimuovi i file o i link simbolici
+                        elif os.path.isdir(file_path):
+                            shutil.rmtree(file_path)  # Rimuovi le sottodirectory e i loro contenuti
+                    except Exception as e:
+                        print(f'Failed to delete {file_path}. Reason: {e}')
+            print(77*'*')
+
+
+        print('GRADIENT COMPUTION TERMINATED')
+        write_output(GauOutput,Energy,dipole,Gradient)
+        exit_time = time.time()
+        elapsed_time = exit_time - enter_time
+        hours, remainder = divmod(elapsed_time, 3600)
+        minutes, seconds = divmod(remainder, 60)
+        print(f"Time taken: {int(hours)} hours, {int(minutes)} minutes, {seconds:.2f} seconds")
+        
+
+    print(77*'*')
+    print('MOVING TO NEXT COMPUTATION')
+    print(77*'*')
+
+    
+def create_input(preamble_file,end_file,nprocs,mem,spin,charge,geom):
+     formatted_geom = "\n".join(geom)
+     geom_string=f"""geomtyp=xyz
+noorient
+bohr
+geometry={{ 
+{len(geom)}
+Title
+{formatted_geom}
+}}
+Set,spin = {spin}
+Set,charge = {charge}
+      """
+     with open(preamble_file,'r') as preamble: 
+      preamble_string =  preamble.read()
+
+     with open(end_file,'r') as ending: 
+      ending_string =  ending.read()
+
+     with open('qmolpro.com','w') as molproinput:
+      molproinput.write(preamble_string)
+      molproinput.write(geom_string)
+      molproinput.write(ending_string)
+
+
+#  COMPUTE THE FINAL ENERGY
+def compute_energy(nprocs,mem,OptFlag=False,readgradpy='NONE',coefficients=[],atoms=None): 
+    import os
+    import sys
+    last_gradients = []
+    dipole = [0.0, 0.0, 0.0]
+    nprocs=int(nprocs)
+    mem=int(mem)
+    # reserve some memory for the system (i.e. 20% GB for buffer I/O))
+    mem=mem-(0.2*mem)
+        # Convert memory from GB to megawords (MW)
+    mem_mb = int(mem * 1024)  # Convert GB to MB
+    mem_mw = int(mem_mb // (8 * nprocs))  # Convert MB to MW, considering 8 bytes per word
+
+
+    command = f"molpro --ga-impl ga -s -n {nprocs} -t 1 -m {mem_mw}m qmolpro.com --output qmolpro.out -I {os.getenv('SCRATCH')} -d {os.getenv('SCRATCH')} -W {os.getenv('SCRATCH')}"
+    print(command)
+    if os.path.exists("qmolpro.out"):
+        os.remove("qmolpro.out")
+    subprocess.run(shlex.split(command))
+    
+    print('MOLPRO RUN')
+    with open ('qmolpro.out','r') as molproout:
+        for line in molproout:
+        # Check if the line contains the target string
+            if 'EXE_ENERGY' in line:
+        # Split the line to extract the floating-point number
+                parts = line.split('=')[1].split()
+                
+        # Convert the extracted part to a floating-point number and store it in a variable
+                Energy = float(parts[0])
+                break  # Exit the loop after finding the target line
+    print(' Energy post processing done:')
+    print(Energy)
+
+    if OptFlag:
+        print("OPT FLAG DETECTED")
+
+
+# In questo caso devi settare il gradiente a 0 senza fare il calcolo delle forze
+# serve per fare uno scan rigido 
+        if readgradpy.upper() == 'SCAN': 
+            grad = [[0.0, 0.0, 0.0] for _ in range(atoms)]
+            return Energy,dipole,grad
+
+
+#  optg,savegrd=gradient,maxit=2
+        if readgradpy.upper() == 'NONE':
+
+
+            with open('testgradient', 'r') as file:
+                lines = file.readlines()
+
+                grad_coord = lines[2:]
+                grad = []
+                # Print the gradients from the last block
+                for line in grad_coord:
+                    parts = line.split()
+                    grad.append(parts[-3:])
+
+                print("Read gradient from MOLPRO")
+                for sublist in grad:
+                    print("{:12.6f} {:12.6f} {:12.6f}".format(*[float(x) for x in sublist]))
+                # Old version
+                grad = [[float(element)*(-0.0194469) for element in sublist] for sublist in grad]
+                
+                print("Read gradient from MOLPRO CONVERTED")
+                for sublist in grad:
+                    print("{:12.6f} {:12.6f} {:12.6f}".format(*sublist))
+                return Energy,dipole,grad
+
+        elif readgradpy.upper() == 'READ':
+            num_gradients = len(coefficients)
+            print("READING COMPOSITE GRADIENTS")
+
+            gradients_sets = []
+            with open('qmolpro.xml', 'r') as file:
+                lines = file.readlines()
+
+        # Extract gradient values from the XML file manually
+            in_gradient_section = False
+            current_gradient = []
+            gradients_count = 0
+
+            for line in lines:
+                line = line.strip()
+                if '<gradient' in line:
+                    in_gradient_section = True
+                    current_gradient = []
+                    continue
+                elif '</gradient>' in line:
+                    in_gradient_section = False
+                    gradients_sets.append(np.array(current_gradient))
+                    gradients_count += 1
+                    if gradients_count >= num_gradients:
+                        break
+
+                if in_gradient_section and line:
+                    values = line.split()
+                    if len(values) == 3:
+                        current_gradient.append([float(values[0]), float(values[1]), float(values[2])])
+
+            if len(gradients_sets) < num_gradients:
+                print(f"WARNING: Requested {num_gradients} gradients, but only found {len(gradients_sets)} in the XML.")
+
+        # Combine gradients based on coefficients and return as a list containing a single combined gradient
+
+            print("PROCESSED GRADIENTS ARE") 
+            for i, gradient in enumerate(gradients_sets):
+                print(f"Gradient {i + 1}:")
+                print(np.array(gradient))
+
+            grad = combine_gradients(coefficients, gradients_sets).tolist()
+            print("FINAL GRADIENTS ARE")
+            #print(grad)
+
+
+            ####
+            return Energy,dipole,grad
+        else: 
+            ### To use this feature in the ending.dat you should put a table like
+#{ TABLE, finalgradient_x,finalgradient_y,finalgradient_z;
+#SAVE,new,gradients.py;}
+            ### and you should specify the gradients file, in this case gradients in the external input
+            print(f'The gradient will be read from python module { readgradpy }')
+            import sys
+            import os
+            sys.path.append(f'{os.getcwd()}')
+
+            grad_mod = __import__(readgradpy)
+            grad = grad_mod.molpro_table_values
+            print('READ GRADIENTS VALUES')
+            return Energy,dipole,grad
+    else:
+        return Energy,dipole
+
+if __name__ == "__main__":
+    main()
+
+

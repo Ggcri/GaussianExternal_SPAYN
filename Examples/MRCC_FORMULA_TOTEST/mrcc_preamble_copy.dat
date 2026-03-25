@@ -1,0 +1,14 @@
+! ============================================================
+! Test case for COPY mechanism in MRCC_ext v5
+! ============================================================
+! Test: Single HF calculation copied with different coefficients
+! Expected: E_final = 1.0*E_hf + 2.0*E_hf + (-0.5)*E_hf = 2.5*E_hf
+
+!scheme
+! 1.0 copy[1,2.0] copy[1,-0.5]
+!end
+
+! Default section - Hartree-Fock calculation
+energy_pattern=***FINAL HARTREE-FOCK ENERGY:
+basis=sto-3g
+calc=HF

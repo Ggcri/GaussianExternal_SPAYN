@@ -1,0 +1,5 @@
+Iteration: 7
+Output file: /Users/luigicrisci/Documents/Project_external/GeneralExternalDevelopment/ExternalLast/CH4_Td/test_td_REAL_FIXED.EOut
+Central energy: -76.123456789
+Number of atoms: 5
+Timestamp: 2025-09-10 00:34:57
