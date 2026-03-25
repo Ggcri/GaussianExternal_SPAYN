@@ -2,6 +2,10 @@
 
 Python wrappers for interfacing Gaussian with external quantum chemistry programs (**Molpro**, **ORCA**, **MRCC**, **eT**). Supports both sequential analytical and parallel numerical gradient calculations with molecular symmetry exploitation and normal mode coordinate displacements.
 
+> **WARNING: ORCA and eT interfaces are still in testing phase.**
+> The ORCA (`orc`) and eT (`et`) interfaces are experimental and have not been extensively validated.
+> Use them at your own risk. For production calculations, use **Molpro** or **MRCC**.
+
 ## Quick Start
 
 ### Prerequisites
@@ -67,7 +71,14 @@ Make sure Gaussian, Molpro (or the external program), and the External module ar
 
 ## Command Structure
 
-The External command is specified in the Gaussian `.gjf` file via the `External="..."` keyword. Gaussian automatically appends the layer identifier (`R`, `H`, `M`, `L`), input file (`.EIn`), and output file (`.EOut`) — you do NOT include these in the External string.
+To use the External interface, you specify a command string in the Gaussian `.gjf` input file via the `External="..."` keyword. This string tells Gaussian which external program to call and how to configure it. Gaussian automatically appends the layer identifier (`R`, `H`, `M`, `L`), the input file (`.EIn`), and the output file (`.EOut`) — you do NOT include these in the External string.
+
+The syntax varies depending on the external program and whether you want numerical parallel gradients. There are two main modes:
+
+- **Without `parall`/`parall_n`**: the external program computes the gradient directly (analytical gradients via `{forces}` in the ending file). This is a sequential calculation.
+- **With `parall` or `parall_n`**: the External interface computes the gradient numerically via finite differences, running multiple energy calculations in parallel. `parall` uses Cartesian displacements, `parall_n` uses normal mode displacements.
+
+**Important:** When the ending file contains `{forces}` (analytical gradients), do NOT use `parall` or `parall_n` in the External string — the gradient is computed entirely by the external program.
 
 ### Gaussian .gjf Syntax
 
@@ -443,31 +454,15 @@ Options:
 - `ALL` — use all normal modes (no filtering)
 - `A` — default, matches all modes with "A" in symmetry label
 
-## Frequency Calculation (!computefreq)
+## Computing Frequencies
 
-The `!computefreq` keyword instructs the interface to compute and return vibrational frequencies after a gradient calculation. It only works with `parall_n`.
+To compute vibrational frequencies with the External interface, use Gaussian's `freq=num` keyword in the `.gjf` file. This tells Gaussian to compute frequencies via finite differences of the gradients provided by the external program (either with `parall` or `parall_n`).
 
-```
-!normalmode
-!symmetry=auto
-!reference_fc=minimax
-
-!fakekey
-! scf=xqc level="b3lyp/6-31g(d,p)"
-
-!computefreq
+```gaussian
+#p opt=(nomicro) freq=num External="CE mol preamble.dat ending.dat 8 16GB READ parall_n 4"
 ```
 
-When Gaussian passes `OptFlag=2` (via the `freq` keyword), `!computefreq` is automatically enabled — no manual configuration needed.
-
-### Output
-
-Frequency information is written to `normal_mode_debug.txt` in the working directory, containing:
-- Normal mode indices and symmetries
-- Vibrational frequencies (cm^-1)
-- Force constants (mDyne/A), reduced masses (a.m.u.)
-- Energies for central point and displaced geometries (Hartree)
-- Step sizes (Bohr), gradients in normal mode and Cartesian coordinates
+**Note:** Direct Hessian computation via OptFlag=2 is not available in this release. Use `freq=num` instead.
 
 ## Workflow Example: DPCS3 + PCS2
 
@@ -485,7 +480,7 @@ Pure Gaussian DFT optimization at the DPCS3 level:
 %mem=16GB
 #p dsdpbep86/gen iop(3/125=0079905785,3/78=0429604296,3/76=0310006900,3/74=1004)
  empiricaldispersion=gd3bj iop(3/174=0437700,3/175=-1,3/176=0,3/177=-1,3/178=5500000)
- opt=(tight,maxcycles=100)
+ opt=(tight,maxcycles=100) output=pickett
 
 Title
 
@@ -498,7 +493,7 @@ Title
 
 ### Block 2: DPCS3 Frequency Calculation
 
-Harmonic frequencies at the same level (provides normal modes for Block 3):
+Harmonic frequencies at the same level (provides the Hessian for Block 3's `readFC`):
 
 ```gaussian
 --Link1--
@@ -507,44 +502,40 @@ Harmonic frequencies at the same level (provides normal modes for Block 3):
 %mem=16GB
 #p dsdpbep86/gen iop(3/125=0079905785,3/78=0429604296,3/76=0310006900,3/74=1004)
  empiricaldispersion=gd3bj iop(3/174=0437700,3/175=-1,3/176=0,3/177=-1,3/178=5500000)
- freq geom=allcheck guess=read
+ freq output=pickett geom=allcheck guess=read
 
 @/path/to/BasisSet/Gaussian/3F12red.gbs
 
 ```
 
-### Block 3: PCS2 Frequencies with External
+### Block 3: PCS2 Geometry Optimization with External
 
-Normal mode gradient calculation at PCS2 level using the external interface:
+Geometry optimization at PCS2 level using the external interface with Molpro. The `%oldchk` reads the force constants from the DPCS3 frequency calculation, and `readFC` uses them as the initial Hessian guess:
 
 ```gaussian
 --Link1--
-%chk=molecule.chk
+%oldchk=molecule.chk
+%chk=molecule_pcs2.chk
 %nprocs=1
 %mem=1GB
-#p External="CE mol preamble.dat ending.dat 8 16GB READ parall_n 4" geom=allcheck guess=read
+#p opt=(nomicro,readFC,maxcycles=100) output=pickett External="CE mol preamble.dat ending.dat 8 16GB READ parall_n 4" geom=allcheck
+
 ```
 
 **Important:** Do NOT include `R` at the end of the External string — Gaussian adds it automatically.
 
-For one-sided (forward difference) mode:
+For one-sided (forward difference) mode, add `oneside` before the number of threads:
 ```gaussian
-#p External="CE mol preamble.dat ending.dat 8 16GB READ parall_n oneside 4" geom=allcheck guess=read
+#p opt=(nomicro,readFC,maxcycles=100) output=pickett External="CE mol preamble.dat ending.dat 8 16GB READ parall_n oneside 4" geom=allcheck
 ```
 
 Ready-to-use Molpro PCS2 and PPCS2 preamble/ending files are in `ExtScript/WorkflowTemplate/Molpro/`.
 
 ## Complete Working Examples
 
-### Example 1: Simple Optimization with Cartesian Gradients
+### Example 1: Optimization with Analytical Gradients
 
-**Directory structure:**
-```
-work/
-  |- preamble.dat
-  |- ending.dat
-  |- water.gjf
-```
+When the ending file contains `{forces}`, Molpro computes the gradient analytically. No `parall` or `parall_n` is needed — the External interface just passes the geometry and reads back the energy and gradient.
 
 **preamble.dat:**
 ```
@@ -563,7 +554,7 @@ exe_energy = energy
 
 **water.gjf:**
 ```gaussian
-#p opt=(maxcycles=50,nomicro) external="CentralExt molpro preamble.dat ending.dat 4 8GB READ parall twoside 2"
+#p opt=(nomicro,maxcycles=50) external="CentralExt molpro preamble.dat ending.dat 4 8GB READ"
 
 Water optimization
 
@@ -573,10 +564,6 @@ H   0.000000   0.000000   1.000000
 H   0.942809   0.000000  -0.333333
 
 ```
-
-**Resource breakdown:**
-- Each of the 2 workers gets: 4 processors and 8GB memory
-- **Total resources**: 8 processors, 16 GB memory
 
 **Run:**
 ```bash
@@ -610,7 +597,7 @@ exe_energy = energy
 
 **methane.gjf:**
 ```gaussian
-#p opt=(calcfc,maxcycles=100,nomicro) external="CentralExt molpro preamble.dat ending.dat 16 32GB READ parall_n oneside 8"
+#p opt=(nomicro,calcfc,maxcycles=100) external="CentralExt molpro preamble.dat ending.dat 16 32GB READ parall_n oneside 8"
 
 Methane optimization with adaptive gradients
 
@@ -627,38 +614,47 @@ H    0.629118   -0.629118   -0.629118
 - Each of the 8 workers gets: 16 processors and 32GB memory
 - **Total resources**: 128 processors, 256 GB memory
 
-### Example 3: Composite Method with Frequency Calculation
+### Example 3: Composite Method Optimization with Normal Mode Gradients
 
 **preamble.dat:**
 ```
-*** Ethylene composite method
-
 !scheme
 ! 1.0 1.0 -1.0
 !end
-
-include $BASIS_DIR/aug-cc-pVQZ-F12.basis
 ```
 
 **ending.dat:**
 ```
-{rhf}
-{ccsd(t)-f12b,df_basis=avqz/mp2fit}
+basis={
+default=vdz-f12
+set,jkfit,context=jkfit
+default,avtz
+set,mp2fit,context=mp2fit
+default,avdz
+set,ri,context=jkfit
+default,avtz
+}
+explicit,ri_basis=ri,df_basis=mp2fit,df_basis_exch=jkfit
+
+rhf,so-sci
+{ccsd(t)-f12,scale_trip=1}
 ccsd_energy = energy
 
-{rhf}
-{mp2,core}
-mp2_ae = energy
-
-{rhf}
+basis=cc-pwcvtz
+{rhf,so-sci}
 {mp2}
 mp2_fc = energy
 
-exe_energy = ccsd_energy + (mp2_ae - mp2_fc)
+{rhf,so-sci}
+{mp2;core}
+mp2_ae = energy
+
+exe_energy = ccsd_energy + mp2_ae - mp2_fc
 
 !normalmode
-!symmetry=ALL
-!reference_fc=minimax
+!symmetry=auto
+!reference_fc=error_dependent
+!energy_error_grad=1e-10
 
 !fakekey
 ! scf=xqc level="b3lyp/6-31g(d,p)"
@@ -666,9 +662,9 @@ exe_energy = ccsd_energy + (mp2_ae - mp2_fc)
 
 **ethylene.gjf:**
 ```gaussian
-#p opt=(nomicro) freq external="CentralExt molpro preamble.dat ending.dat 32 64GB READ parall_n twoside 16"
+#p opt=(nomicro,maxcycles=100) external="CentralExt molpro preamble.dat ending.dat 8 16GB READ parall_n 4"
 
-Ethylene composite optimization and frequency
+Ethylene composite optimization
 
 0 1
 C    0.000000    0.000000    0.667186
@@ -681,40 +677,10 @@ H    0.000000   -0.923024   -1.234852
 ```
 
 **Resource breakdown:**
-- Each of the 16 workers gets: 32 processors and 64GB memory
-- **Total resources**: 512 processors, 1024 GB memory
+- Each of the 4 workers gets: 8 processors and 16GB memory
+- **Total resources**: 32 processors, 64 GB memory
 
-### Example 4: Using Environment Variables
-
-**Setup:**
-```bash
-export BASIS_PATH=/shared/molpro/basis
-export CONFIG_PATH=$HOME/molpro_configs
-export SCRATCH=/fast/scratch/$USER
-```
-
-**$CONFIG_PATH/preamble_f12.dat:**
-```
-*** Generic F12 calculation
-
-include $BASIS_PATH/cc-pVTZ-F12.basis
-include $BASIS_PATH/cc-pVTZ-F12-CABS.basis
-```
-
-**molecule.gjf:**
-```gaussian
-#p opt=(nomicro) external="CentralExt molpro $CONFIG_PATH/preamble_f12.dat $CONFIG_PATH/ending_f12.dat 8 16GB READ parall_n twoside 4"
-
-Molecule with environment variable paths
-
-0 1
-[geometry]
-
-```
-
-Environment variables are resolved via `os.path.expandvars()`, supporting both `$VAR` and `${VAR}` syntax.
-
-### Example 5: Analytical Gradients with Basis Set Extrapolation
+### Example 4: Analytical Gradients with Basis Set Extrapolation
 
 This example uses **analytical gradients** (via Molpro's `{forces}` command) combined with basis set extrapolation — no `parall` keyword.
 
@@ -778,7 +744,7 @@ H   0.000000  -0.763239  -0.477047
 - Gradient: `nabla_E = nabla_E_HF/QZ - nabla_E_HF/DZ + nabla_E_CCSD(T)/DZ`
 - HF gradients are fast even with large basis (cc-pVQZ-F12); CCSD(T) gradient only with small basis (cc-pVDZ-F12)
 
-### Example 6: MRCC CCSD(T) with Parallel Gradients
+### Example 5: MRCC CCSD(T) with Parallel Gradients
 
 **ccsd_preamble.dat:**
 ```
@@ -803,7 +769,7 @@ calc=CCSD(T)
 %chk=water_ccsd.chk
 %nproc=1
 %mem=16GB
-#p External="CentralExt mrcc 16GB READ 8 1 ccsd_preamble.dat ending.dat parall 2" opt(nomicro)
+#p opt=(nomicro) External="CentralExt mrcc 16GB READ 8 1 ccsd_preamble.dat ending.dat parall 2"
 
 Water CCSD(T) optimization
 
@@ -817,7 +783,7 @@ H     0.000000   -0.756950   -0.471160
 - 2 parallel workers, each using 8 OpenMP threads, 1 MPI process, 16GB memory
 - **Total**: 16 threads, 32 GB memory
 
-### Example 7: MRCC Composite Method (Mixed Analytical + Numerical)
+### Example 6: MRCC Composite Method (Mixed Analytical + Numerical)
 
 **composite_preamble.dat:**
 ```
@@ -853,7 +819,7 @@ dens=2
 ```gaussian
 %chk=water_composite.chk
 %nproc=1
-#p External="CentralExt mrcc 120GB READ 16 4 composite_preamble.dat ending.dat parall 2" opt
+#p opt=(nomicro) External="CentralExt mrcc 120GB READ 16 4 composite_preamble.dat ending.dat parall 2"
 
 Composite CBS extrapolation with mixed gradients
 
@@ -869,7 +835,7 @@ H     0.000000   -0.756950   -0.471160
 3. SECTION3 (MP2/small): Analytical gradient from MRCC (`dens=2`)
 4. Combined: `Grad = 1.0*Grad1 - 1.0*Grad2 + 1.0*Grad3`
 
-### Example 8: Gaussian as External Program
+### Example 7: Gaussian as External Program
 
 **gau_preamble.dat:**
 ```
@@ -892,7 +858,7 @@ H     0.000000   -0.756950   -0.471160
 ```gaussian
 %chk=test.chk
 %nprocs=1
-#p force External="CentralExt gau gau_preamble.dat gau_ending.dat 7 55GB READ parall 2"
+#p opt=(nomicro) External="CentralExt gau gau_preamble.dat gau_ending.dat 7 55GB READ"
 
 Gaussian composite method
 
@@ -906,6 +872,8 @@ H   -1.715701    0.217768   -0.887665
 H    0.292607    1.522005    0.000000
 ```
 
+Since the preamble contains `Force` (analytical gradients from inner Gaussian), no `parall` is needed.
+
 ## Gaussian Integration
 
 ### Direct External Interface
@@ -913,7 +881,7 @@ H    0.292607    1.522005    0.000000
 ```gaussian
 %chk=calculation.chk
 %nprocs=1
-#p opt=(tight,maxcycles=100) External="CE mol preamble.dat ending.dat 8 16GB READ parall_n 4" geom=allcheck
+#p opt=(nomicro,maxcycles=100) External="CE mol preamble.dat ending.dat 8 16GB READ parall_n 4" geom=allcheck
 ```
 
 ### ONIOM Multi-Layer

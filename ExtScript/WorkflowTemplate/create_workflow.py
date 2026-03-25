@@ -101,14 +101,15 @@ DPCS3 Geometry Optimization
 """
 
     # =========================================================================
-    # Block 3: PCS2 Optimization with External (parall_n)
+    # Block 3: PCS2 Geometry Optimization with External (parall_n)
     # =========================================================================
     block3 = f"""--Link1--
-%chk={chk_name}.chk
+%oldchk={chk_name}.chk
+%chk={chk_name}_pcs2.chk
 %nprocs=1
 %mem=1GB
 ! -----------------------------------------------------------------------
-! PCS2 Optimization using the External interface with Molpro
+! PCS2 Geometry Optimization using the External interface with Molpro
 ! -----------------------------------------------------------------------
 ! External command breakdown:
 !   CE              = CentralExt (main dispatcher)
@@ -124,8 +125,9 @@ DPCS3 Geometry Optimization
 ! Total resources needed: {mol_nprocs}x{nthreads} = {mol_nprocs * nthreads} processors, {mol_mem}x{nthreads} = {nthreads} workers
 ! The ending file uses the error-dependent displacement strategy.
 ! Gaussian adds the layer (R), input (.EIn) and output (.EOut) automatically.
+! readFC reads the Hessian from the DPCS3 frequency calculation (Block 2).
 ! -----------------------------------------------------------------------
-#p opt=(nomicro,maxcycles=100) output=pickett External="CE mol {preamble_path} {ending_path} {mol_nprocs} {mol_mem} READ parall_n {nthreads}" geom=allcheck guess=read
+#p opt=(nomicro,readFC,maxcycles=100) output=pickett External="CE mol {preamble_path} {ending_path} {mol_nprocs} {mol_mem} READ parall_n {nthreads}" geom=allcheck
 
 """
 

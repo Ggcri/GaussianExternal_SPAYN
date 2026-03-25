@@ -3,7 +3,7 @@
 %mem=16GB
 #p dsdpbep86/gen iop(3/125=0079905785,3/78=0429604296,3/76=0310006900,3/74=1004)
  empiricaldispersion=gd3bj iop(3/174=0437700,3/175=-1,3/176=0,3/177=-1,3/178=5500000)
- opt=(tight,maxcycles=100)
+ opt=(tight,maxcycles=100) output=pickett
 
 DPCS3 Geometry Optimization - H2O
 
@@ -20,13 +20,14 @@ H    0.000000   -0.757160   -0.469480
 %mem=16GB
 #p dsdpbep86/gen iop(3/125=0079905785,3/78=0429604296,3/76=0310006900,3/74=1004)
  empiricaldispersion=gd3bj iop(3/174=0437700,3/175=-1,3/176=0,3/177=-1,3/178=5500000)
- freq geom=allcheck guess=read
+ freq output=pickett geom=allcheck guess=read
 
 @/path/to/BasisSet/Gaussian/3F12red.gbs
 
 --Link1--
-%chk=h2o_dpcs3.chk
+%oldchk=h2o_dpcs3.chk
+%chk=h2o_pcs2.chk
 %nprocs=1
 %mem=1GB
-#p External="CE mol preamble.dat ending.dat 8 16GB READ parall_n 4" geom=allcheck guess=read
+#p opt=(nomicro,readFC,maxcycles=100) output=pickett External="CE mol preamble.dat ending.dat 8 16GB READ parall_n 4" geom=allcheck
 
