@@ -1,4 +1,0 @@
-0000000000000000000000000000000000000000 1b3997ed7fbd44b61b4f83679495b23e7a4ea29d Luigi Crisci <luigi.crisci@sns.it> 1761827738 +0100	branch: Created from HEAD
-1b3997ed7fbd44b61b4f83679495b23e7a4ea29d 174fe2cd46fbb873d810db510815521e8622a2c4 Luigi Crisci <luigi.crisci@sns.it> 1761899683 +0100	commit: new minimax on low frequencies to test
-174fe2cd46fbb873d810db510815521e8622a2c4 bbadf4fcdf7467a98c0dbe26af8f5621f1f161c1 Luigi Crisci <luigi.crisci@sns.it> 1761923690 +0100	commit: Stepsize graphs script added
-bbadf4fcdf7467a98c0dbe26af8f5621f1f161c1 dae0053ed5cef03f539239976053ad4b8f47f3c3 Luigi Crisci <luigi.crisci@sns.it> 1762087038 +0100	commit: new low boundary on exponential function to test

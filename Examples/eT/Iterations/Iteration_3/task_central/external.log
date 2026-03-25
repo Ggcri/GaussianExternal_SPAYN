@@ -1,0 +1,29 @@
+PROGRAM: eTExt
+NPROCS: 7
+MEMORY: dynamic
+Parsing eT sections from '/local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_3/task_central/et_preamble_sectioning.dat' and '/local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_3/task_central/et_ending_sectioning.dat'...
+Planning 3 eT calculation(s)
+
+--- eT Calculation 1/3 ---
+  Energy pattern(s): ['Final ground state CCSD(T) energy (a.u.):']
+  Input file: et_input_sec_1.inp
+  Running eT: /usr/bin/python3.12 /home/lcrisci/Bin/eT/eT/build/eT_launch.py --omp 7 --scratch /local/scratch/lcrisci/test_eT_I9sG6E1M/et-2251453-1 -of et_input_sec_1.out et_input_sec_1.inp
+  Energy: -76.243287488158 Hartree
+  Warning: Could not clean scratch: [Errno 2] No such file or directory: '/local/scratch/lcrisci/test_eT_I9sG6E1M/et-2251453-1'
+
+--- eT Calculation 2/3 ---
+  Energy pattern(s): ['Total energy:']
+  Input file: et_input_sec_2.inp
+  Running eT: /usr/bin/python3.12 /home/lcrisci/Bin/eT/eT/build/eT_launch.py --omp 7 --scratch /local/scratch/lcrisci/test_eT_I9sG6E1M/et-2251453-2 -of et_input_sec_2.out et_input_sec_2.inp
+  Energy: -76.026674684053 Hartree
+  Warning: Could not clean scratch: [Errno 2] No such file or directory: '/local/scratch/lcrisci/test_eT_I9sG6E1M/et-2251453-2'
+
+--- eT Calculation 3/3 ---
+  Energy pattern(s): ['Total energy:']
+  Input file: et_input_sec_3.inp
+  Running eT: /usr/bin/python3.12 /home/lcrisci/Bin/eT/eT/build/eT_launch.py --omp 7 --scratch /local/scratch/lcrisci/test_eT_I9sG6E1M/et-2251453-3 -of et_input_sec_3.out et_input_sec_3.inp
+  Energy: -76.056928720173 Hartree
+  Warning: Could not clean scratch: [Errno 2] No such file or directory: '/local/scratch/lcrisci/test_eT_I9sG6E1M/et-2251453-3'
+
+Combined energy: -76.273541524278 Hartree
+ENERGY: -76.273541524278

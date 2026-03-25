@@ -1,0 +1,1570 @@
+ Entering Gaussian System, Link 0=gdv
+ Input=H2O_eT.gjf
+ Output=H2O_eT.log
+ Initial command:
+ "/home/lcrisci/Bin/Gaussian/G32p/gdv.j32/gdv/l1.exe" -scrdir="/local/scratch/lcrisci/GauScr_MGZsUGkC/" "/local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248129.inp" "H2O_eT.log" 
+ Entering Link 1 = /home/lcrisci/Bin/Gaussian/G32p/gdv.j32/gdv/l1.exe PID=   2248130.
+  
+ Copyright (c) 1988-2025, Gaussian, Inc.  All Rights Reserved.
+  
+ This is the private, development version of
+ the Gaussian(R) DV system of programs. It is based on
+ the Gaussian(R) 16 system (copyright 2016, Gaussian, Inc.),
+ the Gaussian(R) 09 system (copyright 2009, Gaussian, Inc.),
+ the Gaussian(R) 03 system (copyright 2003, Gaussian, Inc.),
+ the Gaussian(R) 98 system (copyright 1998, Gaussian, Inc.),
+ the Gaussian(R) 94 system (copyright 1995, Gaussian, Inc.),
+ the Gaussian 92(TM) system (copyright 1992, Gaussian, Inc.),
+ the Gaussian 90(TM) system (copyright 1990, Gaussian, Inc.),
+ the Gaussian 88(TM) system (copyright 1988, Gaussian, Inc.),
+ the Gaussian 86(TM) system (copyright 1986, Carnegie Mellon
+ University), and the Gaussian 82(TM) system (copyright 1983,
+ Carnegie Mellon University). Gaussian is a federally registered
+ trademark of Gaussian, Inc.
+  
+ This software contains proprietary and confidential information,
+ including trade secrets, belonging to Gaussian, Inc.
+  
+ This software is provided under written license and may be
+ used, copied, transmitted, or stored only in accord with that
+ written license.
+  
+ The following legend is applicable only to US Government
+ contracts under FAR:
+  
+                    RESTRICTED RIGHTS LEGEND
+  
+ Use, reproduction and disclosure by the US Government is
+ subject to restrictions as set forth in subparagraphs (a)
+ and (c) of the Commercial Computer Software - Restricted
+ Rights clause in FAR 52.227-19.
+  
+ Gaussian, Inc.
+ 340 Quinnipiac St., Bldg. 40, Wallingford CT 06492
+  
+  
+ ---------------------------------------------------------------
+ Warning -- This program may not be used in any manner that
+ competes with the business of Gaussian, Inc. or will provide
+ assistance to any competitor of Gaussian, Inc.  The licensee
+ of this program is prohibited from giving any competitor of
+ Gaussian, Inc. access to this program.  By using this program,
+ the user acknowledges that Gaussian, Inc. is engaged in the
+ business of creating and licensing software in the field of
+ computational chemistry and represents and warrants to the
+ licensee that it is not a competitor of Gaussian, Inc. and that
+ it will not use this program in any manner prohibited above.
+ ---------------------------------------------------------------
+  
+
+ Cite this work as:
+ Gaussian Development Version, Revision J.32+,
+ M. J. Frisch, G. W. Trucks, G. Scalmani, J. R. Cheeseman, X. Li, 
+ J. Bloino, B. G. Janesko, A. V. Marenich, J. Zheng, F. Lipparini, 
+ A. Jenkins, A. Liu, H. Liu, H. B. Schlegel, G. E. Scuseria, 
+ M. A. Robb, V. Barone, G. A. Petersson, H. Nakatsuji, B. Mennucci, 
+ C. Adamo, N. Rega, M. Caricato, H. P. Hratchian, J. V. Ortiz, 
+ F. Pawlowski, A. F. Izmaylov, H. Hu, C. Liao, J. L. Sonnenberg, 
+ D. Williams-Young, F. Ding, R. Gomperts, F. Egidi, J. Goings, 
+ B. Peng, A. Petrone, T. Henderson, D. Ranasinghe, V. G. Zakrzewski, 
+ J. Gao, G. Zheng, M. Mendolicchio, W. Liang, M. Hada, M. Ehara, 
+ K. Toyota, R. Fukuda, J. Hasegawa, M. Ishida, T. Nakajima, Y. Honda, 
+ O. Kitao, H. Nakai, T. Vreven, K. Throssell, J. A. Montgomery, Jr., 
+ J. E. Peralta, F. Ogliaro, M. J. Bearpark, J. J. Heyd, 
+ E. N. Brothers, K. N. Kudin, V. N. Staroverov, T. A. Keith, 
+ R. Kobayashi, J. Normand, K. Raghavachari, A. P. Rendell, 
+ J. C. Burant, S. S. Iyengar, M. Cossi, J. M. Millam, M. Klene, 
+ R. Cammi, R. L. Martin, O. Farkas, J. B. Foresman, and D. J. Fox, 
+ Gaussian, Inc., Wallingford CT, 2024.
+ 
+ *******************************************
+ Gaussian DV:  ES64L-GDVRevJ.32+ 19-Oct-2025
+                 21-Mar-2026 
+ *******************************************
+ %chk=test_parall.chk
+ %nprocs=1
+ Will use up to    1 processors via shared memory.
+ ----------------------------------------------------------------------
+ #p opt(nomicro) output=pickett External="CentralExt eT et_preamble_sec
+ tioning.dat et_ending_sectioning.dat 7 read parall_n 6"
+ ----------------------------------------------------------------------
+ 1/18=20,19=15,26=1,37=210000000,38=1/1,3;
+ 2/9=110,12=2/2;
+ 3/5=30,11=9,25=1,30=1,41=9990000,43=2,71=1/1;
+ 4/20=17,22=1,24=3,113=1,114=1,125=6000/2;
+ 6/7=2,8=2,9=2,10=2/1;
+ 7/44=-1/16;
+ 1/18=20,19=15,26=1/3(2);
+ 2/9=110/2;
+ 99/10=1024/99;
+ 2/9=110/2;
+ 3/5=30,11=9,25=1,30=1,41=9990000,43=2,71=1/1;
+ 4/16=2,20=17,22=1,24=3,113=1,114=1,125=6000/2;
+ 7/44=-1/16;
+ 1/18=20,19=15,26=1/3(-4);
+ 2/9=110/2;
+ 6/7=2,8=2,9=2,10=2/1;
+ 99/9=10,10=1024/99;
+ Leave Link    1 at Sat Mar 21 19:57:02 2026, MaxMem=           0 cpu:               0.0 elap:               0.0
+ (Enter /home/lcrisci/Bin/Gaussian/G32p/gdv.j32/gdv/l101.exe)
+ -----
+ title
+ -----
+ Symbolic Z-matrix:
+ Charge =     0 Multiplicity =     1
+ O                     0.        0.       -0.11081 
+ H                     0.       -0.78398   0.44325 
+ H                     0.        0.78398   0.44325 
+ 
+ Initializing the GIC definitions file.
+ ITRead=  0  0  0
+ MicOpt= -1 -1 -1
+ NAtoms=      3 NQM=        3 NQMF=       0 NMMI=      0 NMMIF=      0
+                NMic=       0 NMicF=      0.
+                    Isotopes and Nuclear Properties:
+ (Nuclear quadrupole moments (NQMom) in fm**2, nuclear magnetic moments (NMagM)
+  in nuclear magnetons)
+
+  Atom         1           2           3
+ IAtWgt=          16           1           1
+ AtmWgt=  15.9949146   1.0078250   1.0078250
+ NucSpn=           0           1           1
+ AtZEff=   -0.000000   -0.000000   -0.000000
+ NQMom=    0.0000000   0.0000000   0.0000000
+ NMagM=    0.0000000   2.7928460   2.7928460
+ AtZNuc=   8.0000000   1.0000000   1.0000000
+ Leave Link  101 at Sat Mar 21 19:57:02 2026, MaxMem=   104857600 cpu:               0.1 elap:               0.1
+ (Enter /home/lcrisci/Bin/Gaussian/G32p/gdv.j32/gdv/l103.exe)
+
+ GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
+ Berny optimization.
+ Initialization pass.
+                           ----------------------------
+                           !    Initial Parameters    !
+                           ! (Angstroms and Degrees)  !
+ --------------------------                            --------------------------
+ ! Name  Definition              Value          Derivative Info.                !
+ --------------------------------------------------------------------------------
+ ! R1    R(1,2)                  0.96           estimate D2E/DX2                !
+ ! R2    R(1,3)                  0.96           estimate D2E/DX2                !
+ ! A1    A(2,1,3)              109.5            estimate D2E/DX2                !
+ --------------------------------------------------------------------------------
+ Trust Radius=3.00D-01 FncErr=1.00D-07 GrdErr=1.00D-07 EigMax=2.50D+02 EigMin=1.00D-04
+ Number of steps in this run=     20 maximum allowed number of steps=    100.
+ GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
+
+ Leave Link  103 at Sat Mar 21 19:57:02 2026, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /home/lcrisci/Bin/Gaussian/G32p/gdv.j32/gdv/l202.exe)
+                          Input orientation:                          
+ ---------------------------------------------------------------------
+ Center     Atomic      Atomic             Coordinates (Angstroms)
+ Number     Number       Type             X           Y           Z
+ ---------------------------------------------------------------------
+      1          8           0        0.000000    0.000000   -0.110812
+      2          1           0        0.000000   -0.783976    0.443248
+      3          1           0        0.000000    0.783976    0.443248
+ ---------------------------------------------------------------------
+                    Distance matrix (angstroms):
+                    1          2          3
+     1  O    0.000000
+     2  H    0.960000   0.000000
+     3  H    0.960000   1.567952   0.000000
+ Stoichiometry    H2O
+ Framework group  C2V[C2(O),SGV(H2)]
+ Deg. of freedom     2
+ Full point group                 C2V     NOp   4
+ Largest Abelian subgroup         C2V     NOp   4
+ Largest concise Abelian subgroup C2      NOp   2
+                         Standard orientation:                         
+ ---------------------------------------------------------------------
+ Center     Atomic      Atomic             Coordinates (Angstroms)
+ Number     Number       Type             X           Y           Z
+ ---------------------------------------------------------------------
+      1          8           0        0.000000    0.000000    0.110812
+      2          1           0       -0.000000    0.783976   -0.443248
+      3          1           0       -0.000000   -0.783976   -0.443248
+ ---------------------------------------------------------------------
+ Rotational constants (GHZ):         919.6759406         407.9403341         282.5913764
+ Leave Link  202 at Sat Mar 21 19:57:02 2026, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /home/lcrisci/Bin/Gaussian/G32p/gdv.j32/gdv/l301.exe)
+ Standard basis: Dummy (5D, 7F)
+ There are     2 symmetry adapted cartesian basis functions of A1  symmetry.
+ There are     0 symmetry adapted cartesian basis functions of A2  symmetry.
+ There are     0 symmetry adapted cartesian basis functions of B1  symmetry.
+ There are     1 symmetry adapted cartesian basis functions of B2  symmetry.
+ There are     2 symmetry adapted basis functions of A1  symmetry.
+ There are     0 symmetry adapted basis functions of A2  symmetry.
+ There are     0 symmetry adapted basis functions of B1  symmetry.
+ There are     1 symmetry adapted basis functions of B2  symmetry.
+     3 basis functions,     3 primitive gaussians,     3 cartesian basis functions
+     2 alpha electrons        2 beta electrons
+       nuclear repulsion energy         2.5424008860 Hartrees.
+ IExCor=         0 DFT=F Ex=HF Corr=None N6=None ScaHFX=  1.000000
+ ScaDFX=  1.000000  1.000000  1.000000  1.000000  1.000000  0.000000
+ ScaDFX=  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+ Grid=UltraFine IRanWt=     -1 IRanGd=            0 ICorTp=0 IEDCtl=  2004
+ NAtoms=    3 NActive=    3 NUniq=    2 SFac= 2.25D+00 NAtFMM=   60 NAOKFM=F Big=F
+ Integral buffers will be    131072 words long.
+ Raffenetti 1 integral format.
+ Two-electron integral symmetry is turned on.
+ Leave Link  301 at Sat Mar 21 19:57:02 2026, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /home/lcrisci/Bin/Gaussian/G32p/gdv.j32/gdv/l402.exe)
+ External calculation of energy and first derivatives.
+ Running external command "CentralExt eT et_preamble_sectioning.dat et_ending_sectioning.dat 7 read parall_n 6 R"
+         input file       "/local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EIn"
+         output file      "/local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EOu"
+         message file     "/local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EMs"
+         fchk file        "/local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EFC"
+         mat. el file     "/local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EUF"
+ Running external command "CentralExt eT et_preamble_sectioning.dat et_ending_sectioning.dat 7 read parall_n 6 R /local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EIn /local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EOu /local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EMs /local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EFC /local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EUF".
+GRADIENT MODE: twoside differences (default, no flag given)
+
+======================================================================
+ NORMAL MODE PARALLEL GRADIENT CALCULATION
+======================================================================
+Program: et
+Threads: 6
+Input: /local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EIn
+Output: /local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EOu
+Preamble: /local/home/lcrisci/Bin/External/Examples/eT/et_preamble_sectioning.dat
+Ending: /local/home/lcrisci/Bin/External/Examples/eT/et_ending_sectioning.dat
+DEBUG [hash]: Found Iterations/ in /local/home/lcrisci/Bin/External/Examples
+DEBUG [find_and_parse_initial_gjf]: No .gjf file found in /local/home/lcrisci/Bin/External/Examples
+INFO: No reference geometry found, using current geometry for hash
+System hash computed: ba2877f1c947a1abcd0ac4881191c9e1
+  Based on: 3 atoms, charge=0, spin=1, gradient_mode=twoside
+  Preamble: 298 chars, Ending: 223 chars
+System hash for this calculation: ba2877f1c947a1abcd0ac4881191c9e1
+
+
+================================================================================
+CHECKING FOR MIXED ANALYTICAL/NUMERICAL GRADIENT MODE (NORMAL MODE)
+================================================================================
+Analyzing sections in /local/home/lcrisci/Bin/External/Examples/eT/et_preamble_sectioning.dat for gradient mode (comment='!')
+  Found section marker: '!SECTION1' at line 7
+  Found section marker: '!SECTION2' at line 17
+  Found section marker: '!SECTION3' at line 26
+
+--- Section Analysis Summary ---
+  default: NUMERICAL (dens=0, lines=1)
+  !SECTION1: NUMERICAL (dens=0, lines=9)
+  !SECTION2: NUMERICAL (dens=0, lines=8)
+  !SECTION3: NUMERICAL (dens=0, lines=7)
+
+Total sections: 4
+Analytical sections (0): []
+Numerical sections (4): ['default', '!SECTION1', '!SECTION2', '!SECTION3']
+--------------------------------
+  Gradient calculation: True (OptFlag=1)
+  Has analytical sections (dens=2): False
+  Has numerical sections (dens!=2): True
+  Mixed mode activated: False
+  All analytical mode: False
+  All numerical mode: True
+================================================================================
+
+Parsing scheme and formula from /local/home/lcrisci/Bin/External/Examples/eT/et_preamble_sectioning.dat (comment='!')
+  Entered !scheme section at line 1.
+    Line 2: Found coefficient: 1.0
+    Line 3: Found coefficient: -1.0
+    Line 4: Found coefficient: 1.0
+  Exited !scheme section at line 5.
+Finished parsing scheme: [('coeff', 1.0), ('coeff', -1.0), ('coeff', 1.0)]
+Found !normalmode marker at line 10 in ending.dat file
+  Normal mode symmetry filters: AUTO (automatic TSR detection)
+  Degeneracy threshold: 1.0 cm⁻¹
+  Restart from last iteration: ENABLED
+  Reference force constant: ERROR_DEPENDENT (based on energy error)
+  Characteristic length: 0.01 Å
+  Energy error for gradients: 1e-07 Eh
+RESTART: No previous iteration found — starting fresh
+Created iteration directory: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_1
+INFO: This is iteration number 1
+
+================================================================================
+NUMERICAL NORMAL MODE GRADIENT WORKFLOW
+================================================================================
+
+Running numerical normal mode gradient calculation...
+  Iteration directory: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_1
+  Preamble: /local/home/lcrisci/Bin/External/Examples/eT/et_preamble_sectioning.dat
+  Using original resources (no adjustment for numerical)
+
+======================================================================
+ NORMAL MODE GRADIENT CALCULATION
+======================================================================
+  Working directory: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_1
+  Input file: /local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EIn
+  Preamble file: /local/home/lcrisci/Bin/External/Examples/eT/et_preamble_sectioning.dat
+  Ending file: /local/home/lcrisci/Bin/External/Examples/eT/et_ending_sectioning.dat
+
+Reading !normalmode keywords from ending.dat: /local/home/lcrisci/Bin/External/Examples/eT/et_ending_sectioning.dat
+Found !normalmode marker at line 10 in ending.dat file
+  Normal mode symmetry filters: AUTO (automatic TSR detection)
+  Degeneracy threshold: 1.0 cm⁻¹
+  Restart from last iteration: ENABLED
+  Reference force constant: ERROR_DEPENDENT (based on energy error)
+  Characteristic length: 0.01 Å
+  Energy error for gradients: 1e-07 Eh
+Successfully parsed !normalmode keywords from ending.dat
+
+--- Step 1: Running fake frequency calculation ---
+
+=== Running Fake Frequency Calculation ===
+Reading !fakekey keywords from ending.dat: /local/home/lcrisci/Bin/External/Examples/eT/et_ending_sectioning.dat
+No !fakekey keywords found in ending.dat, using default route
+
+Resource allocation for fake_freq.gjf:
+  Original: nprocs=7, mem=READ, nthreads=6
+  Scaled: %nprocs=42, %mem=96GB
+Wrote fake frequency input: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_1/fake_freq.gjf
+  Checkpoint file: tmp.chk (will be formatted to /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_1/Test.FChk)
+Found Gaussian executable: gdv at /home/lcrisci/Bin/Gaussian/G32p/gdv.j32/gdv/gdv
+Using Gaussian executable from GAUSS_EXEDIR: gdv
+Gaussian frequency calculation completed: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_1/fake_freq.log
+Gaussian frequency calculation completed successfully
+  Log file: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_1/fake_freq.log
+  FChk file: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_1/Test.FChk
+Generated formatted checkpoint file: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_1/Test.FChk
+
+--- Step 2: Parsing normal modes ---
+
+=== Parsing Normal Modes from /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_1/fake_freq.log ===
+Symmetry filters: auto
+Found Harmonic frequencies section with 'Coord Atom Element:' format at line 766
+Found Harmonic frequencies section with 'Atom AN' format at line 789
+Using preferred 'Atom AN' format section at line 789
+
+Parsing mode block 1
+  Mode indices: [1, 2, 3]
+  Number of modes in this block: 3
+  Symmetries: ['A1', 'A1', 'B2']
+  Using format: atom_an
+  Number of atoms: 3
+  Atomic numbers: [8, 1, 1]
+Reached end of normal modes section at line 804
+
+Total modes parsed: 3
+Available symmetries in log: ['A1', 'B2']
+
+Automatic TSR detection requested
+  Automatically detected TSR: A1
+
+Symmetry matching results:
+  Requested filters: ['A1']
+  Filters that matched: ['A1']
+  Filters that did NOT match: []
+  Total modes selected: 2
+
+Filtered modes summary:
+  Mode 1 (A1): freq=1961.55 cm⁻¹, f=2.4598 mDyne/Å
+  Mode 2 (A1): freq=4421.16 cm⁻¹, f=12.0112 mDyne/Å
+
+USING HIGH-PRECISION DATA FROM .FCHK FILE
+   File: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_1/Test.FChk
+   Replacing low-precision .log data with high-precision .fchk data
+
+=== Parsing Vib-E2 block from /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_1/Test.FChk ===
+  Number of Normal Modes from .fchk: 3
+  Total values in Vib-E2 block: 42
+  Frequencies (cm⁻¹): [1961.55311 4421.16407 4769.27071]
+  Reduced masses (uma): [1.08506874 1.04294665 1.08676974]
+  Force constants (mDyne/Å): [ 2.4598442 12.0111769 14.5643694]
+
+=== Parsing Vib-AtMass block from /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_1/Test.FChk ===
+  Found 3 atomic masses
+  Atomic masses (uma): [15.9949146   1.00782504  1.00782504]
+   Total modes in .fchk: 3
+
+=== Parsing Vib-Modes block from /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_1/Test.FChk ===
+  Number of atoms: 3
+  Number of modes: 3
+  Expected values: 27 (atoms=3 × coords=3 × modes=3)
+  Found values: 27
+  Eigenvectors shape: (3, 3, 3)
+  Example precision (mode 1, atom 1, z-component): -7.179147920000e-02
+
+  Normalizing eigenvectors by sqrt(reduced_mass)...
+    Mode 1: mu_k = 1.085069 uma, sqrt(mu_k) = 1.041666
+    Mode 2: mu_k = 1.042947 uma, sqrt(mu_k) = 1.021248
+    Mode 3: mu_k = 1.086770 uma, sqrt(mu_k) = 1.042482
+  After normalization (mode 1, atom 1, z-component): -6.891984240394e-02
+
+   Replacing data for 2 filtered modes:
+   Mode 1 (A1):
+      Frequency:    .log=1961.55 → .fchk=1961.55311000 cm⁻¹
+      Red. mass:    .log=1.0851 → .fchk=1.08506874 uma
+      Force const:  .log=2.4598 → .fchk=2.45984420 mDyne/Å
+      Eigvec[0,z]:  .log=-0.07 → .fchk=-6.891984240394e-02
+   Mode 2 (A1):
+      Frequency:    .log=4421.16 → .fchk=4421.16407000 cm⁻¹
+      Red. mass:    .log=1.0429 → .fchk=1.04294665 uma
+      Force const:  .log=12.0112 → .fchk=12.01117690 mDyne/Å
+      Eigvec[0,z]:  .log=0.05 → .fchk=4.740209714453e-02
+
+   Successfully replaced data for 2 modes with high-precision values
+   Precision improvement: ~2 decimals (.log) -> ~8-12 decimals (.fchk)
+Current iteration: 1
+Looking for metadata from previous iteration: 0
+No previous iteration before Iteration_1
+FIXED GRADIENT MODE: Always using two-sided central differences (gradient_mode=twoside)
+
+--- Adaptive s₀ Scaling ---
+Status: DISABLED (use !adaptive to enable)
+
+--- Step 3: Generating displaced geometries ---
+
+=== Generating Normal Mode Displacements ===
+Displacement Method: Error-Dependent Strategy
+  Calculation Type: Gradient
+  Energy Error (δE): 1.000000e-07 Eh
+  Formula: h = (3 * δE / (ω²/rc))^(1/3)
+  Step sizes calculated individually for each normal mode based on frequency
+  Error-Dependent Mode: MASS-FREE
+  Characteristic length: 0.010000 Å = 0.018897 Bohr
+Atomic masses (uma): [15.99491  1.00783  1.00783]
+  No degenerate groups found (threshold=1.0 cm⁻¹)
+  Mode 1 (A1): freq=1961.55 cm⁻¹, s₀=0.0189 Bohr (fixed) → h_cart=0.003298 Bohr (0.0017 Å), α_Q=0.003436 (Error-Dep MassFree Grad (Central))
+  Mode 2 (A1): freq=4421.16 cm⁻¹, s₀=0.0189 Bohr (fixed) → h_cart=0.001944 Bohr (0.0010 Å), α_Q=0.001985 (Error-Dep MassFree Grad (Central))
+
+Two-sided mode: Total geometries to calculate: 5
+  Central: 1
+  Displaced: 4 (2 modes × 2 directions)
+
+--- Step 4: Running parallel energy calculations ---
+
+=== Running Normal Mode Energy Calculations ===
+Total tasks: 5
+Parallel workers: 6
+  Using preamble: /local/home/lcrisci/Bin/External/Examples/eT/et_preamble_sectioning.dat
+  Using ending: /local/home/lcrisci/Bin/External/Examples/eT/et_ending_sectioning.dat
+  Task 'central': Running in /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_1/task_central
+  Task 'central': Command: /usr/bin/python3.12 /home/lcrisci/Bin/External/Executables/eTExt et_preamble_sectioning.dat et_ending_sectioning.dat 7 READ R Gau-central.EIn output.EOut
+  Task 'mode_1_A1_up': Running in /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_1/task_mode_1_A1_up
+  Task 'mode_1_A1_up': Command: /usr/bin/python3.12 /home/lcrisci/Bin/External/Executables/eTExt et_preamble_sectioning.dat et_ending_sectioning.dat 7 READ R Gau-mode_1_A1_up.EIn output.EOut
+  Task 'mode_1_A1_down': Running in /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_1/task_mode_1_A1_down
+  Task 'mode_1_A1_down': Command: /usr/bin/python3.12 /home/lcrisci/Bin/External/Executables/eTExt et_preamble_sectioning.dat et_ending_sectioning.dat 7 READ R Gau-mode_1_A1_down.EIn output.EOut
+  Task 'mode_2_A1_down': Running in /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_1/task_mode_2_A1_down
+  Task 'mode_2_A1_down': Command: /usr/bin/python3.12 /home/lcrisci/Bin/External/Executables/eTExt et_preamble_sectioning.dat et_ending_sectioning.dat 7 READ R Gau-mode_2_A1_down.EIn output.EOut
+  Task 'mode_2_A1_up': Running in /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_1/task_mode_2_A1_up
+  Task 'mode_2_A1_up': Command: /usr/bin/python3.12 /home/lcrisci/Bin/External/Executables/eTExt et_preamble_sectioning.dat et_ending_sectioning.dat 7 READ R Gau-mode_2_A1_up.EIn output.EOut
+  Task 'central': E = -76.2726233992 Hartree, Dipole = [0.000000, 0.000000, 0.000000] a.u.
+  Task 'mode_2_A1_up': E = -76.2726122247 Hartree
+  Task 'mode_2_A1_down': E = -76.2726324054 Hartree
+  Task 'mode_1_A1_down': E = -76.2726688429 Hartree
+  Task 'mode_1_A1_up': E = -76.2725768026 Hartree
+
+Completed 5 energy calculations
+Central dipole moment: [0.000000, 0.000000, 0.000000] a.u.
+
+--- Step 5: Computing gradient in normal mode coordinates ---
+
+=== Computing Gradient in Normal Modes ===
+Central point energy: -76.2726233992 Hartree
+Using two-sided central differences
+  Mode 1 (A1):
+    E(+α) = -76.2725768026 Hartree
+    E(-α) = -76.2726688429 Hartree
+    ΔE = 9.2040349998e-05 Hartree
+    ∂E/∂Q = 1.3394964645e-02 Hartree
+  Mode 2 (A1):
+    E(+α) = -76.2726122247 Hartree
+    E(-α) = -76.2726324054 Hartree
+    ΔE = 2.0180729990e-05 Hartree
+    ∂E/∂Q = 5.0822623746e-03 Hartree
+
+--- Step 6: Transforming to Cartesian gradient ---
+
+=== Transforming to Cartesian Gradient (Formula A) ===
+
+Transforming with formula: ∂E/∂x_ia = Σ_k m_i * L_k_normalized[i,a] * ∂E/∂Q_k
+Atomic masses:
+  Atom 1: m = 15.994910 uma, factor = 15.994910
+  Atom 2: m = 1.007830 uma, factor = 1.007830
+  Atom 3: m = 1.007830 uma, factor = 1.007830
+
+Cartesian gradient (Hartree/Bohr):
+  Atom 1 (AN=8): [ -0.00000000,  -0.00000000,  -0.01091283]
+  Atom 2 (AN=1): [  0.00000000,   0.00836102,   0.00545644]
+  Atom 3 (AN=1): [ -0.00000000,  -0.00836102,   0.00545644]
+
+--- Step 7: Writing debug output ---
+
+Debug output written to: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_1/normal_mode_debug.txt
+
+GRADIENT NORM: RMS = 5.948377e-03 Hartree/Bohr
+
+======================================================================
+ NORMAL MODE GRADIENT CALCULATION COMPLETE
+======================================================================
+
+NUMERICAL RESULTS:
+  Energy: -76.272623399180 Hartree
+  Gradient shape: (3, 3)
+  RMS gradient: 5.948377e-03
+  Dipole moment: [0.000000, 0.000000, 0.000000] a.u.
+DEBUG: num_dipole type: <class 'list'>, value: [0.0, 0.0, 0.0]
+DEBUG: After append, numerical_dipoles = [[0.0, 0.0, 0.0]]
+
+Writing output to: /local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EOu
+DEBUG: Final dipole_moment being written: [0.0, 0.0, 0.0]
+DEBUG: numerical_dipoles list: [[0.0, 0.0, 0.0]]
+
+======================================================================
+DEBUG: Output file written to: /local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EOu
+DEBUG: First 10 lines of output file:
+======================================================================
+  Line 1: ' -7.627262339918D+01  0.000000000000D+00  0.000000000000D+00  0.000000000000D+00\n'
+  Line 2: '     -0.000000000000     -0.000000000000     -0.010912830572\n'
+  Line 3: '      0.000000000000      0.008361018219      0.005456443735\n'
+  Line 4: '     -0.000000000000     -0.008361018219      0.005456443735\n'
+======================================================================
+
+======================================================================
+ NORMAL MODE PARALLEL GRADIENT CALCULATION COMPLETE
+======================================================================
+
+ Recovered energy= -76.2726233992     dipole=      0.000000000000      0.000000000000      0.000000000000
+ Energy=    -76.2726234     NIter=   0.
+ Dipole moment=       0.000000       0.000000       0.000000
+ Leave Link  402 at Sat Mar 21 19:57:05 2026, MaxMem=   104857600 cpu:               0.0 elap:               3.3
+ (Enter /home/lcrisci/Bin/Gaussian/G32p/gdv.j32/gdv/l601.exe)
+ Leave Link  601 at Sat Mar 21 19:57:05 2026, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /home/lcrisci/Bin/Gaussian/G32p/gdv.j32/gdv/l716.exe)
+ Dipole        = 0.00000000D+00 0.00000000D+00 0.00000000D+00
+ ***** Axes restored to original set *****
+ -------------------------------------------------------------------
+ Center     Atomic                   Forces (Hartrees/Bohr)
+ Number     Number              X              Y              Z
+ -------------------------------------------------------------------
+      1        8           0.000000000   -0.000000000   -0.010912831
+      2        1          -0.000000000    0.008361018    0.005456444
+      3        1           0.000000000   -0.008361018    0.005456444
+ -------------------------------------------------------------------
+ Cartesian Forces:  Max     0.010912831 RMS     0.005948377
+ Leave Link  716 at Sat Mar 21 19:57:05 2026, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /home/lcrisci/Bin/Gaussian/G32p/gdv.j32/gdv/l103.exe)
+
+ GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
+ Berny optimization.
+ FormGI is forming the generalized inverse of G from B-inverse, IUseBI=4.
+ NTrRot=    -1 NTRed=     3 NAtoms=     3 NSkip=     0 NRank=     3 IsLin=F EigSml=7.9700D-01
+ Internal  Forces:  Max     0.016837849 RMS     0.010174812
+ Search for a local minimum.
+ Step number     1 out of a maximum of    20
+ All quantities printed in internal units (Hartrees-Bohrs-Radians)
+ RMS Force = .10175D-01 SwitMx=.10000D-02 MixMth= 1
+ Mixed Optimization -- RFO/linear search
+ Second derivative matrix not updated -- first step.
+ The second derivative matrix:
+                          R1        R2        A1
+           R1           0.55473
+           R2           0.00000   0.55473
+           A1           0.00000   0.00000   0.16000
+ ITU=  0
+     Eigenvalues ---    0.16000   0.55473   0.55473
+ RFO step:  Lambda=-1.80087275D-03 EMin= 1.60000000D-01
+ Linear search not attempted -- first point.
+ GrdOpt: GIC=T ITstSp= 0 NP=   1 DidLin=F DidDIS=F IRisen=  0
+         ISwap=1 XLin= 0.000 DXMaxT= 0.300 DidEig=F Rises=F
+ Iteration  1 RMS(Cart)=  0.03453058 RMS(Int)=  0.00201546
+ Iteration  2 RMS(Cart)=  0.00097276 RMS(Int)=  0.00000015
+ Iteration  3 RMS(Cart)=  0.00000009 RMS(Int)=  0.00000000
+ ClnCor:  largest displacement from symmetrization is 1.11D-16 for atom     3.
+ Variable       Old X    -DE/DX   Delta X   Delta X   Delta X     New X
+                                 (Linear)    (Quad)   (Total)
+    R1        1.81414  -0.00368   0.00000  -0.00661  -0.00661   1.80753
+    R2        1.81414  -0.00368   0.00000  -0.00661  -0.00661   1.80753
+    A1        1.91114  -0.01684   0.00000  -0.10407  -0.10407   1.80707
+         Item               Value     Threshold  Converged?
+ Maximum Force            0.016838     0.000450     NO 
+ RMS     Force            0.010175     0.000300     NO 
+ Maximum Displacement     0.061652     0.001800     NO 
+ RMS     Displacement     0.060592     0.001200     NO 
+ Predicted change in Energy=-9.102652D-04
+ GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
+
+ Leave Link  103 at Sat Mar 21 19:57:05 2026, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /home/lcrisci/Bin/Gaussian/G32p/gdv.j32/gdv/l202.exe)
+                          Input orientation:                          
+ ---------------------------------------------------------------------
+ Center     Atomic      Atomic             Coordinates (Angstroms)
+ Number     Number       Type             X           Y           Z
+ ---------------------------------------------------------------------
+      1          8           0        0.000000   -0.000000   -0.136051
+      2          1           0        0.000000   -0.751351    0.455867
+      3          1           0       -0.000000    0.751351    0.455867
+ ---------------------------------------------------------------------
+                    Distance matrix (angstroms):
+                    1          2          3
+     1  O    0.000000
+     2  H    0.956502   0.000000
+     3  H    0.956502   1.502702   0.000000
+ Stoichiometry    H2O
+ Framework group  C2V[C2(O),SGV(H2)]
+ Deg. of freedom     2
+ Full point group                 C2V     NOp   4
+ RotChk:  IX=0 Diff= 1.19D-16
+ Largest Abelian subgroup         C2V     NOp   4
+ Largest concise Abelian subgroup C2      NOp   2
+                         Standard orientation:                         
+ ---------------------------------------------------------------------
+ Center     Atomic      Atomic             Coordinates (Angstroms)
+ Number     Number       Type             X           Y           Z
+ ---------------------------------------------------------------------
+      1          8           0       -0.000000    0.000000    0.118384
+      2          1           0        0.000000    0.751351   -0.473535
+      3          1           0       -0.000000   -0.751351   -0.473535
+ ---------------------------------------------------------------------
+ Rotational constants (GHZ):         805.7925045         444.1363733         286.3216995
+ Leave Link  202 at Sat Mar 21 19:57:05 2026, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /home/lcrisci/Bin/Gaussian/G32p/gdv.j32/gdv/l301.exe)
+ Standard basis: Dummy (5D, 7F)
+ There are     2 symmetry adapted cartesian basis functions of A1  symmetry.
+ There are     0 symmetry adapted cartesian basis functions of A2  symmetry.
+ There are     0 symmetry adapted cartesian basis functions of B1  symmetry.
+ There are     1 symmetry adapted cartesian basis functions of B2  symmetry.
+ There are     2 symmetry adapted basis functions of A1  symmetry.
+ There are     0 symmetry adapted basis functions of A2  symmetry.
+ There are     0 symmetry adapted basis functions of B1  symmetry.
+ There are     1 symmetry adapted basis functions of B2  symmetry.
+     3 basis functions,     3 primitive gaussians,     3 cartesian basis functions
+     2 alpha electrons        2 beta electrons
+       nuclear repulsion energy         2.5651189403 Hartrees.
+ IExCor=         0 DFT=F Ex=HF Corr=None N6=None ScaHFX=  1.000000
+ ScaDFX=  1.000000  1.000000  1.000000  1.000000  1.000000  0.000000
+ ScaDFX=  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+ Grid=UltraFine IRanWt=     -1 IRanGd=            0 ICorTp=0 IEDCtl=  2004
+ NAtoms=    3 NActive=    3 NUniq=    2 SFac= 2.25D+00 NAtFMM=   60 NAOKFM=F Big=F
+ Integral buffers will be    131072 words long.
+ Raffenetti 1 integral format.
+ Two-electron integral symmetry is turned on.
+ Leave Link  301 at Sat Mar 21 19:57:05 2026, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /home/lcrisci/Bin/Gaussian/G32p/gdv.j32/gdv/l402.exe)
+ External calculation of energy and first derivatives.
+ Running external command "CentralExt eT et_preamble_sectioning.dat et_ending_sectioning.dat 7 read parall_n 6 R"
+         input file       "/local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EIn"
+         output file      "/local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EOu"
+         message file     "/local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EMs"
+         fchk file        "/local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EFC"
+         mat. el file     "/local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EUF"
+ Running external command "CentralExt eT et_preamble_sectioning.dat et_ending_sectioning.dat 7 read parall_n 6 R /local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EIn /local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EOu /local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EMs /local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EFC /local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EUF".
+GRADIENT MODE: twoside differences (default, no flag given)
+
+======================================================================
+ NORMAL MODE PARALLEL GRADIENT CALCULATION
+======================================================================
+Program: et
+Threads: 6
+Input: /local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EIn
+Output: /local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EOu
+Preamble: /local/home/lcrisci/Bin/External/Examples/eT/et_preamble_sectioning.dat
+Ending: /local/home/lcrisci/Bin/External/Examples/eT/et_ending_sectioning.dat
+DEBUG [hash]: Found Iterations/ in /local/home/lcrisci/Bin/External/Examples/eT
+DEBUG [find_and_parse_initial_gjf]: Found .gjf file: /local/home/lcrisci/Bin/External/Examples/eT/H2O_eT.gjf
+INFO: Using reference geometry from .gjf file for consistent hashing
+System hash computed: 727eb4c1e550916160f77b992fac22f4
+  Based on: 3 atoms, charge=0, spin=1, gradient_mode=twoside
+  Preamble: 298 chars, Ending: 223 chars
+System hash for this calculation: 727eb4c1e550916160f77b992fac22f4
+
+
+================================================================================
+CHECKING FOR MIXED ANALYTICAL/NUMERICAL GRADIENT MODE (NORMAL MODE)
+================================================================================
+Analyzing sections in /local/home/lcrisci/Bin/External/Examples/eT/et_preamble_sectioning.dat for gradient mode (comment='!')
+  Found section marker: '!SECTION1' at line 7
+  Found section marker: '!SECTION2' at line 17
+  Found section marker: '!SECTION3' at line 26
+
+--- Section Analysis Summary ---
+  default: NUMERICAL (dens=0, lines=1)
+  !SECTION1: NUMERICAL (dens=0, lines=9)
+  !SECTION2: NUMERICAL (dens=0, lines=8)
+  !SECTION3: NUMERICAL (dens=0, lines=7)
+
+Total sections: 4
+Analytical sections (0): []
+Numerical sections (4): ['default', '!SECTION1', '!SECTION2', '!SECTION3']
+--------------------------------
+  Gradient calculation: True (OptFlag=1)
+  Has analytical sections (dens=2): False
+  Has numerical sections (dens!=2): True
+  Mixed mode activated: False
+  All analytical mode: False
+  All numerical mode: True
+================================================================================
+
+Parsing scheme and formula from /local/home/lcrisci/Bin/External/Examples/eT/et_preamble_sectioning.dat (comment='!')
+  Entered !scheme section at line 1.
+    Line 2: Found coefficient: 1.0
+    Line 3: Found coefficient: -1.0
+    Line 4: Found coefficient: 1.0
+  Exited !scheme section at line 5.
+Finished parsing scheme: [('coeff', 1.0), ('coeff', -1.0), ('coeff', 1.0)]
+Found !normalmode marker at line 10 in ending.dat file
+  Normal mode symmetry filters: AUTO (automatic TSR detection)
+  Degeneracy threshold: 1.0 cm⁻¹
+  Restart from last iteration: ENABLED
+  Reference force constant: ERROR_DEPENDENT (based on energy error)
+  Characteristic length: 0.01 Å
+  Energy error for gradients: 1e-07 Eh
+Found last iteration directory: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_1 (iteration 1)
+RESTART: Last iteration /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_1 is already complete — proceeding normally
+Created iteration directory: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_2
+INFO: This is iteration number 2
+
+================================================================================
+NUMERICAL NORMAL MODE GRADIENT WORKFLOW
+================================================================================
+
+Running numerical normal mode gradient calculation...
+  Iteration directory: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_2
+  Preamble: /local/home/lcrisci/Bin/External/Examples/eT/et_preamble_sectioning.dat
+  Using original resources (no adjustment for numerical)
+
+======================================================================
+ NORMAL MODE GRADIENT CALCULATION
+======================================================================
+  Working directory: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_2
+  Input file: /local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EIn
+  Preamble file: /local/home/lcrisci/Bin/External/Examples/eT/et_preamble_sectioning.dat
+  Ending file: /local/home/lcrisci/Bin/External/Examples/eT/et_ending_sectioning.dat
+
+Reading !normalmode keywords from ending.dat: /local/home/lcrisci/Bin/External/Examples/eT/et_ending_sectioning.dat
+Found !normalmode marker at line 10 in ending.dat file
+  Normal mode symmetry filters: AUTO (automatic TSR detection)
+  Degeneracy threshold: 1.0 cm⁻¹
+  Restart from last iteration: ENABLED
+  Reference force constant: ERROR_DEPENDENT (based on energy error)
+  Characteristic length: 0.01 Å
+  Energy error for gradients: 1e-07 Eh
+Successfully parsed !normalmode keywords from ending.dat
+
+--- Step 1: Running fake frequency calculation ---
+
+=== Running Fake Frequency Calculation ===
+Reading !fakekey keywords from ending.dat: /local/home/lcrisci/Bin/External/Examples/eT/et_ending_sectioning.dat
+No !fakekey keywords found in ending.dat, using default route
+
+Resource allocation for fake_freq.gjf:
+  Original: nprocs=7, mem=READ, nthreads=6
+  Scaled: %nprocs=42, %mem=96GB
+Wrote fake frequency input: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_2/fake_freq.gjf
+  Checkpoint file: tmp.chk (will be formatted to /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_2/Test.FChk)
+Found Gaussian executable: gdv at /home/lcrisci/Bin/Gaussian/G32p/gdv.j32/gdv/gdv
+Using Gaussian executable from GAUSS_EXEDIR: gdv
+Gaussian frequency calculation completed: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_2/fake_freq.log
+Gaussian frequency calculation completed successfully
+  Log file: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_2/fake_freq.log
+  FChk file: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_2/Test.FChk
+Generated formatted checkpoint file: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_2/Test.FChk
+
+--- Step 2: Parsing normal modes ---
+
+=== Parsing Normal Modes from /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_2/fake_freq.log ===
+Symmetry filters: auto
+Found Harmonic frequencies section with 'Coord Atom Element:' format at line 766
+Found Harmonic frequencies section with 'Atom AN' format at line 789
+Using preferred 'Atom AN' format section at line 789
+
+Parsing mode block 1
+  Mode indices: [1, 2, 3]
+  Number of modes in this block: 3
+  Symmetries: ['A1', 'A1', 'B2']
+  Using format: atom_an
+  Number of atoms: 3
+  Atomic numbers: [8, 1, 1]
+Reached end of normal modes section at line 804
+
+Total modes parsed: 3
+Available symmetries in log: ['A1', 'B2']
+
+Automatic TSR detection requested
+  Automatically detected TSR: A1
+
+Symmetry matching results:
+  Requested filters: ['A1']
+  Filters that matched: ['A1']
+  Filters that did NOT match: []
+  Total modes selected: 2
+
+Filtered modes summary:
+  Mode 1 (A1): freq=2055.37 cm⁻¹, f=2.6903 mDyne/Å
+  Mode 2 (A1): freq=4511.78 cm⁻¹, f=12.5556 mDyne/Å
+
+USING HIGH-PRECISION DATA FROM .FCHK FILE
+   File: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_2/Test.FChk
+   Replacing low-precision .log data with high-precision .fchk data
+
+=== Parsing Vib-E2 block from /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_2/Test.FChk ===
+  Number of Normal Modes from .fchk: 3
+  Total values in Vib-E2 block: 42
+  Frequencies (cm⁻¹): [2055.36738 4511.7816  4805.27243]
+  Reduced masses (uma): [1.08085775 1.04686689 1.08089603]
+  Force constants (mDyne/Å): [ 2.69028111 12.5556096  14.7051735 ]
+
+=== Parsing Vib-AtMass block from /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_2/Test.FChk ===
+  Found 3 atomic masses
+  Atomic masses (uma): [15.9949146   1.00782504  1.00782504]
+   Total modes in .fchk: 3
+
+=== Parsing Vib-Modes block from /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_2/Test.FChk ===
+  Number of atoms: 3
+  Number of modes: 3
+  Expected values: 27 (atoms=3 × coords=3 × modes=3)
+  Found values: 27
+  Eigenvectors shape: (3, 3, 3)
+  Example precision (mode 1, atom 1, z-component): -6.980717570000e-02
+
+  Normalizing eigenvectors by sqrt(reduced_mass)...
+    Mode 1: mu_k = 1.080858 uma, sqrt(mu_k) = 1.039643
+    Mode 2: mu_k = 1.046867 uma, sqrt(mu_k) = 1.023165
+    Mode 3: mu_k = 1.080896 uma, sqrt(mu_k) = 1.039661
+  After normalization (mode 1, atom 1, z-component): -6.714532758358e-02
+
+   Replacing data for 2 filtered modes:
+   Mode 1 (A1):
+      Frequency:    .log=2055.37 → .fchk=2055.36738000 cm⁻¹
+      Red. mass:    .log=1.0809 → .fchk=1.08085775 uma
+      Force const:  .log=2.6903 → .fchk=2.69028111 mDyne/Å
+      Eigvec[0,z]:  .log=-0.07 → .fchk=-6.714532758358e-02
+   Mode 2 (A1):
+      Frequency:    .log=4511.78 → .fchk=4511.78160000 cm⁻¹
+      Red. mass:    .log=1.0469 → .fchk=1.04686689 uma
+      Force const:  .log=12.5556 → .fchk=12.55560960 mDyne/Å
+      Eigvec[0,z]:  .log=0.05 → .fchk=4.988394985216e-02
+
+   Successfully replaced data for 2 modes with high-precision values
+   Precision improvement: ~2 decimals (.log) -> ~8-12 decimals (.fchk)
+Current iteration: 2
+Looking for metadata from previous iteration: 1
+Checking Iteration_1 (standard mode)
+  → System hash MISMATCH!
+     Current:  727eb4c1e550916160f77b992fac22f4
+     Metadata: ba2877f1c947a1abcd0ac4881191c9e1
+  → Different calculation detected - treating as new independent calculation
+FIXED GRADIENT MODE: Always using two-sided central differences (gradient_mode=twoside)
+
+--- Adaptive s₀ Scaling ---
+Status: DISABLED (use !adaptive to enable)
+
+--- Step 3: Generating displaced geometries ---
+
+=== Generating Normal Mode Displacements ===
+Displacement Method: Error-Dependent Strategy
+  Calculation Type: Gradient
+  Energy Error (δE): 1.000000e-07 Eh
+  Formula: h = (3 * δE / (ω²/rc))^(1/3)
+  Step sizes calculated individually for each normal mode based on frequency
+  Error-Dependent Mode: MASS-FREE
+  Characteristic length: 0.010000 Å = 0.018897 Bohr
+Atomic masses (uma): [15.99491  1.00783  1.00783]
+  No degenerate groups found (threshold=1.0 cm⁻¹)
+  Mode 1 (A1): freq=2055.37 cm⁻¹, s₀=0.0189 Bohr (fixed) → h_cart=0.003201 Bohr (0.0017 Å), α_Q=0.003328 (Error-Dep MassFree Grad (Central))
+  Mode 2 (A1): freq=4511.78 cm⁻¹, s₀=0.0189 Bohr (fixed) → h_cart=0.001916 Bohr (0.0010 Å), α_Q=0.001960 (Error-Dep MassFree Grad (Central))
+
+Two-sided mode: Total geometries to calculate: 5
+  Central: 1
+  Displaced: 4 (2 modes × 2 directions)
+
+--- Step 4: Running parallel energy calculations ---
+
+=== Running Normal Mode Energy Calculations ===
+Total tasks: 5
+Parallel workers: 6
+  Using preamble: /local/home/lcrisci/Bin/External/Examples/eT/et_preamble_sectioning.dat
+  Using ending: /local/home/lcrisci/Bin/External/Examples/eT/et_ending_sectioning.dat
+  Task 'central': Running in /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_2/task_central  Task 'mode_1_A1_up': Running in /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_2/task_mode_1_A1_up
+  Task 'central': Command: /usr/bin/python3.12 /home/lcrisci/Bin/External/Executables/eTExt et_preamble_sectioning.dat et_ending_sectioning.dat 7 READ R Gau-central.EIn output.EOut
+
+  Task 'mode_1_A1_up': Command: /usr/bin/python3.12 /home/lcrisci/Bin/External/Executables/eTExt et_preamble_sectioning.dat et_ending_sectioning.dat 7 READ R Gau-mode_1_A1_up.EIn output.EOut
+  Task 'mode_1_A1_down': Running in /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_2/task_mode_1_A1_down
+  Task 'mode_1_A1_down': Command: /usr/bin/python3.12 /home/lcrisci/Bin/External/Executables/eTExt et_preamble_sectioning.dat et_ending_sectioning.dat 7 READ R Gau-mode_1_A1_down.EIn output.EOut
+  Task 'mode_2_A1_down': Running in /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_2/task_mode_2_A1_down  Task 'mode_2_A1_up': Running in /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_2/task_mode_2_A1_up
+  Task 'mode_2_A1_up': Command: /usr/bin/python3.12 /home/lcrisci/Bin/External/Executables/eTExt et_preamble_sectioning.dat et_ending_sectioning.dat 7 READ R Gau-mode_2_A1_up.EIn output.EOut
+
+  Task 'mode_2_A1_down': Command: /usr/bin/python3.12 /home/lcrisci/Bin/External/Executables/eTExt et_preamble_sectioning.dat et_ending_sectioning.dat 7 READ R Gau-mode_2_A1_down.EIn output.EOut
+  Task 'mode_2_A1_down': E = -76.2735124969 Hartree
+  Task 'mode_2_A1_up': E = -76.2735304412 Hartree
+  Task 'central': E = -76.2735225673 Hartree, Dipole = [0.000000, 0.000000, 0.000000] a.u.
+  Task 'mode_1_A1_up': E = -76.2735209343 Hartree
+  Task 'mode_1_A1_down': E = -76.2735230478 Hartree
+
+Completed 5 energy calculations
+Central dipole moment: [0.000000, 0.000000, 0.000000] a.u.
+
+--- Step 5: Computing gradient in normal mode coordinates ---
+
+=== Computing Gradient in Normal Modes ===
+Central point energy: -76.2735225673 Hartree
+Using two-sided central differences
+  Mode 1 (A1):
+    E(+α) = -76.2735209343 Hartree
+    E(-α) = -76.2735230478 Hartree
+    ΔE = 2.1134700035e-06 Hartree
+    ∂E/∂Q = 3.1751709151e-04 Hartree
+  Mode 2 (A1):
+    E(+α) = -76.2735304412 Hartree
+    E(-α) = -76.2735124969 Hartree
+    ΔE = -1.7944310002e-05 Hartree
+    ∂E/∂Q = -4.5777250221e-03 Hartree
+
+--- Step 6: Transforming to Cartesian gradient ---
+
+=== Transforming to Cartesian Gradient (Formula A) ===
+
+Transforming with formula: ∂E/∂x_ia = Σ_k m_i * L_k_normalized[i,a] * ∂E/∂Q_k
+Atomic masses:
+  Atom 1: m = 15.994910 uma, factor = 15.994910
+  Atom 2: m = 1.007830 uma, factor = 1.007830
+  Atom 3: m = 1.007830 uma, factor = 1.007830
+
+Cartesian gradient (Hartree/Bohr):
+  Atom 1 (AN=8): [ -0.00000000,  -0.00000000,  -0.00399353]
+  Atom 2 (AN=1): [  0.00000000,  -0.00247409,   0.00199677]
+  Atom 3 (AN=1): [  0.00000000,   0.00247409,   0.00199677]
+
+--- Step 7: Writing debug output ---
+
+Debug output written to: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_2/normal_mode_debug.txt
+
+GRADIENT NORM: RMS = 2.004570e-03 Hartree/Bohr
+
+======================================================================
+ NORMAL MODE GRADIENT CALCULATION COMPLETE
+======================================================================
+
+NUMERICAL RESULTS:
+  Energy: -76.273522567330 Hartree
+  Gradient shape: (3, 3)
+  RMS gradient: 2.004570e-03
+  Dipole moment: [0.000000, 0.000000, 0.000000] a.u.
+DEBUG: num_dipole type: <class 'list'>, value: [0.0, 0.0, 0.0]
+DEBUG: After append, numerical_dipoles = [[0.0, 0.0, 0.0]]
+
+Writing output to: /local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EOu
+DEBUG: Final dipole_moment being written: [0.0, 0.0, 0.0]
+DEBUG: numerical_dipoles list: [[0.0, 0.0, 0.0]]
+
+======================================================================
+DEBUG: Output file written to: /local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EOu
+DEBUG: First 10 lines of output file:
+======================================================================
+  Line 1: ' -7.627352256733D+01  0.000000000000D+00  0.000000000000D+00  0.000000000000D+00\n'
+  Line 2: '     -0.000000000000     -0.000000000000     -0.003993525868\n'
+  Line 3: '      0.000000000000     -0.002474091424      0.001996773348\n'
+  Line 4: '      0.000000000000      0.002474091424      0.001996773348\n'
+======================================================================
+
+======================================================================
+ NORMAL MODE PARALLEL GRADIENT CALCULATION COMPLETE
+======================================================================
+
+ Recovered energy= -76.2735225673     dipole=      0.000000000000      0.000000000000      0.000000000000
+ Energy=    -76.2735226     NIter=   0.
+ Dipole moment=       0.000000       0.000000       0.000000
+ Leave Link  402 at Sat Mar 21 19:57:09 2026, MaxMem=   104857600 cpu:               0.0 elap:               3.4
+ (Enter /home/lcrisci/Bin/Gaussian/G32p/gdv.j32/gdv/l716.exe)
+ Dipole        = 0.00000000D+00 0.00000000D+00 0.00000000D+00
+ ***** Axes restored to original set *****
+ -------------------------------------------------------------------
+ Center     Atomic                   Forces (Hartrees/Bohr)
+ Number     Number              X              Y              Z
+ -------------------------------------------------------------------
+      1        8           0.000000000   -0.000000000   -0.003993526
+      2        1           0.000000000   -0.002474091    0.001996773
+      3        1          -0.000000000    0.002474091    0.001996773
+ -------------------------------------------------------------------
+ Cartesian Forces:  Max     0.003993526 RMS     0.002004570
+ Leave Link  716 at Sat Mar 21 19:57:09 2026, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /home/lcrisci/Bin/Gaussian/G32p/gdv.j32/gdv/l103.exe)
+
+ GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
+ Berny optimization.
+ Using GEDIIS/GDIIS optimizer.
+ FormGI is forming the generalized inverse of G from B-inverse, IUseBI=4.
+ NTrRot=    -1 NTRed=     3 NAtoms=     3 NSkip=     0 NRank=     3 IsLin=F EigSml=7.8045D-01
+ Internal  Forces:  Max     0.003179120 RMS     0.002596034
+ Search for a local minimum.
+ Step number     2 out of a maximum of    20
+ All quantities printed in internal units (Hartrees-Bohrs-Radians)
+ RMS Force = .25960D-02 SwitMx=.10000D-02 MixMth= 1
+ Mixed Optimization -- RFO/linear search
+ Update second derivatives using D2CorX and points    1    2
+ DE= -8.99D-04 DEPred=-9.10D-04 R= 9.88D-01
+ TightC=F SS=  1.41D+00  RLast= 1.04D-01 DXNew= 5.0454D-01 3.1345D-01
+ Trust test= 9.88D-01 RLast= 1.04D-01 DXMaxT set to 3.13D-01
+ The second derivative matrix:
+                          R1        R2        A1
+           R1           0.57280
+           R2           0.01807   0.57280
+           A1           0.02837   0.02837   0.15755
+ ITU=  1  0
+ Use linear search instead of GDIIS.
+     Eigenvalues ---    0.15386   0.55473   0.59456
+ RFO step:  Lambda=-3.45649090D-05 EMin= 1.53863687D-01
+ Quartic linear search produced a step of -0.01811.
+ GrdOpt: GIC=T ITstSp= 0 NP=   2 DidLin=T DidDIS=F IRisen=  0
+         ISwap=1 XLin=-0.018 DXMaxT= 0.313 DidEig=F Rises=F
+ Iteration  1 RMS(Cart)=  0.00196972 RMS(Int)=  0.00000455
+ Iteration  2 RMS(Cart)=  0.00000283 RMS(Int)=  0.00000000
+ Iteration  3 RMS(Cart)=  0.00000000 RMS(Int)=  0.00000000
+ ClnCor:  largest displacement from symmetrization is 4.58D-16 for atom     3.
+ Variable       Old X    -DE/DX   Delta X   Delta X   Delta X     New X
+                                 (Linear)    (Quad)   (Total)
+    R1        1.80753   0.00318   0.00012   0.00538   0.00550   1.81303
+    R2        1.80753   0.00318   0.00012   0.00538   0.00550   1.81303
+    A1        1.80707  -0.00007   0.00188  -0.00440  -0.00251   1.80456
+         Item               Value     Threshold  Converged?
+ Maximum Force            0.003179     0.000450     NO 
+ RMS     Force            0.002596     0.000300     NO 
+ Maximum Displacement     0.003462     0.001800     NO 
+ RMS     Displacement     0.003410     0.001200     NO 
+ Predicted change in Energy=-1.755318D-05
+ GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
+
+ Leave Link  103 at Sat Mar 21 19:57:09 2026, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /home/lcrisci/Bin/Gaussian/G32p/gdv.j32/gdv/l202.exe)
+                          Input orientation:                          
+ ---------------------------------------------------------------------
+ Center     Atomic      Atomic             Coordinates (Angstroms)
+ Number     Number       Type             X           Y           Z
+ ---------------------------------------------------------------------
+      1          8           0       -0.000000   -0.000000   -0.137883
+      2          1           0        0.000000   -0.752890    0.456783
+      3          1           0       -0.000000    0.752890    0.456783
+ ---------------------------------------------------------------------
+                    Distance matrix (angstroms):
+                    1          2          3
+     1  O    0.000000
+     2  H    0.959412   0.000000
+     3  H    0.959412   1.505779   0.000000
+ Stoichiometry    H2O
+ Framework group  C2V[C2(O),SGV(H2)]
+ Deg. of freedom     2
+ Full point group                 C2V     NOp   4
+ RotChk:  IX=0 Diff= 7.52D-16
+ Largest Abelian subgroup         C2V     NOp   4
+ Largest concise Abelian subgroup C2      NOp   2
+                         Standard orientation:                         
+ ---------------------------------------------------------------------
+ Center     Atomic      Atomic             Coordinates (Angstroms)
+ Number     Number       Type             X           Y           Z
+ ---------------------------------------------------------------------
+      1          8           0        0.000000    0.000000    0.118933
+      2          1           0        0.000000    0.752890   -0.475733
+      3          1           0       -0.000000   -0.752890   -0.475733
+ ---------------------------------------------------------------------
+ Rotational constants (GHZ):         798.3629052         442.3227680         284.6281679
+ Leave Link  202 at Sat Mar 21 19:57:09 2026, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /home/lcrisci/Bin/Gaussian/G32p/gdv.j32/gdv/l301.exe)
+ Standard basis: Dummy (5D, 7F)
+ There are     2 symmetry adapted cartesian basis functions of A1  symmetry.
+ There are     0 symmetry adapted cartesian basis functions of A2  symmetry.
+ There are     0 symmetry adapted cartesian basis functions of B1  symmetry.
+ There are     1 symmetry adapted cartesian basis functions of B2  symmetry.
+ There are     2 symmetry adapted basis functions of A1  symmetry.
+ There are     0 symmetry adapted basis functions of A2  symmetry.
+ There are     0 symmetry adapted basis functions of B1  symmetry.
+ There are     1 symmetry adapted basis functions of B2  symmetry.
+     3 basis functions,     3 primitive gaussians,     3 cartesian basis functions
+     2 alpha electrons        2 beta electrons
+       nuclear repulsion energy         2.5576871614 Hartrees.
+ IExCor=         0 DFT=F Ex=HF Corr=None N6=None ScaHFX=  1.000000
+ ScaDFX=  1.000000  1.000000  1.000000  1.000000  1.000000  0.000000
+ ScaDFX=  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+ Grid=UltraFine IRanWt=     -1 IRanGd=            0 ICorTp=0 IEDCtl=  2004
+ NAtoms=    3 NActive=    3 NUniq=    2 SFac= 2.25D+00 NAtFMM=   60 NAOKFM=F Big=F
+ Integral buffers will be    131072 words long.
+ Raffenetti 1 integral format.
+ Two-electron integral symmetry is turned on.
+ Leave Link  301 at Sat Mar 21 19:57:09 2026, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /home/lcrisci/Bin/Gaussian/G32p/gdv.j32/gdv/l402.exe)
+ External calculation of energy and first derivatives.
+ Running external command "CentralExt eT et_preamble_sectioning.dat et_ending_sectioning.dat 7 read parall_n 6 R"
+         input file       "/local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EIn"
+         output file      "/local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EOu"
+         message file     "/local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EMs"
+         fchk file        "/local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EFC"
+         mat. el file     "/local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EUF"
+ Running external command "CentralExt eT et_preamble_sectioning.dat et_ending_sectioning.dat 7 read parall_n 6 R /local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EIn /local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EOu /local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EMs /local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EFC /local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EUF".
+GRADIENT MODE: twoside differences (default, no flag given)
+
+======================================================================
+ NORMAL MODE PARALLEL GRADIENT CALCULATION
+======================================================================
+Program: et
+Threads: 6
+Input: /local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EIn
+Output: /local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EOu
+Preamble: /local/home/lcrisci/Bin/External/Examples/eT/et_preamble_sectioning.dat
+Ending: /local/home/lcrisci/Bin/External/Examples/eT/et_ending_sectioning.dat
+DEBUG [hash]: Found Iterations/ in /local/home/lcrisci/Bin/External/Examples/eT
+DEBUG [find_and_parse_initial_gjf]: Found .gjf file: /local/home/lcrisci/Bin/External/Examples/eT/H2O_eT.gjf
+INFO: Using reference geometry from .gjf file for consistent hashing
+System hash computed: 727eb4c1e550916160f77b992fac22f4
+  Based on: 3 atoms, charge=0, spin=1, gradient_mode=twoside
+  Preamble: 298 chars, Ending: 223 chars
+System hash for this calculation: 727eb4c1e550916160f77b992fac22f4
+
+
+================================================================================
+CHECKING FOR MIXED ANALYTICAL/NUMERICAL GRADIENT MODE (NORMAL MODE)
+================================================================================
+Analyzing sections in /local/home/lcrisci/Bin/External/Examples/eT/et_preamble_sectioning.dat for gradient mode (comment='!')
+  Found section marker: '!SECTION1' at line 7
+  Found section marker: '!SECTION2' at line 17
+  Found section marker: '!SECTION3' at line 26
+
+--- Section Analysis Summary ---
+  default: NUMERICAL (dens=0, lines=1)
+  !SECTION1: NUMERICAL (dens=0, lines=9)
+  !SECTION2: NUMERICAL (dens=0, lines=8)
+  !SECTION3: NUMERICAL (dens=0, lines=7)
+
+Total sections: 4
+Analytical sections (0): []
+Numerical sections (4): ['default', '!SECTION1', '!SECTION2', '!SECTION3']
+--------------------------------
+  Gradient calculation: True (OptFlag=1)
+  Has analytical sections (dens=2): False
+  Has numerical sections (dens!=2): True
+  Mixed mode activated: False
+  All analytical mode: False
+  All numerical mode: True
+================================================================================
+
+Parsing scheme and formula from /local/home/lcrisci/Bin/External/Examples/eT/et_preamble_sectioning.dat (comment='!')
+  Entered !scheme section at line 1.
+    Line 2: Found coefficient: 1.0
+    Line 3: Found coefficient: -1.0
+    Line 4: Found coefficient: 1.0
+  Exited !scheme section at line 5.
+Finished parsing scheme: [('coeff', 1.0), ('coeff', -1.0), ('coeff', 1.0)]
+Found !normalmode marker at line 10 in ending.dat file
+  Normal mode symmetry filters: AUTO (automatic TSR detection)
+  Degeneracy threshold: 1.0 cm⁻¹
+  Restart from last iteration: ENABLED
+  Reference force constant: ERROR_DEPENDENT (based on energy error)
+  Characteristic length: 0.01 Å
+  Energy error for gradients: 1e-07 Eh
+Found last iteration directory: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_2 (iteration 2)
+RESTART: Last iteration /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_2 is already complete — proceeding normally
+Created iteration directory: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_3
+INFO: This is iteration number 3
+
+================================================================================
+NUMERICAL NORMAL MODE GRADIENT WORKFLOW
+================================================================================
+
+Running numerical normal mode gradient calculation...
+  Iteration directory: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_3
+  Preamble: /local/home/lcrisci/Bin/External/Examples/eT/et_preamble_sectioning.dat
+  Using original resources (no adjustment for numerical)
+
+======================================================================
+ NORMAL MODE GRADIENT CALCULATION
+======================================================================
+  Working directory: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_3
+  Input file: /local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EIn
+  Preamble file: /local/home/lcrisci/Bin/External/Examples/eT/et_preamble_sectioning.dat
+  Ending file: /local/home/lcrisci/Bin/External/Examples/eT/et_ending_sectioning.dat
+
+Reading !normalmode keywords from ending.dat: /local/home/lcrisci/Bin/External/Examples/eT/et_ending_sectioning.dat
+Found !normalmode marker at line 10 in ending.dat file
+  Normal mode symmetry filters: AUTO (automatic TSR detection)
+  Degeneracy threshold: 1.0 cm⁻¹
+  Restart from last iteration: ENABLED
+  Reference force constant: ERROR_DEPENDENT (based on energy error)
+  Characteristic length: 0.01 Å
+  Energy error for gradients: 1e-07 Eh
+Successfully parsed !normalmode keywords from ending.dat
+
+--- Step 1: Running fake frequency calculation ---
+
+=== Running Fake Frequency Calculation ===
+Reading !fakekey keywords from ending.dat: /local/home/lcrisci/Bin/External/Examples/eT/et_ending_sectioning.dat
+No !fakekey keywords found in ending.dat, using default route
+
+Resource allocation for fake_freq.gjf:
+  Original: nprocs=7, mem=READ, nthreads=6
+  Scaled: %nprocs=42, %mem=96GB
+Wrote fake frequency input: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_3/fake_freq.gjf
+  Checkpoint file: tmp.chk (will be formatted to /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_3/Test.FChk)
+Found Gaussian executable: gdv at /home/lcrisci/Bin/Gaussian/G32p/gdv.j32/gdv/gdv
+Using Gaussian executable from GAUSS_EXEDIR: gdv
+Gaussian frequency calculation completed: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_3/fake_freq.log
+Gaussian frequency calculation completed successfully
+  Log file: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_3/fake_freq.log
+  FChk file: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_3/Test.FChk
+Generated formatted checkpoint file: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_3/Test.FChk
+
+--- Step 2: Parsing normal modes ---
+
+=== Parsing Normal Modes from /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_3/fake_freq.log ===
+Symmetry filters: auto
+Found Harmonic frequencies section with 'Coord Atom Element:' format at line 766
+Found Harmonic frequencies section with 'Atom AN' format at line 789
+Using preferred 'Atom AN' format section at line 789
+
+Parsing mode block 1
+  Mode indices: [1, 2, 3]
+  Number of modes in this block: 3
+  Symmetries: ['A1', 'A1', 'B2']
+  Using format: atom_an
+  Number of atoms: 3
+  Atomic numbers: [8, 1, 1]
+Reached end of normal modes section at line 804
+
+Total modes parsed: 3
+Available symmetries in log: ['A1', 'B2']
+
+Automatic TSR detection requested
+  Automatically detected TSR: A1
+
+Symmetry matching results:
+  Requested filters: ['A1']
+  Filters that matched: ['A1']
+  Filters that did NOT match: []
+  Total modes selected: 2
+
+Filtered modes summary:
+  Mode 1 (A1): freq=2065.46 cm⁻¹, f=2.7164 mDyne/Å
+  Mode 2 (A1): freq=4476.15 cm⁻¹, f=12.3596 mDyne/Å
+
+USING HIGH-PRECISION DATA FROM .FCHK FILE
+   File: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_3/Test.FChk
+   Replacing low-precision .log data with high-precision .fchk data
+
+=== Parsing Vib-E2 block from /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_3/Test.FChk ===
+  Number of Normal Modes from .fchk: 3
+  Total values in Vib-E2 block: 42
+  Frequencies (cm⁻¹): [2065.45999 4476.15443 4767.55524]
+  Reduced masses (uma): [1.08072488 1.04699156 1.08075194]
+  Force constants (mDyne/Å): [ 2.71643256 12.3595742  14.4733044 ]
+
+=== Parsing Vib-AtMass block from /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_3/Test.FChk ===
+  Found 3 atomic masses
+  Atomic masses (uma): [15.9949146   1.00782504  1.00782504]
+   Total modes in .fchk: 3
+
+=== Parsing Vib-Modes block from /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_3/Test.FChk ===
+  Number of atoms: 3
+  Number of modes: 3
+  Expected values: 27 (atoms=3 × coords=3 × modes=3)
+  Found values: 27
+  Eigenvectors shape: (3, 3, 3)
+  Example precision (mode 1, atom 1, z-component): -6.974364790000e-02
+
+  Normalizing eigenvectors by sqrt(reduced_mass)...
+    Mode 1: mu_k = 1.080725 uma, sqrt(mu_k) = 1.039579
+    Mode 2: mu_k = 1.046992 uma, sqrt(mu_k) = 1.023226
+    Mode 3: mu_k = 1.080752 uma, sqrt(mu_k) = 1.039592
+  After normalization (mode 1, atom 1, z-component): -6.708834590684e-02
+
+   Replacing data for 2 filtered modes:
+   Mode 1 (A1):
+      Frequency:    .log=2065.46 → .fchk=2065.45999000 cm⁻¹
+      Red. mass:    .log=1.0807 → .fchk=1.08072488 uma
+      Force const:  .log=2.7164 → .fchk=2.71643256 mDyne/Å
+      Eigvec[0,z]:  .log=-0.07 → .fchk=-6.708834590684e-02
+   Mode 2 (A1):
+      Frequency:    .log=4476.15 → .fchk=4476.15443000 cm⁻¹
+      Red. mass:    .log=1.0470 → .fchk=1.04699156 uma
+      Force const:  .log=12.3596 → .fchk=12.35957420 mDyne/Å
+      Eigvec[0,z]:  .log=0.05 → .fchk=4.996055782707e-02
+
+   Successfully replaced data for 2 modes with high-precision values
+   Precision improvement: ~2 decimals (.log) -> ~8-12 decimals (.fchk)
+Current iteration: 3
+Looking for metadata from previous iteration: 2
+Checking Iteration_2 (standard mode)
+  → System hash MATCH: 727eb4c1e5509161...
+  → Same calculation confirmed - reading RMS from previous iteration
+Found valid RMS gradient: 2.004570e-03
+FIXED GRADIENT MODE: Always using two-sided central differences (gradient_mode=twoside)
+
+--- Adaptive s₀ Scaling ---
+Status: DISABLED (use !adaptive to enable)
+
+--- Step 3: Generating displaced geometries ---
+
+=== Generating Normal Mode Displacements ===
+Displacement Method: Error-Dependent Strategy
+  Calculation Type: Gradient
+  Energy Error (δE): 1.000000e-07 Eh
+  Formula: h = (3 * δE / (ω²/rc))^(1/3)
+  Step sizes calculated individually for each normal mode based on frequency
+  Error-Dependent Mode: MASS-FREE
+  Characteristic length: 0.010000 Å = 0.018897 Bohr
+Atomic masses (uma): [15.99491  1.00783  1.00783]
+  No degenerate groups found (threshold=1.0 cm⁻¹)
+  Mode 1 (A1): freq=2065.46 cm⁻¹, s₀=0.0189 Bohr (fixed) → h_cart=0.003191 Bohr (0.0017 Å), α_Q=0.003317 (Error-Dep MassFree Grad (Central))
+  Mode 2 (A1): freq=4476.15 cm⁻¹, s₀=0.0189 Bohr (fixed) → h_cart=0.001926 Bohr (0.0010 Å), α_Q=0.001970 (Error-Dep MassFree Grad (Central))
+
+Two-sided mode: Total geometries to calculate: 5
+  Central: 1
+  Displaced: 4 (2 modes × 2 directions)
+
+--- Step 4: Running parallel energy calculations ---
+
+=== Running Normal Mode Energy Calculations ===
+Total tasks: 5
+Parallel workers: 6
+  Using preamble: /local/home/lcrisci/Bin/External/Examples/eT/et_preamble_sectioning.dat
+  Using ending: /local/home/lcrisci/Bin/External/Examples/eT/et_ending_sectioning.dat
+  Task 'central': Running in /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_3/task_central
+  Task 'central': Command: /usr/bin/python3.12 /home/lcrisci/Bin/External/Executables/eTExt et_preamble_sectioning.dat et_ending_sectioning.dat 7 READ R Gau-central.EIn output.EOut
+  Task 'mode_1_A1_up': Running in /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_3/task_mode_1_A1_up
+  Task 'mode_1_A1_up': Command: /usr/bin/python3.12 /home/lcrisci/Bin/External/Executables/eTExt et_preamble_sectioning.dat et_ending_sectioning.dat 7 READ R Gau-mode_1_A1_up.EIn output.EOut
+  Task 'mode_1_A1_down': Running in /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_3/task_mode_1_A1_down
+  Task 'mode_1_A1_down': Command: /usr/bin/python3.12 /home/lcrisci/Bin/External/Executables/eTExt et_preamble_sectioning.dat et_ending_sectioning.dat 7 READ R Gau-mode_1_A1_down.EIn output.EOut
+  Task 'mode_2_A1_up': Running in /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_3/task_mode_2_A1_up
+  Task 'mode_2_A1_up': Command: /usr/bin/python3.12 /home/lcrisci/Bin/External/Executables/eTExt et_preamble_sectioning.dat et_ending_sectioning.dat 7 READ R Gau-mode_2_A1_up.EIn output.EOut
+  Task 'mode_2_A1_down': Running in /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_3/task_mode_2_A1_down
+  Task 'mode_2_A1_down': Command: /usr/bin/python3.12 /home/lcrisci/Bin/External/Executables/eTExt et_preamble_sectioning.dat et_ending_sectioning.dat 7 READ R Gau-mode_2_A1_down.EIn output.EOut
+  Task 'central': E = -76.2735415243 Hartree, Dipole = [0.000000, 0.000000, 0.000000] a.u.
+  Task 'mode_2_A1_down': E = -76.2735396981 Hartree
+  Task 'mode_1_A1_up': E = -76.2735408292 Hartree
+  Task 'mode_1_A1_down': E = -76.2735410631 Hartree
+  Task 'mode_2_A1_up': E = -76.2735411749 Hartree
+
+Completed 5 energy calculations
+Central dipole moment: [0.000000, 0.000000, 0.000000] a.u.
+
+--- Step 5: Computing gradient in normal mode coordinates ---
+
+=== Computing Gradient in Normal Modes ===
+Central point energy: -76.2735415243 Hartree
+Using two-sided central differences
+  Mode 1 (A1):
+    E(+α) = -76.2735408292 Hartree
+    E(-α) = -76.2735410631 Hartree
+    ΔE = 2.3391000070e-07 Hartree
+    ∂E/∂Q = 3.5257127570e-05 Hartree
+  Mode 2 (A1):
+    E(+α) = -76.2735411749 Hartree
+    E(-α) = -76.2735396981 Hartree
+    ΔE = -1.4767600049e-06 Hartree
+    ∂E/∂Q = -3.7473900879e-04 Hartree
+
+--- Step 6: Transforming to Cartesian gradient ---
+
+=== Transforming to Cartesian Gradient (Formula A) ===
+
+Transforming with formula: ∂E/∂x_ia = Σ_k m_i * L_k_normalized[i,a] * ∂E/∂Q_k
+Atomic masses:
+  Atom 1: m = 15.994910 uma, factor = 15.994910
+  Atom 2: m = 1.007830 uma, factor = 1.007830
+  Atom 3: m = 1.007830 uma, factor = 1.007830
+
+Cartesian gradient (Hartree/Bohr):
+  Atom 1 (AN=8): [ -0.00000000,   0.00000000,  -0.00033729]
+  Atom 2 (AN=1): [  0.00000000,  -0.00019841,   0.00016865]
+  Atom 3 (AN=1): [  0.00000000,   0.00019841,   0.00016865]
+
+--- Step 7: Writing debug output ---
+
+Debug output written to: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_3/normal_mode_debug.txt
+
+GRADIENT NORM: RMS = 1.664600e-04 Hartree/Bohr
+
+======================================================================
+ NORMAL MODE GRADIENT CALCULATION COMPLETE
+======================================================================
+
+NUMERICAL RESULTS:
+  Energy: -76.273541524280 Hartree
+  Gradient shape: (3, 3)
+  RMS gradient: 1.664600e-04
+  Dipole moment: [0.000000, 0.000000, 0.000000] a.u.
+DEBUG: num_dipole type: <class 'list'>, value: [0.0, 0.0, 0.0]
+DEBUG: After append, numerical_dipoles = [[0.0, 0.0, 0.0]]
+
+Writing output to: /local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EOu
+DEBUG: Final dipole_moment being written: [0.0, 0.0, 0.0]
+DEBUG: numerical_dipoles list: [[0.0, 0.0, 0.0]]
+
+======================================================================
+DEBUG: Output file written to: /local/scratch/lcrisci/GauScr_MGZsUGkC/Gau-2248130.EOu
+DEBUG: First 10 lines of output file:
+======================================================================
+  Line 1: ' -7.627354152428D+01  0.000000000000D+00  0.000000000000D+00  0.000000000000D+00\n'
+  Line 2: '     -0.000000000000      0.000000000000     -0.000337292861\n'
+  Line 3: '      0.000000000000     -0.000198406352      0.000168647310\n'
+  Line 4: '      0.000000000000      0.000198406352      0.000168647310\n'
+======================================================================
+
+======================================================================
+ NORMAL MODE PARALLEL GRADIENT CALCULATION COMPLETE
+======================================================================
+
+ Recovered energy= -76.2735415243     dipole=      0.000000000000      0.000000000000      0.000000000000
+ Energy=    -76.2735415     NIter=   0.
+ Dipole moment=       0.000000       0.000000       0.000000
+ Leave Link  402 at Sat Mar 21 19:57:12 2026, MaxMem=   104857600 cpu:               0.0 elap:               3.4
+ (Enter /home/lcrisci/Bin/Gaussian/G32p/gdv.j32/gdv/l716.exe)
+ Dipole        = 0.00000000D+00 0.00000000D+00 0.00000000D+00
+ ***** Axes restored to original set *****
+ -------------------------------------------------------------------
+ Center     Atomic                   Forces (Hartrees/Bohr)
+ Number     Number              X              Y              Z
+ -------------------------------------------------------------------
+      1        8           0.000000000   -0.000000000   -0.000337293
+      2        1           0.000000000   -0.000198406    0.000168647
+      3        1          -0.000000000    0.000198406    0.000168647
+ -------------------------------------------------------------------
+ Cartesian Forces:  Max     0.000337293 RMS     0.000166460
+ Leave Link  716 at Sat Mar 21 19:57:12 2026, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /home/lcrisci/Bin/Gaussian/G32p/gdv.j32/gdv/l103.exe)
+
+ GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
+ Berny optimization.
+ Using GEDIIS/GDIIS optimizer.
+ FormGI is forming the generalized inverse of G from B-inverse, IUseBI=4.
+ NTrRot=    -1 NTRed=     3 NAtoms=     3 NSkip=     0 NRank=     3 IsLin=F EigSml=7.7701D-01
+ Internal  Forces:  Max     0.000260229 RMS     0.000212702
+ Search for a local minimum.
+ Step number     3 out of a maximum of    20
+ All quantities printed in internal units (Hartrees-Bohrs-Radians)
+ RMS Force = .21270D-03 SwitMx=.10000D-02 MixMth= 2
+ Mixed Optimization -- En-DIIS/RFO-DIIS
+ Update second derivatives using D2CorX and points    1    2    3
+ DE= -1.90D-05 DEPred=-1.76D-05 R= 1.08D+00
+ TightC=F SS=  1.41D+00  RLast= 8.17D-03 DXNew= 5.2716D-01 2.4520D-02
+ Trust test= 1.08D+00 RLast= 8.17D-03 DXMaxT set to 3.13D-01
+ The second derivative matrix:
+                          R1        R2        A1
+           R1           0.54993
+           R2          -0.00480   0.54993
+           A1           0.03133   0.03133   0.15717
+ ITU=  1  1  0
+ Use linear search instead of GDIIS.
+     Eigenvalues ---    0.15218   0.55012   0.55473
+ RFO step:  Lambda= 0.00000000D+00 EMin= 1.52176067D-01
+ Quartic linear search produced a step of  0.09128.
+ GrdOpt: GIC=T ITstSp= 0 NP=   3 DidLin=T DidDIS=F IRisen=  0
+         ISwap=1 XLin= 0.091 DXMaxT= 0.313 DidEig=F Rises=F
+ Iteration  1 RMS(Cart)=  0.00017772 RMS(Int)=  0.00000005
+ Iteration  2 RMS(Cart)=  0.00000003 RMS(Int)=  0.00000000
+ ClnCor:  largest displacement from symmetrization is 1.45D-17 for atom     1.
+ Variable       Old X    -DE/DX   Delta X   Delta X   Delta X     New X
+                                 (Linear)    (Quad)   (Total)
+    R1        1.81303   0.00026   0.00050  -0.00000   0.00050   1.81353
+    R2        1.81303   0.00026   0.00050  -0.00000   0.00050   1.81353
+    A1        1.80456  -0.00002  -0.00023  -0.00009  -0.00032   1.80424
+         Item               Value     Threshold  Converged?
+ Maximum Force            0.000260     0.000450     YES
+ RMS     Force            0.000213     0.000300     YES
+ Maximum Displacement     0.000357     0.001800     YES
+ RMS     Displacement     0.000308     0.001200     YES
+ Predicted change in Energy=-1.313574D-07
+ Optimization completed.
+    -- Stationary point found.
+                           ----------------------------
+                           !   Optimized Parameters   !
+                           ! (Angstroms and Degrees)  !
+ --------------------------                            --------------------------
+ ! Name  Definition              Value          Derivative Info.                !
+ --------------------------------------------------------------------------------
+ ! R1    R(1,2)                  0.9594         -DE/DX =    0.0003              !
+ ! R2    R(1,3)                  0.9594         -DE/DX =    0.0003              !
+ ! A1    A(2,1,3)              103.3934         -DE/DX =    0.0                 !
+ --------------------------------------------------------------------------------
+ Largest change from initial coordinates is atom    2       0.034 Angstoms.
+ GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
+
+ Leave Link  103 at Sat Mar 21 19:57:12 2026, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /home/lcrisci/Bin/Gaussian/G32p/gdv.j32/gdv/l202.exe)
+                          Input orientation:                          
+ ---------------------------------------------------------------------
+ Center     Atomic      Atomic             Coordinates (Angstroms)
+ Number     Number       Type             X           Y           Z
+ ---------------------------------------------------------------------
+      1          8           0        0.000000   -0.000000   -0.137883
+      2          1           0        0.000000   -0.752890    0.456783
+      3          1           0       -0.000000    0.752890    0.456783
+ ---------------------------------------------------------------------
+                    Distance matrix (angstroms):
+                    1          2          3
+     1  O    0.000000
+     2  H    0.959412   0.000000
+     3  H    0.959412   1.505779   0.000000
+ Stoichiometry    H2O
+ Framework group  C2V[C2(O),SGV(H2)]
+ Deg. of freedom     2
+ Full point group                 C2V     NOp   4
+ RotChk:  IX=0 Diff= 4.76D-16
+ Largest Abelian subgroup         C2V     NOp   4
+ Largest concise Abelian subgroup C2      NOp   2
+                         Standard orientation:                         
+ ---------------------------------------------------------------------
+ Center     Atomic      Atomic             Coordinates (Angstroms)
+ Number     Number       Type             X           Y           Z
+ ---------------------------------------------------------------------
+      1          8           0        0.000000    0.000000    0.118933
+      2          1           0        0.000000    0.752890   -0.475733
+      3          1           0       -0.000000   -0.752890   -0.475733
+ ---------------------------------------------------------------------
+ Rotational constants (GHZ):         798.3629052         442.3227680         284.6281679
+ Leave Link  202 at Sat Mar 21 19:57:12 2026, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /home/lcrisci/Bin/Gaussian/G32p/gdv.j32/gdv/l601.exe)
+ Leave Link  601 at Sat Mar 21 19:57:12 2026, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /home/lcrisci/Bin/Gaussian/G32p/gdv.j32/gdv/l9999.exe)
+ Unable to Open any file for archive entry.
+ 1\1\GINC-NEO\FOpt\External='CentralExt eT et_preamble_sectioning.dat e
+ t_ending_sectioning.dat 7 rea\ZDO\H2O1\LCRISCI\21-Mar-2026\0\\#p opt(n
+ omicro) output=pickett External="CentralExt eT et_preamble_sectioning.
+ dat et_ending_sectioning.dat 7 read parall_n 6"\\title\\0,1\O,0.,0.,-0
+ .137883363\H,0.,-0.7528897473,0.4567832515\H,0.,0.7528897473,0.4567832
+ 515\\Version=ES64L-GDVRevJ.32+\HF=-76.2735415\RMSD=0.000e+00\RMSF=1.66
+ 5e-04\Dipole=0.,0.,0.\PG=C02V [C2(O1),SGV(H2)]\\@
+ The archive entry for this job was punched.
+ DoSRE=F DoSRN=F DoDH=F DoFC=F DoNQ=F DoQCD=F DoSCD=F
+ Inertia tensor (amu-bohr**2): 
+                 1             2             3 
+      1   0.634070D+01  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.226055D+01  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.408015D+01
+ Principal inertia moments (amu-bohr**2):
+ Iaa = 0.226055D+01 Ibb= 0.408015D+01 Icc= 0.634070D+01
+ Rotation matrix to Principal Axis frame: 
+                 1             2             3 
+      1   0.000000D+00  0.000000D+00  0.100000D+01
+      2   0.100000D+01  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.100000D+01  0.000000D+00
+                Principal axis orientation:                
+ ---------------------------------------------------------------------
+ Center     Atomic                     Coordinates (Angstroms)
+ Number     Number                        X           Y           Z
+ ---------------------------------------------------------------------
+      1          8                   -0.000000   -0.066552    0.000000
+      2          1                   -0.752890    0.528115    0.000000
+      3          1                    0.752890    0.528115   -0.000000
+ ---------------------------------------------------------------------
+ Rotational constants (MHZ):
+ 798362.9052385 442322.7679869 284628.1678946
+ Dipole moment (Debye):
+      0.0000000      0.0000000      0.0000000  Tot=      0.0000000
+
+ Atoms with significant hyperfine tensors: 
+
+--------------------------------------------------------------------------------
+ title                                                   
+   99  1000  50  0.1760E-11  0.1000E+07  0.1000E+01 1.0000000000
+a   1  0  0  0  1  1   1  0  1  0
+     10000   0.79836291E+06    0.0000E+00   /  A  /
+     20000   0.44232277E+06    0.0000E+00   /  B  /
+     30000   0.28462817E+06    0.0000E+00   /  C  /
+--------------------------------------------------------------------------------
+
+
+
+ HOW IS IT THAT THE SKY FEEDS THE STARS?
+
+                           -- LUCRETIUS
+ Job cpu time:       0 days  0 hours  0 minutes  0.4 seconds.
+ Elapsed time:       0 days  0 hours  0 minutes 10.4 seconds.
+ File lengths (MBytes):  RWF=     22 Int=      0 D2E=      0 Chk=      9 Scr=      1
+ Normal termination of Gaussian DV at Sat Mar 21 19:57:12 2026.

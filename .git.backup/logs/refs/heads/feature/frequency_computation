@@ -1,7 +1,0 @@
-0000000000000000000000000000000000000000 9129a18e17d273dfd44a8ba3b50fe137b22fa690 Luigi Crisci <luigi.crisci@sns.it> 1761669944 +0100	branch: Created from HEAD
-9129a18e17d273dfd44a8ba3b50fe137b22fa690 0bed5983d804e308c3ec460007d6ed3d7d35a78a Luigi Crisci <luigi.crisci@sns.it> 1761678128 +0100	commit: Frequency calculation implemented TOTEST
-0bed5983d804e308c3ec460007d6ed3d7d35a78a ad9639473566babee2b6e5112217a976af931479 Luigi Crisci <luigi.crisci@sns.it> 1761680704 +0100	commit: resources added to fake_freq
-ad9639473566babee2b6e5112217a976af931479 64cf188b5752a8804334cc60c591c4ef2f3cc1e0 Luigi Crisci <luigi.crisci@sns.it> 1761681974 +0100	commit: Bug detected for frequency computation
-64cf188b5752a8804334cc60c591c4ef2f3cc1e0 69e19cd07418c82631e38c9f05b6e49fa4c70203 Luigi Crisci <luigi.crisci@sns.it> 1761683044 +0100	commit: Bug detected for frequency computation pt 2
-69e19cd07418c82631e38c9f05b6e49fa4c70203 7dc77f5776d506e91a3dac9613e4158bd737b5fe Luigi Crisci <luigi.crisci@sns.it> 1761684475 +0100	commit: cleanup of chk files implemented
-7dc77f5776d506e91a3dac9613e4158bd737b5fe a84d032d72b5edd4f9f1a46220e61c20320f778f Luigi Crisci <luigi.crisci@sns.it> 1761684782 +0100	commit: header for frequencies modified

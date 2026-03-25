@@ -1,9 +1,0 @@
-docs: update CLAUDE.md for gradient mode CLI flags
-
-Updates usage examples with oneside/twoside flags.
-Adds migration guide from deprecated .gjf markers.
-Documents both parall and parall_n modes.
-
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
-
-Co-Authored-By: Claude <noreply@anthropic.com>

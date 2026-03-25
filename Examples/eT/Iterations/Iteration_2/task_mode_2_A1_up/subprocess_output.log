@@ -1,0 +1,55 @@
+Start of eT_launch, PID is: 2250276
+/home/lcrisci/Bin/eT/eT/build/eT_launch.py:398: UserWarning: More output files than input files, will ignore the excess.
+  warn("More output files than input files, will ignore the excess.")
+Will use basis set from /local/home/lcrisci/Bin/eT/eT/ao_basis
+eT will run with 7 OMP threads
+eT will run in /local/scratch/lcrisci/test_eT_I9sG6E1M/et-2250272-1.
+Input file:  /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_2/task_mode_2_A1_up/et_input_sec_1.inp
+Output file: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_2/task_mode_2_A1_up/et_input_sec_1.out
+Executable:  /local/home/lcrisci/Bin/eT/eT/build/eT
+PID of eT subprocess: 2250283
+Deleting scratch
+Start of eT_launch, PID is: 2250317
+Will use basis set from /local/home/lcrisci/Bin/eT/eT/ao_basis
+eT will run with 7 OMP threads
+eT will run in /local/scratch/lcrisci/test_eT_I9sG6E1M/et-2250272-2.
+Input file:  /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_2/task_mode_2_A1_up/et_input_sec_1.inp
+Output file: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_2/task_mode_2_A1_up/et_input_sec_2.out
+Executable:  /local/home/lcrisci/Bin/eT/eT/build/eT
+PID of eT subprocess: 2250340
+Input file:  /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_2/task_mode_2_A1_up/et_input_sec_2.inp
+Output file: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_2/task_mode_2_A1_up/et_input_sec_2.inp
+Executable:  /local/home/lcrisci/Bin/eT/eT/build/eT
+PID of eT subprocess: 2250363
+Deleting scratch
+Start of eT_launch, PID is: 2250393
+Will use basis set from /local/home/lcrisci/Bin/eT/eT/ao_basis
+eT will run with 7 OMP threads
+eT will run in /local/scratch/lcrisci/test_eT_I9sG6E1M/et-2250272-3.
+Input file:  /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_2/task_mode_2_A1_up/et_input_sec_1.inp
+Output file: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_2/task_mode_2_A1_up/et_input_sec_3.out
+Executable:  /local/home/lcrisci/Bin/eT/eT/build/eT
+PID of eT subprocess: 2250402
+Input file:  /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_2/task_mode_2_A1_up/et_input_sec_2.inp
+Output file: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_2/task_mode_2_A1_up/et_input_sec_3.inp
+Executable:  /local/home/lcrisci/Bin/eT/eT/build/eT
+PID of eT subprocess: 2250437
+Input file:  /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_2/task_mode_2_A1_up/et_input_sec_3.inp
+Output file: /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_2/task_mode_2_A1_up/et_input_sec_3.out
+Executable:  /local/home/lcrisci/Bin/eT/eT/build/eT
+PID of eT subprocess: 2250471
+Deleting scratch
+Parsing scheme and formula from /local/home/lcrisci/Bin/External/Examples/eT/Iterations/Iteration_2/task_mode_2_A1_up/et_preamble_sectioning.dat (comment='!')
+  Entered !scheme section at line 1.
+    Line 2: Found coefficient: 1.0
+    Line 3: Found coefficient: -1.0
+    Line 4: Found coefficient: 1.0
+  Exited !scheme section at line 5.
+Finished parsing scheme: [('coeff', 1.0), ('coeff', -1.0), ('coeff', 1.0)]
+
+======================================================================
+DEBUG: Output file written to: output.EOut
+DEBUG: First 10 lines of output file:
+======================================================================
+  Line 1: ' -7.627353044118D+01  0.000000000000D+00  0.000000000000D+00  0.000000000000D+00\n'
+======================================================================
