@@ -771,6 +771,11 @@ def run_single_mrcc_calculation(minp_file, output_file, mpi_procs, omp_procs, me
     if os.path.exists("GENBAS"):
         shutil.copy("GENBAS", f"{scratch_dir}/")
 
+    # Also copy section-specific basis files (basis_1, basis_2, etc.)
+    import glob
+    for basis_file in glob.glob("basis_*"):
+        shutil.copy(basis_file, f"{scratch_dir}/")
+
     # Change to scratch directory
     original_dir = os.getcwd()
     os.chdir(scratch_dir)

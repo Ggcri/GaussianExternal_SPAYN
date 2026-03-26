@@ -1256,15 +1256,33 @@ def run_normal_mode_parallel_gradient():
         debug_print(f"  RMS gradient: {an_rms:.6e}")
 
         # Store results for combination
-        # For normal modes, duplicate the single analytical gradient for each analytical section
-        # This follows the same pattern as Cartesian mixed mode
-        for idx in analytical_indices:
-            analytical_gradients.append(an_gradient.copy())
-            analytical_energies.append(an_energy)
-            analytical_dipoles.append(an_dipole)  # Include dipole for mixed mode compatibility
+        # Try to read raw (uncombined) analytical results first for proper coefficient handling
+        raw_results_path = os.path.join(an_iteration_dir, "task_central", "raw_analytical_results.dat")
+        if os.path.exists(raw_results_path):
+            raw_results = parse_raw_analytical_results(raw_results_path, atoms)
+            if raw_results and len(raw_results) > 0:
+                for result in raw_results:
+                    analytical_energies.append(result['energy'])
+                    analytical_gradients.append(result['gradient'].copy() if result['gradient'] is not None else np.zeros((atoms, 3)))
+                    analytical_dipoles.append(an_dipole)
+                debug_print(f"  Read {len(raw_results)} RAW analytical results from {raw_results_path}")
+            else:
+                # Fallback if parsing failed
+                debug_print(f"  WARNING: Raw results parsing failed, falling back to combined output")
+                for idx in analytical_indices:
+                    analytical_gradients.append(an_gradient.copy())
+                    analytical_energies.append(an_energy)
+                    analytical_dipoles.append(an_dipole)
+        else:
+            # Legacy: raw_analytical_results.dat not available, duplicate combined result
+            debug_print(f"  raw_analytical_results.dat not found, using combined output (legacy mode)")
+            for idx in analytical_indices:
+                analytical_gradients.append(an_gradient.copy())
+                analytical_energies.append(an_energy)
+                analytical_dipoles.append(an_dipole)
 
         analytical_rms = an_rms
-        debug_print(f"  Stored {len(analytical_indices)} copies of analytical gradient for sections: {analytical_indices}")
+        debug_print(f"  Stored {len(analytical_energies)} analytical energy(ies) for sections: {analytical_indices}")
 
     # ============================================================================
     # NUMERICAL WORKFLOW (if mixed mode, all-numerical mode, or standard mode)
@@ -1365,14 +1383,25 @@ def run_normal_mode_parallel_gradient():
         if len(analytical_gradients) == 0 or len(numerical_gradients) == 0:
             raise RuntimeError("Mixed mode requires both analytical and numerical gradients!")
 
-        # Determine operations for combination (use unit coefficients to avoid double-counting)
-        # Calculate total number of sections from indices
-        num_total_sections = len(analytical_indices) + len(numerical_indices)
-        operations_for_combination = [('coeff', 1.0) for _ in range(num_total_sections)]
+        # Determine if we have raw (uncombined) analytical results
+        # If analytical_energies count matches analytical_indices count, we have raw results
+        # and should use original coefficients. Otherwise, we have pre-combined results.
+        have_raw_analytical = (len(analytical_energies) == len(analytical_indices))
+
+        if have_raw_analytical:
+            # Raw analytical results: apply ORIGINAL coefficients
+            operations_for_combination = operations
+            debug_print(f"\n  MIXED MODE: Using ORIGINAL coefficients (raw analytical results detected)")
+            debug_print(f"  Analytical sections: {len(analytical_energies)} (matches {len(analytical_indices)} indices)")
+        else:
+            # Legacy: pre-combined analytical results, use unit coefficients
+            num_total_sections = len(analytical_indices) + len(numerical_indices)
+            operations_for_combination = [('coeff', 1.0) for _ in range(num_total_sections)]
+            debug_print(f"\n  MIXED MODE: Using unit coefficients (pre-combined analytical results)")
+            debug_print(f"  WARNING: Analytical sections: {len(analytical_energies)} vs {len(analytical_indices)} indices")
 
         debug_print(f"  Analytical sections: {analytical_indices}")
         debug_print(f"  Numerical sections: {numerical_indices}")
-        debug_print(f"  Total sections: {num_total_sections}")
         debug_print(f"  Operations: {operations_for_combination}")
 
         # Combine gradients and energies
@@ -2620,9 +2649,20 @@ def run_normal_mode_parallel_gradient_mpi():
             # ============================================================
             debug_print("\n--- COMBINING MIXED MODE RESULTS ---")
 
-            # Create operations list for combination (unit coefficients)
-            num_total_sections = len(analytical_indices) + len(numerical_indices)
-            operations_for_combination = [('coeff', 1.0) for _ in range(num_total_sections)]
+            # Determine if we have raw (uncombined) analytical results
+            have_raw_analytical = (len(analytical_energies) == len(analytical_indices))
+
+            if have_raw_analytical:
+                # Raw analytical results: apply ORIGINAL coefficients
+                operations_for_combination = operations
+                debug_print(f"  MIXED MODE (MPI): Using ORIGINAL coefficients (raw analytical results detected)")
+                debug_print(f"  Analytical sections: {len(analytical_energies)} (matches {len(analytical_indices)} indices)")
+            else:
+                # Legacy: pre-combined analytical results, use unit coefficients
+                num_total_sections = len(analytical_indices) + len(numerical_indices)
+                operations_for_combination = [('coeff', 1.0) for _ in range(num_total_sections)]
+                debug_print(f"  MIXED MODE (MPI): Using unit coefficients (pre-combined analytical results)")
+                debug_print(f"  WARNING: Analytical sections: {len(analytical_energies)} vs {len(analytical_indices)} indices")
 
             # Combine gradients
             gradient = combine_mixed_gradients(
@@ -3396,13 +3436,21 @@ def run_parallel_numerical_gradient():
                 with open(task_ending, 'w') as f:
                     f.write(analytical_ending_content)
 
-                # Copy GENBAS file if MRCC
+                # Copy GENBAS and section-specific basis files if MRCC
                 if program_key.lower() in ['mrcc', 'mrcc_ext']:
                     genbas_src = os.path.join(original_working_dir, 'GENBAS')
                     if os.path.exists(genbas_src):
                         genbas_dst = os.path.join(task_dir, 'GENBAS')
                         shutil.copy2(genbas_src, genbas_dst)
                         debug_print(f"ANALYTICAL: Copied GENBAS file to {genbas_dst}")
+
+                    # Also copy section-specific basis files (basis_1, basis_2, etc.)
+                    import glob
+                    basis_files = glob.glob(os.path.join(original_working_dir, 'basis_*'))
+                    for basis_src in basis_files:
+                        basis_dst = os.path.join(task_dir, os.path.basename(basis_src))
+                        shutil.copy2(basis_src, basis_dst)
+                        debug_print(f"ANALYTICAL: Copied {os.path.basename(basis_src)} to {task_dir}")
 
                 # Write central geometry to input file with OptFlag=1 (gradient mode)
                 # GauInpParser returns geometry as a list of strings: ["C 0.0 0.0 0.0", ...]
@@ -3718,6 +3766,17 @@ def run_parallel_numerical_gradient():
                                 debug_print(f"WARNING: Failed to copy GENBAS file for task {task_id}: {e}")
                         else:
                             debug_print(f"MRCC SETUP: No GENBAS file found in {original_working_dir} for task {task_id}")
+
+                        # Also copy section-specific basis files (basis_1, basis_2, etc.)
+                        import glob
+                        basis_files = glob.glob(os.path.join(original_working_dir, 'basis_*'))
+                        for basis_src in basis_files:
+                            basis_dst = os.path.join(task_dir, os.path.basename(basis_src))
+                            try:
+                                shutil.copy2(basis_src, basis_dst)
+                                debug_print(f"MRCC SETUP: Copied {os.path.basename(basis_src)} to {task_dir}")
+                            except Exception as e:
+                                debug_print(f"WARNING: Failed to copy {os.path.basename(basis_src)} for task {task_id}: {e}")
 
                     # Convert geometry from Angstrom back to Bohr for .EIn file (standard convention)
                     # .EIn files should always be in Bohr so each program knows the input units

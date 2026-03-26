@@ -6475,6 +6475,20 @@ def run_analytical_normal_mode_gradient(
             if not genbas_found:
                 debug_print(f"  MRCC SETUP: No GENBAS file found for analytical gradient")
 
+            # Also copy section-specific basis files (basis_1, basis_2, etc.)
+            import glob
+            for search_dir in genbas_search_dirs:
+                basis_files = glob.glob(os.path.join(search_dir, 'basis_*'))
+                if basis_files:
+                    for basis_src in basis_files:
+                        basis_dst = os.path.join(task_dir, os.path.basename(basis_src))
+                        try:
+                            shutil.copy2(basis_src, basis_dst)
+                            debug_print(f"  MRCC SETUP: Copied {os.path.basename(basis_src)} for analytical gradient")
+                        except Exception as e:
+                            debug_print(f"  WARNING: Failed to copy {os.path.basename(basis_src)}: {e}")
+                    break  # Found basis files in this directory, stop searching
+
         # Prepare output file
         task_output = os.path.join(task_dir, "output.EOut")
 
