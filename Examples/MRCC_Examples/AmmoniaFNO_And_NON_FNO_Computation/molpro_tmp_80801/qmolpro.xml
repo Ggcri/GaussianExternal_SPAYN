@@ -1,0 +1,242 @@
+<?xml version="1.0"?>
+<molpro xmlns="http://www.molpro.net/schema/molpro-output" xmlns:xsd="http://www.w3.org/1999/XMLSchema"
+  xmlns:cml="http://www.xml-cml.org/schema" xmlns:stm="http://www.xml-cml.org/schema" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+ <job>
+  <stm:metadataList>
+   <stm:metadata name="dc:date" content="2025-10-11T14:26:05+02:00"/>
+   <stm:metadata name="dc:creator" content="lcrisci_vb"/>
+   <stm:metadata name="cmlm:insilico" content="Molpro"/>
+  </stm:metadataList>
+  <platform pid="1007454">
+   <version major="2024" minor="2" SHA="47fa7a7ceb44f09982aa89c0ab36bb1f9cd55771" integer_bits="64">
+    2024.2
+    <date year="2025" month="10" day="11" hour="14" minute="26" second="5">
+     2025-10-11T14:26:05
+    </date>
+   </version>
+   <licence id="vbarone"/>
+   <parallel processes="15" nodes="1" all_processes="15" openmp="1"/>
+   <dimensions natom="400" nvalence="500" nvalence_pno="1000" nbasis="12000" nstate="100" nsymm="16" nrec="1024" nprim="2" ncol="100"/>
+  </platform>
+  <jobstep command="HF-SCF" commandset="SCFPRO">
+   <cml:molecule>
+    <cml:symmetry pointGroup="Cs">
+     <cml:transform3 title="generator" id="X">
+      -1  0  0  0  0  1  0  0  0  0  1  0  0  0  0  1
+     </cml:transform3>
+    </cml:symmetry>
+    <cml:atomArray>
+     <cml:atom id="a1" elementType="N" x3="0.0" y3="0.0" z3="0.111865313434699"/>
+     <cml:atom id="a2" elementType="H" x3="0.0" y3="0.941881989186915" z3="-0.261019064680963"/>
+     <cml:atom id="a3" elementType="H" x3="-0.815693730002943" y3="-0.470940994593193" z3="-0.261019064680963"/>
+     <cml:atom id="a4" elementType="H" x3="0.815693730002943" y3="-0.470940994593193" z3="-0.261019064680963"/>
+    </cml:atomArray>
+    <cml:bondArray>
+     <cml:bond atomRefs2="a1 a2"/>
+     <cml:bond atomRefs2="a1 a3"/>
+     <cml:bond atomRefs2="a1 a4"/>
+    </cml:bondArray>
+   </cml:molecule>
+   <property name="Energy" method="RHF" principal="true" stateSymmetry="1" stateNumber="1" stateMultiplicity="1" value="-56.2184100619332"/>
+   <property name="One-electron energy" method="RHF" stateMultiplicity="1" value="-99.5854860124471"/>
+   <property name="Two-electron energy" method="RHF" stateMultiplicity="1" value="31.4239310185119"/>
+   <property name="Kinetic energy" method="RHF" stateMultiplicity="1" value="56.1257507893336"/>
+   <property name="Nuclear energy" method="RHF" stateMultiplicity="1" value="11.9431449320019"/>
+   <property name="Virial quotient" method="RHF" stateMultiplicity="1" value="-1.00165092263883"/>
+   <property name="Dipole moment" method="RHF" principal="true" stateSymmetry="1" stateNumber="1" stateMultiplicity="1"
+     value="0.0 -0.104322646354849E-08 -0.64172461868764"/>
+   <time start="14:26:05" end="14:26:06" cpu="0.64" system="0.29" real="2.05"/>
+   <storage units="megabyte" memory="3479.0" sf="0.44" df="440.13" eaf="63.84" ga="0.0"/>
+   <summary method="HF" basis="cc-pVDZ-F12" overall_method="HF/cc-pVDZ-F12"/>
+  </jobstep>
+  <jobstep command="CCSD(T)-F12C" commandset="CCSD">
+   <property name="correlation energy" method="CCSD" stateSymmetry="1" stateNumber="1" stateMultiplicity="1" value="-0.226236751717664"/>
+   <property name="correction (uncoupled)" method="MP2-F12" stateSymmetry="1" stateNumber="1" stateMultiplicity="1"
+     value="-0.411901227530267E-01"/>
+   <property name="doubles correction" method="(C+U)*T" stateSymmetry="1" stateNumber="1" stateMultiplicity="1" value="-0.286968268983763E-02"/>
+   <property name="singles correction" method="U*T" stateSymmetry="1" stateNumber="1" stateMultiplicity="1" value="0.553194558091777E-05"/>
+   <property name="correction" method="f12b" stateSymmetry="1" stateNumber="1" stateMultiplicity="1" value="0.553583100871863E-02"/>
+   <property name="correction" method="Total F12" stateSymmetry="1" stateNumber="1" stateMultiplicity="1" value="-0.385239744341457E-01"/>
+   <property name="energy" method="Reference" stateSymmetry="1" stateNumber="1" stateMultiplicity="1" value="-56.2184100619332"/>
+   <property name="OVERLAP" method="F12 singles correction" stateSymmetry="1" stateNumber="1" stateMultiplicity="1"
+     value="-0.267365135258022E-02"/>
+   <property name="energy" method="New reference" stateSymmetry="1" stateNumber="1" stateMultiplicity="1" value="-56.2210837132858"/>
+   <property name="singlet correction" method="F12c" stateSymmetry="1" stateNumber="1" stateMultiplicity="1" value="-0.322554274090438E-01"/>
+   <property name="triplet correction" method="F12c" stateSymmetry="1" stateNumber="1" stateMultiplicity="1" value="-0.626854702510189E-02"/>
+   <property name="total correction" method="F12c" stateSymmetry="1" stateNumber="1" stateMultiplicity="1" value="-0.385239744341457E-01"/>
+   <single orbital="2.1" energy="0.0"/>
+   <single orbital="-2.1" energy="0.0"/>
+   <single orbital="3.1" energy="0.0"/>
+   <single orbital="-3.1" energy="0.0"/>
+   <single orbital="4.1" energy="0.0"/>
+   <single orbital="-4.1" energy="0.0"/>
+   <single orbital="1.2" energy="0.0"/>
+   <single orbital="-1.2" energy="0.0"/>
+   <pair orbital1="2.1" orbital2="-2.1" energy="-0.00548604"/>
+   <pair orbital1="-2.1" orbital2="2.1" energy="-0.00548604"/>
+   <pair orbital1="3.1" orbital2="-3.1" energy="-0.01075677"/>
+   <pair orbital1="-3.1" orbital2="3.1" energy="-0.01075677"/>
+   <pair orbital1="4.1" orbital2="-4.1" energy="-0.01109279"/>
+   <pair orbital1="-4.1" orbital2="4.1" energy="-0.01109279"/>
+   <pair orbital1="1.2" orbital2="-1.2" energy="-0.01075677"/>
+   <pair orbital1="-1.2" orbital2="1.2" energy="-0.01075677"/>
+   <pair orbital1="3.1" orbital2="2.1" energy="-0.00175926"/>
+   <pair orbital1="-3.1" orbital2="-2.1" energy="-0.00175926"/>
+   <pair orbital1="3.1" orbital2="-2.1" energy="-0.00914544"/>
+   <pair orbital1="-3.1" orbital2="2.1" energy="-0.00914544"/>
+   <pair orbital1="4.1" orbital2="2.1" energy="-0.00206251"/>
+   <pair orbital1="-4.1" orbital2="-2.1" energy="-0.00206251"/>
+   <pair orbital1="4.1" orbital2="-2.1" energy="-0.00740844"/>
+   <pair orbital1="-4.1" orbital2="2.1" energy="-0.00740844"/>
+   <pair orbital1="4.1" orbital2="3.1" energy="-0.00605359"/>
+   <pair orbital1="-4.1" orbital2="-3.1" energy="-0.00605359"/>
+   <pair orbital1="4.1" orbital2="-3.1" energy="-0.00884658"/>
+   <pair orbital1="-4.1" orbital2="3.1" energy="-0.00884658"/>
+   <pair orbital1="1.2" orbital2="2.1" energy="-0.00175926"/>
+   <pair orbital1="-1.2" orbital2="-2.1" energy="-0.00175926"/>
+   <pair orbital1="1.2" orbital2="-2.1" energy="-0.00914544"/>
+   <pair orbital1="-1.2" orbital2="2.1" energy="-0.00914544"/>
+   <pair orbital1="1.2" orbital2="3.1" energy="-0.00497221"/>
+   <pair orbital1="-1.2" orbital2="-3.1" energy="-0.00497221"/>
+   <pair orbital1="1.2" orbital2="-3.1" energy="-0.00897309"/>
+   <pair orbital1="-1.2" orbital2="3.1" energy="-0.00897309"/>
+   <pair orbital1="1.2" orbital2="4.1" energy="-0.00605359"/>
+   <pair orbital1="-1.2" orbital2="-4.1" energy="-0.00605359"/>
+   <pair orbital1="1.2" orbital2="-4.1" energy="-0.00884658"/>
+   <pair orbital1="-1.2" orbital2="4.1" energy="-0.00884658"/>
+   <property name="singlet pair energy" method="CCSD-F12c" stateSymmetry="1" stateNumber="1" stateMultiplicity="1" value="-0.190510925003075"/>
+   <property name="triplet pair energy" method="CCSD-F12c" stateSymmetry="1" stateNumber="1" stateMultiplicity="1"
+     value="-0.742498056247451E-01"/>
+   <property name="correlation energy" method="CCSD-F12c" stateSymmetry="1" stateNumber="1" stateMultiplicity="1" value="-0.264755194206229"/>
+   <property name="contribution (scaled)" method="Triples (T)" stateSymmetry="1" stateNumber="1" stateMultiplicity="1"
+     value="-0.809422700159374E-02"/>
+   <property name="correlation energy" method="Total" stateSymmetry="1" stateNumber="1" stateMultiplicity="1" value="-0.272849421207823"/>
+   <property name="total energy" method="CCSD-F12c" stateSymmetry="1" stateNumber="1" stateMultiplicity="1" value="-56.485838907492"/>
+   <property name="energy" method="CCSD[T]-F12c" stateSymmetry="1" stateNumber="1" stateMultiplicity="1" value="-56.4942072985095"/>
+   <property name="energy" method="CCSD-T-F12c" stateSymmetry="1" stateNumber="1" stateMultiplicity="1" value="-56.4938261207883"/>
+   <property name="total energy" method="CCSD(T)-F12c" principal="true" stateSymmetry="1" stateNumber="1" stateMultiplicity="1"
+     value="-56.4939331344936"/>
+   <time start="14:26:06" end="14:26:07" cpu="0.42" system="0.07" real="0.61"/>
+   <storage units="megabyte" memory="3479.0" sf="22.83" df="460.07" eaf="63.84" ga="0.0"/>
+   <summary method="CCSD(T)-F12C" basis="cc-pVDZ-F12" overall_method="CCSD(T)-F12C/cc-pVDZ-F12"/>
+  </jobstep>
+  <jobstep command="FORCES" commandset="FORCES">
+   <gradient name="CCSD(T)-F12C" stateSymmetry="1" stateNumber="1" virial="0.812261232723611E-02">
+      0.000000000000  -0.000000000000  -0.000699586016
+     -0.000000000000   0.001613495139   0.000233195339
+     -0.001397327779  -0.000806747569   0.000233195339
+      0.001397327779  -0.000806747569   0.000233195339
+   </gradient>
+   <jobstep command="HF-SCF" commandset="SCFPRO">
+    <property name="Energy" method="RHF" principal="true" stateSymmetry="1" stateNumber="1" stateMultiplicity="1" value="-56.2184100619332"/>
+    <property name="One-electron energy" method="RHF" stateMultiplicity="1" value="-99.5854862841051"/>
+    <property name="Two-electron energy" method="RHF" stateMultiplicity="1" value="31.42393129017"/>
+    <property name="Kinetic energy" method="RHF" stateMultiplicity="1" value="56.125751026604"/>
+    <property name="Nuclear energy" method="RHF" stateMultiplicity="1" value="11.9431449320019"/>
+    <property name="Virial quotient" method="RHF" stateMultiplicity="1" value="-1.00165091840437"/>
+    <property name="Dipole moment" method="RHF" principal="true" stateSymmetry="1" stateNumber="1" stateMultiplicity="1"
+      value="0.0 -0.104331561445736E-08 -0.641724838607489"/>
+    <time start="14:26:10" end="14:26:10" cpu="0.65" system="0.05" real="0.76"/>
+    <storage units="megabyte" memory="3479.0" sf="22.83" df="562.96" eaf="63.84" ga="0.0"/>
+    <summary method="CCSD(T)-F12C" basis="cc-pVDZ-F12" overall_method="CCSD(T)-F12C/cc-pVDZ-F12"/>
+   </jobstep>
+   <jobstep command="CCSD(T)-F12C" commandset="CCSD">
+    <property name="correlation energy" method="CCSD" stateSymmetry="1" stateNumber="1" stateMultiplicity="1" value="-0.226236751390635"/>
+    <property name="correction (uncoupled)" method="MP2-F12" stateSymmetry="1" stateNumber="1" stateMultiplicity="1"
+      value="-0.411901232406246E-01"/>
+    <property name="doubles correction" method="(C+U)*T" stateSymmetry="1" stateNumber="1" stateMultiplicity="1" value="-0.286968266628195E-02"/>
+    <property name="singles correction" method="U*T" stateSymmetry="1" stateNumber="1" stateMultiplicity="1" value="0.553193339494486E-05"/>
+    <property name="correction" method="f12b" stateSymmetry="1" stateNumber="1" stateMultiplicity="1" value="0.553583144119612E-02"/>
+    <property name="correction" method="Total F12" stateSymmetry="1" stateNumber="1" stateMultiplicity="1" value="-0.385239744657104E-01"/>
+    <property name="energy" method="Reference" stateSymmetry="1" stateNumber="1" stateMultiplicity="1" value="-56.2184100619332"/>
+    <property name="OVERLAP" method="F12 singles correction" stateSymmetry="1" stateNumber="1" stateMultiplicity="1"
+      value="-0.267365132904405E-02"/>
+    <property name="energy" method="New reference" stateSymmetry="1" stateNumber="1" stateMultiplicity="1" value="-56.2210837132623"/>
+    <property name="singlet correction" method="F12c" stateSymmetry="1" stateNumber="1" stateMultiplicity="1" value="-0.322554274533426E-01"/>
+    <property name="triplet correction" method="F12c" stateSymmetry="1" stateNumber="1" stateMultiplicity="1" value="-0.626854701236786E-02"/>
+    <property name="total correction" method="F12c" stateSymmetry="1" stateNumber="1" stateMultiplicity="1" value="-0.385239744657104E-01"/>
+    <single orbital="2.1" energy="0.0"/>
+    <single orbital="-2.1" energy="0.0"/>
+    <single orbital="3.1" energy="0.0"/>
+    <single orbital="-3.1" energy="0.0"/>
+    <single orbital="4.1" energy="0.0"/>
+    <single orbital="-4.1" energy="0.0"/>
+    <single orbital="1.2" energy="0.0"/>
+    <single orbital="-1.2" energy="0.0"/>
+    <pair orbital1="2.1" orbital2="-2.1" energy="-0.00548604"/>
+    <pair orbital1="-2.1" orbital2="2.1" energy="-0.00548604"/>
+    <pair orbital1="3.1" orbital2="-3.1" energy="-0.01075677"/>
+    <pair orbital1="-3.1" orbital2="3.1" energy="-0.01075677"/>
+    <pair orbital1="4.1" orbital2="-4.1" energy="-0.01109279"/>
+    <pair orbital1="-4.1" orbital2="4.1" energy="-0.01109279"/>
+    <pair orbital1="1.2" orbital2="-1.2" energy="-0.01075677"/>
+    <pair orbital1="-1.2" orbital2="1.2" energy="-0.01075677"/>
+    <pair orbital1="3.1" orbital2="2.1" energy="-0.00175926"/>
+    <pair orbital1="-3.1" orbital2="-2.1" energy="-0.00175926"/>
+    <pair orbital1="3.1" orbital2="-2.1" energy="-0.00914544"/>
+    <pair orbital1="-3.1" orbital2="2.1" energy="-0.00914544"/>
+    <pair orbital1="4.1" orbital2="2.1" energy="-0.00206251"/>
+    <pair orbital1="-4.1" orbital2="-2.1" energy="-0.00206251"/>
+    <pair orbital1="4.1" orbital2="-2.1" energy="-0.00740844"/>
+    <pair orbital1="-4.1" orbital2="2.1" energy="-0.00740844"/>
+    <pair orbital1="4.1" orbital2="3.1" energy="-0.00605359"/>
+    <pair orbital1="-4.1" orbital2="-3.1" energy="-0.00605359"/>
+    <pair orbital1="4.1" orbital2="-3.1" energy="-0.00884658"/>
+    <pair orbital1="-4.1" orbital2="3.1" energy="-0.00884658"/>
+    <pair orbital1="1.2" orbital2="2.1" energy="-0.00175926"/>
+    <pair orbital1="-1.2" orbital2="-2.1" energy="-0.00175926"/>
+    <pair orbital1="1.2" orbital2="-2.1" energy="-0.00914544"/>
+    <pair orbital1="-1.2" orbital2="2.1" energy="-0.00914544"/>
+    <pair orbital1="1.2" orbital2="3.1" energy="-0.00497221"/>
+    <pair orbital1="-1.2" orbital2="-3.1" energy="-0.00497221"/>
+    <pair orbital1="1.2" orbital2="-3.1" energy="-0.00897309"/>
+    <pair orbital1="-1.2" orbital2="3.1" energy="-0.00897309"/>
+    <pair orbital1="1.2" orbital2="4.1" energy="-0.00605359"/>
+    <pair orbital1="-1.2" orbital2="-4.1" energy="-0.00605359"/>
+    <pair orbital1="1.2" orbital2="-4.1" energy="-0.00884658"/>
+    <pair orbital1="-1.2" orbital2="4.1" energy="-0.00884658"/>
+    <property name="singlet pair energy" method="CCSD-F12c" stateSymmetry="1" stateNumber="1" stateMultiplicity="1" value="-0.190510925201989"/>
+    <property name="triplet pair energy" method="CCSD-F12c" stateSymmetry="1" stateNumber="1" stateMultiplicity="1"
+      value="-0.742498055166485E-01"/>
+    <property name="correlation energy" method="CCSD-F12c" stateSymmetry="1" stateNumber="1" stateMultiplicity="1" value="-0.26475519392295"/>
+    <property name="contribution (scaled)" method="Triples (T)" stateSymmetry="1" stateNumber="1" stateMultiplicity="1"
+      value="-0.809422710712263E-02"/>
+    <property name="correlation energy" method="Total" stateSymmetry="1" stateNumber="1" stateMultiplicity="1" value="-0.272849421030073"/>
+    <property name="total energy" method="CCSD-F12c" stateSymmetry="1" stateNumber="1" stateMultiplicity="1" value="-56.4858389071852"/>
+    <property name="energy" method="CCSD[T]-F12c" stateSymmetry="1" stateNumber="1" stateMultiplicity="1" value="-56.4942072982251"/>
+    <property name="energy" method="CCSD-T-F12c" stateSymmetry="1" stateNumber="1" stateMultiplicity="1" value="-56.4938261205391"/>
+    <property name="total energy" method="CCSD(T)-F12c" principal="true" stateSymmetry="1" stateNumber="1" stateMultiplicity="1"
+      value="-56.4939331342924"/>
+    <time start="14:26:10" end="14:26:11" cpu="0.4" system="0.07" real="0.61"/>
+    <storage units="megabyte" memory="3479.0" sf="22.83" df="562.96" eaf="63.84" ga="0.0"/>
+    <summary method="CCSD(T)-F12C" basis="cc-pVDZ-F12" overall_method="CCSD(T)-F12C/cc-pVDZ-F12"/>
+   </jobstep>
+   <time start="14:26:07" end="14:26:11" cpu="2.86" system="0.63" real="3.96"/>
+   <storage units="megabyte" memory="0.18" sf="22.83" df="562.96" eaf="63.84" ga="0.0"/>
+   <summary method="CCSD(T)-F12C" basis="cc-pVDZ-F12" overall_method="CCSD(T)-F12C/cc-pVDZ-F12"/>
+  </jobstep>
+  <input>
+   <p>!scheme</p>
+   <p>!1.0</p>
+   <p>geomtyp=xyz</p>
+   <p>noorient</p>
+   <p>bohr</p>
+   <p>geometry={</p>
+   <p>4</p>
+   <p>Title</p>
+   <p>N 0.0 0.0 0.211394805237</p>
+   <p>H -0.0 1.779899001281 -0.493254545553</p>
+   <p>H -1.54143775128 -0.88994950064 -0.493254545553</p>
+   <p>H 1.54143775128 -0.88994950064 -0.493254545553</p>
+   <p>}</p>
+   <p>Set,spin = 0</p>
+   <p>Set,charge = 0</p>
+   <p>      basis=cc-pvdz-f12</p>
+   <p>{hf,so-sci}</p>
+   <p>{ccsd(t)-f12c,scale_trip=1}</p>
+   <p>forces</p>
+   <p>exe_energy=energy</p>
+  </input>
+  <diagnostics warnings="0"/>
+ </job>
+</molpro>

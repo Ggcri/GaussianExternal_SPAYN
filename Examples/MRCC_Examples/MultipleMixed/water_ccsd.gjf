@@ -1,0 +1,12 @@
+%chk=water_ccsd.chk
+%nproc=1
+%mem=2GB
+#p External="CentralExt mrcc 16GB READ 5 1 preamble.dat ending.dat parall 6" force
+
+Water CCSD gradient
+
+0 1
+O     0.000000    0.000000    0.117790
+H     0.000000    0.756950   -0.471160
+H     0.000000   -0.756950   -0.471160
+

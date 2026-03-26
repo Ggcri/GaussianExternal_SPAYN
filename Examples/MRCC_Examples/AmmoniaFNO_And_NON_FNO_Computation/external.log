@@ -1,0 +1,170 @@
+SEQUENTIAL MODE: Running in base directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestSet/FNO_AND_NON-FNO/ammoniaca
+*****************************************************************************
+STARTING PARSING
+PROGRAM: MolproExt_project
+NPROCS: 16
+MEMORY: 64
+No files matching the pattern were found.
+Preamble file: /home/barone/lcrisci_vb/MyScript/PreambleMolpro/test.dat
+End file: /home/barone/lcrisci_vb/MyScript/EndingMolpro/E_F12c.dat
+Number of processors: 16
+Memory allocation: 64
+Read Gradient Python Script: read
+Layer: R
+Gaussian Input: /local/scratch/lcrisci_vb/amm_Gaussian_73951.pbs.village.sns.it/Gau-1007223.EIn
+Gaussian Output: /local/scratch/lcrisci_vb/amm_Gaussian_73951.pbs.village.sns.it/Gau-1007223.EOu
+gaussian parsing completed
+*****************************************************************************
+PARSING COMPLETED
+Gaussian input geoms
+*****************************************************************************
+Geom processes
+N     0.0000000000    0.0000000000    0.2113948052
+H    -0.0000000000    1.7798990013   -0.4932545456
+H    -1.5414377513   -0.8899495006   -0.4932545456
+H     1.5414377513   -0.8899495006   -0.4932545456
+*****************************************************************************
+*****************************************************************************
+OPERAZIONI DELLO SCHEMA LETTE (da main): [('coeff', 1.0)]
+NUMERO TOTALE DI OPERAZIONI NELLO SCHEMA: 1
+*****************************************************************************
+Creata directory univoca: molpro_tmp_80801
+Created scratch calculation directory: /local/scratch/lcrisci_vb/amm_73951.pbs.village.sns.it/molpro_tmp_80801
+Input file copied to local: molpro_tmp_80801/qmolpro.com
+Input file copied to scratch: /local/scratch/lcrisci_vb/amm_73951.pbs.village.sns.it/molpro_tmp_80801/qmolpro.com
+Changing working directory to scratch: /local/scratch/lcrisci_vb/amm_73951.pbs.village.sns.it/molpro_tmp_80801
+Current working directory before change: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestSet/FNO_AND_NON-FNO/ammoniaca
+Successfully changed to scratch directory: /local/scratch/lcrisci_vb/amm_73951.pbs.village.sns.it/molpro_tmp_80801
+molpro -s -n 16 -t 1 -m 456m qmolpro.com --output qmolpro.out -W /local/scratch/lcrisci_vb/amm_73951.pbs.village.sns.it  -D /local/scratch/lcrisci_vb/amm_73951.pbs.village.sns.it
+Copying output files from scratch /local/scratch/lcrisci_vb/amm_73951.pbs.village.sns.it/molpro_tmp_80801 to local /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestSet/FNO_AND_NON-FNO/ammoniaca/molpro_tmp_80801
+Copied qmolpro.out from scratch to local directory
+Copied qmolpro.xml from scratch to local directory
+Copied additional file qmolpro.log from scratch to local directory
+ Energy post processing done:
+-56.49393313
+OPT FLAG DETECTED
+*****************************************************************************
+Operations from scheme: [('coeff', 1.0)]
+Number of actual gradient calculations to read from XML: 1
+READING COMPOSITE GRADIENTS FROM XML
+Changing to local directory for XML reading: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestSet/FNO_AND_NON-FNO/ammoniaca/molpro_tmp_80801
+Current working directory before change: /local/scratch/lcrisci_vb/amm_73951.pbs.village.sns.it/molpro_tmp_80801
+Successfully changed to local calc directory for XML: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestSet/FNO_AND_NON-FNO/ammoniaca/molpro_tmp_80801
+Using standard linear combination (no formula)
+ACTUAL GRADIENTS PROCESSED (from XML):
+Actual Gradient 1:
+   0.0000000000   -0.0000000000   -0.0006995860
+  -0.0000000000    0.0016134951    0.0002331953
+  -0.0013973278   -0.0008067476    0.0002331953
+   0.0013973278   -0.0008067476    0.0002331953
+FINAL COMBINED GRADIENT:
+   0.0000000000    0.0000000000   -0.0006995860
+   0.0000000000    0.0016134951    0.0002331953
+  -0.0013973278   -0.0008067476    0.0002331953
+   0.0013973278   -0.0008067476    0.0002331953
+Final restore to original working directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestSet/FNO_AND_NON-FNO/ammoniaca
+Current working directory before final restore: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestSet/FNO_AND_NON-FNO/ammoniaca/molpro_tmp_80801
+Successfully restored to original directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestSet/FNO_AND_NON-FNO/ammoniaca
+Cleaning up scratch directory: /local/scratch/lcrisci_vb/amm_73951.pbs.village.sns.it/molpro_tmp_80801
+Scratch directory cleaned up
+ENERGY: -56.493933130000
+ITERATION 1
+GRADIENT 1
+      0.000000000000       0.000000000000      -0.000699586016
+      0.000000000000       0.001613495139       0.000233195339
+     -0.001397327779      -0.000806747569       0.000233195339
+      0.001397327779      -0.000806747569       0.000233195339
+*****************************************************************************
+Disk space used by "/local/scratch/lcrisci_vb/amm_73951.pbs.village.sns.it": 0.00 GB
+SCRATCH CLEANING...
+*****************************************************************************
+GRADIENT COMPUTION TERMINATED
+Time taken: 0 hours, 0 minutes, 25.31 seconds
+*****************************************************************************
+MOVING TO NEXT COMPUTATION
+*****************************************************************************
+SEQUENTIAL MODE: Running in base directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestSet/FNO_AND_NON-FNO/ammoniaca
+*****************************************************************************
+STARTING PARSING
+PROGRAM: MolproExt_project
+NPROCS: 16
+MEMORY: 64
+No files matching the pattern were found.
+Preamble file: /home/barone/lcrisci_vb/MyScript/PreambleMolpro/test.dat
+End file: /home/barone/lcrisci_vb/MyScript/EndingMolpro/E_F12c.dat
+Number of processors: 16
+Memory allocation: 64
+Read Gradient Python Script: read
+Layer: R
+Gaussian Input: /local/scratch/lcrisci_vb/amm_Gaussian_73951.pbs.village.sns.it/Gau-1007223.EIn
+Gaussian Output: /local/scratch/lcrisci_vb/amm_Gaussian_73951.pbs.village.sns.it/Gau-1007223.EOu
+gaussian parsing completed
+*****************************************************************************
+PARSING COMPLETED
+Gaussian input geoms
+*****************************************************************************
+Geom processes
+N     0.0000000000    0.0000000000    0.2170706607
+H     0.0000000000    1.7706007760   -0.5064982083
+H    -1.5333852520   -0.8853003880   -0.5064982083
+H     1.5333852520   -0.8853003880   -0.5064982083
+*****************************************************************************
+*****************************************************************************
+OPERAZIONI DELLO SCHEMA LETTE (da main): [('coeff', 1.0)]
+NUMERO TOTALE DI OPERAZIONI NELLO SCHEMA: 1
+*****************************************************************************
+Creata directory univoca: molpro_tmp_28497
+Created scratch calculation directory: /local/scratch/lcrisci_vb/amm_73951.pbs.village.sns.it/molpro_tmp_28497
+Input file copied to local: molpro_tmp_28497/qmolpro.com
+Input file copied to scratch: /local/scratch/lcrisci_vb/amm_73951.pbs.village.sns.it/molpro_tmp_28497/qmolpro.com
+Changing working directory to scratch: /local/scratch/lcrisci_vb/amm_73951.pbs.village.sns.it/molpro_tmp_28497
+Current working directory before change: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestSet/FNO_AND_NON-FNO/ammoniaca
+Successfully changed to scratch directory: /local/scratch/lcrisci_vb/amm_73951.pbs.village.sns.it/molpro_tmp_28497
+molpro -s -n 16 -t 1 -m 456m qmolpro.com --output qmolpro.out -W /local/scratch/lcrisci_vb/amm_73951.pbs.village.sns.it  -D /local/scratch/lcrisci_vb/amm_73951.pbs.village.sns.it
+Copying output files from scratch /local/scratch/lcrisci_vb/amm_73951.pbs.village.sns.it/molpro_tmp_28497 to local /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestSet/FNO_AND_NON-FNO/ammoniaca/molpro_tmp_28497
+Copied qmolpro.out from scratch to local directory
+Copied qmolpro.xml from scratch to local directory
+Copied additional file qmolpro.log from scratch to local directory
+ Energy post processing done:
+-56.49396129
+OPT FLAG DETECTED
+*****************************************************************************
+Operations from scheme: [('coeff', 1.0)]
+Number of actual gradient calculations to read from XML: 1
+READING COMPOSITE GRADIENTS FROM XML
+Changing to local directory for XML reading: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestSet/FNO_AND_NON-FNO/ammoniaca/molpro_tmp_28497
+Current working directory before change: /local/scratch/lcrisci_vb/amm_73951.pbs.village.sns.it/molpro_tmp_28497
+Successfully changed to local calc directory for XML: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestSet/FNO_AND_NON-FNO/ammoniaca/molpro_tmp_28497
+Using standard linear combination (no formula)
+ACTUAL GRADIENTS PROCESSED (from XML):
+Actual Gradient 1:
+   0.0000000000   -0.0000000000    0.0000790790
+  -0.0000000000   -0.0000311745   -0.0000263597
+   0.0000269979    0.0000155873   -0.0000263597
+  -0.0000269979    0.0000155873   -0.0000263597
+FINAL COMBINED GRADIENT:
+   0.0000000000    0.0000000000    0.0000790790
+   0.0000000000   -0.0000311745   -0.0000263597
+   0.0000269979    0.0000155873   -0.0000263597
+  -0.0000269979    0.0000155873   -0.0000263597
+Final restore to original working directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestSet/FNO_AND_NON-FNO/ammoniaca
+Current working directory before final restore: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestSet/FNO_AND_NON-FNO/ammoniaca/molpro_tmp_28497
+Successfully restored to original directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestSet/FNO_AND_NON-FNO/ammoniaca
+Cleaning up scratch directory: /local/scratch/lcrisci_vb/amm_73951.pbs.village.sns.it/molpro_tmp_28497
+Scratch directory cleaned up
+ENERGY: -56.493961290000
+ITERATION 1
+GRADIENT 1
+      0.000000000000       0.000000000000       0.000079079033
+      0.000000000000      -0.000031174525      -0.000026359678
+      0.000026997931       0.000015587263      -0.000026359678
+     -0.000026997931       0.000015587263      -0.000026359678
+*****************************************************************************
+Disk space used by "/local/scratch/lcrisci_vb/amm_73951.pbs.village.sns.it": 0.00 GB
+SCRATCH CLEANING...
+*****************************************************************************
+GRADIENT COMPUTION TERMINATED
+Time taken: 0 hours, 0 minutes, 24.78 seconds
+*****************************************************************************
+MOVING TO NEXT COMPUTATION
+*****************************************************************************

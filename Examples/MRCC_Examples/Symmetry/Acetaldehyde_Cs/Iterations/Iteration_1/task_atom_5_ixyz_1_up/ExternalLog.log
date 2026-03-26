@@ -1,0 +1,13 @@
+PROGRAM: Gaussian (External Scheme)
+NPROCS: 7
+MEMORY: 55
+Operazioni dal schema: [('coeff', 1.0)]
+Formula trovata: e=c1*e1
+Rilevato schema: False, Coefficienti: [1.0]
+Formula dello schema: e=c1*e1
+Esecuzione di: g16 < GauExternal.gjf
+File GauExternal.fchk non trovato. Eseguo formchk su GauExternal.chk.
+Energia da GauExternal.fchk: -150.9445149116515
+Energia finale (combinazione semplice): -150.9445149116515
+Output scritto con solo energia in energy_output.dat
+Output finale scritto in energy_output.dat

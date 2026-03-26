@@ -1,0 +1,63 @@
+[   0.000s] [  MainThread:22463163914048] === PERFORMANCE PROFILING SESSION STARTED ===
+[   0.001s] [  MainThread:22463163914048] Session ID: 2025-12-28T15:46:49.874669
+[   0.002s] [  MainThread:22463163914048] Python GIL Status: Active (CPython)
+[   0.003s] [  MainThread:22463163914048] ============================================================
+[   0.105s] [  MainThread:22463163914048] START: run_fake_freq_calculation
+[   0.108s] [  MainThread:22463163914048] START: find_gaussian_input_file
+[   0.109s] [  MainThread:22463163914048] DONE: find_gaussian_input_file (0.001s)
+[   0.111s] [  MainThread:22463163914048] START: find_gaussian_input_file
+[   0.115s] [  MainThread:22463163914048] DONE: find_gaussian_input_file (0.005s)
+[   0.116s] [  MainThread:22463163914048] START: parse_fakekey_keywords
+[   0.117s] [  MainThread:22463163914048] I/O: file_read -> water_ccsd.gjf
+[   0.120s] [  MainThread:22463163914048] DONE: parse_fakekey_keywords (0.003s)
+[   0.121s] [  MainThread:22463163914048] START: write_gaussian_freq_input
+[   0.122s] [  MainThread:22463163914048] I/O: file_write -> fake_freq.gjf
+[   0.123s] [  MainThread:22463163914048] DONE: write_gaussian_freq_input (0.002s)
+[   0.124s] [  MainThread:22463163914048] START: subprocess_gaussian_execution
+[   0.125s] [  MainThread:22463163914048] I/O: subprocess_call -> g16
+[   2.362s] [  MainThread:22463163914048] DONE: subprocess_gaussian_execution (2.238s) SLOW
+[   2.364s] [  MainThread:22463163914048] DONE: run_fake_freq_calculation (2.259s) SLOW
+[   2.365s] [  MainThread:22463163914048] START: parse_gradient_recipe_from_log
+[   2.366s] [  MainThread:22463163914048] I/O: log_file_read -> fake_freq.log
+[   2.393s] [  MainThread:22463163914048] DONE: parse_gradient_recipe_from_log (0.028s)
+[   0.000s] [  MainThread:23133099358016] === PERFORMANCE PROFILING SESSION STARTED ===
+[   0.001s] [  MainThread:23133099358016] Session ID: 2025-12-28T15:48:32.462932
+[   0.003s] [  MainThread:23133099358016] Python GIL Status: Active (CPython)
+[   0.004s] [  MainThread:23133099358016] ============================================================
+[   0.127s] [  MainThread:23133099358016] START: run_fake_freq_calculation
+[   0.131s] [  MainThread:23133099358016] START: find_gaussian_input_file
+[   0.133s] [  MainThread:23133099358016] DONE: find_gaussian_input_file (0.002s)
+[   0.135s] [  MainThread:23133099358016] START: find_gaussian_input_file
+[   0.142s] [  MainThread:23133099358016] DONE: find_gaussian_input_file (0.006s)
+[   0.143s] [  MainThread:23133099358016] START: parse_fakekey_keywords
+[   0.144s] [  MainThread:23133099358016] I/O: file_read -> water_ccsd.gjf
+[   0.147s] [  MainThread:23133099358016] DONE: parse_fakekey_keywords (0.004s)
+[   0.149s] [  MainThread:23133099358016] START: write_gaussian_freq_input
+[   0.150s] [  MainThread:23133099358016] I/O: file_write -> fake_freq.gjf
+[   0.151s] [  MainThread:23133099358016] DONE: write_gaussian_freq_input (0.003s)
+[   0.153s] [  MainThread:23133099358016] START: subprocess_gaussian_execution
+[   0.154s] [  MainThread:23133099358016] I/O: subprocess_call -> g16
+[   1.990s] [  MainThread:23133099358016] DONE: subprocess_gaussian_execution (1.837s) MODERATE
+[   1.992s] [  MainThread:23133099358016] DONE: run_fake_freq_calculation (1.865s) MODERATE
+[   1.993s] [  MainThread:23133099358016] START: parse_gradient_recipe_from_log
+[   1.995s] [  MainThread:23133099358016] I/O: log_file_read -> fake_freq.log
+[   2.012s] [  MainThread:23133099358016] DONE: parse_gradient_recipe_from_log (0.018s)
+[ 130.771s] [  MainThread:23133099358016] START: run_energy_tasks_in_parallel
+[ 130.773s] [  MainThread:23133099358016] I/O: thread_pool_init -> ThreadPoolExecutor(6)
+[ 130.775s] [ThreadPoolExecutor-0_0:23132975089408] START: run_single_point_energy
+[ 130.775s] [ThreadPoolExecutor-0_1:23132972988160] START: run_single_point_energy
+[ 130.775s] [ThreadPoolExecutor-0_2:23132970886912] START: run_single_point_energy
+[ 130.776s] [ThreadPoolExecutor-0_3:23132968785664] START: run_single_point_energy
+[ 130.776s] [ThreadPoolExecutor-0_4:23132966684416] START: run_single_point_energy
+[ 130.777s] [ThreadPoolExecutor-0_5:23132964583168] START: run_single_point_energy
+[ 242.787s] [ThreadPoolExecutor-0_2:23132970886912] DONE: run_single_point_energy (112.012s) VERY SLOW
+[ 242.789s] [ThreadPoolExecutor-0_2:23132970886912] START: run_single_point_energy
+[ 242.791s] [ThreadPoolExecutor-0_5:23132964583168] DONE: run_single_point_energy (112.014s) VERY SLOW
+[ 242.803s] [ThreadPoolExecutor-0_4:23132966684416] DONE: run_single_point_energy (112.026s) VERY SLOW
+[ 242.810s] [ThreadPoolExecutor-0_1:23132972988160] DONE: run_single_point_energy (112.035s) VERY SLOW
+[ 243.008s] [ThreadPoolExecutor-0_3:23132968785664] DONE: run_single_point_energy (112.232s) VERY SLOW
+[ 243.013s] [ThreadPoolExecutor-0_0:23132975089408] DONE: run_single_point_energy (112.238s) VERY SLOW
+[ 298.235s] [ThreadPoolExecutor-0_2:23132970886912] DONE: run_single_point_energy (55.447s) VERY SLOW
+[ 298.239s] [  MainThread:23133099358016] DONE: run_energy_tasks_in_parallel (167.469s) VERY SLOW
+[ 298.245s] [  MainThread:23133099358016] START: assemble_full_gradient_from_force_map
+[ 298.467s] [  MainThread:23133099358016] DONE: assemble_full_gradient_from_force_map (0.223s)

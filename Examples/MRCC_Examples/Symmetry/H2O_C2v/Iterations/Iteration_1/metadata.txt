@@ -1,0 +1,5 @@
+Iteration: 1
+Output file: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/H2O_C2v/Gau-4152554.EOu
+Central energy: -74.960702510833
+Number of atoms: 3
+Timestamp: 2025-11-19 18:11:04

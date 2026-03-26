@@ -1,0 +1,5 @@
+Iteration: 1
+Output file: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C3H4_D2d/Gau-4153751.EOu
+Central energy: -114.407534963541
+Number of atoms: 7
+Timestamp: 2025-11-19 18:14:26

@@ -1,0 +1,22 @@
+!scheme
+!  -1.0  1.0
+!end
+
+!SECTION1
+energy_pattern=DF-MP2 energy [au]:                          
+basis=cc-pVDZ
+calc=MP2
+dfbasis_cor=auto
+dens=2          # Analytical gradient
+
+
+
+!SECTION2
+energy_pattern=DF-MP2 energy [au]:                          
+basis=cc-pVTZ
+calc=MP2
+dfbasis_cor=auto
+dens=2          # Analytical gradient
+
+
+

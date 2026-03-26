@@ -1,0 +1,5 @@
+Iteration: 1
+Output file: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H2ClBr_Cs/Gau-4155925.EOu
+Central energy: -584.096263372115
+Number of atoms: 6
+Timestamp: 2025-11-19 18:20:39

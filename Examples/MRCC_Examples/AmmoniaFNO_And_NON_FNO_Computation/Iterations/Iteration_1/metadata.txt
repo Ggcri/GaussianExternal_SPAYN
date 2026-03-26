@@ -1,0 +1,5 @@
+Iteration: 1
+Output file: /local/scratch/lcrisci_vb/amm_Gaussian_73951.pbs.village.sns.it/Gau-999282.EOu
+Central energy: -56.493303019551
+Number of atoms: 4
+Timestamp: 2025-10-11 14:05:11

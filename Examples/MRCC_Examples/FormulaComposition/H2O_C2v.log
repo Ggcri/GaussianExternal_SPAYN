@@ -1,0 +1,601 @@
+ Entering Gaussian System, Link 0=/gaussian/g16.c01/intel64-sandybridge/g16/g16
+ Input=H2O_C2v.gjf
+ Output=H2O_C2v.log
+ Initial command:
+ /gaussian/g16.c01/intel64-haswell/g16/l1.exe "/home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Gau-2030903.inp" -scrdir="/home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/"
+ Entering Link 1 = /gaussian/g16.c01/intel64-haswell/g16/l1.exe PID=   2030904.
+  
+ Copyright (c) 1988-2019, Gaussian, Inc.  All Rights Reserved.
+  
+ This is part of the Gaussian(R) 16 program.  It is based on
+ the Gaussian(R) 09 system (copyright 2009, Gaussian, Inc.),
+ the Gaussian(R) 03 system (copyright 2003, Gaussian, Inc.),
+ the Gaussian(R) 98 system (copyright 1998, Gaussian, Inc.),
+ the Gaussian(R) 94 system (copyright 1995, Gaussian, Inc.),
+ the Gaussian 92(TM) system (copyright 1992, Gaussian, Inc.),
+ the Gaussian 90(TM) system (copyright 1990, Gaussian, Inc.),
+ the Gaussian 88(TM) system (copyright 1988, Gaussian, Inc.),
+ the Gaussian 86(TM) system (copyright 1986, Carnegie Mellon
+ University), and the Gaussian 82(TM) system (copyright 1983,
+ Carnegie Mellon University). Gaussian is a federally registered
+ trademark of Gaussian, Inc.
+  
+ This software contains proprietary and confidential information,
+ including trade secrets, belonging to Gaussian, Inc.
+  
+ This software is provided under written license and may be
+ used, copied, transmitted, or stored only in accord with that
+ written license.
+  
+ The following legend is applicable only to US Government
+ contracts under FAR:
+  
+                    RESTRICTED RIGHTS LEGEND
+  
+ Use, reproduction and disclosure by the US Government is
+ subject to restrictions as set forth in subparagraphs (a)
+ and (c) of the Commercial Computer Software - Restricted
+ Rights clause in FAR 52.227-19.
+  
+ Gaussian, Inc.
+ 340 Quinnipiac St., Bldg. 40, Wallingford CT 06492
+  
+  
+ ---------------------------------------------------------------
+ Warning -- This program may not be used in any manner that
+ competes with the business of Gaussian, Inc. or will provide
+ assistance to any competitor of Gaussian, Inc.  The licensee
+ of this program is prohibited from giving any competitor of
+ Gaussian, Inc. access to this program.  By using this program,
+ the user acknowledges that Gaussian, Inc. is engaged in the
+ business of creating and licensing software in the field of
+ computational chemistry and represents and warrants to the
+ licensee that it is not a competitor of Gaussian, Inc. and that
+ it will not use this program in any manner prohibited above.
+ ---------------------------------------------------------------
+  
+
+ Cite this work as:
+ Gaussian 16, Revision C.01,
+ M. J. Frisch, G. W. Trucks, H. B. Schlegel, G. E. Scuseria, 
+ M. A. Robb, J. R. Cheeseman, G. Scalmani, V. Barone, 
+ G. A. Petersson, H. Nakatsuji, X. Li, M. Caricato, A. V. Marenich, 
+ J. Bloino, B. G. Janesko, R. Gomperts, B. Mennucci, H. P. Hratchian, 
+ J. V. Ortiz, A. F. Izmaylov, J. L. Sonnenberg, D. Williams-Young, 
+ F. Ding, F. Lipparini, F. Egidi, J. Goings, B. Peng, A. Petrone, 
+ T. Henderson, D. Ranasinghe, V. G. Zakrzewski, J. Gao, N. Rega, 
+ G. Zheng, W. Liang, M. Hada, M. Ehara, K. Toyota, R. Fukuda, 
+ J. Hasegawa, M. Ishida, T. Nakajima, Y. Honda, O. Kitao, H. Nakai, 
+ T. Vreven, K. Throssell, J. A. Montgomery, Jr., J. E. Peralta, 
+ F. Ogliaro, M. J. Bearpark, J. J. Heyd, E. N. Brothers, K. N. Kudin, 
+ V. N. Staroverov, T. A. Keith, R. Kobayashi, J. Normand, 
+ K. Raghavachari, A. P. Rendell, J. C. Burant, S. S. Iyengar, 
+ J. Tomasi, M. Cossi, J. M. Millam, M. Klene, C. Adamo, R. Cammi, 
+ J. W. Ochterski, R. L. Martin, K. Morokuma, O. Farkas, 
+ J. B. Foresman, and D. J. Fox, Gaussian, Inc., Wallingford CT, 2019.
+ 
+ ******************************************
+ Gaussian 16:  ES64L-G16RevC.01  3-Jul-2019
+                23-Nov-2025 
+ ******************************************
+ %chk=test_parall.chk
+ %nprocs=1
+ Will use up to    1 processors via shared memory.
+ ----------------------------------------------------------------------
+ #p force output=pickett External="CentralExt mrcc 10 READ 5 1 mrcc_pre
+ amble_formula.dat mrcc_ending.dat parall 6"
+ ----------------------------------------------------------------------
+ 1/10=10,18=10,30=1,38=1,172=1/1;
+ 2/12=2,17=6,18=5,29=2,40=1/2;
+ 3/11=9,25=1,30=1,41=9900000,43=2,71=1/1;
+ 4/20=17,22=1,24=3,113=1,114=1/2;
+ 6/7=2,8=2,9=2,10=2/1;
+ 7/7=1,44=-1/16;
+ 99/10=1024,12=1/99;
+ Leave Link    1 at Sun Nov 23 14:31:53 2025, MaxMem=           0 cpu:               0.1 elap:               0.2
+ (Enter /gaussian/g16.c01/intel64-haswell/g16/l101.exe)
+ -----
+ title
+ -----
+ Symbolic Z-matrix:
+ Charge =  0 Multiplicity = 1
+ O                     0.        0.       -0.11081 
+ H                     0.       -0.78398   0.44325 
+ H                     0.        0.78398   0.44325 
+ 
+ ITRead=  0  0  0
+ MicOpt= -1 -1 -1
+ NAtoms=      3 NQM=        3 NQMF=       0 NMMI=      0 NMMIF=      0
+                NMic=       0 NMicF=      0.
+                    Isotopes and Nuclear Properties:
+ (Nuclear quadrupole moments (NQMom) in fm**2, nuclear magnetic moments (NMagM)
+  in nuclear magnetons)
+
+  Atom         1           2           3
+ IAtWgt=          16           1           1
+ AtmWgt=  15.9949146   1.0078250   1.0078250
+ NucSpn=           0           1           1
+ AtZEff=  -0.0000000  -0.0000000  -0.0000000
+ NQMom=    0.0000000   0.0000000   0.0000000
+ NMagM=    0.0000000   2.7928460   2.7928460
+ AtZNuc=   8.0000000   1.0000000   1.0000000
+ Leave Link  101 at Sun Nov 23 14:31:53 2025, MaxMem=   104857600 cpu:               0.4 elap:               0.4
+ (Enter /gaussian/g16.c01/intel64-haswell/g16/l202.exe)
+ ---------------------------------------------------------------------------------------------------
+                            Z-MATRIX (ANGSTROMS AND DEGREES)
+   CD    Cent   Atom    N1       Length/X        N2       Alpha/Y        N3        Beta/Z          J
+ ---------------------------------------------------------------------------------------------------
+      1      1  O        0   0.000000          0.000000         -0.110812
+      2      2  H        0   0.000000         -0.783976          0.443248
+      3      3  H        0  -0.000000          0.783976          0.443248
+ ---------------------------------------------------------------------------------------------------
+                         Z-Matrix orientation:                         
+ ---------------------------------------------------------------------
+ Center     Atomic      Atomic             Coordinates (Angstroms)
+ Number     Number       Type             X           Y           Z
+ ---------------------------------------------------------------------
+      1          8           0        0.000000    0.000000   -0.110812
+      2          1           0        0.000000   -0.783976    0.443248
+      3          1           0       -0.000000    0.783976    0.443248
+ ---------------------------------------------------------------------
+                    Distance matrix (angstroms):
+                    1          2          3
+     1  O    0.000000
+     2  H    0.960000   0.000000
+     3  H    0.960000   1.567952   0.000000
+ Stoichiometry    H2O
+ Framework group  C2V[C2(O),SGV(H2)]
+ Deg. of freedom     2
+ Full point group                 C2V     NOp   4
+ Largest Abelian subgroup         C2V     NOp   4
+ Largest concise Abelian subgroup C2      NOp   2
+                         Standard orientation:                         
+ ---------------------------------------------------------------------
+ Center     Atomic      Atomic             Coordinates (Angstroms)
+ Number     Number       Type             X           Y           Z
+ ---------------------------------------------------------------------
+      1          8           0        0.000000    0.000000    0.110812
+      2          1           0       -0.000000    0.783976   -0.443248
+      3          1           0       -0.000000   -0.783976   -0.443248
+ ---------------------------------------------------------------------
+ Rotational constants (GHZ):         919.6759406         407.9403341         282.5913764
+ Leave Link  202 at Sun Nov 23 14:31:54 2025, MaxMem=   104857600 cpu:               0.2 elap:               0.2
+ (Enter /gaussian/g16.c01/intel64-haswell/g16/l301.exe)
+ Standard basis: STO-3G (5D, 7F)
+ Ernie: Thresh=  0.10000D-02 Tol=  0.10000D-05 Strict=F.
+ There are     4 symmetry adapted cartesian basis functions of A1  symmetry.
+ There are     0 symmetry adapted cartesian basis functions of A2  symmetry.
+ There are     1 symmetry adapted cartesian basis functions of B1  symmetry.
+ There are     2 symmetry adapted cartesian basis functions of B2  symmetry.
+ There are     4 symmetry adapted basis functions of A1  symmetry.
+ There are     0 symmetry adapted basis functions of A2  symmetry.
+ There are     1 symmetry adapted basis functions of B1  symmetry.
+ There are     2 symmetry adapted basis functions of B2  symmetry.
+     7 basis functions,    21 primitive gaussians,     7 cartesian basis functions
+     5 alpha electrons        5 beta electrons
+       nuclear repulsion energy         9.1571160091 Hartrees.
+ IExCor=    0 DFT=F Ex=HF Corr=None ExCW=0 ScaHFX=  1.000000
+ ScaDFX=  1.000000  1.000000  1.000000  1.000000 ScalE2=  1.000000  1.000000
+ IRadAn=      5 IRanWt=     -1 IRanGd=            0 ICorTp=0 IEmpDi=  4
+ NAtoms=    3 NActive=    3 NUniq=    2 SFac= 2.25D+00 NAtFMM=   60 NAOKFM=F Big=F
+ Integral buffers will be    131072 words long.
+ Raffenetti 1 integral format.
+ Two-electron integral symmetry is turned on.
+ Leave Link  301 at Sun Nov 23 14:31:54 2025, MaxMem=   104857600 cpu:               0.2 elap:               0.3
+ (Enter /gaussian/g16.c01/intel64-haswell/g16/l402.exe)
+ External calculation of energy and first derivatives.
+ Running external command "CentralExt mrcc 10 READ 5 1 mrcc_preamble_formula.dat mrcc_ending.dat parall 6 R"
+         input file       "/home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Gau-2030904.EIn"
+         output file      "/home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Gau-2030904.EOu"
+         message file     "/home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Gau-2030904.EMs"
+         fchk file        "/home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Gau-2030904.EFC"
+         mat. el file     "/home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Gau-2030904.EUF"
+
+================================================================================
+CHECKING FOR MIXED ANALYTICAL/NUMERICAL GRADIENT MODE
+================================================================================
+Analyzing sections in /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/mrcc_preamble_formula.dat for gradient mode (comment='!')
+  Found section marker: '! Default section - fallback (not used with multiple sections)' at line 13
+  Found section marker: '!SECTION1' at line 18
+  Found section marker: '!SECTION2' at line 23
+  Found section marker: '!SECTION3' at line 28
+
+--- Section Analysis Summary ---
+  default: NUMERICAL (dens=0, lines=7)
+  ! Default section - fallback (not used with multiple sections): NUMERICAL (dens=0, lines=4)
+  !SECTION1: NUMERICAL (dens=0, lines=4)
+  !SECTION2: NUMERICAL (dens=0, lines=4)
+  !SECTION3: NUMERICAL (dens=0, lines=4)
+
+Total sections: 5
+Analytical sections (0): []
+Numerical sections (5): ['default', '! Default section - fallback (not used with multiple sections)', '!SECTION1', '!SECTION2', '!SECTION3']
+--------------------------------
+
+Mode Detection Results:
+  OptFlag (gradient requested): 1
+  Has analytical sections: False
+  Has numerical sections: True
+  Mixed mode activated: False
+  All analytical mode: False
+  All numerical mode: True
+================================================================================
+
+FAKE_FREQ CONVERSION: O Bohr=['0.0', '0.0', '0.209404100769'] -> Angstrom=[0.0, 0.0, 0.11081187799659017]
+FAKE_FREQ CONVERSION: H Bohr=['-0.0', '1.481499720362', '-0.837616403075'] -> Angstrom=[-0.0, 0.7839758899747375, -0.44324751198583145]
+FAKE_FREQ CONVERSION: H Bohr=['-0.0', '-1.481499720362', '-0.837616403075'] -> Angstrom=[-0.0, -0.7839758899747375, -0.44324751198583145]
+Checking original directory for Gaussian input: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST
+Found Gaussian input file with External keyword: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/H2O_C2v.gjf
+GEOMETRY CONVERSION: Task 'central' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.        0.        0.2094041], Angstrom = [0.         0.         0.11081188]
+GEOMETRY CONVERSION: Task 'atom_1_ixyz_1_up' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.00188973 0.         0.2094041 ], Angstrom = [0.001      0.         0.11081188]
+GEOMETRY CONVERSION: Task 'atom_1_ixyz_2_up' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.         0.00188973 0.2094041 ], Angstrom = [0.         0.001      0.11081188]
+GEOMETRY CONVERSION: Task 'atom_1_ixyz_3_up' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.         0.         0.21129383], Angstrom = [0.         0.         0.11181188]
+GEOMETRY CONVERSION: Task 'atom_1_ixyz_3_down' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.         0.         0.20751437], Angstrom = [0.         0.         0.10981188]
+GEOMETRY CONVERSION: Task 'atom_2_ixyz_1_up' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.        0.        0.2094041], Angstrom = [0.         0.         0.11081188]
+GEOMETRY CONVERSION: Task 'atom_2_ixyz_2_up' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.        0.        0.2094041], Angstrom = [0.         0.         0.11081188]
+GEOMETRY CONVERSION: Task 'atom_2_ixyz_2_down' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.        0.        0.2094041], Angstrom = [0.         0.         0.11081188]
+GEOMETRY CONVERSION: Task 'atom_2_ixyz_3_up' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.        0.        0.2094041], Angstrom = [0.         0.         0.11081188]
+GEOMETRY CONVERSION: Task 'atom_2_ixyz_3_down' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.        0.        0.2094041], Angstrom = [0.         0.         0.11081188]
+Extracted Input orientation (3 atoms)
+Extracted Original coordinates (3 atoms)
+DEBUG: Preserved fake frequency log as FAKE_FREQ/fake_freq_2.log
+DEBUG: Expected atoms: 3
+DEBUG: Task central: 3 atoms
+DEBUG: Task atom_1_ixyz_3_up: 3 atoms
+DEBUG: Task atom_1_ixyz_3_down: 3 atoms
+DEBUG: Task atom_2_ixyz_2_up: 3 atoms
+DEBUG: Task atom_2_ixyz_2_down: 3 atoms
+DEBUG: Task atom_2_ixyz_3_up: 3 atoms
+DEBUG: Task atom_2_ixyz_3_down: 3 atoms
+DEBUG: All geometries have correct atom count (3)
+
+================================================================================
+STANDARD NUMERICAL GRADIENT MODE (no dens=2 detected)
+================================================================================
+Created iteration directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Iterations/Iteration_2
+INFO: This is iteration number 2
+INFO: Running numerical gradient calculation in iteration 2
+Running parallel energy calculations with 6 threads
+TASK SUBMISSION: Submitting 7 tasks
+  - Task: central
+  - Task: atom_1_ixyz_3_up
+  - Task: atom_1_ixyz_3_down
+  - Task: atom_2_ixyz_2_up
+  - Task: atom_2_ixyz_2_down
+  - Task: atom_2_ixyz_3_up
+  - Task: atom_2_ixyz_3_down
+PARALLEL EXECUTION: Starting with 6 workers
+PARALLEL EXECUTION: Total tasks to execute: 7
+PARALLEL EXECUTION: Submitted tasks: ['atom_1_ixyz_3_down', 'atom_1_ixyz_3_up', 'atom_2_ixyz_2_down', 'atom_2_ixyz_2_up', 'atom_2_ixyz_3_down', 'atom_2_ixyz_3_up', 'central']
+PARALLEL EXECUTION: Submitted 7 futures to executor
+MRCC SETUP: No global GENBAS file found in /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST for task atom_1_ixyz_3_downMRCC SETUP: No global GENBAS file found in /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST for task atom_2_ixyz_2_up
+MRCC SETUP: Searching for section-specific basis files (basis_1, basis_2, etc.)...
+
+MRCC SETUP: No global GENBAS file found in /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST for task centralMRCC SETUP: No global GENBAS file found in /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST for task atom_1_ixyz_3_upMRCC SETUP: Searching for section-specific basis files (basis_1, basis_2, etc.)...
+
+MRCC SETUP: Searching for section-specific basis files (basis_1, basis_2, etc.)...
+MRCC SETUP: Searching for section-specific basis files (basis_1, basis_2, etc.)...MRCC SETUP: No global GENBAS file found in /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST for task atom_2_ixyz_2_down
+
+MRCC SETUP: No global GENBAS file found in /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST for task atom_2_ixyz_3_up
+
+MRCC SETUP: No section-specific basis files (basis_*) found either
+MRCC SETUP: Searching for section-specific basis files (basis_1, basis_2, etc.)...
+MRCC SETUP: Searching for section-specific basis files (basis_1, basis_2, etc.)...MRCC SETUP: If using custom basis sets, ensure either:
+MRCC SETUP: No section-specific basis files (basis_*) found either
+MRCC SETUP: No section-specific basis files (basis_*) found either
+MRCC SETUP:   1. GENBAS file exists in /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST, OR
+
+MRCC SETUP: No section-specific basis files (basis_*) found eitherMRCC SETUP: If using custom basis sets, ensure either:
+MRCC SETUP:   2. basis_1, basis_2, etc. files exist in /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST
+MRCC SETUP: If using custom basis sets, ensure either:MRCC SETUP: No section-specific basis files (basis_*) found either
+MRCC SETUP:   1. GENBAS file exists in /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST, OR
+MRCC SETUP: No section-specific basis files (basis_*) found either
+
+MRCC SETUP: If using custom basis sets, ensure either:MRCC SETUP:   2. basis_1, basis_2, etc. files exist in /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST
+
+MRCC SETUP:   1. GENBAS file exists in /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST, ORMRCC SETUP: If using custom basis sets, ensure either:
+
+MRCC SETUP: If using custom basis sets, ensure either:
+UNIT CONVERSION: Task 'atom_1_ixyz_3_down' - Wrote .EIn file in Bohr
+
+MRCC SETUP:   1. GENBAS file exists in /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST, ORMRCC SETUP:   1. GENBAS file exists in /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST, ORMRCC SETUP:   1. GENBAS file exists in /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST, OR
+  First atom: Angstrom = [0.         0.         0.10981188], Bohr = [0.         0.         0.20751437]
+MRCC SETUP:   2. basis_1, basis_2, etc. files exist in /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST
+MRCC SETUP:   2. basis_1, basis_2, etc. files exist in /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST
+UNIT CONVERSION: Task 'atom_1_ixyz_3_up' - Wrote .EIn file in Bohr
+MRCC SETUP:   2. basis_1, basis_2, etc. files exist in /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTESTTHREAD-22663620093696: Starting execution for task 'atom_1_ixyz_3_down'
+
+
+MRCC SETUP:   2. basis_1, basis_2, etc. files exist in /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST  First atom: Angstrom = [0.         0.         0.11181188], Bohr = [0.         0.         0.21129383]
+
+
+THREAD-22663622194944: Starting execution for task 'atom_1_ixyz_3_up'THREAD-22663620093696: Task directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Iterations/Iteration_2/task_atom_1_ixyz_3_down
+
+THREAD-22663622194944: Task directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Iterations/Iteration_2/task_atom_1_ixyz_3_up
+THREAD-22663620093696: Input file: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Iterations/Iteration_2/task_atom_1_ixyz_3_down/Gau-atom_1_ixyz_3_down.EIn
+THREAD-22663622194944: Input file: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Iterations/Iteration_2/task_atom_1_ixyz_3_up/Gau-atom_1_ixyz_3_up.EInUNIT CONVERSION: Task 'atom_2_ixyz_2_down' - Wrote .EIn file in Bohr
+
+UNIT CONVERSION: Task 'atom_2_ixyz_3_up' - Wrote .EIn file in BohrUNIT CONVERSION: Task 'atom_2_ixyz_2_up' - Wrote .EIn file in Bohr
+  First atom: Angstrom = [0.         0.         0.11081188], Bohr = [0.        0.        0.2094041]
+  First atom: Angstrom = [0.         0.         0.11081188], Bohr = [0.        0.        0.2094041]
+  First atom: Angstrom = [0.         0.         0.11081188], Bohr = [0.        0.        0.2094041]THREAD-22663622194944: Original working directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTESTUNIT CONVERSION: Task 'central' - Wrote .EIn file in BohrTHREAD-22663620093696: Original working directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTESTTHREAD-22663615891200: Starting execution for task 'atom_2_ixyz_2_down'
+
+
+
+
+
+THREAD-22663615891200: Task directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Iterations/Iteration_2/task_atom_2_ixyz_2_downTHREAD-22663617992448: Starting execution for task 'atom_2_ixyz_2_up'  First atom: Angstrom = [0.         0.         0.11081188], Bohr = [0.        0.        0.2094041]THREAD-22663613789952: Starting execution for task 'atom_2_ixyz_3_up'
+THREAD-22663622194944: Test mode: False
+
+
+THREAD-22663620093696: Test mode: False
+
+THREAD-22663613789952: Task directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Iterations/Iteration_2/task_atom_2_ixyz_3_upTHREAD-22663622194944: Executing command: /home/barone/lcrisci_vb/python3.9/bin/python3.9 /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Executables/MRCC_ext 10 READ 5 1 mrcc_preamble_formula.dat mrcc_ending.dat R Gau-atom_1_ixyz_3_up.EIn energy_output.dat
+THREAD-22663617992448: Task directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Iterations/Iteration_2/task_atom_2_ixyz_2_upTHREAD-22663615891200: Input file: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Iterations/Iteration_2/task_atom_2_ixyz_2_down/Gau-atom_2_ixyz_2_down.EInTHREAD-22663620093696: Executing command: /home/barone/lcrisci_vb/python3.9/bin/python3.9 /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Executables/MRCC_ext 10 READ 5 1 mrcc_preamble_formula.dat mrcc_ending.dat R Gau-atom_1_ixyz_3_down.EIn energy_output.dat
+THREAD-22663624296192: Starting execution for task 'central'
+THREAD-22663622194944: Working directory for subprocess: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Iterations/Iteration_2/task_atom_1_ixyz_3_up
+
+
+THREAD-22663620093696: Working directory for subprocess: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Iterations/Iteration_2/task_atom_1_ixyz_3_down
+THREAD-22663613789952: Input file: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Iterations/Iteration_2/task_atom_2_ixyz_3_up/Gau-atom_2_ixyz_3_up.EInTHREAD-22663624296192: Task directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Iterations/Iteration_2/task_centralTHREAD-22663617992448: Input file: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Iterations/Iteration_2/task_atom_2_ixyz_2_up/Gau-atom_2_ixyz_2_up.EIn
+
+
+
+THREAD-22663624296192: Input file: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Iterations/Iteration_2/task_central/Gau-central.EInTHREAD-22663615891200: Original working directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST
+THREAD-22663613789952: Original working directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTESTTHREAD-22663617992448: Original working directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST
+
+THREAD-22663613789952: Test mode: False
+THREAD-22663615891200: Test mode: False
+THREAD-22663617992448: Test mode: False
+THREAD-22663613789952: Executing command: /home/barone/lcrisci_vb/python3.9/bin/python3.9 /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Executables/MRCC_ext 10 READ 5 1 mrcc_preamble_formula.dat mrcc_ending.dat R Gau-atom_2_ixyz_3_up.EIn energy_output.dat
+
+THREAD-22663615891200: Executing command: /home/barone/lcrisci_vb/python3.9/bin/python3.9 /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Executables/MRCC_ext 10 READ 5 1 mrcc_preamble_formula.dat mrcc_ending.dat R Gau-atom_2_ixyz_2_down.EIn energy_output.datTHREAD-22663624296192: Original working directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST
+THREAD-22663613789952: Working directory for subprocess: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Iterations/Iteration_2/task_atom_2_ixyz_3_upTHREAD-22663617992448: Executing command: /home/barone/lcrisci_vb/python3.9/bin/python3.9 /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Executables/MRCC_ext 10 READ 5 1 mrcc_preamble_formula.dat mrcc_ending.dat R Gau-atom_2_ixyz_2_up.EIn energy_output.dat
+
+THREAD-22663624296192: Test mode: False
+
+THREAD-22663617992448: Working directory for subprocess: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Iterations/Iteration_2/task_atom_2_ixyz_2_upTHREAD-22663615891200: Working directory for subprocess: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Iterations/Iteration_2/task_atom_2_ixyz_2_downTHREAD-22663624296192: Executing command: /home/barone/lcrisci_vb/python3.9/bin/python3.9 /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Executables/MRCC_ext 10 READ 5 1 mrcc_preamble_formula.dat mrcc_ending.dat R Gau-central.EIn energy_output.dat
+
+
+THREAD-22663624296192: Working directory for subprocess: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Iterations/Iteration_2/task_central
+THREAD-22663615891200: Subprocess completed successfully
+THREAD-22663615891200: Subprocess stdout (last 200 chars): ****************************************************************
+SCRIPT EXECUTION FINISHED
+*****************************************************************************
+MRCC External Script Finished.
+
+THREAD-22663615891200: Output file path: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Iterations/Iteration_2/task_atom_2_ixyz_2_down/energy_output.dat
+THREAD-22663615891200: Already in original directory /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST
+PARALLEL EXECUTION: Task 'atom_2_ixyz_2_down' completed successfully with energy 171.756492053981
+MRCC SETUP: No global GENBAS file found in /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST for task atom_2_ixyz_3_down
+MRCC SETUP: Searching for section-specific basis files (basis_1, basis_2, etc.)...
+MRCC SETUP: No section-specific basis files (basis_*) found either
+MRCC SETUP: If using custom basis sets, ensure either:
+MRCC SETUP:   1. GENBAS file exists in /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST, OR
+MRCC SETUP:   2. basis_1, basis_2, etc. files exist in /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST
+UNIT CONVERSION: Task 'atom_2_ixyz_3_down' - Wrote .EIn file in Bohr
+  First atom: Angstrom = [0.         0.         0.11081188], Bohr = [0.        0.        0.2094041]
+THREAD-22663615891200: Starting execution for task 'atom_2_ixyz_3_down'
+THREAD-22663615891200: Task directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Iterations/Iteration_2/task_atom_2_ixyz_3_down
+THREAD-22663615891200: Input file: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Iterations/Iteration_2/task_atom_2_ixyz_3_down/Gau-atom_2_ixyz_3_down.EIn
+THREAD-22663615891200: Original working directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST
+THREAD-22663615891200: Test mode: False
+THREAD-22663615891200: Executing command: /home/barone/lcrisci_vb/python3.9/bin/python3.9 /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Executables/MRCC_ext 10 READ 5 1 mrcc_preamble_formula.dat mrcc_ending.dat R Gau-atom_2_ixyz_3_down.EIn energy_output.dat
+THREAD-22663615891200: Working directory for subprocess: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Iterations/Iteration_2/task_atom_2_ixyz_3_down
+THREAD-22663613789952: Subprocess completed successfully
+THREAD-22663613789952: Subprocess stdout (last 200 chars): ****************************************************************
+SCRIPT EXECUTION FINISHED
+*****************************************************************************
+MRCC External Script Finished.
+
+THREAD-22663613789952: Output file path: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Iterations/Iteration_2/task_atom_2_ixyz_3_up/energy_output.dat
+THREAD-22663613789952: Already in original directory /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST
+PARALLEL EXECUTION: Task 'atom_2_ixyz_3_up' completed successfully with energy 171.756387425871
+THREAD-22663622194944: Subprocess completed successfully
+THREAD-22663622194944: Subprocess stdout (last 200 chars): ****************************************************************
+SCRIPT EXECUTION FINISHED
+*****************************************************************************
+MRCC External Script Finished.
+
+THREAD-22663622194944: Output file path: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Iterations/Iteration_2/task_atom_1_ixyz_3_up/energy_output.dat
+THREAD-22663622194944: Already in original directory /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST
+PARALLEL EXECUTION: Task 'atom_1_ixyz_3_up' completed successfully with energy 171.756860146947
+THREAD-22663620093696: Subprocess completed successfully
+THREAD-22663620093696: Subprocess stdout (last 200 chars): ****************************************************************
+SCRIPT EXECUTION FINISHED
+*****************************************************************************
+MRCC External Script Finished.
+
+THREAD-22663620093696: Output file path: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Iterations/Iteration_2/task_atom_1_ixyz_3_down/energy_output.dat
+THREAD-22663620093696: Already in original directory /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST
+PARALLEL EXECUTION: Task 'atom_1_ixyz_3_down' completed successfully with energy 171.756228118381
+THREAD-22663624296192: Subprocess completed successfully
+THREAD-22663624296192: Subprocess stdout (last 200 chars): ****************************************************************
+SCRIPT EXECUTION FINISHED
+*****************************************************************************
+MRCC External Script Finished.
+
+THREAD-22663624296192: Output file path: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Iterations/Iteration_2/task_central/energy_output.dat
+THREAD-22663624296192: Already in original directory /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST
+PARALLEL EXECUTION: Task 'central' completed successfully with energy 171.756546596276
+THREAD-22663617992448: Subprocess completed successfully
+THREAD-22663617992448: Subprocess stdout (last 200 chars): ****************************************************************
+SCRIPT EXECUTION FINISHED
+*****************************************************************************
+MRCC External Script Finished.
+
+THREAD-22663617992448: Output file path: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Iterations/Iteration_2/task_atom_2_ixyz_2_up/energy_output.dat
+THREAD-22663617992448: Already in original directory /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST
+PARALLEL EXECUTION: Task 'atom_2_ixyz_2_up' completed successfully with energy 171.756596759641
+THREAD-22663615891200: Subprocess completed successfully
+THREAD-22663615891200: Subprocess stdout (last 200 chars): ****************************************************************
+SCRIPT EXECUTION FINISHED
+*****************************************************************************
+MRCC External Script Finished.
+
+THREAD-22663615891200: Output file path: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Iterations/Iteration_2/task_atom_2_ixyz_3_down/energy_output.dat
+THREAD-22663615891200: Already in original directory /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST
+PARALLEL EXECUTION: Task 'atom_2_ixyz_3_down' completed successfully with energy 171.756703440382
+PARALLEL EXECUTION: Completed tasks: ['atom_1_ixyz_3_down', 'atom_1_ixyz_3_up', 'atom_2_ixyz_2_down', 'atom_2_ixyz_2_up', 'atom_2_ixyz_3_down', 'atom_2_ixyz_3_up', 'central']
+PARALLEL EXECUTION: Failed tasks: []
+PARALLEL EXECUTION: All 7 tasks completed successfully
+TASK COMPLETION: Received 7 results
+  - Task atom_2_ixyz_2_down: Energy = 171.756492053981
+  - Task atom_2_ixyz_3_up: Energy = 171.756387425871
+  - Task atom_1_ixyz_3_up: Energy = 171.756860146947
+  - Task atom_1_ixyz_3_down: Energy = 171.756228118381
+  - Task central: Energy = 171.756546596276
+  - Task atom_2_ixyz_2_up: Energy = 171.756596759641
+  - Task atom_2_ixyz_3_down: Energy = 171.756703440382
+WARNING: Could not find point group information in log file
+Returning minimal PointGroupInfo with empty operations (will use fallback)
+ADVANCED SYMMETRY: Using Unknown point group
+ADVANCED SYMMETRY: 0 operations found in log
+ADVANCED SYMMETRY: Applying symmetry-aware gradient assembly
+  (with automatic inference from forces if needed)
+AUTO-DETECT: Found R_coords with RMSD = 4.43e-13 Bohr
+Gradient transformation matrix R^T (original → central):
+  [1. 0. 0.]
+  [0. 1. 0.]
+  [0. 0. 1.]
+
+No explicit symmetry operations found in log
+Attempting to infer operations from forces...
+
+=== INFERRING SYMMETRY OPERATIONS FROM FORCES ===
+Atoms with displacements: [0, 1]
+Atoms to infer: [2]
+Testing 60 transformation matrices...
+Operation 2: Atom 1→2, RMSD=0.00e+00, Abelian
+  Transformation matrix:
+    [1. 0. 0.]
+    [ 0. -1.  0.]
+    [0. 0. 1.]
+  Nuclear permutation: [0, 2, 1]
+Inferred 2 operations (including identity)
+Successfully inferred 2 operations from forces
+
+=== MOLECULAR SYMMETRY CONSTRAINTS ===
+SYMMETRY CONSTRAINT: Atom 1, Axis 1 = 0.000000000 (missing displacement)
+SYMMETRY CONSTRAINT: Atom 1, Axis 2 = 0.000000000 (missing displacement)
+SYMMETRY CONSTRAINT: Atom 2, Axis 1 = 0.000000000 (missing displacement)
+SYMMETRY CONSTRAINT: Atom 3, Axis 1 = 0.000000000 (symmetry element)
+SYMMETRY CONSTRAINT: Atom 3, Axis 1 = 0.000000000 (symmetry element)
+SYMMETRY CONSTRAINT: Atom 3, Axis 2 = 0.000000000 (symmetry element)
+
+=== DIRECT CALCULATIONS ===
+DIRECT CALCULATION: Atom 1, Axis 3 = 0.16722756
+DIRECT CALCULATION: Atom 2, Axis 2 = 0.02770392
+DIRECT CALCULATION: Atom 2, Axis 3 = -0.08361384
+SYMMETRY PROPAGATION: Atom 3 from Atom 2 via operation 2
+  Source gradient: [ 0.          0.02770392 -0.08361384]
+  Transformation matrix:
+    [1. 0. 0.]
+    [ 0. -1.  0.]
+    [0. 0. 1.]
+  Result gradient: [ 0.         -0.02770392 -0.08361384]
+
+=== VALIDATION ===
+CONSTRAINT VERIFIED: Atom 1, Axis 1 = 0.000000000
+CONSTRAINT VERIFIED: Atom 1, Axis 2 = 0.000000000
+CONSTRAINT VERIFIED: Atom 2, Axis 1 = 0.000000000
+SYMMETRY EFFICIENCY: 33.3% computational reduction
+SYMMETRY EFFICIENCY: 6/9 components calculated
+NUMERICAL WORKFLOW: Gradient shape: (3, 3)
+NUMERICAL WORKFLOW: Central energy: 171.756546596276
+
+DEBUG: Writing output to /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Gau-2030904.EOu
+DEBUG: Current directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST
+DEBUG: Central energy: 171.756546596276
+DEBUG: Gradient shape: (3, 3)
+DEBUG: Output written successfully
+DEBUG: File exists: True
+SUCCESS: Parallel gradient calculation completed using iteration 2
+Task directories preserved in: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Iterations/Iteration_2
+ Recovered energy=  171.756546596     dipole=      0.000000000000      0.000000000000      0.000000000000
+ Energy=     171.756547     NIter=   0.
+ Dipole moment=       0.000000       0.000000       0.000000
+ Leave Link  402 at Sun Nov 23 14:41:45 2025, MaxMem=   104857600 cpu:               0.1 elap:             590.3
+ (Enter /gaussian/g16.c01/intel64-haswell/g16/l601.exe)
+ Leave Link  601 at Sun Nov 23 14:41:45 2025, MaxMem=   104857600 cpu:               0.1 elap:               0.2
+ (Enter /gaussian/g16.c01/intel64-haswell/g16/l716.exe)
+ Dipole        = 0.00000000D+00 0.00000000D+00 0.00000000D+00
+ ***** Axes restored to original set *****
+ -------------------------------------------------------------------
+ Center     Atomic                   Forces (Hartrees/Bohr)
+ Number     Number              X              Y              Z
+ -------------------------------------------------------------------
+      1        8          -0.000000000    0.000000000    0.167227557
+      2        1           0.000000000    0.027703925   -0.083613839
+      3        1           0.000000000   -0.027703925   -0.083613839
+ -------------------------------------------------------------------
+ Cartesian Forces:  Max     0.167227557 RMS     0.069508288
+ Leave Link  716 at Sun Nov 23 14:41:45 2025, MaxMem=   104857600 cpu:               0.1 elap:               0.1
+ (Enter /gaussian/g16.c01/intel64-haswell/g16/l9999.exe)
+ Unable to Open any file for archive entry.
+ 1\1\GINC-PAULING\Force\External='CentralExt mrcc 10 READ 5 1 mrcc_prea
+ mble_formula.dat mrcc_ending.dat p\ZDO\H2O1\LCRISCI_VB\23-Nov-2025\0\\
+ #p force output=pickett External="CentralExt mrcc 10 READ 5 1 mrcc_pre
+ amble_formula.dat mrcc_ending.dat parall 6"\\title\\0,1\O,0.,0.,-0.110
+ 81188\H,0.,-0.78397589,0.44324751\H,0.,0.78397589,0.44324751\\Version=
+ ES64L-G16RevC.01\HF=171.7565466\RMSD=0.000e+00\RMSF=6.951e-02\Dipole=0
+ .,0.,0.\PG=C02V [C2(O1),SGV(H2)]\\@
+ The archive entry for this job was punched.
+ DoSRE=F DoSRN=F DoDH=F DoFC=F DoNQ=F DoQCD=F DoSCD=F
+ Inertia tensor (amu-bohr**2): 
+                 1             2             3 
+      1   0.638640D+01  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.196237D+01  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.442403D+01
+ Principal inertia moments (amu-bohr**2):
+ Iaa = 0.196237D+01 Ibb= 0.442403D+01 Icc= 0.638640D+01
+ Rotation matrix to Principal Axis frame: 
+                 1             2             3 
+      1   0.000000D+00  0.000000D+00  0.100000D+01
+      2   0.100000D+01  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.100000D+01  0.000000D+00
+                Principal axis orientation:                
+ ---------------------------------------------------------------------
+ Center     Atomic                     Coordinates (Angstroms)
+ Number     Number                        X           Y           Z
+ ---------------------------------------------------------------------
+      1          8                   -0.000000   -0.062007    0.000000
+      2          1                   -0.783976    0.492052    0.000000
+      3          1                    0.783976    0.492052   -0.000000
+ ---------------------------------------------------------------------
+ Rotational constants (MHZ):
+ 919675.9406139 407940.3340574 282591.3764363
+ Dipole moment (Debye):
+      0.0000000      0.0000000      0.0000000  Tot=      0.0000000
+
+ Atoms with significant hyperfine tensors: 
+
+--------------------------------------------------------------------------------
+ title                                                   
+   99  1000  50  0.1760E-11  0.1000E+07  0.1000E+01 1.0000000000
+a   1  0  0  0  1  1   1  0  1  0
+     10000   0.91967594E+06    0.0000E+00   /  A  /
+     20000   0.40794033E+06    0.0000E+00   /  B  /
+     30000   0.28259138E+06    0.0000E+00   /  C  /
+--------------------------------------------------------------------------------
+
+ Punch of MOs requested, but none found.
+
+
+ A successful marriage requires falling in love
+ many times, always with the same person.
+                           -- Mignon McLaughlin
+ Job cpu time:       0 days  0 hours  0 minutes  1.6 seconds.
+ Elapsed time:       0 days  0 hours  9 minutes 52.3 seconds.
+ File lengths (MBytes):  RWF=      5 Int=      0 D2E=      0 Chk=      1 Scr=      1
+ Normal termination of Gaussian 16 at Sun Nov 23 14:41:46 2025.

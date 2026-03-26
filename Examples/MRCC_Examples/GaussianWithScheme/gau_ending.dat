@@ -1,0 +1,10 @@
+--link1--
+@/example/path/to/include/basis/set/custom
+
+--link1--
+!test 01
+
+
+--link1--
+!test 02
+

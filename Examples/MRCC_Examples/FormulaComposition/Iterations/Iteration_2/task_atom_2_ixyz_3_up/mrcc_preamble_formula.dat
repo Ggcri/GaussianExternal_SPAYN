@@ -1,0 +1,32 @@
+! ============================================================
+! Test case for FORMULA mechanism in MRCC_ext v5
+! ============================================================
+! Test: Three different calculations combined with custom formula
+! Expected: E_final = sqrt(c1²*E_hf² + c2²*E_mp2² + c3²*E_ccsd²)
+
+!scheme
+! 1.0 2.0 0.5
+!formula
+!e=sqrt(c1*c1*e1*e1 + c2*c2*e2*e2 + c3*c3*e3*e3)
+!end
+
+! Default section - fallback (not used with multiple sections)
+energy_pattern=***FINAL HARTREE-FOCK ENERGY:
+basis=sto-3g
+calc=HF
+
+!SECTION1
+energy_pattern=***FINAL HARTREE-FOCK ENERGY:
+basis=sto-3g
+calc=HF
+
+!SECTION2
+energy_pattern=***FINAL HARTREE-FOCK ENERGY:
+basis=sto-3g
+calc=HF
+
+!SECTION3
+energy_pattern=***FINAL HARTREE-FOCK ENERGY:
+basis=sto-3g
+calc=HF
+

@@ -1,0 +1,5 @@
+Iteration: 1
+Output file: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/CH4_Td/Gau-4153084.EOu
+Central energy: -39.726074618132
+Number of atoms: 5
+Timestamp: 2025-11-19 18:11:55

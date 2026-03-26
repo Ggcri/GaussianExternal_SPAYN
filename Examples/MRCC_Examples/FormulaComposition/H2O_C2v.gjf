@@ -1,0 +1,13 @@
+%chk=test_parall.chk
+%nprocs=1
+#p force output=pickett External="CentralExt mrcc 10 READ 5 1 mrcc_preamble_formula.dat mrcc_ending.dat parall 6" 
+
+title
+
+0 1
+ O                  0.00000000    0.00000000   -0.11081188
+ H                  0.00000000   -0.78397589    0.44324751
+ H                 -0.00000000    0.78397589    0.44324751
+
+
+

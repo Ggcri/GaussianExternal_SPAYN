@@ -1,0 +1,11 @@
+!scheme
+!  1.0    
+!end
+
+!SECTION1
+energy_pattern=Total CCSD(F12*)(T+) energy [au]:
+basis=cc-pVDZ-F12
+calc=CCSD(T)-F12
+
+
+

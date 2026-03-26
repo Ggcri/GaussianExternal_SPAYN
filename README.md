@@ -63,11 +63,12 @@ A static workflow template is also available at `ExtScript/WorkflowTemplate/DPCS
 
 ```bash
 export SCRATCH=/scratch/$USER
+export TMPDIR=$SCRATCH
 mkdir -p $SCRATCH
 g16 molecule.gjf
 ```
 
-Make sure Gaussian, Molpro (or the external program), and the External module are all loaded before running.
+Make sure Gaussian, Molpro (or the external program), and the External module are all loaded before running. A working Gaussian environment requires at minimum `GAUSS_EXEDIR` and `GAUSS_SCRDIR` to be set, but these are typically configured when loading the Gaussian module.
 
 ## Command Structure
 
@@ -75,10 +76,10 @@ To use the External interface, you specify a command string in the Gaussian `.gj
 
 The syntax varies depending on the external program and whether you want numerical parallel gradients. There are two main modes:
 
-- **Without `parall`/`parall_n`**: the external program computes the gradient directly (analytical gradients via `{forces}` in the ending file). This is a sequential calculation.
+- **Without `parall`/`parall_n`**: the external program computes the gradient directly. The user must include the appropriate gradient keyword in the ending file — for example, `{forces}` in Molpro, `EnGrad` in ORCA, or `numgrad=on` in MRCC. This is a sequential calculation where the external program handles the gradient computation internally.
 - **With `parall` or `parall_n`**: the External interface computes the gradient numerically via finite differences, running multiple energy calculations in parallel. `parall` uses Cartesian displacements, `parall_n` uses normal mode displacements.
 
-**Important:** When the ending file contains `{forces}` (analytical gradients), do NOT use `parall` or `parall_n` in the External string — the gradient is computed entirely by the external program.
+**Important:** When the ending file contains a gradient directive (e.g., `{forces}` in Molpro), do NOT use `parall` or `parall_n` in the External string — the gradient computation is entirely delegated to the external program.
 
 ### Gaussian .gjf Syntax
 
@@ -96,8 +97,6 @@ The syntax varies depending on the external program and whether you want numeric
 # eT (no memory parameter)
 #p External="CentralExt et <preamble> <ending> <et_omp> <readgradpy> parall_n [oneside|twoside] <nthreads>"
 ```
-
-**Important:** Do NOT include `R` (or any layer/input/output) at the end — Gaussian adds these automatically.
 
 ### Abbreviations
 
@@ -124,7 +123,7 @@ The syntax varies depending on the external program and whether you want numeric
 | `<mrcc_mpi>` | MRCC only: number of MPI processes |
 | `parall` | Parallel Cartesian gradients |
 | `parall_n` | Parallel normal mode gradients |
-| `parall_n_mpi` | Multi-node MPI normal mode gradients |
+| `parall_n_mpi` | Multi-node, multi-queue/partition normal mode gradients |
 | `oneside` | Adaptive forward difference (switches to central when RMS < 1e-3) |
 | `twoside` | Central differences (default, more accurate) |
 
@@ -172,7 +171,10 @@ The preamble file contains directives that appear **before** the geometry specif
 
 The ending file contains method definitions and calculation directives that appear **after** the geometry. This is where you define the quantum chemistry methods, store energies, and configure normal mode settings.
 
-**Critical:** The final energy must be stored in a variable named `exe_energy` (case-insensitive). This is mandatory for all Molpro calculations.
+**Critical:** Each external program has its own way of communicating the final energy back to the interface:
+- **Molpro**: the energy must be stored in a variable named `exe_energy` (case-insensitive) in the ending file
+- **Gaussian**: the energy is read automatically from the formatted checkpoint file — no special keyword needed
+- **MRCC**: the `energy_pattern` keyword in the preamble tells the interface which output line contains the energy (see [MRCC section](#mrcc))
 
 ### Simple energy assignment
 
@@ -568,9 +570,9 @@ Ready-to-use Molpro PCS2 and PPCS2 preamble/ending files are in `ExtScript/Workf
 
 ## Complete Working Examples
 
-### Example 1: Optimization with Analytical Gradients
+### Example 1: Optimization with Molpro-Computed Gradients
 
-When the ending file contains `{forces}`, Molpro computes the gradient analytically. No `parall` or `parall_n` is needed — the External interface just passes the geometry and reads back the energy and gradient.
+When the ending file contains `{forces}`, Molpro computes the gradient internally. No `parall` or `parall_n` is needed — the External interface just passes the geometry and reads back the energy and gradient.
 
 **preamble.dat:**
 ```
@@ -1113,7 +1115,60 @@ energy_pattern=CCSD energy [au]:
 calc=CCSD
 ```
 
-**Custom basis sets:** Place a `GENBAS` file in the working directory (used for all sections), or create `basis_1`, `basis_2`, ... files for section-specific basis sets with `basis=custom` in the preamble.
+**Custom basis sets:** MRCC reads custom basis definitions from a file called `GENBAS`. The interface provides two ways to supply it:
+
+1. **Global:** Place a `GENBAS` file in the working directory. It will be automatically copied to the MRCC scratch directory for every section.
+
+2. **Per-section:** If different sections need different basis sets, add `basis=custom` to each section in the preamble and create numbered basis files in the working directory:
+   - `basis_1` for `!SECTION1`
+   - `basis_2` for `!SECTION2`
+   - `basis_default` for the default section (no `!SECTIONN`)
+
+   The interface copies the appropriate `basis_N` file as `GENBAS` into the scratch directory before each section runs, and cleans it up afterwards.
+
+   **Complete example** (from `Examples/MRCC_Examples/MultipleBasisSets/`):
+
+   **Preamble (`MultiBas`):**
+   ```
+   !scheme
+   !  1.0 -1.0
+   !end
+
+   !SECTION1
+   energy_pattern=FINAL HARTREE-FOCK ENERGY:
+   calc=hf
+   basis=custom
+
+   !SECTION2
+   energy_pattern=FINAL HARTREE-FOCK ENERGY:
+   calc=hf
+   basis=custom
+   ```
+
+   **Gaussian input (`water.gjf`):**
+   ```gaussian
+   %chk=mrcc_struc.chk
+   #p output=pickett External="CentralExt mrcc 4 READ 4 1 $PMR/MultiBas $EMR/test_en.dat parall 9" force
+
+   Title
+
+   0 1
+   8       -0.000000    0.000000    0.110812
+   1        0.000000    0.783976   -0.443248
+   1       -0.000000   -0.783976   -0.443248
+   ```
+
+   **Basis files** (`basis_1` and `basis_2`) use the MRCC `GENBAS` format. Each file defines basis functions for every element in the molecule. The format uses `Element:custom` headers followed by contraction specifications. Custom basis sets can be downloaded from the [Basis Set Exchange](https://www.basissetexchange.org) in MRCC format.
+
+   **Directory structure:**
+   ```
+   working_directory/
+   ├── water.gjf
+   ├── basis_1          # e.g., 6-311+G*-J for SECTION1
+   └── basis_2          # e.g., 6-31+G* for SECTION2
+   ```
+
+   A complete working example with all files is available in `Examples/MRCC_Examples/MultipleBasisSets/`.
 
 **MRCC memory:** Total memory is divided by MPI processes. With `16GB` and `2` MPI: each process gets 8GB.
 
@@ -1223,6 +1278,7 @@ External/
 │   ├── MRCC/                 # MRCC default files
 │   └── Orca/                 # ORCA default files
 ├── Examples/                 # Working calculation examples
+│   └── MRCC_Examples/       # MRCC examples (custom basis, mixed mode, symmetry, etc.)
 ├── tests/                    # Test suite
 ├── setup_external.sh         # Environment setup script
 └── README.md

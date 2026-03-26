@@ -1,0 +1,5 @@
+Iteration: 1
+Output file: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/MultipleBasisSets/Gau-307505.EOu
+Central energy: 0.0
+Number of atoms: 3
+Timestamp: 2025-11-19 22:10:59

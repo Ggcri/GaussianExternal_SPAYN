@@ -1,0 +1,44 @@
+%nprocs=16
+%mem=64GB
+%chk=b3.chk
+# opt b3lyp/gen freq 
+
+Title Card Required
+
+0 1
+7                   0.000000    0.000000    0.100000
+1                   0.000000    0.942809   -0.233333
+1                  -0.816497   -0.471404   -0.233333
+1                   0.816497   -0.471405   -0.233333
+
+@/home/barone/lcrisci_vb/SUSPENDED_PROJECTS/Project_Emilio/Imid-H2O-complexes/FINAL_HL_Imid-H2O/3F12red.gbs
+
+
+
+--link1--
+%chk=mrcc_struc.chk
+%oldchk=b3.chk
+#p output=pickett External="CentralExt mrcc 4 READ 2 1 $PMR/PR_CCSDF12 $EMR/test_en.dat parall 16" opt(nomicro,readFC)  geom=allcheck
+
+
+--link1--
+%oldchk=b3.chk 
+%chk=mrcc_struc_FNO.chk
+%nprocs=1
+#p output=pickett External="CentralExt mrcc 4 READ 2 1 $PMR/PR_FNO_CCSDTF12 $EMR/test_en.dat parall 16" opt(nomicro,readFC)  geom=allcheck 
+
+
+
+--link1--
+%oldchk=b3.chk
+%chk=molpro_struc.chk
+%nprocs=1
+#p output=pickett External="CentralExt molpro_project $PRMOL/test.dat $ENDMOL/E_F12c.dat 16 64 read" opt(nomicro,readFC) geom=allcheck
+
+
+
+
+
+
+
+

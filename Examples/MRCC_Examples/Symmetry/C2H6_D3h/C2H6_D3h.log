@@ -1,0 +1,1325 @@
+ Entering Gaussian System, Link 0=/gaussian/g16.c01/intel64-sandybridge/g16/g16
+ Input=C2H6_D3h.gjf
+ Output=C2H6_D3h.log
+ Initial command:
+ /gaussian/g16.c01/intel64-sandybridge/g16/l1.exe "/home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Gau-4154399.inp" -scrdir="/home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/"
+ Entering Link 1 = /gaussian/g16.c01/intel64-sandybridge/g16/l1.exe PID=   4154400.
+  
+ Copyright (c) 1988-2019, Gaussian, Inc.  All Rights Reserved.
+  
+ This is part of the Gaussian(R) 16 program.  It is based on
+ the Gaussian(R) 09 system (copyright 2009, Gaussian, Inc.),
+ the Gaussian(R) 03 system (copyright 2003, Gaussian, Inc.),
+ the Gaussian(R) 98 system (copyright 1998, Gaussian, Inc.),
+ the Gaussian(R) 94 system (copyright 1995, Gaussian, Inc.),
+ the Gaussian 92(TM) system (copyright 1992, Gaussian, Inc.),
+ the Gaussian 90(TM) system (copyright 1990, Gaussian, Inc.),
+ the Gaussian 88(TM) system (copyright 1988, Gaussian, Inc.),
+ the Gaussian 86(TM) system (copyright 1986, Carnegie Mellon
+ University), and the Gaussian 82(TM) system (copyright 1983,
+ Carnegie Mellon University). Gaussian is a federally registered
+ trademark of Gaussian, Inc.
+  
+ This software contains proprietary and confidential information,
+ including trade secrets, belonging to Gaussian, Inc.
+  
+ This software is provided under written license and may be
+ used, copied, transmitted, or stored only in accord with that
+ written license.
+  
+ The following legend is applicable only to US Government
+ contracts under FAR:
+  
+                    RESTRICTED RIGHTS LEGEND
+  
+ Use, reproduction and disclosure by the US Government is
+ subject to restrictions as set forth in subparagraphs (a)
+ and (c) of the Commercial Computer Software - Restricted
+ Rights clause in FAR 52.227-19.
+  
+ Gaussian, Inc.
+ 340 Quinnipiac St., Bldg. 40, Wallingford CT 06492
+  
+  
+ ---------------------------------------------------------------
+ Warning -- This program may not be used in any manner that
+ competes with the business of Gaussian, Inc. or will provide
+ assistance to any competitor of Gaussian, Inc.  The licensee
+ of this program is prohibited from giving any competitor of
+ Gaussian, Inc. access to this program.  By using this program,
+ the user acknowledges that Gaussian, Inc. is engaged in the
+ business of creating and licensing software in the field of
+ computational chemistry and represents and warrants to the
+ licensee that it is not a competitor of Gaussian, Inc. and that
+ it will not use this program in any manner prohibited above.
+ ---------------------------------------------------------------
+  
+
+ Cite this work as:
+ Gaussian 16, Revision C.01,
+ M. J. Frisch, G. W. Trucks, H. B. Schlegel, G. E. Scuseria, 
+ M. A. Robb, J. R. Cheeseman, G. Scalmani, V. Barone, 
+ G. A. Petersson, H. Nakatsuji, X. Li, M. Caricato, A. V. Marenich, 
+ J. Bloino, B. G. Janesko, R. Gomperts, B. Mennucci, H. P. Hratchian, 
+ J. V. Ortiz, A. F. Izmaylov, J. L. Sonnenberg, D. Williams-Young, 
+ F. Ding, F. Lipparini, F. Egidi, J. Goings, B. Peng, A. Petrone, 
+ T. Henderson, D. Ranasinghe, V. G. Zakrzewski, J. Gao, N. Rega, 
+ G. Zheng, W. Liang, M. Hada, M. Ehara, K. Toyota, R. Fukuda, 
+ J. Hasegawa, M. Ishida, T. Nakajima, Y. Honda, O. Kitao, H. Nakai, 
+ T. Vreven, K. Throssell, J. A. Montgomery, Jr., J. E. Peralta, 
+ F. Ogliaro, M. J. Bearpark, J. J. Heyd, E. N. Brothers, K. N. Kudin, 
+ V. N. Staroverov, T. A. Keith, R. Kobayashi, J. Normand, 
+ K. Raghavachari, A. P. Rendell, J. C. Burant, S. S. Iyengar, 
+ J. Tomasi, M. Cossi, J. M. Millam, M. Klene, C. Adamo, R. Cammi, 
+ J. W. Ochterski, R. L. Martin, K. Morokuma, O. Farkas, 
+ J. B. Foresman, and D. J. Fox, Gaussian, Inc., Wallingford CT, 2019.
+ 
+ ******************************************
+ Gaussian 16:  ES64L-G16RevC.01  3-Jul-2019
+                19-Nov-2025 
+ ******************************************
+ %chk=test_parall.chk
+ %nprocs=1
+ Will use up to    1 processors via shared memory.
+ ----------------------------------------------------------------------
+ #p force output=pickett External="CentralExt gau $PGAU/test_pr.dat $EG
+ AU/test_en.dat 7 10 read parall 2"
+ ----------------------------------------------------------------------
+ 1/10=10,18=10,30=1,38=1,172=1/1;
+ 2/12=2,17=6,18=5,29=2,40=1/2;
+ 3/11=9,25=1,30=1,41=9900000,43=2,71=1/1;
+ 4/20=17,22=1,24=3,113=1,114=1/2;
+ 6/7=2,8=2,9=2,10=2/1;
+ 7/7=1,44=-1/16;
+ 99/10=1024,12=1/99;
+ Leave Link    1 at Wed Nov 19 18:15:03 2025, MaxMem=           0 cpu:               0.0 elap:               0.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l101.exe)
+ -----
+ title
+ -----
+ Symbolic Z-matrix:
+ Charge =  0 Multiplicity = 1
+ 6                     0.        0.       -0.77041 
+ 1                     0.        1.01193  -1.17444 
+ 1                    -0.87636  -0.50597  -1.17444 
+ 1                     0.87636  -0.50597  -1.17444 
+ 6                     0.        0.        0.77041 
+ 1                    -0.87636  -0.50597   1.17444 
+ 1                     0.87636  -0.50597   1.17444 
+ 1                     0.        1.01193   1.17444 
+ 
+ ITRead=  0  0  0  0  0  0  0  0
+ MicOpt= -1 -1 -1 -1 -1 -1 -1 -1
+ NAtoms=      8 NQM=        8 NQMF=       0 NMMI=      0 NMMIF=      0
+                NMic=       0 NMicF=      0.
+                    Isotopes and Nuclear Properties:
+ (Nuclear quadrupole moments (NQMom) in fm**2, nuclear magnetic moments (NMagM)
+  in nuclear magnetons)
+
+  Atom         1           2           3           4           5           6           7           8
+ IAtWgt=          12           1           1           1          12           1           1           1
+ AtmWgt=  12.0000000   1.0078250   1.0078250   1.0078250  12.0000000   1.0078250   1.0078250   1.0078250
+ NucSpn=           0           1           1           1           0           1           1           1
+ AtZEff=  -0.0000000  -0.0000000  -0.0000000  -0.0000000  -0.0000000  -0.0000000  -0.0000000  -0.0000000
+ NQMom=    0.0000000   0.0000000   0.0000000   0.0000000   0.0000000   0.0000000   0.0000000   0.0000000
+ NMagM=    0.0000000   2.7928460   2.7928460   2.7928460   0.0000000   2.7928460   2.7928460   2.7928460
+ AtZNuc=   6.0000000   1.0000000   1.0000000   1.0000000   6.0000000   1.0000000   1.0000000   1.0000000
+ Leave Link  101 at Wed Nov 19 18:15:03 2025, MaxMem=   104857600 cpu:               0.3 elap:               0.4
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l202.exe)
+ ---------------------------------------------------------------------------------------------------
+                            Z-MATRIX (ANGSTROMS AND DEGREES)
+   CD    Cent   Atom    N1       Length/X        N2       Alpha/Y        N3        Beta/Z          J
+ ---------------------------------------------------------------------------------------------------
+      1      1  C        0   0.000000          0.000000         -0.770410
+      2      2  H        0   0.000000          1.011933         -1.174440
+      3      3  H        0  -0.876360         -0.505967         -1.174440
+      4      4  H        0   0.876360         -0.505967         -1.174440
+      5      5  C        0   0.000000          0.000000          0.770410
+      6      6  H        0  -0.876360         -0.505967          1.174440
+      7      7  H        0   0.876360         -0.505967          1.174440
+      8      8  H        0   0.000000          1.011933          1.174440
+ ---------------------------------------------------------------------------------------------------
+                         Z-Matrix orientation:                         
+ ---------------------------------------------------------------------
+ Center     Atomic      Atomic             Coordinates (Angstroms)
+ Number     Number       Type             X           Y           Z
+ ---------------------------------------------------------------------
+      1          6           0        0.000000    0.000000   -0.770410
+      2          1           0        0.000000    1.011933   -1.174440
+      3          1           0       -0.876360   -0.505967   -1.174440
+      4          1           0        0.876360   -0.505967   -1.174440
+      5          6           0        0.000000    0.000000    0.770410
+      6          1           0       -0.876360   -0.505967    1.174440
+      7          1           0        0.876360   -0.505967    1.174440
+      8          1           0        0.000000    1.011933    1.174440
+ ---------------------------------------------------------------------
+                    Distance matrix (angstroms):
+                    1          2          3          4          5
+     1  C    0.000000
+     2  H    1.089609   0.000000
+     3  H    1.089610   1.752720   0.000000
+     4  H    1.089610   1.752720   1.752720   0.000000
+     5  C    1.540820   2.192362   2.192362   2.192362   0.000000
+     6  H    2.192362   2.930745   2.348880   2.930745   1.089610
+     7  H    2.192362   2.930745   2.930745   2.348880   1.089610
+     8  H    2.192362   2.348880   2.930745   2.930745   1.089609
+                    6          7          8
+     6  H    0.000000
+     7  H    1.752720   0.000000
+     8  H    1.752720   1.752720   0.000000
+ Stoichiometry    C2H6
+ Framework group  D3H[C3(C.C),3SGV(H2)]
+ Deg. of freedom     3
+ Full point group                 D3H     NOp  12
+ Largest Abelian subgroup         C2V     NOp   4
+ Largest concise Abelian subgroup C2V     NOp   4
+                         Standard orientation:                         
+ ---------------------------------------------------------------------
+ Center     Atomic      Atomic             Coordinates (Angstroms)
+ Number     Number       Type             X           Y           Z
+ ---------------------------------------------------------------------
+      1          6           0       -0.000000    0.000000    0.770410
+      2          1           0        0.000000    1.011933    1.174440
+      3          1           0        0.876360   -0.505967    1.174440
+      4          1           0       -0.876360   -0.505967    1.174440
+      5          6           0        0.000000    0.000000   -0.770410
+      6          1           0        0.876360   -0.505967   -1.174440
+      7          1           0       -0.876360   -0.505967   -1.174440
+      8          1           0        0.000000    1.011933   -1.174440
+ ---------------------------------------------------------------------
+ Rotational constants (GHZ):          81.6163546          19.6787668          19.6787668
+ Leave Link  202 at Wed Nov 19 18:15:03 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l301.exe)
+ Standard basis: STO-3G (5D, 7F)
+ Ernie: Thresh=  0.10000D-02 Tol=  0.10000D-05 Strict=F.
+ There are     6 symmetry adapted cartesian basis functions of A1  symmetry.
+ There are     2 symmetry adapted cartesian basis functions of A2  symmetry.
+ There are     2 symmetry adapted cartesian basis functions of B1  symmetry.
+ There are     6 symmetry adapted cartesian basis functions of B2  symmetry.
+ There are     6 symmetry adapted basis functions of A1  symmetry.
+ There are     2 symmetry adapted basis functions of A2  symmetry.
+ There are     2 symmetry adapted basis functions of B1  symmetry.
+ There are     6 symmetry adapted basis functions of B2  symmetry.
+    16 basis functions,    48 primitive gaussians,    16 cartesian basis functions
+     9 alpha electrons        9 beta electrons
+       nuclear repulsion energy        42.1076399241 Hartrees.
+ IExCor=    0 DFT=F Ex=HF Corr=None ExCW=0 ScaHFX=  1.000000
+ ScaDFX=  1.000000  1.000000  1.000000  1.000000 ScalE2=  1.000000  1.000000
+ IRadAn=      5 IRanWt=     -1 IRanGd=            0 ICorTp=0 IEmpDi=  4
+ NAtoms=    8 NActive=    8 NUniq=    2 SFac= 4.00D+00 NAtFMM=   60 NAOKFM=F Big=F
+ Integral buffers will be    131072 words long.
+ Raffenetti 1 integral format.
+ Two-electron integral symmetry is turned on.
+ Leave Link  301 at Wed Nov 19 18:15:04 2025, MaxMem=   104857600 cpu:               0.1 elap:               0.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l402.exe)
+ External calculation of energy and first derivatives.
+ Running external command "CentralExt gau $PGAU/test_pr.dat $EGAU/test_en.dat 7 10 read parall 2 R"
+         input file       "/home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Gau-4154400.EIn"
+         output file      "/home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Gau-4154400.EOu"
+         message file     "/home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Gau-4154400.EMs"
+         fchk file        "/home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Gau-4154400.EFC"
+         mat. el file     "/home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Gau-4154400.EUF"
+
+================================================================================
+CHECKING FOR MIXED ANALYTICAL/NUMERICAL GRADIENT MODE
+================================================================================
+Analyzing sections in /home/barone/lcrisci_vb/MyScript/PreambleGau/test_pr.dat for gradient mode (comment='#')
+
+--- Section Analysis Summary ---
+  default: NUMERICAL (dens=0, lines=0)
+
+Total sections: 1
+Analytical sections (0): []
+Numerical sections (1): ['default']
+--------------------------------
+
+Mode Detection Results:
+  OptFlag (gradient requested): 1
+  Has analytical sections: False
+  Has numerical sections: True
+  Mixed mode activated: False
+  All analytical mode: False
+  All numerical mode: True
+================================================================================
+
+FAKE_FREQ CONVERSION: C Bohr=['-0.0', '0.0', '1.455863903626'] -> Angstrom=[-0.0, 0.0, 0.7704099999751606]
+FAKE_FREQ CONVERSION: H Bohr=['0.0', '1.912276436379', '2.219369949734'] -> Angstrom=[0.0, 1.0119331110785672, 1.1744399999621693]
+FAKE_FREQ CONVERSION: H Bohr=['1.656079972963', '-0.95613821819', '2.219369949734'] -> Angstrom=[0.8763597811248759, -0.5059665555395483, 1.1744399999621693]
+FAKE_FREQ CONVERSION: H Bohr=['-1.656079972963', '-0.95613821819', '2.219369949734'] -> Angstrom=[-0.8763597811248759, -0.5059665555395483, 1.1744399999621693]
+FAKE_FREQ CONVERSION: C Bohr=['0.0', '0.0', '-1.455863903626'] -> Angstrom=[0.0, 0.0, -0.7704099999751606]
+FAKE_FREQ CONVERSION: H Bohr=['1.656079972963', '-0.95613821819', '-2.219369949734'] -> Angstrom=[0.8763597811248759, -0.5059665555395483, -1.1744399999621693]
+FAKE_FREQ CONVERSION: H Bohr=['-1.656079972963', '-0.95613821819', '-2.219369949734'] -> Angstrom=[-0.8763597811248759, -0.5059665555395483, -1.1744399999621693]
+FAKE_FREQ CONVERSION: H Bohr=['0.0', '1.912276436379', '-2.219369949734'] -> Angstrom=[0.0, 1.0119331110785672, -1.1744399999621693]
+Checking original directory for Gaussian input: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h
+Found Gaussian input file with External keyword: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/C2H6_D3h.gjf
+GEOMETRY CONVERSION: Task 'central' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.        0.        1.4558639], Angstrom = [0.      0.      0.77041]
+GEOMETRY CONVERSION: Task 'atom_1_ixyz_1_up' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.00188973 0.         1.4558639 ], Angstrom = [0.001   0.      0.77041]
+GEOMETRY CONVERSION: Task 'atom_1_ixyz_2_up' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.         0.00188973 1.4558639 ], Angstrom = [0.      0.001   0.77041]
+GEOMETRY CONVERSION: Task 'atom_1_ixyz_2_down' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [ 0.         -0.00188973  1.4558639 ], Angstrom = [ 0.      -0.001    0.77041]
+GEOMETRY CONVERSION: Task 'atom_1_ixyz_3_up' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.         0.         1.45775363], Angstrom = [0.      0.      0.77141]
+GEOMETRY CONVERSION: Task 'atom_1_ixyz_3_down' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.         0.         1.45397418], Angstrom = [0.      0.      0.76941]
+GEOMETRY CONVERSION: Task 'atom_2_ixyz_1_up' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.        0.        1.4558639], Angstrom = [0.      0.      0.77041]
+GEOMETRY CONVERSION: Task 'atom_2_ixyz_2_up' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.        0.        1.4558639], Angstrom = [0.      0.      0.77041]
+GEOMETRY CONVERSION: Task 'atom_2_ixyz_2_down' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.        0.        1.4558639], Angstrom = [0.      0.      0.77041]
+GEOMETRY CONVERSION: Task 'atom_2_ixyz_3_up' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.        0.        1.4558639], Angstrom = [0.      0.      0.77041]
+GEOMETRY CONVERSION: Task 'atom_2_ixyz_3_down' - Converted from Bohr to Angstrom
+  First atom coordinates: Bohr = [0.        0.        1.4558639], Angstrom = [0.      0.      0.77041]
+✓ Extracted Input orientation (8 atoms)
+✓ Extracted Original coordinates (8 atoms)
+DEBUG: Preserved fake frequency log as FAKE_FREQ/fake_freq_1.log
+DEBUG: Expected atoms: 8
+DEBUG: Task central: 8 atoms
+DEBUG: Task atom_1_ixyz_2_up: 8 atoms
+DEBUG: Task atom_1_ixyz_2_down: 8 atoms
+DEBUG: Task atom_1_ixyz_3_up: 8 atoms
+DEBUG: Task atom_1_ixyz_3_down: 8 atoms
+DEBUG: Task atom_2_ixyz_2_up: 8 atoms
+DEBUG: Task atom_2_ixyz_2_down: 8 atoms
+DEBUG: Task atom_2_ixyz_3_up: 8 atoms
+DEBUG: Task atom_2_ixyz_3_down: 8 atoms
+DEBUG: All geometries have correct atom count (8)
+
+================================================================================
+STANDARD NUMERICAL GRADIENT MODE (no dens=2 detected)
+================================================================================
+Created iteration directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1
+INFO: This is iteration number 1
+INFO: Running numerical gradient calculation in iteration 1
+Running parallel energy calculations with 2 threads
+TASK SUBMISSION: Submitting 9 tasks
+  - Task: central
+  - Task: atom_1_ixyz_2_up
+  - Task: atom_1_ixyz_2_down
+  - Task: atom_1_ixyz_3_up
+  - Task: atom_1_ixyz_3_down
+  - Task: atom_2_ixyz_2_up
+  - Task: atom_2_ixyz_2_down
+  - Task: atom_2_ixyz_3_up
+  - Task: atom_2_ixyz_3_down
+PARALLEL EXECUTION: Starting with 2 workers
+PARALLEL EXECUTION: Total tasks to execute: 9
+PARALLEL EXECUTION: Submitted tasks: ['atom_1_ixyz_2_down', 'atom_1_ixyz_2_up', 'atom_1_ixyz_3_down', 'atom_1_ixyz_3_up', 'atom_2_ixyz_2_down', 'atom_2_ixyz_2_up', 'atom_2_ixyz_3_down', 'atom_2_ixyz_3_up', 'central']
+PARALLEL EXECUTION: Submitted 9 futures to executor
+UNIT CONVERSION: Task 'central' - Wrote .EIn file in BohrUNIT CONVERSION: Task 'atom_1_ixyz_2_up' - Wrote .EIn file in Bohr
+
+  First atom: Angstrom = [0.      0.      0.77041], Bohr = [0.        0.        1.4558639]
+  First atom: Angstrom = [0.      0.001   0.77041], Bohr = [0.         0.00188973 1.4558639 ]THREAD-23333255509760: Starting execution for task 'central'
+
+THREAD-23333253408512: Starting execution for task 'atom_1_ixyz_2_up'THREAD-23333255509760: Task directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1/task_central
+
+THREAD-23333253408512: Task directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1/task_atom_1_ixyz_2_up
+THREAD-23333255509760: Input file: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1/task_central/Gau-central.EIn
+THREAD-23333253408512: Input file: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1/task_atom_1_ixyz_2_up/Gau-atom_1_ixyz_2_up.EIn
+THREAD-23333255509760: Original working directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h
+THREAD-23333255509760: Test mode: False
+THREAD-23333253408512: Original working directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3hTHREAD-23333255509760: Executing command: /home/barone/lcrisci_vb/python3.9/bin/python3.9 /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Executables/GauExt test_pr.dat test_en.dat 7 10 READ R Gau-central.EIn energy_output.dat
+
+THREAD-23333253408512: Test mode: False
+THREAD-23333255509760: Working directory for subprocess: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1/task_central
+THREAD-23333253408512: Executing command: /home/barone/lcrisci_vb/python3.9/bin/python3.9 /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Executables/GauExt test_pr.dat test_en.dat 7 10 READ R Gau-atom_1_ixyz_2_up.EIn energy_output.dat
+THREAD-23333253408512: Working directory for subprocess: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1/task_atom_1_ixyz_2_up
+THREAD-23333255509760: Subprocess completed successfully
+THREAD-23333255509760: Subprocess stdout (last 200 chars): d !scheme section at line 1.
+    Line 2: Found coefficient: 1.0
+  Found !formula marker at line 3
+    Found formula at line 4: e=c1*e1
+Finished parsing scheme: [('coeff', 1.0)]
+Found formula: e=c1*e1
+
+THREAD-23333255509760: Output file path: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1/task_central/energy_output.dat
+THREAD-23333255509760: Already in original directory /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h
+PARALLEL EXECUTION: Task 'central' completed successfully with energy -78.301368986759
+UNIT CONVERSION: Task 'atom_1_ixyz_2_down' - Wrote .EIn file in Bohr
+  First atom: Angstrom = [ 0.      -0.001    0.77041], Bohr = [ 0.         -0.00188973  1.4558639 ]
+THREAD-23333255509760: Starting execution for task 'atom_1_ixyz_2_down'
+THREAD-23333255509760: Task directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1/task_atom_1_ixyz_2_down
+THREAD-23333255509760: Input file: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1/task_atom_1_ixyz_2_down/Gau-atom_1_ixyz_2_down.EIn
+THREAD-23333255509760: Original working directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h
+THREAD-23333255509760: Test mode: False
+THREAD-23333255509760: Executing command: /home/barone/lcrisci_vb/python3.9/bin/python3.9 /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Executables/GauExt test_pr.dat test_en.dat 7 10 READ R Gau-atom_1_ixyz_2_down.EIn energy_output.dat
+THREAD-23333255509760: Working directory for subprocess: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1/task_atom_1_ixyz_2_down
+THREAD-23333253408512: Subprocess completed successfully
+THREAD-23333253408512: Subprocess stdout (last 200 chars): d !scheme section at line 1.
+    Line 2: Found coefficient: 1.0
+  Found !formula marker at line 3
+    Found formula at line 4: e=c1*e1
+Finished parsing scheme: [('coeff', 1.0)]
+Found formula: e=c1*e1
+
+THREAD-23333253408512: Output file path: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1/task_atom_1_ixyz_2_up/energy_output.dat
+THREAD-23333253408512: Already in original directory /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h
+PARALLEL EXECUTION: Task 'atom_1_ixyz_2_up' completed successfully with energy -78.30136749345
+UNIT CONVERSION: Task 'atom_1_ixyz_3_up' - Wrote .EIn file in Bohr
+  First atom: Angstrom = [0.      0.      0.77141], Bohr = [0.         0.         1.45775363]
+THREAD-23333253408512: Starting execution for task 'atom_1_ixyz_3_up'
+THREAD-23333253408512: Task directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1/task_atom_1_ixyz_3_up
+THREAD-23333253408512: Input file: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1/task_atom_1_ixyz_3_up/Gau-atom_1_ixyz_3_up.EIn
+THREAD-23333253408512: Original working directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h
+THREAD-23333253408512: Test mode: False
+THREAD-23333253408512: Executing command: /home/barone/lcrisci_vb/python3.9/bin/python3.9 /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Executables/GauExt test_pr.dat test_en.dat 7 10 READ R Gau-atom_1_ixyz_3_up.EIn energy_output.dat
+THREAD-23333253408512: Working directory for subprocess: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1/task_atom_1_ixyz_3_up
+THREAD-23333255509760: Subprocess completed successfully
+THREAD-23333255509760: Subprocess stdout (last 200 chars): d !scheme section at line 1.
+    Line 2: Found coefficient: 1.0
+  Found !formula marker at line 3
+    Found formula at line 4: e=c1*e1
+Finished parsing scheme: [('coeff', 1.0)]
+Found formula: e=c1*e1
+
+THREAD-23333255509760: Output file path: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1/task_atom_1_ixyz_2_down/energy_output.dat
+THREAD-23333255509760: Already in original directory /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h
+PARALLEL EXECUTION: Task 'atom_1_ixyz_2_down' completed successfully with energy -78.301367496045
+UNIT CONVERSION: Task 'atom_1_ixyz_3_down' - Wrote .EIn file in Bohr
+  First atom: Angstrom = [0.      0.      0.76941], Bohr = [0.         0.         1.45397418]
+THREAD-23333255509760: Starting execution for task 'atom_1_ixyz_3_down'
+THREAD-23333255509760: Task directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1/task_atom_1_ixyz_3_down
+THREAD-23333255509760: Input file: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1/task_atom_1_ixyz_3_down/Gau-atom_1_ixyz_3_down.EIn
+THREAD-23333255509760: Original working directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h
+THREAD-23333255509760: Test mode: False
+THREAD-23333255509760: Executing command: /home/barone/lcrisci_vb/python3.9/bin/python3.9 /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Executables/GauExt test_pr.dat test_en.dat 7 10 READ R Gau-atom_1_ixyz_3_down.EIn energy_output.dat
+THREAD-23333255509760: Working directory for subprocess: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1/task_atom_1_ixyz_3_down
+THREAD-23333253408512: Subprocess completed successfully
+THREAD-23333253408512: Subprocess stdout (last 200 chars): d !scheme section at line 1.
+    Line 2: Found coefficient: 1.0
+  Found !formula marker at line 3
+    Found formula at line 4: e=c1*e1
+Finished parsing scheme: [('coeff', 1.0)]
+Found formula: e=c1*e1
+
+THREAD-23333253408512: Output file path: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1/task_atom_1_ixyz_3_up/energy_output.dat
+THREAD-23333253408512: Already in original directory /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h
+PARALLEL EXECUTION: Task 'atom_1_ixyz_3_up' completed successfully with energy -78.3013911684
+UNIT CONVERSION: Task 'atom_2_ixyz_2_up' - Wrote .EIn file in Bohr
+  First atom: Angstrom = [0.      0.      0.77041], Bohr = [0.        0.        1.4558639]
+THREAD-23333253408512: Starting execution for task 'atom_2_ixyz_2_up'
+THREAD-23333253408512: Task directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1/task_atom_2_ixyz_2_up
+THREAD-23333253408512: Input file: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1/task_atom_2_ixyz_2_up/Gau-atom_2_ixyz_2_up.EIn
+THREAD-23333253408512: Original working directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h
+THREAD-23333253408512: Test mode: False
+THREAD-23333253408512: Executing command: /home/barone/lcrisci_vb/python3.9/bin/python3.9 /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Executables/GauExt test_pr.dat test_en.dat 7 10 READ R Gau-atom_2_ixyz_2_up.EIn energy_output.dat
+THREAD-23333253408512: Working directory for subprocess: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1/task_atom_2_ixyz_2_up
+THREAD-23333255509760: Subprocess completed successfully
+THREAD-23333255509760: Subprocess stdout (last 200 chars): d !scheme section at line 1.
+    Line 2: Found coefficient: 1.0
+  Found !formula marker at line 3
+    Found formula at line 4: e=c1*e1
+Finished parsing scheme: [('coeff', 1.0)]
+Found formula: e=c1*e1
+
+THREAD-23333255509760: Output file path: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1/task_atom_1_ixyz_3_down/energy_output.dat
+THREAD-23333255509760: Already in original directory /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h
+PARALLEL EXECUTION: Task 'atom_1_ixyz_3_down' completed successfully with energy -78.301344147536
+UNIT CONVERSION: Task 'atom_2_ixyz_2_down' - Wrote .EIn file in Bohr
+  First atom: Angstrom = [0.      0.      0.77041], Bohr = [0.        0.        1.4558639]
+THREAD-23333255509760: Starting execution for task 'atom_2_ixyz_2_down'
+THREAD-23333255509760: Task directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1/task_atom_2_ixyz_2_down
+THREAD-23333255509760: Input file: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1/task_atom_2_ixyz_2_down/Gau-atom_2_ixyz_2_down.EIn
+THREAD-23333255509760: Original working directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h
+THREAD-23333255509760: Test mode: False
+THREAD-23333255509760: Executing command: /home/barone/lcrisci_vb/python3.9/bin/python3.9 /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Executables/GauExt test_pr.dat test_en.dat 7 10 READ R Gau-atom_2_ixyz_2_down.EIn energy_output.dat
+THREAD-23333255509760: Working directory for subprocess: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1/task_atom_2_ixyz_2_down
+THREAD-23333253408512: Subprocess completed successfully
+THREAD-23333253408512: Subprocess stdout (last 200 chars): d !scheme section at line 1.
+    Line 2: Found coefficient: 1.0
+  Found !formula marker at line 3
+    Found formula at line 4: e=c1*e1
+Finished parsing scheme: [('coeff', 1.0)]
+Found formula: e=c1*e1
+
+THREAD-23333253408512: Output file path: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1/task_atom_2_ixyz_2_up/energy_output.dat
+THREAD-23333253408512: Already in original directory /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h
+PARALLEL EXECUTION: Task 'atom_2_ixyz_2_up' completed successfully with energy -78.301363624182
+UNIT CONVERSION: Task 'atom_2_ixyz_3_up' - Wrote .EIn file in Bohr
+  First atom: Angstrom = [0.      0.      0.77041], Bohr = [0.        0.        1.4558639]
+THREAD-23333253408512: Starting execution for task 'atom_2_ixyz_3_up'
+THREAD-23333253408512: Task directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1/task_atom_2_ixyz_3_up
+THREAD-23333253408512: Input file: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1/task_atom_2_ixyz_3_up/Gau-atom_2_ixyz_3_up.EIn
+THREAD-23333253408512: Original working directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h
+THREAD-23333253408512: Test mode: False
+THREAD-23333253408512: Executing command: /home/barone/lcrisci_vb/python3.9/bin/python3.9 /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Executables/GauExt test_pr.dat test_en.dat 7 10 READ R Gau-atom_2_ixyz_3_up.EIn energy_output.dat
+THREAD-23333253408512: Working directory for subprocess: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1/task_atom_2_ixyz_3_up
+THREAD-23333255509760: Subprocess completed successfully
+THREAD-23333255509760: Subprocess stdout (last 200 chars): d !scheme section at line 1.
+    Line 2: Found coefficient: 1.0
+  Found !formula marker at line 3
+    Found formula at line 4: e=c1*e1
+Finished parsing scheme: [('coeff', 1.0)]
+Found formula: e=c1*e1
+
+THREAD-23333255509760: Output file path: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1/task_atom_2_ixyz_2_down/energy_output.dat
+THREAD-23333255509760: Already in original directory /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h
+PARALLEL EXECUTION: Task 'atom_2_ixyz_2_down' completed successfully with energy -78.30137284449
+UNIT CONVERSION: Task 'atom_2_ixyz_3_down' - Wrote .EIn file in Bohr
+  First atom: Angstrom = [0.      0.      0.77041], Bohr = [0.        0.        1.4558639]
+THREAD-23333255509760: Starting execution for task 'atom_2_ixyz_3_down'
+THREAD-23333255509760: Task directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1/task_atom_2_ixyz_3_down
+THREAD-23333255509760: Input file: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1/task_atom_2_ixyz_3_down/Gau-atom_2_ixyz_3_down.EIn
+THREAD-23333255509760: Original working directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h
+THREAD-23333255509760: Test mode: False
+THREAD-23333255509760: Executing command: /home/barone/lcrisci_vb/python3.9/bin/python3.9 /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Executables/GauExt test_pr.dat test_en.dat 7 10 READ R Gau-atom_2_ixyz_3_down.EIn energy_output.dat
+THREAD-23333255509760: Working directory for subprocess: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1/task_atom_2_ixyz_3_down
+THREAD-23333253408512: Subprocess completed successfully
+THREAD-23333253408512: Subprocess stdout (last 200 chars): d !scheme section at line 1.
+    Line 2: Found coefficient: 1.0
+  Found !formula marker at line 3
+    Found formula at line 4: e=c1*e1
+Finished parsing scheme: [('coeff', 1.0)]
+Found formula: e=c1*e1
+
+THREAD-23333253408512: Output file path: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1/task_atom_2_ixyz_3_up/energy_output.dat
+THREAD-23333253408512: Already in original directory /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h
+PARALLEL EXECUTION: Task 'atom_2_ixyz_3_up' completed successfully with energy -78.30136288611
+THREAD-23333255509760: Subprocess completed successfully
+THREAD-23333255509760: Subprocess stdout (last 200 chars): d !scheme section at line 1.
+    Line 2: Found coefficient: 1.0
+  Found !formula marker at line 3
+    Found formula at line 4: e=c1*e1
+Finished parsing scheme: [('coeff', 1.0)]
+Found formula: e=c1*e1
+
+THREAD-23333255509760: Output file path: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1/task_atom_2_ixyz_3_down/energy_output.dat
+THREAD-23333255509760: Already in original directory /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h
+PARALLEL EXECUTION: Task 'atom_2_ixyz_3_down' completed successfully with energy -78.30137462965
+PARALLEL EXECUTION: Completed tasks: ['atom_1_ixyz_2_down', 'atom_1_ixyz_2_up', 'atom_1_ixyz_3_down', 'atom_1_ixyz_3_up', 'atom_2_ixyz_2_down', 'atom_2_ixyz_2_up', 'atom_2_ixyz_3_down', 'atom_2_ixyz_3_up', 'central']
+PARALLEL EXECUTION: Failed tasks: []
+PARALLEL EXECUTION: All 9 tasks completed successfully
+TASK COMPLETION: Received 9 results
+  - Task central: Energy = -78.301368986759
+  - Task atom_1_ixyz_2_up: Energy = -78.30136749345
+  - Task atom_1_ixyz_2_down: Energy = -78.301367496045
+  - Task atom_1_ixyz_3_up: Energy = -78.3013911684
+  - Task atom_1_ixyz_3_down: Energy = -78.301344147536
+  - Task atom_2_ixyz_2_up: Energy = -78.301363624182
+  - Task atom_2_ixyz_2_down: Energy = -78.30137284449
+  - Task atom_2_ixyz_3_up: Energy = -78.30136288611
+  - Task atom_2_ixyz_3_down: Energy = -78.30137462965
+WARNING: Could not find point group information in log file
+Returning minimal PointGroupInfo with empty operations (will use fallback)
+ADVANCED SYMMETRY: Using Unknown point group
+ADVANCED SYMMETRY: 0 operations found in log
+ADVANCED SYMMETRY: Applying symmetry-aware gradient assembly
+  (with automatic inference from forces if needed)
+AUTO-DETECT: Found R_coords with RMSD = 4.36e-13 Bohr
+Gradient transformation matrix R^T (original → central):
+  [1. 0. 0.]
+  [0. 1. 0.]
+  [0. 0. 1.]
+
+⚠ No explicit symmetry operations found in log
+Attempting to infer operations from forces...
+
+=== INFERRING SYMMETRY OPERATIONS FROM FORCES ===
+Atoms with displacements: [0, 1]
+Atoms to infer: [2, 3, 4, 5, 6, 7]
+Testing 60 transformation matrices...
+Operation 2: Atom 1→2, RMSD=7.80e-11, Non-Abelian
+  Transformation matrix:
+    [-0.5        0.8660254  0.       ]
+    [-0.8660254 -0.5        0.       ]
+    [0. 0. 1.]
+  Nuclear permutation: [0, 2, 3, 1, 4, 6, 7, 5]
+Operation 3: Atom 1→3, RMSD=7.80e-11, Non-Abelian
+  Transformation matrix:
+    [-0.5       -0.8660254  0.       ]
+    [ 0.8660254 -0.5        0.       ]
+    [0. 0. 1.]
+  Nuclear permutation: [0, 3, 1, 2, 4, 7, 5, 6]
+Operation 4: Atom 0→4, RMSD=0.00e+00, Abelian
+  Transformation matrix:
+    [1. 0. 0.]
+    [0. 1. 0.]
+    [ 0.  0. -1.]
+  Nuclear permutation: [4, 7, 5, 6, 0, 2, 3, 1]
+WARNING: No transformation found for atom 5 (RMSD > 1e-05)
+WARNING: No transformation found for atom 6 (RMSD > 1e-05)
+Operation 5: Atom 1→7, RMSD=0.00e+00, Abelian
+  Transformation matrix:
+    [1. 0. 0.]
+    [0. 1. 0.]
+    [ 0.  0. -1.]
+  Nuclear permutation: [4, 7, 5, 6, 0, 2, 3, 1]
+✓ Inferred 5 operations (including identity)
+✓ Successfully inferred 5 operations from forces
+
+=== MOLECULAR SYMMETRY CONSTRAINTS ===
+SYMMETRY CONSTRAINT: Atom 1, Axis 1 = 0.000000000 (missing displacement)
+SYMMETRY CONSTRAINT: Atom 2, Axis 1 = 0.000000000 (missing displacement)
+SYMMETRY CONSTRAINT: Atom 5, Axis 1 = 0.000000000 (symmetry element)
+SYMMETRY CONSTRAINT: Atom 5, Axis 1 = 0.000000000 (symmetry element)
+SYMMETRY CONSTRAINT: Atom 8, Axis 1 = 0.000000000 (symmetry element)
+SYMMETRY CONSTRAINT: Atom 8, Axis 1 = 0.000000000 (symmetry element)
+
+=== DIRECT CALCULATIONS ===
+DIRECT CALCULATION: Atom 1, Axis 2 = 0.00000069
+DIRECT CALCULATION: Atom 1, Axis 3 = -0.01244118
+DIRECT CALCULATION: Atom 2, Axis 2 = 0.00243959
+DIRECT CALCULATION: Atom 2, Axis 3 = 0.00310721
+SYMMETRY PROPAGATION: Atom 3 from Atom 2 via operation 2
+  Source gradient: [0.         0.00243959 0.00310721]
+  Transformation matrix:
+    [-0.5        0.8660254  0.       ]
+    [-0.8660254 -0.5        0.       ]
+    [0. 0. 1.]
+  Result gradient: [ 0.00211275 -0.00121979  0.00310721]
+SYMMETRY PROPAGATION: Atom 4 from Atom 3 via operation 2
+  Source gradient: [ 0.00211275 -0.00121979  0.00310721]
+  Transformation matrix:
+    [-0.5        0.8660254  0.       ]
+    [-0.8660254 -0.5        0.       ]
+    [0. 0. 1.]
+  Result gradient: [-0.00211275 -0.00121979  0.00310721]
+SYMMETRY PROPAGATION: Atom 5 from Atom 1 via operation 4
+  Source gradient: [ 0.00000000e+00  6.86607840e-07 -1.24411848e-02]
+  Transformation matrix:
+    [1. 0. 0.]
+    [0. 1. 0.]
+    [ 0.  0. -1.]
+  Result gradient: [0.00000000e+00 6.86607840e-07 1.24411848e-02]
+SYMMETRY PROPAGATION: Atom 6 from Atom 3 via operation 4
+  Source gradient: [ 0.00211275 -0.00121979  0.00310721]
+  Transformation matrix:
+    [1. 0. 0.]
+    [0. 1. 0.]
+    [ 0.  0. -1.]
+  Result gradient: [ 0.00211275 -0.00121979 -0.00310721]
+SYMMETRY PROPAGATION: Atom 7 from Atom 6 via operation 2
+  Source gradient: [ 0.00211275 -0.00121979 -0.00310721]
+  Transformation matrix:
+    [-0.5        0.8660254  0.       ]
+    [-0.8660254 -0.5        0.       ]
+    [0. 0. 1.]
+  Result gradient: [-0.00211275 -0.00121979 -0.00310721]
+SYMMETRY PROPAGATION: Atom 8 from Atom 7 via operation 2
+  Source gradient: [-0.00211275 -0.00121979 -0.00310721]
+  Transformation matrix:
+    [-0.5        0.8660254  0.       ]
+    [-0.8660254 -0.5        0.       ]
+    [0. 0. 1.]
+  Result gradient: [ 3.75717316e-18  2.43958844e-03 -3.10720687e-03]
+
+=== VALIDATION ===
+CONSTRAINT VERIFIED: Atom 1, Axis 1 = 0.000000000
+CONSTRAINT VERIFIED: Atom 2, Axis 1 = 0.000000000
+SYMMETRY EFFICIENCY: 62.5% computational reduction
+SYMMETRY EFFICIENCY: 9/24 components calculated
+NUMERICAL WORKFLOW: Gradient shape: (8, 3)
+NUMERICAL WORKFLOW: Central energy: -78.301368986759
+
+DEBUG: Writing output to /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Gau-4154400.EOu
+DEBUG: Current directory: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h
+DEBUG: Central energy: -78.301368986759
+DEBUG: Gradient shape: (8, 3)
+DEBUG: Output written successfully
+DEBUG: File exists: True
+SUCCESS: Parallel gradient calculation completed using iteration 1
+Task directories preserved in: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Iterations/Iteration_1
+ Recovered energy= -78.3013689868     dipole=      0.000000000000      0.000000000000      0.000000000000
+ Energy=    -78.3013690     NIter=   0.
+ Dipole moment=       0.000000       0.000000       0.000000
+ Leave Link  402 at Wed Nov 19 18:15:49 2025, MaxMem=   104857600 cpu:               0.1 elap:              45.0
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l601.exe)
+ Leave Link  601 at Wed Nov 19 18:15:49 2025, MaxMem=   104857600 cpu:               0.1 elap:               0.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l716.exe)
+ Dipole        = 0.00000000D+00 0.00000000D+00 0.00000000D+00
+ ***** Axes restored to original set *****
+ -------------------------------------------------------------------
+ Center     Atomic                   Forces (Hartrees/Bohr)
+ Number     Number              X              Y              Z
+ -------------------------------------------------------------------
+      1        6           0.000000000   -0.000000687   -0.012441185
+      2        1           0.000000000   -0.002439588    0.003107207
+      3        1           0.002112746    0.001219794    0.003107207
+      4        1          -0.002112746    0.001219794    0.003107207
+      5        6           0.000000000   -0.000000687    0.012441185
+      6        1           0.002112746    0.001219794   -0.003107207
+      7        1          -0.002112746    0.001219794   -0.003107207
+      8        1           0.000000000   -0.002439588   -0.003107207
+ -------------------------------------------------------------------
+ Cartesian Forces:  Max     0.012441185 RMS     0.004098801
+ Leave Link  716 at Wed Nov 19 18:15:49 2025, MaxMem=   104857600 cpu:               0.1 elap:               0.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l9999.exe)
+ Unable to Open any file for archive entry.
+ 1\1\GINC-THIOTIMOLINE-LARGE01\Force\External='CentralExt gau $PGAU/tes
+ t_pr.dat $EGAU/test_en.dat 7 10 read parall 2'\ZDO\C2H6\LCRISCI_VB\19-
+ Nov-2025\0\\#p force output=pickett External="CentralExt gau $PGAU/tes
+ t_pr.dat $EGAU/test_en.dat 7 10 read parall 2"\\title\\0,1\C,0.,-0.000
+ 0001111,-0.77041\H,0.,1.011933,-1.17444\H,-0.8763597812,-0.5059666667,
+ -1.17444\H,0.8763597812,-0.5059666667,-1.17444\C,0.,-0.0000001111,0.77
+ 041\H,-0.8763597812,-0.5059666667,1.17444\H,0.8763597812,-0.5059666667
+ ,1.17444\H,0.,1.011933,1.17444\\Version=ES64L-G16RevC.01\HF=-78.301369
+ \RMSD=0.000e+00\RMSF=4.099e-03\Dipole=0.,0.,0.\PG=D03H [C3(C1.C1),3SGV
+ (H2)]\\@
+ The archive entry for this job was punched.
+ DoSRE=F DoSRN=F DoDH=F DoFC=F DoNQ=F DoQCD=F DoSCD=F
+ Inertia tensor (amu-bohr**2): 
+                 1             2             3 
+      1   0.917101D+02  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.917101D+02  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.221125D+02
+ Principal inertia moments (amu-bohr**2):
+ Iaa = 0.221125D+02 Ibb= 0.917101D+02 Icc= 0.917101D+02
+ Rotation matrix to Principal Axis frame: 
+                 1             2             3 
+      1   0.000000D+00  0.100000D+01  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.100000D+01
+      3   0.100000D+01  0.000000D+00  0.000000D+00
+                Principal axis orientation:                
+ ---------------------------------------------------------------------
+ Center     Atomic                     Coordinates (Angstroms)
+ Number     Number                        X           Y           Z
+ ---------------------------------------------------------------------
+      1          6                   -0.770410   -0.000000    0.000000
+      2          1                   -1.174440   -0.000000    1.011933
+      3          1                   -1.174440   -0.876360   -0.505967
+      4          1                   -1.174440    0.876360   -0.505967
+      5          6                    0.770410   -0.000000    0.000000
+      6          1                    1.174440   -0.876360   -0.505967
+      7          1                    1.174440    0.876360   -0.505967
+      8          1                    1.174440   -0.000000    1.011933
+ ---------------------------------------------------------------------
+ Rotational constants (MHZ):
+  81616.3545907  19678.7667963  19678.7667963
+ Dipole moment (Debye):
+      0.0000000      0.0000000      0.0000000  Tot=      0.0000000
+
+ Atoms with significant hyperfine tensors: 
+
+--------------------------------------------------------------------------------
+ title                                                   
+   99  1000  50  0.1760E-11  0.1000E+07  0.1000E+01 1.0000000000
+a   1  0  0  0  1  1   1  0  1  0
+     10000   0.81616355E+05    0.0000E+00   /  A  /
+     20000   0.19678767E+05    0.0000E+00   /  B  /
+     30000   0.19678767E+05    0.0000E+00   /  C  /
+--------------------------------------------------------------------------------
+
+ Punch of MOs requested, but none found.
+
+
+ THE VALUE OF PHILOSOPHY IS, IN FACT, TO BE SOUGHT LARGELY IN ITS
+ VERY UNCERTAINTY.  THE MAN WHO HAS NO TINCTURE OF PHILOSOPHY GOES
+ THROUGH LIFE IMPRISONED IN THE PREJUDICES DERIVED FROM COMMON SENSE,
+ FROM THE HABITUAL BELIEFS OF HIS AGE OR HIS NATION, AND FROM
+ CONVICTIONS WHICH HAVE GROWN UP IN HIS MIND WITHOUT THE CO-OPERATION
+ OR CONSENT OF HIS DELIBERATE REASON.  TO SUCH A MAN THE WORLD TENDS
+ TO BE DEFINITE, FINITE, OBVIOUS; COMMON OBJECTS ROUSE NO QUESTIONS,
+ AND UNFAMILIAR POSSIBILITIES ARE CONTEMPTUOUSLY REJECTED.
+
+                             -- BERTRAND RUSSELL
+ Job cpu time:       0 days  0 hours  0 minutes  0.7 seconds.
+ Elapsed time:       0 days  0 hours  0 minutes 46.1 seconds.
+ File lengths (MBytes):  RWF=      5 Int=      0 D2E=      0 Chk=      1 Scr=      1
+ Normal termination of Gaussian 16 at Wed Nov 19 18:15:49 2025.
+ Initial command:
+ /gaussian/g16.c01/intel64-sandybridge/g16/l1.exe "/home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/Gau-4154399.inp" -scrdir="/home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/C2H6_D3h/"
+ Entering Link 1 = /gaussian/g16.c01/intel64-sandybridge/g16/l1.exe PID=   4155041.
+  
+ Copyright (c) 1988-2019, Gaussian, Inc.  All Rights Reserved.
+  
+ This is part of the Gaussian(R) 16 program.  It is based on
+ the Gaussian(R) 09 system (copyright 2009, Gaussian, Inc.),
+ the Gaussian(R) 03 system (copyright 2003, Gaussian, Inc.),
+ the Gaussian(R) 98 system (copyright 1998, Gaussian, Inc.),
+ the Gaussian(R) 94 system (copyright 1995, Gaussian, Inc.),
+ the Gaussian 92(TM) system (copyright 1992, Gaussian, Inc.),
+ the Gaussian 90(TM) system (copyright 1990, Gaussian, Inc.),
+ the Gaussian 88(TM) system (copyright 1988, Gaussian, Inc.),
+ the Gaussian 86(TM) system (copyright 1986, Carnegie Mellon
+ University), and the Gaussian 82(TM) system (copyright 1983,
+ Carnegie Mellon University). Gaussian is a federally registered
+ trademark of Gaussian, Inc.
+  
+ This software contains proprietary and confidential information,
+ including trade secrets, belonging to Gaussian, Inc.
+  
+ This software is provided under written license and may be
+ used, copied, transmitted, or stored only in accord with that
+ written license.
+  
+ The following legend is applicable only to US Government
+ contracts under FAR:
+  
+                    RESTRICTED RIGHTS LEGEND
+  
+ Use, reproduction and disclosure by the US Government is
+ subject to restrictions as set forth in subparagraphs (a)
+ and (c) of the Commercial Computer Software - Restricted
+ Rights clause in FAR 52.227-19.
+  
+ Gaussian, Inc.
+ 340 Quinnipiac St., Bldg. 40, Wallingford CT 06492
+  
+  
+ ---------------------------------------------------------------
+ Warning -- This program may not be used in any manner that
+ competes with the business of Gaussian, Inc. or will provide
+ assistance to any competitor of Gaussian, Inc.  The licensee
+ of this program is prohibited from giving any competitor of
+ Gaussian, Inc. access to this program.  By using this program,
+ the user acknowledges that Gaussian, Inc. is engaged in the
+ business of creating and licensing software in the field of
+ computational chemistry and represents and warrants to the
+ licensee that it is not a competitor of Gaussian, Inc. and that
+ it will not use this program in any manner prohibited above.
+ ---------------------------------------------------------------
+  
+
+ Cite this work as:
+ Gaussian 16, Revision C.01,
+ M. J. Frisch, G. W. Trucks, H. B. Schlegel, G. E. Scuseria, 
+ M. A. Robb, J. R. Cheeseman, G. Scalmani, V. Barone, 
+ G. A. Petersson, H. Nakatsuji, X. Li, M. Caricato, A. V. Marenich, 
+ J. Bloino, B. G. Janesko, R. Gomperts, B. Mennucci, H. P. Hratchian, 
+ J. V. Ortiz, A. F. Izmaylov, J. L. Sonnenberg, D. Williams-Young, 
+ F. Ding, F. Lipparini, F. Egidi, J. Goings, B. Peng, A. Petrone, 
+ T. Henderson, D. Ranasinghe, V. G. Zakrzewski, J. Gao, N. Rega, 
+ G. Zheng, W. Liang, M. Hada, M. Ehara, K. Toyota, R. Fukuda, 
+ J. Hasegawa, M. Ishida, T. Nakajima, Y. Honda, O. Kitao, H. Nakai, 
+ T. Vreven, K. Throssell, J. A. Montgomery, Jr., J. E. Peralta, 
+ F. Ogliaro, M. J. Bearpark, J. J. Heyd, E. N. Brothers, K. N. Kudin, 
+ V. N. Staroverov, T. A. Keith, R. Kobayashi, J. Normand, 
+ K. Raghavachari, A. P. Rendell, J. C. Burant, S. S. Iyengar, 
+ J. Tomasi, M. Cossi, J. M. Millam, M. Klene, C. Adamo, R. Cammi, 
+ J. W. Ochterski, R. L. Martin, K. Morokuma, O. Farkas, 
+ J. B. Foresman, and D. J. Fox, Gaussian, Inc., Wallingford CT, 2019.
+ 
+ ******************************************
+ Gaussian 16:  ES64L-G16RevC.01  3-Jul-2019
+                19-Nov-2025 
+ ******************************************
+ %chk=test_parall.chk
+ %nprocs=1
+ Will use up to    1 processors via shared memory.
+ ------------------
+ #p force hf/sto-3g
+ ------------------
+ 1/10=7,30=1,38=1/1,3;
+ 2/12=2,17=6,18=5,40=1/2;
+ 3/6=3,11=9,25=1,30=1,71=1/1,2,3;
+ 4//1;
+ 5/5=2,38=5/2;
+ 6/7=2,8=2,9=2,10=2,28=1/1;
+ 7/29=1/1,2,3,16;
+ 1/10=7,30=1/3;
+ 99//99;
+ Leave Link    1 at Wed Nov 19 18:15:49 2025, MaxMem=           0 cpu:               0.0 elap:               0.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l101.exe)
+ -----
+ title
+ -----
+ Symbolic Z-matrix:
+ Charge =  0 Multiplicity = 1
+ 6                     0.        0.       -0.77041 
+ 1                     0.        1.01193  -1.17444 
+ 1                    -0.87636  -0.50597  -1.17444 
+ 1                     0.87636  -0.50597  -1.17444 
+ 6                     0.        0.        0.77041 
+ 1                    -0.87636  -0.50597   1.17444 
+ 1                     0.87636  -0.50597   1.17444 
+ 1                     0.        1.01193   1.17444 
+ 
+ ITRead=  0  0  0  0  0  0  0  0
+ MicOpt= -1 -1 -1 -1 -1 -1 -1 -1
+ NAtoms=      8 NQM=        8 NQMF=       0 NMMI=      0 NMMIF=      0
+                NMic=       0 NMicF=      0.
+                    Isotopes and Nuclear Properties:
+ (Nuclear quadrupole moments (NQMom) in fm**2, nuclear magnetic moments (NMagM)
+  in nuclear magnetons)
+
+  Atom         1           2           3           4           5           6           7           8
+ IAtWgt=          12           1           1           1          12           1           1           1
+ AtmWgt=  12.0000000   1.0078250   1.0078250   1.0078250  12.0000000   1.0078250   1.0078250   1.0078250
+ NucSpn=           0           1           1           1           0           1           1           1
+ AtZEff=  -0.0000000  -0.0000000  -0.0000000  -0.0000000  -0.0000000  -0.0000000  -0.0000000  -0.0000000
+ NQMom=    0.0000000   0.0000000   0.0000000   0.0000000   0.0000000   0.0000000   0.0000000   0.0000000
+ NMagM=    0.0000000   2.7928460   2.7928460   2.7928460   0.0000000   2.7928460   2.7928460   2.7928460
+ AtZNuc=   6.0000000   1.0000000   1.0000000   1.0000000   6.0000000   1.0000000   1.0000000   1.0000000
+ Leave Link  101 at Wed Nov 19 18:15:50 2025, MaxMem=   104857600 cpu:               0.2 elap:               0.2
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l103.exe)
+
+ GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
+ Berny optimization.
+ Initialization pass.
+ Trust Radius=3.00D-01 FncErr=1.00D-07 GrdErr=1.00D-07 EigMax=2.50D+02 EigMin=1.00D-04
+ Number of steps in this run=      2 maximum allowed number of steps=      2.
+ GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
+
+ Leave Link  103 at Wed Nov 19 18:15:50 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l202.exe)
+                          Input orientation:                          
+ ---------------------------------------------------------------------
+ Center     Atomic      Atomic             Coordinates (Angstroms)
+ Number     Number       Type             X           Y           Z
+ ---------------------------------------------------------------------
+      1          6           0        0.000000    0.000000   -0.770410
+      2          1           0        0.000000    1.011933   -1.174440
+      3          1           0       -0.876360   -0.505967   -1.174440
+      4          1           0        0.876360   -0.505967   -1.174440
+      5          6           0        0.000000    0.000000    0.770410
+      6          1           0       -0.876360   -0.505967    1.174440
+      7          1           0        0.876360   -0.505967    1.174440
+      8          1           0        0.000000    1.011933    1.174440
+ ---------------------------------------------------------------------
+                    Distance matrix (angstroms):
+                    1          2          3          4          5
+     1  C    0.000000
+     2  H    1.089609   0.000000
+     3  H    1.089610   1.752720   0.000000
+     4  H    1.089610   1.752720   1.752720   0.000000
+     5  C    1.540820   2.192362   2.192362   2.192362   0.000000
+     6  H    2.192362   2.930745   2.348880   2.930745   1.089610
+     7  H    2.192362   2.930745   2.930745   2.348880   1.089610
+     8  H    2.192362   2.348880   2.930745   2.930745   1.089609
+                    6          7          8
+     6  H    0.000000
+     7  H    1.752720   0.000000
+     8  H    1.752720   1.752720   0.000000
+ Stoichiometry    C2H6
+ Framework group  D3H[C3(C.C),3SGV(H2)]
+ Deg. of freedom     3
+ Full point group                 D3H     NOp  12
+ Largest Abelian subgroup         C2V     NOp   4
+ Largest concise Abelian subgroup C2V     NOp   4
+                         Standard orientation:                         
+ ---------------------------------------------------------------------
+ Center     Atomic      Atomic             Coordinates (Angstroms)
+ Number     Number       Type             X           Y           Z
+ ---------------------------------------------------------------------
+      1          6           0       -0.000000    0.000000    0.770410
+      2          1           0        0.000000    1.011933    1.174440
+      3          1           0        0.876360   -0.505967    1.174440
+      4          1           0       -0.876360   -0.505967    1.174440
+      5          6           0        0.000000    0.000000   -0.770410
+      6          1           0        0.876360   -0.505967   -1.174440
+      7          1           0       -0.876360   -0.505967   -1.174440
+      8          1           0        0.000000    1.011933   -1.174440
+ ---------------------------------------------------------------------
+ Rotational constants (GHZ):          81.6163546          19.6787668          19.6787668
+ Leave Link  202 at Wed Nov 19 18:15:50 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l301.exe)
+ Standard basis: STO-3G (5D, 7F)
+ Ernie: Thresh=  0.10000D-02 Tol=  0.10000D-05 Strict=F.
+ There are     6 symmetry adapted cartesian basis functions of A1  symmetry.
+ There are     2 symmetry adapted cartesian basis functions of A2  symmetry.
+ There are     2 symmetry adapted cartesian basis functions of B1  symmetry.
+ There are     6 symmetry adapted cartesian basis functions of B2  symmetry.
+ There are     6 symmetry adapted basis functions of A1  symmetry.
+ There are     2 symmetry adapted basis functions of A2  symmetry.
+ There are     2 symmetry adapted basis functions of B1  symmetry.
+ There are     6 symmetry adapted basis functions of B2  symmetry.
+    16 basis functions,    48 primitive gaussians,    16 cartesian basis functions
+     9 alpha electrons        9 beta electrons
+       nuclear repulsion energy        42.1076399241 Hartrees.
+ IExCor=    0 DFT=F Ex=HF Corr=None ExCW=0 ScaHFX=  1.000000
+ ScaDFX=  1.000000  1.000000  1.000000  1.000000 ScalE2=  1.000000  1.000000
+ IRadAn=      5 IRanWt=     -1 IRanGd=            0 ICorTp=0 IEmpDi=  4
+ NAtoms=    8 NActive=    8 NUniq=    2 SFac= 4.00D+00 NAtFMM=   60 NAOKFM=F Big=F
+ Integral buffers will be    131072 words long.
+ Raffenetti 1 integral format.
+ Two-electron integral symmetry is turned on.
+ Leave Link  301 at Wed Nov 19 18:15:50 2025, MaxMem=   104857600 cpu:               0.1 elap:               0.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l302.exe)
+ NPDir=0 NMtPBC=     1 NCelOv=     1 NCel=       1 NClECP=     1 NCelD=      1
+         NCelK=      1 NCelE2=     1 NClLst=     1 CellRange=     0.0.
+ One-electron integrals computed using PRISM.
+ One-electron integral symmetry used in STVInt
+ NBasis=    16 RedAO= T EigKep=  2.08D-01  NBF=     6     2     2     6
+ NBsUse=    16 1.00D-06 EigRej= -1.00D+00 NBFU=     6     2     2     6
+ Leave Link  302 at Wed Nov 19 18:15:50 2025, MaxMem=   104857600 cpu:               0.1 elap:               0.2
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l303.exe)
+ DipDrv:  MaxL=1.
+ Leave Link  303 at Wed Nov 19 18:15:51 2025, MaxMem=   104857600 cpu:               0.1 elap:               0.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l401.exe)
+ ExpMin= 1.69D-01 ExpMax= 7.16D+01 ExpMxC= 7.16D+01 IAcc=3 IRadAn=         5 AccDes= 0.00D+00
+ Harris functional with IExCor=  205 and IRadAn=       5 diagonalized for initial guess.
+ HarFok:  IExCor=  205 AccDes= 0.00D+00 IRadAn=         5 IDoV= 1 UseB2=F ITyADJ=14
+ ICtDFT=  3500011 ScaDFX=  1.000000  1.000000  1.000000  1.000000
+ FoFCou: FMM=F IPFlag=           0 FMFlag=      100000 FMFlg1=           0
+         NFxFlg=           0 DoJE=T BraDBF=F KetDBF=T FulRan=T
+         wScrn=  0.000000 ICntrl=       500 IOpCl=  0 I1Cent=   200000004 NGrid=           0
+         NMat0=    1 NMatS0=      1 NMatT0=    0 NMatD0=    1 NMtDS0=    0 NMtDT0=    0
+ Petite list used in FoFCou.
+ Harris En= -78.5379136726463    
+ JPrj=0 DoOrth=F DoCkMO=F.
+ Initial guess orbital symmetries:
+       Occupied  (A2") (A1') (A1') (A2") (E') (E') (A1') (E") (E")
+       Virtual   (A2") (E') (E') (A1') (E") (E") (A2")
+ The electronic state of the initial guess is 1-A1'.
+ Leave Link  401 at Wed Nov 19 18:15:51 2025, MaxMem=   104857600 cpu:               0.1 elap:               0.2
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l502.exe)
+ Keep R1 ints in memory in symmetry-blocked form, NReq=819176.
+ FoFCou: FMM=F IPFlag=           0 FMFlag=           0 FMFlg1=           0
+         NFxFlg=           0 DoJE=F BraDBF=F KetDBF=F FulRan=T
+         wScrn=  0.000000 ICntrl=       600 IOpCl=  0 I1Cent=           0 NGrid=           0
+         NMat0=    1 NMatS0=    136 NMatT0=    0 NMatD0=    1 NMtDS0=    0 NMtDT0=    0
+ Petite list used in FoFCou.
+ Closed shell SCF:
+ Using DIIS extrapolation, IDIIS=  1040.
+ NGot=   104857600 LenX=   104852494 LenY=   104851612
+ Requested convergence on RMS density matrix=1.00D-08 within 128 cycles.
+ Requested convergence on MAX density matrix=1.00D-06.
+ Requested convergence on             energy=1.00D-06.
+ No special actions if energy rises.
+
+ Cycle   1  Pass 1  IDiag  1:
+ E= -78.2151018777394    
+ DIIS: error= 5.64D-02 at cycle   1 NSaved=   1.
+ NSaved= 1 IEnMin= 1 EnMin= -78.2151018777394     IErMin= 1 ErrMin= 5.64D-02
+ ErrMax= 5.64D-02  0.00D+00 EMaxC= 1.00D-01 BMatC= 7.85D-02 BMatP= 7.85D-02
+ IDIUse=3 WtCom= 4.36D-01 WtEn= 5.64D-01
+ Coeff-Com:  0.100D+01
+ Coeff-En:   0.100D+01
+ Coeff:      0.100D+01
+ Gap=     1.047 Goal=   None    Shift=    0.000
+ GapD=    1.047 DampG=2.000 DampE=0.500 DampFc=1.0000 IDamp=-1.
+ RMSDP=2.47D-02 MaxDP=1.13D-01              OVMax= 0.00D+00
+
+ Cycle   2  Pass 1  IDiag  1:
+ E= -78.2987008277120     Delta-E=       -0.083598949973 Rises=F Damp=F
+ DIIS: error= 1.07D-02 at cycle   2 NSaved=   2.
+ NSaved= 2 IEnMin= 2 EnMin= -78.2987008277120     IErMin= 2 ErrMin= 1.07D-02
+ ErrMax= 1.07D-02  0.00D+00 EMaxC= 1.00D-01 BMatC= 2.44D-03 BMatP= 7.85D-02
+ IDIUse=3 WtCom= 8.93D-01 WtEn= 1.07D-01
+ Coeff-Com:  0.110D+00 0.890D+00
+ Coeff-En:   0.000D+00 0.100D+01
+ Coeff:      0.983D-01 0.902D+00
+ Gap=     1.080 Goal=   None    Shift=    0.000
+ RMSDP=4.09D-03 MaxDP=1.92D-02 DE=-8.36D-02 OVMax= 0.00D+00
+
+ Cycle   3  Pass 1  IDiag  1:
+ E= -78.3013478031003     Delta-E=       -0.002646975388 Rises=F Damp=F
+ DIIS: error= 8.43D-04 at cycle   3 NSaved=   3.
+ NSaved= 3 IEnMin= 3 EnMin= -78.3013478031003     IErMin= 3 ErrMin= 8.43D-04
+ ErrMax= 8.43D-04  0.00D+00 EMaxC= 1.00D-01 BMatC= 1.35D-05 BMatP= 2.44D-03
+ IDIUse=3 WtCom= 9.92D-01 WtEn= 8.43D-03
+ Coeff-Com: -0.103D-01 0.318D-02 0.101D+01
+ Coeff-En:   0.000D+00 0.000D+00 0.100D+01
+ Coeff:     -0.102D-01 0.315D-02 0.101D+01
+ Gap=     1.082 Goal=   None    Shift=    0.000
+ RMSDP=3.24D-04 MaxDP=1.19D-03 DE=-2.65D-03 OVMax= 0.00D+00
+
+ Cycle   4  Pass 1  IDiag  1:
+ E= -78.3013684485759     Delta-E=       -0.000020645476 Rises=F Damp=F
+ DIIS: error= 1.40D-04 at cycle   4 NSaved=   4.
+ NSaved= 4 IEnMin= 4 EnMin= -78.3013684485759     IErMin= 4 ErrMin= 1.40D-04
+ ErrMax= 1.40D-04  0.00D+00 EMaxC= 1.00D-01 BMatC= 2.91D-07 BMatP= 1.35D-05
+ IDIUse=3 WtCom= 9.99D-01 WtEn= 1.40D-03
+ Coeff-Com:  0.267D-02-0.568D-02-0.308D+00 0.131D+01
+ Coeff-En:   0.000D+00 0.000D+00 0.000D+00 0.100D+01
+ Coeff:      0.266D-02-0.567D-02-0.307D+00 0.131D+01
+ Gap=     1.082 Goal=   None    Shift=    0.000
+ RMSDP=6.98D-05 MaxDP=4.71D-04 DE=-2.06D-05 OVMax= 0.00D+00
+
+ Cycle   5  Pass 1  IDiag  1:
+ E= -78.3013689865584     Delta-E=       -0.000000537982 Rises=F Damp=F
+ DIIS: error= 3.28D-06 at cycle   5 NSaved=   5.
+ NSaved= 5 IEnMin= 5 EnMin= -78.3013689865584     IErMin= 5 ErrMin= 3.28D-06
+ ErrMax= 3.28D-06  0.00D+00 EMaxC= 1.00D-01 BMatC= 1.26D-10 BMatP= 2.91D-07
+ IDIUse=1 WtCom= 1.00D+00 WtEn= 0.00D+00
+ Coeff-Com: -0.561D-03 0.112D-02 0.646D-01-0.278D+00 0.121D+01
+ Coeff:     -0.561D-03 0.112D-02 0.646D-01-0.278D+00 0.121D+01
+ Gap=     1.082 Goal=   None    Shift=    0.000
+ RMSDP=1.23D-06 MaxDP=8.26D-06 DE=-5.38D-07 OVMax= 0.00D+00
+
+ Cycle   6  Pass 1  IDiag  1:
+ E= -78.3013689867567     Delta-E=       -0.000000000198 Rises=F Damp=F
+ DIIS: error= 1.74D-07 at cycle   6 NSaved=   6.
+ NSaved= 6 IEnMin= 6 EnMin= -78.3013689867567     IErMin= 6 ErrMin= 1.74D-07
+ ErrMax= 1.74D-07  0.00D+00 EMaxC= 1.00D-01 BMatC= 4.39D-13 BMatP= 1.26D-10
+ IDIUse=1 WtCom= 1.00D+00 WtEn= 0.00D+00
+ Coeff-Com:  0.171D-04-0.248D-04-0.190D-02 0.833D-02-0.867D-01 0.108D+01
+ Coeff:      0.171D-04-0.248D-04-0.190D-02 0.833D-02-0.867D-01 0.108D+01
+ Gap=     1.082 Goal=   None    Shift=    0.000
+ RMSDP=7.36D-08 MaxDP=3.43D-07 DE=-1.98D-10 OVMax= 0.00D+00
+
+ Cycle   7  Pass 1  IDiag  1:
+ E= -78.3013689867573     Delta-E=       -0.000000000001 Rises=F Damp=F
+ DIIS: error= 1.50D-08 at cycle   7 NSaved=   7.
+ NSaved= 7 IEnMin= 7 EnMin= -78.3013689867573     IErMin= 7 ErrMin= 1.50D-08
+ ErrMax= 1.50D-08  0.00D+00 EMaxC= 1.00D-01 BMatC= 3.25D-15 BMatP= 4.39D-13
+ IDIUse=1 WtCom= 1.00D+00 WtEn= 0.00D+00
+ Coeff-Com: -0.211D-05 0.209D-05 0.226D-03-0.101D-02 0.147D-01-0.214D+00
+ Coeff-Com:  0.120D+01
+ Coeff:     -0.211D-05 0.209D-05 0.226D-03-0.101D-02 0.147D-01-0.214D+00
+ Coeff:      0.120D+01
+ Gap=     1.082 Goal=   None    Shift=    0.000
+ RMSDP=7.09D-09 MaxDP=2.40D-08 DE=-5.12D-13 OVMax= 0.00D+00
+
+ SCF Done:  E(RHF) =  -78.3013689868     A.U. after    7 cycles
+            NFock=  7  Conv=0.71D-08     -V/T= 2.0082
+ KE= 7.766309392460D+01 PE=-2.657148761921D+02 EE= 6.764277335671D+01
+ Leave Link  502 at Wed Nov 19 18:15:51 2025, MaxMem=   104857600 cpu:               0.1 elap:               0.3
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l601.exe)
+ Copying SCF densities to generalized density rwf, IOpCl= 0 IROHF=0.
+
+ **********************************************************************
+
+            Population analysis using the SCF Density.
+
+ **********************************************************************
+
+ Orbital symmetries:
+       Occupied  (A2") (A1') (A1') (A2") (E') (E') (A1') (E") (E")
+       Virtual   (E') (E') (A2") (A1') (A2") (E") (E")
+ The electronic state is 1-A1'.
+ Alpha  occ. eigenvalues --  -11.03489 -11.03455  -0.97736  -0.81299  -0.56817
+ Alpha  occ. eigenvalues --   -0.56817  -0.47555  -0.45571  -0.45571
+ Alpha virt. eigenvalues --    0.62652   0.62652   0.68683   0.73706   0.78535
+ Alpha virt. eigenvalues --    0.80761   0.80761
+          Condensed to atoms (all electrons):
+               1          2          3          4          5          6
+     1  C    4.721042   0.384113   0.384113   0.384113   0.361150  -0.019874
+     2  H    0.384113   0.626038  -0.022482  -0.022482  -0.019874   0.001328
+     3  H    0.384113  -0.022482   0.626038  -0.022482  -0.019874  -0.006271
+     4  H    0.384113  -0.022482  -0.022482   0.626038  -0.019874   0.001328
+     5  C    0.361150  -0.019874  -0.019874  -0.019874   4.721042   0.384113
+     6  H   -0.019874   0.001328  -0.006271   0.001328   0.384113   0.626038
+     7  H   -0.019874   0.001328   0.001328  -0.006271   0.384113  -0.022482
+     8  H   -0.019874  -0.006271   0.001328   0.001328   0.384113  -0.022482
+               7          8
+     1  C   -0.019874  -0.019874
+     2  H    0.001328  -0.006271
+     3  H    0.001328   0.001328
+     4  H   -0.006271   0.001328
+     5  C    0.384113   0.384113
+     6  H   -0.022482  -0.022482
+     7  H    0.626038  -0.022482
+     8  H   -0.022482   0.626038
+ Mulliken charges:
+               1
+     1  C   -0.174908
+     2  H    0.058303
+     3  H    0.058303
+     4  H    0.058303
+     5  C   -0.174908
+     6  H    0.058303
+     7  H    0.058303
+     8  H    0.058303
+ Sum of Mulliken charges =  -0.00000
+ Mulliken charges with hydrogens summed into heavy atoms:
+               1
+     1  C   -0.000000
+     5  C   -0.000000
+ Electronic spatial extent (au):  <R**2>=            108.4591
+ Charge=             -0.0000 electrons
+ Dipole moment (field-independent basis, Debye):
+    X=              0.0000    Y=              0.0000    Z=              0.0000  Tot=              0.0000
+ Quadrupole moment (field-independent basis, Debye-Ang):
+   XX=            -14.0458   YY=            -14.0458   ZZ=            -14.3175
+   XY=             -0.0000   XZ=             -0.0000   YZ=             -0.0000
+ Traceless Quadrupole moment (field-independent basis, Debye-Ang):
+   XX=              0.0905   YY=              0.0905   ZZ=             -0.1811
+   XY=             -0.0000   XZ=             -0.0000   YZ=             -0.0000
+ Octapole moment (field-independent basis, Debye-Ang**2):
+  XXX=              0.0000  YYY=              0.8310  ZZZ=              0.0000  XYY=              0.0000
+  XXY=             -0.8310  XXZ=              0.0000  XZZ=              0.0000  YZZ=              0.0000
+  YYZ=             -0.0000  XYZ=             -0.0000
+ Hexadecapole moment (field-independent basis, Debye-Ang**3):
+ XXXX=            -24.8699 YYYY=            -24.8699 ZZZZ=            -86.3069 XXXY=              0.0000
+ XXXZ=             -0.0000 YYYX=              0.0000 YYYZ=              0.0000 ZZZX=              0.0000
+ ZZZY=             -0.0000 XXYY=             -8.2900 XXZZ=            -17.4470 YYZZ=            -17.4470
+ XXYZ=              0.0000 YYXZ=             -0.0000 ZZXY=             -0.0000
+ N-N= 4.210763992406D+01 E-N=-2.657148762324D+02  KE= 7.766309392460D+01
+ Symmetry A1   KE= 3.794714471860D+01
+ Symmetry A2   KE= 2.132708136723D+00
+ Symmetry B1   KE= 1.791336208285D+00
+ Symmetry B2   KE= 3.579190486099D+01
+ No NMR shielding tensors so no spin-rotation constants.
+ Leave Link  601 at Wed Nov 19 18:15:51 2025, MaxMem=   104857600 cpu:               0.1 elap:               0.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l701.exe)
+ ... and contract with generalized density number  0.
+ Compute integral first derivatives.
+ Leave Link  701 at Wed Nov 19 18:15:52 2025, MaxMem=   104857600 cpu:               0.1 elap:               0.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l702.exe)
+ L702 exits ... SP integral derivatives will be done elsewhere.
+ Leave Link  702 at Wed Nov 19 18:15:52 2025, MaxMem=   104857600 cpu:               0.1 elap:               0.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l703.exe)
+ Integral derivatives from FoFJK, PRISM(SPDF).
+ Compute integral first derivatives, UseDBF=F ICtDFT=           0.
+ Calling FoFJK, ICntrl=      2127 FMM=F ISym2X=1 I1Cent= 0 IOpClX= 0 NMat=1 NMatS=1 NMatT=0.
+ FoFJK:  IHMeth= 1 ICntrl=    2127 DoSepK=F KAlg= 0 I1Cent=           0 FoldK=F
+ IRaf=         0 NMat=       1 IRICut=       1 DoRegI=T DoRafI=F ISym2E= 1 IDoP0=0 IntGTp=1.
+ FoFCou: FMM=F IPFlag=           0 FMFlag=      100000 FMFlg1=         800
+         NFxFlg=           0 DoJE=F BraDBF=F KetDBF=F FulRan=T
+         wScrn=  0.000000 ICntrl=      2127 IOpCl=  0 I1Cent=           0 NGrid=           0
+         NMat0=    1 NMatS0=      1 NMatT0=    0 NMatD0=    1 NMtDS0=    0 NMtDT0=    0
+ Petite list used in FoFCou.
+ Leave Link  703 at Wed Nov 19 18:15:52 2025, MaxMem=   104857600 cpu:               0.1 elap:               0.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l716.exe)
+ Dipole        = 4.93839035D-16 4.44089210D-16 8.88178420D-16
+ ***** Axes restored to original set *****
+ -------------------------------------------------------------------
+ Center     Atomic                   Forces (Hartrees/Bohr)
+ Number     Number              X              Y              Z
+ -------------------------------------------------------------------
+      1        6          -0.000000000   -0.000000000   -0.012440454
+      2        1          -0.000000000   -0.002440133    0.003107165
+      3        1           0.002113217    0.001220066    0.003107165
+      4        1          -0.002113217    0.001220066    0.003107165
+      5        6           0.000000000    0.000000000    0.012440454
+      6        1           0.002113217    0.001220066   -0.003107165
+      7        1          -0.002113217    0.001220066   -0.003107165
+      8        1          -0.000000000   -0.002440133   -0.003107165
+ -------------------------------------------------------------------
+ Cartesian Forces:  Max     0.012440454 RMS     0.004098689
+ Z-matrix is all fixed cartesians, so copy forces.
+ Force constants in Cartesian coordinates: 
+                1             2             3             4             5 
+      1  0.643084D+00
+      2  0.000000D+00  0.643084D+00
+      3  0.000000D+00  0.000000D+00  0.641536D+00
+      4 -0.730406D-01  0.000000D+00  0.000000D+00  0.559742D-01
+      5  0.000000D+00 -0.306391D+00  0.916531D-01  0.000000D+00  0.308905D+00
+      6  0.000000D+00  0.105662D+00 -0.119024D+00  0.000000D+00 -0.993651D-01
+      7 -0.248053D+00 -0.101044D+00 -0.793739D-01  0.806316D-02  0.181825D-02
+      8 -0.101044D+00 -0.131378D+00 -0.458265D-01 -0.265720D-01 -0.622844D-02
+      9 -0.915063D-01 -0.528312D-01 -0.119024D+00  0.157868D-01  0.385601D-02
+     10 -0.248053D+00  0.101044D+00  0.793739D-01  0.806316D-02 -0.181825D-02
+     11  0.101044D+00 -0.131378D+00 -0.458265D-01  0.265720D-01 -0.622844D-02
+     12  0.915063D-01 -0.528312D-01 -0.119024D+00 -0.157868D-01  0.385601D-02
+     13 -0.902614D-01  0.000000D+00  0.000000D+00  0.940058D-03  0.000000D+00
+     14  0.000000D+00 -0.902614D-01  0.000000D+00  0.000000D+00  0.994260D-02
+     15  0.000000D+00  0.000000D+00 -0.284464D+00  0.000000D+00  0.000000D+00
+     16  0.769197D-02  0.389822D-02  0.000000D+00  0.314483D-03  0.000000D+00
+     17  0.389822D-02  0.319069D-02  0.000000D+00 -0.544700D-03  0.000000D+00
+     18  0.215660D-01  0.124511D-01  0.000000D+00  0.000000D+00  0.000000D+00
+     19  0.769197D-02 -0.389822D-02  0.000000D+00  0.314483D-03  0.000000D+00
+     20 -0.389822D-02  0.319069D-02  0.000000D+00  0.544700D-03  0.000000D+00
+     21 -0.215660D-01  0.124511D-01  0.000000D+00  0.000000D+00  0.000000D+00
+     22  0.940058D-03  0.000000D+00  0.000000D+00 -0.628965D-03  0.000000D+00
+     23  0.000000D+00  0.994260D-02  0.000000D+00  0.000000D+00  0.000000D+00
+     24  0.000000D+00 -0.249022D-01  0.000000D+00  0.000000D+00  0.000000D+00
+                6             7             8             9            10 
+      6  0.997084D-01
+      7  0.455398D-02  0.245672D+00
+      8 -0.155997D-01  0.109522D+00  0.119207D+00
+      9  0.965776D-02  0.860527D-01  0.496825D-01  0.997084D-01
+     10 -0.455398D-02 -0.133742D-01  0.141951D-01  0.112328D-01  0.245672D+00
+     11 -0.155997D-01 -0.141951D-01  0.152090D-01  0.117437D-01 -0.109522D+00
+     12  0.965776D-02 -0.112328D-01  0.117437D-01  0.965776D-02 -0.860527D-01
+     13  0.000000D+00  0.769197D-02  0.389822D-02 -0.215660D-01  0.769197D-02
+     14  0.249022D-01  0.389822D-02  0.319069D-02 -0.124511D-01 -0.389822D-02
+     15  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+     16  0.000000D+00 -0.157241D-03  0.272350D-03  0.000000D+00 -0.157241D-03
+     17  0.000000D+00  0.272350D-03 -0.471724D-03  0.000000D+00  0.272350D-03
+     18  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+     19  0.000000D+00 -0.157241D-03  0.272350D-03  0.000000D+00 -0.157241D-03
+     20  0.000000D+00 -0.272350D-03  0.471724D-03  0.000000D+00 -0.272350D-03
+     21  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+     22  0.000000D+00  0.314483D-03 -0.544700D-03  0.000000D+00  0.314483D-03
+     23  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+     24  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+               11            12            13            14            15 
+     11  0.119207D+00
+     12  0.496825D-01  0.997084D-01
+     13 -0.389822D-02  0.215660D-01  0.643084D+00
+     14  0.319069D-02 -0.124511D-01  0.000000D+00  0.643084D+00
+     15  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.641536D+00
+     16 -0.272350D-03  0.000000D+00 -0.248053D+00 -0.101044D+00  0.793739D-01
+     17  0.471724D-03  0.000000D+00 -0.101044D+00 -0.131378D+00  0.458265D-01
+     18  0.000000D+00  0.000000D+00  0.915063D-01  0.528312D-01 -0.119024D+00
+     19 -0.272350D-03  0.000000D+00 -0.248053D+00  0.101044D+00 -0.793739D-01
+     20 -0.471724D-03  0.000000D+00  0.101044D+00 -0.131378D+00  0.458265D-01
+     21  0.000000D+00  0.000000D+00 -0.915063D-01  0.528312D-01 -0.119024D+00
+     22  0.544700D-03  0.000000D+00 -0.730406D-01  0.000000D+00  0.000000D+00
+     23  0.000000D+00  0.000000D+00  0.000000D+00 -0.306391D+00 -0.916531D-01
+     24  0.000000D+00  0.000000D+00  0.000000D+00 -0.105662D+00 -0.119024D+00
+               16            17            18            19            20 
+     16  0.245672D+00
+     17  0.109522D+00  0.119207D+00
+     18 -0.860527D-01 -0.496825D-01  0.997084D-01
+     19 -0.133742D-01  0.141951D-01 -0.112328D-01  0.245672D+00
+     20 -0.141951D-01  0.152090D-01 -0.117437D-01 -0.109522D+00  0.119207D+00
+     21  0.112328D-01 -0.117437D-01  0.965776D-02  0.860527D-01 -0.496825D-01
+     22  0.806316D-02 -0.265720D-01 -0.157868D-01  0.806316D-02  0.265720D-01
+     23  0.181825D-02 -0.622844D-02 -0.385601D-02 -0.181825D-02 -0.622844D-02
+     24 -0.455398D-02  0.155997D-01  0.965776D-02  0.455398D-02  0.155997D-01
+               21            22            23            24 
+     21  0.997084D-01
+     22  0.157868D-01  0.559742D-01
+     23 -0.385601D-02  0.000000D+00  0.308905D+00
+     24  0.965776D-02  0.000000D+00  0.993651D-01  0.997084D-01
+ Leave Link  716 at Wed Nov 19 18:15:52 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l103.exe)
+
+ GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
+ Berny optimization.
+ Search for a local minimum.
+ Step number   1 out of a maximum of    2
+ All quantities printed in internal units (Hartrees-Bohrs-Radians)
+ Second derivative matrix not updated -- first step.
+ ITU=  0
+     Eigenvalues ---    0.00377   0.04008   0.04008   0.05720   0.08533
+     Eigenvalues ---    0.08533   0.12353   0.12353   0.13489   0.13489
+     Eigenvalues ---    0.18105   0.28034   0.52367   0.74060   0.74060
+     Eigenvalues ---    0.89454   0.89454   1.01947
+ Angle between quadratic step and forces=  59.25 degrees.
+ ClnCor:  largest displacement from symmetrization is 8.37D-14 for atom     7.
+ Linear search not attempted -- first point.
+ ClnCor:  largest displacement from symmetrization is 2.22D-16 for atom     4.
+ B after Tr=     0.000000   -0.000000    0.000000
+         Rot=    1.000000   -0.000000   -0.000000   -0.000000 Ang=   0.00 deg.
+ Variable       Old X    -DE/DX   Delta X   Delta X   Delta X     New X
+                                 (Linear)    (Quad)   (Total)
+    X1        0.00000  -0.00000   0.00000   0.00000   0.00000   0.00000
+    Y1       -0.00000  -0.00000   0.00000   0.00000   0.00000  -0.00000
+    Z1       -1.45586  -0.01244   0.00000  -0.00548  -0.00548  -1.46135
+    X2       -0.00000  -0.00000   0.00000   0.00000  -0.00000  -0.00000
+    Y2        1.91228  -0.00244   0.00000  -0.00020  -0.00020   1.91208
+    Z2       -2.21937   0.00311   0.00000   0.02047   0.02047  -2.19890
+    X3       -1.65608   0.00211   0.00000   0.00017   0.00017  -1.65591
+    Y3       -0.95614   0.00122   0.00000   0.00010   0.00010  -0.95604
+    Z3       -2.21937   0.00311   0.00000   0.02047   0.02047  -2.19890
+    X4        1.65608  -0.00211   0.00000  -0.00017  -0.00017   1.65591
+    Y4       -0.95614   0.00122   0.00000   0.00010   0.00010  -0.95604
+    Z4       -2.21937   0.00311   0.00000   0.02047   0.02047  -2.19890
+    X5       -0.00000   0.00000   0.00000  -0.00000   0.00000  -0.00000
+    Y5       -0.00000   0.00000   0.00000   0.00000  -0.00000  -0.00000
+    Z5        1.45586   0.01244   0.00000   0.00548   0.00548   1.46135
+    X6       -1.65608   0.00211   0.00000   0.00017   0.00017  -1.65591
+    Y6       -0.95614   0.00122   0.00000   0.00010   0.00010  -0.95604
+    Z6        2.21937  -0.00311   0.00000  -0.02047  -0.02047   2.19890
+    X7        1.65608  -0.00211   0.00000  -0.00017  -0.00017   1.65591
+    Y7       -0.95614   0.00122   0.00000   0.00010   0.00010  -0.95604
+    Z7        2.21937  -0.00311   0.00000  -0.02047  -0.02047   2.19890
+    X8       -0.00000  -0.00000   0.00000   0.00000  -0.00000  -0.00000
+    Y8        1.91228  -0.00244   0.00000  -0.00020  -0.00020   1.91208
+    Z8        2.21937  -0.00311   0.00000  -0.02047  -0.02047   2.19890
+         Item               Value     Threshold  Converged?
+ Maximum Force            0.012440     0.000450     NO 
+ RMS     Force            0.004099     0.000300     NO 
+ Maximum Displacement     0.020472     0.001800     NO 
+ RMS     Displacement     0.010358     0.001200     NO 
+ Predicted change in Energy=-2.604679D-04
+ GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
+
+ Leave Link  103 at Wed Nov 19 18:15:52 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l9999.exe)
+ Unable to Open any file for archive entry.
+ 1\1\GINC-THIOTIMOLINE-LARGE01\Force\RHF\STO-3G\C2H6\LCRISCI_VB\19-Nov-
+ 2025\0\\#p force hf/sto-3g\\title\\0,1\C,0.,-0.0000001111,-0.77041\H,0
+ .,1.011933,-1.17444\H,-0.8763597812,-0.5059666667,-1.17444\H,0.8763597
+ 812,-0.5059666667,-1.17444\C,0.,-0.0000001111,0.77041\H,-0.8763597812,
+ -0.5059666667,1.17444\H,0.8763597812,-0.5059666667,1.17444\H,0.,1.0119
+ 33,1.17444\\Version=ES64L-G16RevC.01\State=1-A1'\HF=-78.301369\RMSD=7.
+ 091e-09\RMSF=4.099e-03\Dipole=0.,0.,0.\Quadrupole=0.0673193,0.0673193,
+ -0.1346387,0.,0.,0.\PG=D03H [C3(C1.C1),3SGV(H2)]\\@
+ The archive entry for this job was punched.
+
+
+ The hours that make us happy make us wise.
+                         -- John Masefield
+ Job cpu time:       0 days  0 hours  0 minutes  1.4 seconds.
+ Elapsed time:       0 days  0 hours  0 minutes  2.1 seconds.
+ File lengths (MBytes):  RWF=      5 Int=      0 D2E=      0 Chk=      1 Scr=      1
+ Normal termination of Gaussian 16 at Wed Nov 19 18:15:52 2025.

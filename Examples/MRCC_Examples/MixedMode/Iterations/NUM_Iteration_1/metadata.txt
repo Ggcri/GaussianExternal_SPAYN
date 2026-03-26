@@ -1,0 +1,7 @@
+Mode: Mixed
+Output file: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/MixedMode/Gau-302198.EOu
+Final energy: -1.3800161013932666e-10
+Number of atoms: 3
+Analytical sections: 1
+Numerical sections: 1
+Timestamp: 2025-11-19 20:48:20

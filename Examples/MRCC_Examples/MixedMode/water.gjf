@@ -1,0 +1,13 @@
+%chk=mrcc_struc.chk
+#p output=pickett External="CentralExt mrcc 4 READ 4 1 $PMR/TestMIX $EMR/test_en.dat parall 9" force
+
+Title 
+
+0 1
+8                  -0.000000    0.000000    0.110812
+1                   0.000000    0.783976   -0.443248
+1                  -0.000000   -0.783976   -0.443248
+
+
+
+

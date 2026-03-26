@@ -1,0 +1,27 @@
+%chk=test_parall.chk
+%nprocs=1
+#p force output=pickett External="CentralExt gau $PGAU/test_pr.dat $EGAU/test_en.dat 7 20 read parall 7" 
+
+title
+
+0 1
+ O                  0.00000000    0.00000000   -0.11081188
+ H                  0.00000000   -0.78397589    0.44324751
+ H                 -0.00000000    0.78397589    0.44324751
+
+
+
+
+--link1--
+%chk=test_parall.chk
+%nprocs=1
+#p force hf/sto-3g
+
+title
+
+0 1
+ O                  0.00000000    0.00000000   -0.11081188
+ H                  0.00000000   -0.78397589    0.44324751
+ H                 -0.00000000    0.78397589    0.44324751
+
+

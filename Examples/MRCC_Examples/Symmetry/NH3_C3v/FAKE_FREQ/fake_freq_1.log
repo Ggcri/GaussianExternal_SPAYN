@@ -1,0 +1,3871 @@
+ Entering Gaussian System, Link 0=g16
+ Input=/var/tmp/pbs.78240.pbs.village.sns.it/tmpg9h1nztb/fake_freq.gjf
+ Output=/var/tmp/pbs.78240.pbs.village.sns.it/tmpg9h1nztb/fake_freq.log
+ Initial command:
+ /gaussian/g16.c01/intel64-sandybridge/g16/l1.exe "/home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/NH3_C3v/Gau-4149969.inp" -scrdir="/home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/NH3_C3v/"
+ Entering Link 1 = /gaussian/g16.c01/intel64-sandybridge/g16/l1.exe PID=   4149970.
+  
+ Copyright (c) 1988-2019, Gaussian, Inc.  All Rights Reserved.
+  
+ This is part of the Gaussian(R) 16 program.  It is based on
+ the Gaussian(R) 09 system (copyright 2009, Gaussian, Inc.),
+ the Gaussian(R) 03 system (copyright 2003, Gaussian, Inc.),
+ the Gaussian(R) 98 system (copyright 1998, Gaussian, Inc.),
+ the Gaussian(R) 94 system (copyright 1995, Gaussian, Inc.),
+ the Gaussian 92(TM) system (copyright 1992, Gaussian, Inc.),
+ the Gaussian 90(TM) system (copyright 1990, Gaussian, Inc.),
+ the Gaussian 88(TM) system (copyright 1988, Gaussian, Inc.),
+ the Gaussian 86(TM) system (copyright 1986, Carnegie Mellon
+ University), and the Gaussian 82(TM) system (copyright 1983,
+ Carnegie Mellon University). Gaussian is a federally registered
+ trademark of Gaussian, Inc.
+  
+ This software contains proprietary and confidential information,
+ including trade secrets, belonging to Gaussian, Inc.
+  
+ This software is provided under written license and may be
+ used, copied, transmitted, or stored only in accord with that
+ written license.
+  
+ The following legend is applicable only to US Government
+ contracts under FAR:
+  
+                    RESTRICTED RIGHTS LEGEND
+  
+ Use, reproduction and disclosure by the US Government is
+ subject to restrictions as set forth in subparagraphs (a)
+ and (c) of the Commercial Computer Software - Restricted
+ Rights clause in FAR 52.227-19.
+  
+ Gaussian, Inc.
+ 340 Quinnipiac St., Bldg. 40, Wallingford CT 06492
+  
+  
+ ---------------------------------------------------------------
+ Warning -- This program may not be used in any manner that
+ competes with the business of Gaussian, Inc. or will provide
+ assistance to any competitor of Gaussian, Inc.  The licensee
+ of this program is prohibited from giving any competitor of
+ Gaussian, Inc. access to this program.  By using this program,
+ the user acknowledges that Gaussian, Inc. is engaged in the
+ business of creating and licensing software in the field of
+ computational chemistry and represents and warrants to the
+ licensee that it is not a competitor of Gaussian, Inc. and that
+ it will not use this program in any manner prohibited above.
+ ---------------------------------------------------------------
+  
+
+ Cite this work as:
+ Gaussian 16, Revision C.01,
+ M. J. Frisch, G. W. Trucks, H. B. Schlegel, G. E. Scuseria, 
+ M. A. Robb, J. R. Cheeseman, G. Scalmani, V. Barone, 
+ G. A. Petersson, H. Nakatsuji, X. Li, M. Caricato, A. V. Marenich, 
+ J. Bloino, B. G. Janesko, R. Gomperts, B. Mennucci, H. P. Hratchian, 
+ J. V. Ortiz, A. F. Izmaylov, J. L. Sonnenberg, D. Williams-Young, 
+ F. Ding, F. Lipparini, F. Egidi, J. Goings, B. Peng, A. Petrone, 
+ T. Henderson, D. Ranasinghe, V. G. Zakrzewski, J. Gao, N. Rega, 
+ G. Zheng, W. Liang, M. Hada, M. Ehara, K. Toyota, R. Fukuda, 
+ J. Hasegawa, M. Ishida, T. Nakajima, Y. Honda, O. Kitao, H. Nakai, 
+ T. Vreven, K. Throssell, J. A. Montgomery, Jr., J. E. Peralta, 
+ F. Ogliaro, M. J. Bearpark, J. J. Heyd, E. N. Brothers, K. N. Kudin, 
+ V. N. Staroverov, T. A. Keith, R. Kobayashi, J. Normand, 
+ K. Raghavachari, A. P. Rendell, J. C. Burant, S. S. Iyengar, 
+ J. Tomasi, M. Cossi, J. M. Millam, M. Klene, C. Adamo, R. Cammi, 
+ J. W. Ochterski, R. L. Martin, K. Morokuma, O. Farkas, 
+ J. B. Foresman, and D. J. Fox, Gaussian, Inc., Wallingford CT, 2019.
+ 
+ ******************************************
+ Gaussian 16:  ES64L-G16RevC.01  3-Jul-2019
+                19-Nov-2025 
+ ******************************************
+ ------------------------------------
+ #p freq=num geom=gic uff iop(1/33=2)
+ ------------------------------------
+ 1/10=4,18=20,30=1,33=2,38=11,56=1,64=2,145=2/1,6,3;
+ 2/9=110,12=2,17=6,18=5,40=1/2;
+ 3/5=30,11=9,25=1,30=1,41=10200000,43=2,71=1/1;
+ 4/20=10,22=1,24=3/2;
+ 7/44=-1/16;
+ 1/10=4,18=20,30=1,33=2,38=10,64=2,145=2/6(3);
+ 7/8=1,25=1,44=-1/16;
+ 1/10=4,18=20,30=1,33=2,38=10,64=2,145=2/3;
+ 99//99;
+ 3/5=30,11=9,25=1,30=1,41=10200000,43=2,71=1/1;
+ 4/16=2,20=10,22=1,24=3/2;
+ 7/7=1,44=-1/16;
+ 1/10=4,18=20,30=1,33=2,38=10,64=2,145=2/6(-3);
+ 7/8=1,25=1,44=-1/16;
+ 1/10=4,18=20,30=1,33=2,38=10,64=2,145=2/3;
+ 99//99;
+ Leave Link    1 at Wed Nov 19 18:06:12 2025, MaxMem=           0 cpu:               0.0 elap:               0.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l101.exe)
+ ONIOM data not found on unit 2.
+ -------------
+ fake freq run
+ -------------
+ TstMul:  ICh=     0
+ TstMul:  Mul=     1
+ TstMul:  ICh=     0
+ TstMul:  Mul=     1
+ Symbolic Z-matrix:
+ Charge =  0 Multiplicity = 1
+ N                     0.        0.        0.1 
+ H                     0.        0.94281  -0.23333 
+ H                    -0.8165   -0.4714   -0.23333 
+ H                     0.8165   -0.4714   -0.23333 
+ 
+ RdStrC is calling ZToCFu for IStruc=1 NZ=     4.
+                                ZToCFu                                
+ ---------------------------------------------------------------------
+ Center     Atomic      Atomic             Coordinates (Angstroms)
+ Number     Number       Type             X           Y           Z
+ ---------------------------------------------------------------------
+      1          7           0        0.000000    0.000000    0.100000
+      2          1           0        0.000000    0.942809   -0.233333
+      3          1           0       -0.816497   -0.471404   -0.233333
+      4          1           0        0.816497   -0.471404   -0.233333
+ ---------------------------------------------------------------------
+ PrtBox:  NBox=     1 Levels=  1 BoxLen=    8.00 SMaxX=        3.09
+          Shift=            1.542955            0.890825            0.440936
+ Box      1 Number                   0 centers from      1 to      4:
+            I=     1 IX=     1 XYZ=      1      1      1 Ind=                   0
+            I=     2 IX=     2 XYZ=      1      1      1 Ind=                   0
+            I=     3 IX=     3 XYZ=      1      1      1 Ind=                   0
+            I=     4 IX=     4 XYZ=      1      1      1 Ind=                   0
+ GenCBx connectivity:
+ I=     1 IAn=  7 IBond, IBType=     2     1     3     1     4     1
+ I=     2 IAn=  1 IBond, IBType=     1     1
+ I=     3 IAn=  1 IBond, IBType=     1     1
+ I=     4 IAn=  1 IBond, IBType=     1     1
+ Connectivity in DoCon:
+ I=     1 IAn=  7 IBond, RBType=     2  1.00     3  1.00     4  1.00
+ I=     2 IAn=  1 IBond, RBType=     1  1.00
+ I=     3 IAn=  1 IBond, RBType=     1  1.00
+ I=     4 IAn=  1 IBond, RBType=     1  1.00
+ After GenITR:
+ ITRead=  0  0  0  0
+ MicOpt= -1 -1 -1 -1
+ List IsCon N=      4 M=      2:
+ I=      1 Vals=      2      1 |      3      1 |      4      1 |
+ I=      2 Vals=      1      1 |
+ I=      3 Vals=      1      1 |
+ I=      4 Vals=      1      1 |
+ CrdCon IBond: 
+              1            2            3
+     1            2            3            4
+     2            1            0            0
+     3            1            0            0
+     4            1            0            0
+ CrdCon RBType: 
+                 1             2             3             4 
+      1   0.100000D+01  0.100000D+01  0.100000D+01  0.100000D+01
+      2   0.100000D+01  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.100000D+01  0.000000D+00  0.000000D+00  0.000000D+00
+ CrdCon: Bond(     1,     2)
+ 1,2,BOND
+ CrdCon: Adding coordinate No     1
+ CrdCon: Bond(     1,     3)
+ 1,3,BOND
+ CrdCon: Adding coordinate No     2
+ CrdCon: Bond(     1,     4)
+ 1,4,BOND
+ CrdCon: Adding coordinate No     3
+ CrdCon: Valence angle(     2,     1,     3)
+ 2,1,3,ANGLE
+ CrdCon: Adding coordinate No     4
+ CrdCon: Valence angle(     2,     1,     4)
+ 2,1,4,ANGLE
+ CrdCon: Adding coordinate No     5
+ CrdCon: Valence angle(     3,     1,     4)
+ 3,1,4,ANGLE
+ CrdCon: Adding coordinate No     6
+ CrdCon: Central-atom dihedral (     2,     1,     3,     4)
+ 2,1,3,4,DIHEDRAL
+ CrdCon: Adding coordinate No     7
+ NVar =       7  NTBond =       3  NTVang  =       3  NTDih  =       1  NTLin  =       0
+ Atomic centers
+ NCoord =       1  IAtom1 =     1  IAtom2 =     2  IAtom3 =     0  IAtom4 =     0
+ NCoord =       2  IAtom1 =     1  IAtom2 =     3  IAtom3 =     0  IAtom4 =     0
+ NCoord =       3  IAtom1 =     1  IAtom2 =     4  IAtom3 =     0  IAtom4 =     0
+ NCoord =       4  IAtom1 =     2  IAtom2 =     1  IAtom3 =     3  IAtom4 =     0
+ NCoord =       5  IAtom1 =     2  IAtom2 =     1  IAtom3 =     4  IAtom4 =     0
+ NCoord =       6  IAtom1 =     3  IAtom2 =     1  IAtom3 =     4  IAtom4 =     0
+ NCoord =       7  IAtom1 =     2  IAtom2 =     1  IAtom3 =     3  IAtom4 =     4
+ Initializing the GIC definitions file.
+    ICrDer=    3 ICrDef=    9
+    ICrDfA=10031 ICrDfB=    0 ICrDf1=20010 ICrDf2=30010
+ CrdDef: GIC expression optimization turned off.
+ Forming coordinate definitions.
+ CrdDef: GIC expression optimization turned off.
+ CrdDef: NFroz=    0 NRF=    0
+ CrDf31 is appending new coordinates.
+ 1,2,BOND,1,3,BOND,1,4,BOND,2,1,3,ANGLE,2,1,4,ANGLE,3,1,4,ANGLE,2,1,3,4,DIHEDRAL
+ Forming B-matrix definitions.
+ CrdDef: GIC expression optimization turned off.
+ CrdDef: NFroz=    0 NRF=    0
+ Enter CrDfDx.
+    ISet=    2 ISet2=    1 NAtoms=     4
+ Forming B-matrix derivative definitions.
+ CrdDef: GIC expression optimization turned off.
+ CrdDef: NFroz=    0 NRF=    0
+ Enter CrDfDx.
+    ISet=    3 ISet2=    2 NAtoms=     4
+ Writing the coordinate definitions file.
+ CrdDef: GIC expression optimization turned off.
+ CrdDef: Writing coordinates to the RWF file.
+         NPrim=      6144 NCoord=       340 MaxSet=         3 LIVars=     18675
+         LRVars=         5
+ CrdDef: NCrdSt= 
+              1            2            3
+     1            7           57          276
+ Length of the coordinate file in words =           94130
+ Total number of GIC primitives =            6144
+ Internal Coord. Values: 
+                 1 
+      1   0.188973D+01
+      2   0.188973D+01
+      3   0.188973D+01
+      4   0.191063D+01
+      5   0.191063D+01
+      6   0.191063D+01
+      7   0.209440D+01
+ Number of GICs ready for optimization =    7
+ IZRed in CrdIZR: 
+              1            2            3            4
+     1            1            2            0            0
+     2            1            3            0            0
+     3            1            4            0            0
+     4            2            1            3            0
+     5            2            1            4            0
+     6            3            1            4            0
+     7            2            1            3            4
+ ITRead=  0  0  0  0
+ MicOpt= -1 -1 -1 -1
+ NAtoms=      4 NQM=        4 NQMF=       0 NMMI=      0 NMMIF=      0
+                NMic=       0 NMicF=      0.
+                    Isotopes and Nuclear Properties:
+ (Nuclear quadrupole moments (NQMom) in fm**2, nuclear magnetic moments (NMagM)
+  in nuclear magnetons)
+
+  Atom         1           2           3           4
+ IAtWgt=          14           1           1           1
+ AtmWgt=  14.0030740   1.0078250   1.0078250   1.0078250
+ NucSpn=           2           1           1           1
+ AtZEff=  -0.0000000  -0.0000000  -0.0000000  -0.0000000
+ NQMom=    2.0440000   0.0000000   0.0000000   0.0000000
+ NMagM=    0.4037610   2.7928460   2.7928460   2.7928460
+ AtZNuc=   7.0000000   1.0000000   1.0000000   1.0000000
+ Generating MM parameters.
+ MMInit:  IParam=     2 NAtoms=     0 ICharg=  0 ICntrl=     1 Multip=
+ CnvCon:  DoRev=F.
+ CnvCon connectivity:  1
+ I=     1 IAn=  7 IBond, IBType=     2     1     3     1     4     1
+ I=     2 IAn=  1 IBond, IBType=     1     1
+ I=     3 IAn=  1 IBond, IBType=     1     1
+ I=     4 IAn=  1 IBond, IBType=     1     1
+ I=    1 IAn=  7 Valence= 3.
+ I=    2 IAn=  1 Valence= 1.
+ I=    3 IAn=  1 Valence= 1.
+ I=    4 IAn=  1 Valence= 1.
+ There are    1 entries in the MM symbol table.
+ Symbol    1 IAtTpT=           0 IUser=           0 String=*
+ Center Symbol User# IAn  Charge Atom? Charge? IAType1  2    IAtTyp
+      1 N_3        0   7   0.000    T       F      3    7  10071003
+      2 H_         0   1   0.000    T       F      0    1  10011000
+      3 H_         0   1   0.000    T       F      0    1  10011000
+      4 H_         0   1   0.000    T       F      0    1  10011000
+ Include all MM classes
+ There are    3 entries in the MM symbol table.
+ Symbol    1 IAtTpT=           0 IUser=           0 String=*
+ Symbol    2 IAtTpT=    10071003 IUser=           0 String=N_3
+ Symbol    3 IAtTpT=    10011000 IUser=           0 String=H_
+
+ MM sanity checks:
+ No residue numbers specified.
+ All charges sum to:                0.00000000
+ Charges of atoms sum to:           0.00000000
+ There are    3 entries in the MM symbol table.
+ Symbol    1 IAtTpT=           0 IUser=           0 String=*
+ Symbol    2 IAtTpT=    10071003 IUser=           0 String=N_3
+ Symbol    3 IAtTpT=    10011000 IUser=           0 String=H_
+ MMInit generated parameter data with length LenPar=         609.
+ There are    1 entries in the MM symbol table.
+ Symbol    1 IAtTpT=           0 IUser=           0 String=*
+ New AtmChZ: 
+                 1 
+      1   0.000000D+00
+      2   0.000000D+00
+      3   0.000000D+00
+      4   0.000000D+00
+ Leave Link  101 at Wed Nov 19 18:06:12 2025, MaxMem=   104857600 cpu:               0.1 elap:               0.2
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l106.exe)
+ Numerical evaluation of force-constants.
+ Nuclear step= 0.001000 Angstroms, electric field step= 0.000333 atomic units, NStep=1.
+ In D2SvPt:  central point
+ Coordinates:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   1.889725652077D-01
+ I=    2 X=   0.000000000000D+00 Y=   1.781650797718D+00 Z=  -4.409359854846D-01
+ I=    3 X=  -1.542954851496D+00 Y=  -8.908253988592D-01 Z=  -4.409359854846D-01
+ I=    4 X=   1.542954851496D+00 Y=  -8.908253988592D-01 Z=  -4.409359854846D-01
+ Electric Field:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   0.000000000000D+00
+ Leave Link  106 at Wed Nov 19 18:06:13 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l103.exe)
+
+ GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
+ Berny optimization.
+ Optmz: redundant internal coordinate code flag= 2
+ Initialization pass.
+                           ----------------------------
+                           !    Initial Parameters    !
+                           ! (Angstroms and Degrees)  !
+ --------------------------                            --------------------------
+ ! Name  Definition              Value          Derivative Info.                !
+ --------------------------------------------------------------------------------
+ ! R1    R(1,2)                  1.0            calculate D2E/DX2 analytically  !
+ ! R2    R(1,3)                  1.0            calculate D2E/DX2 analytically  !
+ ! R3    R(1,4)                  1.0            calculate D2E/DX2 analytically  !
+ ! A1    A(2,1,3)              109.4712         calculate D2E/DX2 analytically  !
+ ! A2    A(2,1,4)              109.4712         calculate D2E/DX2 analytically  !
+ ! A3    A(3,1,4)              109.4712         calculate D2E/DX2 analytically  !
+ ! D1    D(2,1,3,4)            120.0            calculate D2E/DX2 analytically  !
+ --------------------------------------------------------------------------------
+ Maximum allowed force set to 1.00D+20.
+ Trust Radius=3.00D-01 FncErr=1.00D-07 GrdErr=1.00D-07 EigMax=2.50D+02 EigMin=1.00D-04
+ Number of steps in this run=      2 maximum allowed number of steps=      2.
+ GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
+
+ Leave Link  103 at Wed Nov 19 18:06:13 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l202.exe)
+                          Input orientation:                          
+ ---------------------------------------------------------------------
+ Center     Atomic      Atomic             Coordinates (Angstroms)
+ Number     Number       Type             X           Y           Z
+ ---------------------------------------------------------------------
+      1          7    10071003        0.000000    0.000000    0.100000
+      2          1    10011000        0.000000    0.942809   -0.233333
+      3          1    10011000       -0.816497   -0.471404   -0.233333
+      4          1    10011000        0.816497   -0.471404   -0.233333
+ ---------------------------------------------------------------------
+                    Distance matrix (angstroms):
+                    1          2          3          4
+     1  N    0.000000
+     2  H    1.000000   0.000000
+     3  H    1.000000   1.632993   0.000000
+     4  H    1.000000   1.632993   1.632993   0.000000
+ Stoichiometry    H3N
+ Framework group  C3V[C3(N),3SGV(H)]
+ Deg. of freedom     2
+ Full point group                 C3V     NOp   6
+ Largest Abelian subgroup         CS      NOp   2
+ Largest concise Abelian subgroup CS      NOp   2
+                         Standard orientation:                         
+ ---------------------------------------------------------------------
+ Center     Atomic      Atomic             Coordinates (Angstroms)
+ Number     Number       Type             X           Y           Z
+ ---------------------------------------------------------------------
+      1          7    10071003        0.000000    0.000000    0.100000
+      2          1    10011000        0.000000    0.942809   -0.233333
+      3          1    10011000       -0.816497   -0.471404   -0.233333
+      4          1    10011000        0.816497   -0.471404   -0.233333
+ ---------------------------------------------------------------------
+ Rotational constants (GHZ):         311.9520343         311.9520343         188.0456808
+ Leave Link  202 at Wed Nov 19 18:06:13 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l301.exe)
+ Standard basis: Dummy (5D, 7F)
+ There are     3 symmetry adapted cartesian basis functions of A'  symmetry.
+ There are     1 symmetry adapted cartesian basis functions of A"  symmetry.
+ There are     3 symmetry adapted basis functions of A'  symmetry.
+ There are     1 symmetry adapted basis functions of A"  symmetry.
+     4 basis functions,     4 primitive gaussians,     4 cartesian basis functions
+     2 alpha electrons        2 beta electrons
+       nuclear repulsion energy         2.5596923948 Hartrees.
+ IExCor=    0 DFT=F Ex=HF Corr=None ExCW=0 ScaHFX=  1.000000
+ ScaDFX=  1.000000  1.000000  1.000000  1.000000 ScalE2=  1.000000  1.000000
+ IRadAn=      5 IRanWt=     -1 IRanGd=            0 ICorTp=0 IEmpDi=  4
+ NAtoms=    4 NActive=    4 NUniq=    2 SFac= 4.00D+00 NAtFMM=   60 NAOKFM=F Big=F
+ Integral buffers will be    131072 words long.
+ Raffenetti 1 integral format.
+ Two-electron integral symmetry is turned on.
+ Leave Link  301 at Wed Nov 19 18:06:13 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l402.exe)
+ UFF calculation of energy and first derivatives.
+ Energy per function type:
+ Direct Coulomb + vdW (small)                           0.000000000
+ Direct Coulomb (large)                                 0.000000000
+ Direct vdW (large)                                   365.423057852
+ Non-direct Coulomb + vdW (small)                       0.000000000
+ Non-direct Coulomb (large)                             0.000000000
+ Non-direct vdW (large)                              -365.423057852
+ Harmonic stretch III                                   0.004980134
+ UFF 3-term bend                                        0.000534266
+ Energy per function class:
+        Coulomb               0.000000000
+    Vanderwaals               0.000000000
+     Stretching               0.004980134
+        Bending               0.000534266
+ Energy=    5.514400437E-03 NIter=   0.
+ Dipole moment=       0.000000       0.000000       0.000000
+ Leave Link  402 at Wed Nov 19 18:06:13 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l716.exe)
+ Dipole        = 0.00000000D+00 0.00000000D+00 0.00000000D+00
+ ***** Axes restored to original set *****
+ -------------------------------------------------------------------
+ Center     Atomic                   Forces (Hartrees/Bohr)
+ Number     Number              X              Y              Z
+ -------------------------------------------------------------------
+      1        7          -0.000000000    0.000000000    0.050485721
+      2        1           0.000000000    0.036002332   -0.016828574
+      3        1          -0.031178934   -0.018001166   -0.016828574
+      4        1           0.031178934   -0.018001166   -0.016828574
+ -------------------------------------------------------------------
+ Cartesian Forces:  Max     0.050485721 RMS     0.024642298
+ Leave Link  716 at Wed Nov 19 18:06:13 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l106.exe)
+ NDeriv=     12 NFrqRd=  0 NDerD0=      0 MskFDP=       0 MskDFD=       0 MskDF0=       0
+ At 1st pt F.D. properties file   721 does not exist.
+ At 1st pt F.D. properties file   722 does not exist.
+ Allocation parameters:
+ ICO    =           1 IFXYZ2 =          13 ICurSt =          25
+ IES    =          50 IFS    =          53 IFFS   =          89
+ IEDrv0 =          89 IEDrvS =         718 IFDPrS =        1347
+ IDFDPS =        1347 IElTrS =        1347 IMagS  =        1350
+ IDNumr =        1350 IVNACS =        1386 IFNumr =        1386
+ IDipDE =        1398 IFCNum =        1398 ID2Dip =        1542
+ IFFC   =        1542 IFFC2  =        1542 IEDrvD =        1542
+ IFDPrD =        1590 IDFDPD =        1590 IElTrD =        1590
+ IMagD  =        1602 IVNACD =        1602 IDone  =        1746
+ IAMO   =        1761 ICITDT =        1761 ICISSD =        1761
+ IB     =        1761 IMol   =        1857 IGen   =     4824377
+ IEFSav =     4825377 IStSav =     4825412 IPFS   =     4825422
+ INEqA  =     4825428 INEqC  =     4825460 IV     =     4825556
+ IDFTab 
+              1
+     1          619
+     2          777
+     3            1
+     4            4
+     5          718
+     6         1542
+     7            0
+     8            1
+     9            1
+    10            0
+    11            0
+    12            0
+ NEqCor:
+     1   -1
+     2    2
+     3    3
+     4   -4
+     5    5
+     6    6
+     7  -10
+     8   11
+     9   12
+    10   -7
+    11    8
+    12    9
+ D2Numr ... symmetry will be used.
+ Original coordinates:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   1.889725652077D-01
+ I=    2 X=   0.000000000000D+00 Y=   1.781650797718D+00 Z=  -4.409359854846D-01
+ I=    3 X=  -1.542954851497D+00 Y=  -8.908253988592D-01 Z=  -4.409359854846D-01
+ I=    4 X=   1.542954851497D+00 Y=  -8.908253988592D-01 Z=  -4.409359854846D-01
+ Energy from central point:  5.514400437333D-03
+ Forces from central point
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=  -5.048572088890D-02
+ I=    2 X=   0.000000000000D+00 Y=  -3.600233154452D-02 Z=   1.682857362965D-02
+ I=    3 X=   3.117893371324D-02 Y=   1.800116577225D-02 Z=   1.682857362965D-02
+ I=    4 X=  -3.117893371347D-02 Y=   1.800116577244D-02 Z=   1.682857362977D-02
+ Static electric field derivatives from central point Dipole Moment 
+                 1 
+      1   0.000000D+00
+      2   0.000000D+00
+      3   0.000000D+00
+ Rotating derivatives, DoTrsp=T IDiff=-1 LEDeriv=    628 LFDPrp=       0 LDFDPr=       0.
+ In D2SvPt:  atom      1 IXYZ=1 step-up   number 1
+ Coordinates:
+ I=    1 X=   1.889726124565D-03 Y=   0.000000000000D+00 Z=   1.889725652077D-01
+ I=    2 X=   0.000000000000D+00 Y=   1.781650797718D+00 Z=  -4.409359854846D-01
+ I=    3 X=  -1.542954851497D+00 Y=  -8.908253988592D-01 Z=  -4.409359854846D-01
+ I=    4 X=   1.542954851497D+00 Y=  -8.908253988592D-01 Z=  -4.409359854846D-01
+ Electric Field:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   0.000000000000D+00
+ Leave Link  106 at Wed Nov 19 18:06:14 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.4
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l301.exe)
+ Standard basis: Dummy (5D, 7F)
+     4 basis functions,     4 primitive gaussians,     4 cartesian basis functions
+     2 alpha electrons        2 beta electrons
+       nuclear repulsion energy         2.5596926593 Hartrees.
+ IExCor=    0 DFT=F Ex=HF Corr=None ExCW=0 ScaHFX=  1.000000
+ ScaDFX=  1.000000  1.000000  1.000000  1.000000 ScalE2=  1.000000  1.000000
+ IRadAn=      5 IRanWt=     -1 IRanGd=            0 ICorTp=0 IEmpDi=  4
+ NAtoms=    4 NActive=    4 NUniq=    4 SFac= 1.00D+00 NAtFMM=   60 NAOKFM=F Big=F
+ Integral buffers will be    131072 words long.
+ Raffenetti 1 integral format.
+ Two-electron integral symmetry is turned off.
+ Leave Link  301 at Wed Nov 19 18:06:14 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l402.exe)
+ UFF calculation of energy and first derivatives.
+ Energy per function type:
+ Direct Coulomb + vdW (small)                           0.000000000
+ Direct Coulomb (large)                                 0.000000000
+ Direct vdW (large)                                   365.434516871
+ Non-direct Coulomb + vdW (small)                       0.000000000
+ Non-direct Coulomb (large)                             0.000000000
+ Non-direct vdW (large)                              -365.434516871
+ Harmonic stretch III                                   0.004981194
+ UFF 3-term bend                                        0.000534454
+ Energy per function class:
+        Coulomb               0.000000000
+    Vanderwaals               0.000000000
+     Stretching               0.004981194
+        Bending               0.000534454
+ Energy=    5.515647623E-03 NIter=   0.
+ Dipole moment=       0.000000       0.000000       0.000000
+ Leave Link  402 at Wed Nov 19 18:06:14 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l716.exe)
+ Dipole        = 0.00000000D+00 0.00000000D+00 0.00000000D+00
+ -------------------------------------------------------------------
+ Center     Atomic                   Forces (Hartrees/Bohr)
+ Number     Number              X              Y              Z
+ -------------------------------------------------------------------
+      1        7          -0.001319964    0.000000703    0.050486038
+      2        1           0.000113522    0.036002022   -0.016828514
+      3        1          -0.030575360   -0.017718634   -0.016528409
+      4        1           0.031781802   -0.018284091   -0.017129115
+ -------------------------------------------------------------------
+ Cartesian Forces:  Max     0.050486038 RMS     0.024647056
+ Leave Link  716 at Wed Nov 19 18:06:14 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l106.exe)
+ NDeriv=     12 NFrqRd=  0 NDerD0=      0 MskFDP=       0 MskDFD=       0 MskDF0=       0
+ Allocation parameters:
+ ICO    =           1 IFXYZ2 =          13 ICurSt =          25
+ IES    =          50 IFS    =          53 IFFS   =          89
+ IEDrv0 =          89 IEDrvS =         718 IFDPrS =        1347
+ IDFDPS =        1347 IElTrS =        1347 IMagS  =        1350
+ IDNumr =        1350 IVNACS =        1386 IFNumr =        1386
+ IDipDE =        1398 IFCNum =        1398 ID2Dip =        1542
+ IFFC   =        1542 IFFC2  =        1542 IEDrvD =        1542
+ IFDPrD =        1590 IDFDPD =        1590 IElTrD =        1590
+ IMagD  =        1602 IVNACD =        1602 IDone  =        1746
+ IAMO   =        1761 ICITDT =        1761 ICISSD =        1761
+ IB     =        1761 IMol   =        1857 IGen   =     4824377
+ IEFSav =     4825377 IStSav =     4825412 IPFS   =     4825422
+ INEqA  =     4825428 INEqC  =     4825460 IV     =     4825556
+ IDFTab 
+              1
+     1          619
+     2          777
+     3            1
+     4            4
+     5          718
+     6         1542
+     7            0
+     8            1
+     9            1
+    10            0
+    11            0
+    12            0
+ NEqCor:
+     1   -1
+     2    2
+     3    3
+     4   -4
+     5    5
+     6    6
+     7  -10
+     8   11
+     9   12
+    10   -7
+    11    8
+    12    9
+ Re-enter D2Numr:  atom      1 IXYZ=1 step-up   number 1
+ Energy from atom      1 IXYZ=1 step-up   number 1:  5.515647623005D-03
+ Forces from atom      1 IXYZ=1 step-up   number 1
+ I=    1 X=   1.319964072422D-03 Y=  -7.028474442450D-07 Z=  -5.048603807302D-02
+ I=    2 X=  -1.135217885236D-04 Y=  -3.600202189193D-02 Z=   1.682851369492D-02
+ I=    3 X=   3.057536015101D-02 Y=   1.771863388581D-02 Z=   1.652840944698D-02
+ I=    4 X=  -3.178180243503D-02 Y=   1.828409085368D-02 Z=   1.712911493098D-02
+ Static electric field derivatives from atom      1 IXYZ=1 step-up   number 1 Dipole Moment 
+                 1 
+      1   0.000000D+00
+      2   0.000000D+00
+      3   0.000000D+00
+ Forces transformed using operation 2.
+ Rotating derivatives, DoTrsp=F IDiff= 1 LEDeriv=      3 LFDPrp=      -2 LDFDPr=       0.
+ CorEq1 forces:
+ I=    1 X=  -1.319964072422D-03 Y=  -7.028474442450D-07 Z=  -5.048603807302D-02
+ I=    2 X=   1.135217885236D-04 Y=  -3.600202189193D-02 Z=   1.682851369492D-02
+ I=    3 X=   3.178180243503D-02 Y=   1.828409085368D-02 Z=   1.712911493098D-02
+ I=    4 X=  -3.057536015101D-02 Y=   1.771863388581D-02 Z=   1.652840944698D-02
+ CorEq1 nonadiabatic coupling:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   0.000000000000D+00
+ I=    2 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   0.000000000000D+00
+ I=    3 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   0.000000000000D+00
+ I=    4 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   0.000000000000D+00
+ CorEq1 Dipole Moment 
+                 1 
+      1   0.000000D+00
+      2   0.000000D+00
+      3   0.000000D+00
+ Skip step-back as it is equivalent to step-up.
+ Numerical forces after IXYZ=1 IAtom=     1: 
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9            10 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                11            12 
+      1   0.000000D+00  0.000000D+00
+ Numerical force constants after IXYZ=1 IAtom=     1: 
+                 1             2             3             4             5 
+      1   0.698495D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      4  -0.600731D-01  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      5   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      6   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      7  -0.319211D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      8  -0.149613D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      9  -0.158940D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+     10  -0.319211D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+     11   0.149613D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+     12   0.158940D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9            10 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      4   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      5   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      6   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      7   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      8   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      9   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+     10   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+     11   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+     12   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                11            12 
+      1   0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00
+      4   0.000000D+00  0.000000D+00
+      5   0.000000D+00  0.000000D+00
+      6   0.000000D+00  0.000000D+00
+      7   0.000000D+00  0.000000D+00
+      8   0.000000D+00  0.000000D+00
+      9   0.000000D+00  0.000000D+00
+     10   0.000000D+00  0.000000D+00
+     11   0.000000D+00  0.000000D+00
+     12   0.000000D+00  0.000000D+00
+ Current Numerical derivative of Dipole Moment 
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9            10 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                11            12 
+      1   0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00
+ D2NDiT:  IFil=  1  File 1 number   619 JFDS=         718 JFDD=        1542 IOff=           1 LFil=           4 JSkipF=1.
+ In D2SvPt:  atom      1 IXYZ=2 step-up   number 1
+ Coordinates:
+ I=    1 X=   0.000000000000D+00 Y=   1.889726124565D-03 Z=   1.889725652077D-01
+ I=    2 X=   0.000000000000D+00 Y=   1.781650797718D+00 Z=  -4.409359854846D-01
+ I=    3 X=  -1.542954851497D+00 Y=  -8.908253988592D-01 Z=  -4.409359854846D-01
+ I=    4 X=   1.542954851497D+00 Y=  -8.908253988592D-01 Z=  -4.409359854846D-01
+ Electric Field:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   0.000000000000D+00
+ Leave Link  106 at Wed Nov 19 18:06:15 2025, MaxMem=   104857600 cpu:               0.1 elap:               0.8
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l301.exe)
+ Standard basis: Dummy (5D, 7F)
+     4 basis functions,     4 primitive gaussians,     4 cartesian basis functions
+     2 alpha electrons        2 beta electrons
+       nuclear repulsion energy         2.5596926602 Hartrees.
+ IExCor=    0 DFT=F Ex=HF Corr=None ExCW=0 ScaHFX=  1.000000
+ ScaDFX=  1.000000  1.000000  1.000000  1.000000 ScalE2=  1.000000  1.000000
+ IRadAn=      5 IRanWt=     -1 IRanGd=            0 ICorTp=0 IEmpDi=  4
+ NAtoms=    4 NActive=    4 NUniq=    4 SFac= 1.00D+00 NAtFMM=   60 NAOKFM=F Big=F
+ Integral buffers will be    131072 words long.
+ Raffenetti 1 integral format.
+ Two-electron integral symmetry is turned off.
+ Leave Link  301 at Wed Nov 19 18:06:15 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l402.exe)
+ UFF calculation of energy and first derivatives.
+ Energy per function type:
+ Direct Coulomb + vdW (small)                           0.000000000
+ Direct Coulomb (large)                                 0.000000000
+ Direct vdW (large)                                   365.434551201
+ Non-direct Coulomb + vdW (small)                       0.000000000
+ Non-direct Coulomb (large)                             0.000000000
+ Non-direct vdW (large)                              -365.434551201
+ Harmonic stretch III                                   0.004981194
+ UFF 3-term bend                                        0.000534454
+ Energy per function class:
+        Coulomb               0.000000000
+    Vanderwaals               0.000000000
+     Stretching               0.004981194
+        Bending               0.000534454
+ Energy=    5.515648066E-03 NIter=   0.
+ Dipole moment=       0.000000       0.000000       0.000000
+ Leave Link  402 at Wed Nov 19 18:06:15 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l716.exe)
+ Dipole        = 0.00000000D+00 0.00000000D+00 0.00000000D+00
+ -------------------------------------------------------------------
+ Center     Atomic                   Forces (Hartrees/Bohr)
+ Number     Number              X              Y              Z
+ -------------------------------------------------------------------
+      1        7          -0.000000000   -0.001320667    0.050486039
+      2        1           0.000000000    0.036768613   -0.017175663
+      3        1          -0.030896140   -0.017723973   -0.016655188
+      4        1           0.030896140   -0.017723973   -0.016655188
+ -------------------------------------------------------------------
+ Cartesian Forces:  Max     0.050486039 RMS     0.024647060
+ Leave Link  716 at Wed Nov 19 18:06:15 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l106.exe)
+ NDeriv=     12 NFrqRd=  0 NDerD0=      0 MskFDP=       0 MskDFD=       0 MskDF0=       0
+ Allocation parameters:
+ ICO    =           1 IFXYZ2 =          13 ICurSt =          25
+ IES    =          50 IFS    =          53 IFFS   =          89
+ IEDrv0 =          89 IEDrvS =         718 IFDPrS =        1347
+ IDFDPS =        1347 IElTrS =        1347 IMagS  =        1350
+ IDNumr =        1350 IVNACS =        1386 IFNumr =        1386
+ IDipDE =        1398 IFCNum =        1398 ID2Dip =        1542
+ IFFC   =        1542 IFFC2  =        1542 IEDrvD =        1542
+ IFDPrD =        1590 IDFDPD =        1590 IElTrD =        1590
+ IMagD  =        1602 IVNACD =        1602 IDone  =        1746
+ IAMO   =        1761 ICITDT =        1761 ICISSD =        1761
+ IB     =        1761 IMol   =        1857 IGen   =     4824377
+ IEFSav =     4825377 IStSav =     4825412 IPFS   =     4825422
+ INEqA  =     4825428 INEqC  =     4825460 IV     =     4825556
+ IDFTab 
+              1
+     1          619
+     2          777
+     3            1
+     4            4
+     5          718
+     6         1542
+     7            0
+     8            1
+     9            1
+    10            0
+    11            0
+    12            0
+ NEqCor:
+     1   -1
+     2    2
+     3    3
+     4   -4
+     5    5
+     6    6
+     7  -10
+     8   11
+     9   12
+    10   -7
+    11    8
+    12    9
+ Re-enter D2Numr:  atom      1 IXYZ=2 step-up   number 1
+ Energy from atom      1 IXYZ=2 step-up   number 1:  5.515648065792D-03
+ Forces from atom      1 IXYZ=2 step-up   number 1
+ I=    1 X=   0.000000000000D+00 Y=   1.320666920549D-03 Z=  -5.048603852691D-02
+ I=    2 X=   0.000000000000D+00 Y=  -3.676861348810D-02 Z=   1.717566264495D-02
+ I=    3 X=   3.089614025110D-02 Y=   1.772397328381D-02 Z=   1.665518794084D-02
+ I=    4 X=  -3.089614025134D-02 Y=   1.772397328392D-02 Z=   1.665518794096D-02
+ Static electric field derivatives from atom      1 IXYZ=2 step-up   number 1 Dipole Moment 
+                 1 
+      1   0.000000D+00
+      2   0.000000D+00
+      3   0.000000D+00
+ In D2SvPt:  atom      1 IXYZ=2 step-down number 1
+ Coordinates:
+ I=    1 X=   0.000000000000D+00 Y=  -1.889726124565D-03 Z=   1.889725652077D-01
+ I=    2 X=   0.000000000000D+00 Y=   1.781650797718D+00 Z=  -4.409359854846D-01
+ I=    3 X=  -1.542954851497D+00 Y=  -8.908253988592D-01 Z=  -4.409359854846D-01
+ I=    4 X=   1.542954851497D+00 Y=  -8.908253988592D-01 Z=  -4.409359854846D-01
+ Electric Field:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   0.000000000000D+00
+ Leave Link  106 at Wed Nov 19 18:06:16 2025, MaxMem=   104857600 cpu:               0.1 elap:               1.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l301.exe)
+ Standard basis: Dummy (5D, 7F)
+     4 basis functions,     4 primitive gaussians,     4 cartesian basis functions
+     2 alpha electrons        2 beta electrons
+       nuclear repulsion energy         2.5596926585 Hartrees.
+ IExCor=    0 DFT=F Ex=HF Corr=None ExCW=0 ScaHFX=  1.000000
+ ScaDFX=  1.000000  1.000000  1.000000  1.000000 ScalE2=  1.000000  1.000000
+ IRadAn=      5 IRanWt=     -1 IRanGd=            0 ICorTp=0 IEmpDi=  4
+ NAtoms=    4 NActive=    4 NUniq=    4 SFac= 1.00D+00 NAtFMM=   60 NAOKFM=F Big=F
+ Integral buffers will be    131072 words long.
+ Raffenetti 1 integral format.
+ Two-electron integral symmetry is turned off.
+ Leave Link  301 at Wed Nov 19 18:06:17 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l402.exe)
+ UFF calculation of energy and first derivatives.
+ Energy per function type:
+ Direct Coulomb + vdW (small)                           0.000000000
+ Direct Coulomb (large)                                 0.000000000
+ Direct vdW (large)                                   365.434482540
+ Non-direct Coulomb + vdW (small)                       0.000000000
+ Non-direct Coulomb (large)                             0.000000000
+ Non-direct vdW (large)                              -365.434482540
+ Harmonic stretch III                                   0.004981193
+ UFF 3-term bend                                        0.000534454
+ Energy per function class:
+        Coulomb               0.000000000
+    Vanderwaals               0.000000000
+     Stretching               0.004981193
+        Bending               0.000534454
+ Energy=    5.515647180E-03 NIter=   0.
+ Dipole moment=       0.000000       0.000000       0.000000
+ Leave Link  402 at Wed Nov 19 18:06:17 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l716.exe)
+ Dipole        = 0.00000000D+00 0.00000000D+00 0.00000000D+00
+ -------------------------------------------------------------------
+ Center     Atomic                   Forces (Hartrees/Bohr)
+ Number     Number              X              Y              Z
+ -------------------------------------------------------------------
+      1        7          -0.000000000    0.001319261    0.050486038
+      2        1           0.000000000    0.035235704   -0.016482027
+      3        1          -0.031461597   -0.018277483   -0.017002005
+      4        1           0.031461597   -0.018277483   -0.017002005
+ -------------------------------------------------------------------
+ Cartesian Forces:  Max     0.050486038 RMS     0.024647051
+ Leave Link  716 at Wed Nov 19 18:06:17 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l106.exe)
+ NDeriv=     12 NFrqRd=  0 NDerD0=      0 MskFDP=       0 MskDFD=       0 MskDF0=       0
+ Allocation parameters:
+ ICO    =           1 IFXYZ2 =          13 ICurSt =          25
+ IES    =          50 IFS    =          53 IFFS   =          89
+ IEDrv0 =          89 IEDrvS =         718 IFDPrS =        1347
+ IDFDPS =        1347 IElTrS =        1347 IMagS  =        1350
+ IDNumr =        1350 IVNACS =        1386 IFNumr =        1386
+ IDipDE =        1398 IFCNum =        1398 ID2Dip =        1542
+ IFFC   =        1542 IFFC2  =        1542 IEDrvD =        1542
+ IFDPrD =        1590 IDFDPD =        1590 IElTrD =        1590
+ IMagD  =        1602 IVNACD =        1602 IDone  =        1746
+ IAMO   =        1761 ICITDT =        1761 ICISSD =        1761
+ IB     =        1761 IMol   =        1857 IGen   =     4824377
+ IEFSav =     4825377 IStSav =     4825412 IPFS   =     4825422
+ INEqA  =     4825428 INEqC  =     4825460 IV     =     4825556
+ IDFTab 
+              1
+     1          619
+     2          777
+     3            1
+     4            4
+     5          718
+     6         1542
+     7            0
+     8            1
+     9            1
+    10            0
+    11            0
+    12            0
+ NEqCor:
+     1   -1
+     2    2
+     3    3
+     4   -4
+     5    5
+     6    6
+     7  -10
+     8   11
+     9   12
+    10   -7
+    11    8
+    12    9
+ Re-enter D2Numr:  atom      1 IXYZ=2 step-down number 1
+ Energy from atom      1 IXYZ=2 step-down number 1:  5.515647180219D-03
+ Forces from atom      1 IXYZ=2 step-down number 1
+ I=    1 X=   0.000000000000D+00 Y=  -1.319261225376D-03 Z=  -5.048603761912D-02
+ I=    2 X=   0.000000000000D+00 Y=  -3.523570428751D-02 Z=   1.648202739639D-02
+ I=    3 X=   3.146159662979D-02 Y=   1.827748275628D-02 Z=   1.700200511129D-02
+ I=    4 X=  -3.146159663015D-02 Y=   1.827748275645D-02 Z=   1.700200511135D-02
+ Static electric field derivatives from atom      1 IXYZ=2 step-down number 1 Dipole Moment 
+                 1 
+      1   0.000000D+00
+      2   0.000000D+00
+      3   0.000000D+00
+ Numerical forces after IXYZ=2 IAtom=     1: 
+                 1             2             3             4             5 
+      1   0.000000D+00  0.234313D-06  0.000000D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9            10 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                11            12 
+      1   0.000000D+00  0.000000D+00
+ Numerical force constants after IXYZ=2 IAtom=     1: 
+                 1             2             3             4             5 
+      1   0.698495D+00 -0.300802D-10  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.698495D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00 -0.240191D-06  0.000000D+00  0.000000D+00  0.000000D+00
+      4  -0.600731D-01  0.367190D-14  0.000000D+00  0.000000D+00  0.000000D+00
+      5   0.000000D+00 -0.405590D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      6   0.000000D+00  0.183528D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      7  -0.319211D+00 -0.149613D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      8  -0.149613D+00 -0.146452D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      9  -0.158940D+00 -0.917639D-01  0.000000D+00  0.000000D+00  0.000000D+00
+     10  -0.319211D+00  0.149613D+00  0.000000D+00  0.000000D+00  0.000000D+00
+     11   0.149613D+00 -0.146452D+00  0.000000D+00  0.000000D+00  0.000000D+00
+     12   0.158940D+00 -0.917639D-01  0.000000D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9            10 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      4   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      5   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      6   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      7   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      8   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      9   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+     10   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+     11   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+     12   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                11            12 
+      1   0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00
+      4   0.000000D+00  0.000000D+00
+      5   0.000000D+00  0.000000D+00
+      6   0.000000D+00  0.000000D+00
+      7   0.000000D+00  0.000000D+00
+      8   0.000000D+00  0.000000D+00
+      9   0.000000D+00  0.000000D+00
+     10   0.000000D+00  0.000000D+00
+     11   0.000000D+00  0.000000D+00
+     12   0.000000D+00  0.000000D+00
+ Current Numerical derivative of Dipole Moment 
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9            10 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                11            12 
+      1   0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00
+ D2NDiT:  IFil=  1  File 1 number   619 JFDS=         718 JFDD=        1542 IOff=           1 LFil=           4 JSkipF=1.
+ In D2SvPt:  atom      1 IXYZ=3 step-up   number 1
+ Coordinates:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   1.908622913322D-01
+ I=    2 X=   0.000000000000D+00 Y=   1.781650797718D+00 Z=  -4.409359854846D-01
+ I=    3 X=  -1.542954851497D+00 Y=  -8.908253988592D-01 Z=  -4.409359854846D-01
+ I=    4 X=   1.542954851497D+00 Y=  -8.908253988592D-01 Z=  -4.409359854846D-01
+ Electric Field:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   0.000000000000D+00
+ Leave Link  106 at Wed Nov 19 18:06:18 2025, MaxMem=   104857600 cpu:               0.1 elap:               1.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l301.exe)
+ Standard basis: Dummy (5D, 7F)
+     4 basis functions,     4 primitive gaussians,     4 cartesian basis functions
+     2 alpha electrons        2 beta electrons
+       nuclear repulsion energy         2.5591626890 Hartrees.
+ IExCor=    0 DFT=F Ex=HF Corr=None ExCW=0 ScaHFX=  1.000000
+ ScaDFX=  1.000000  1.000000  1.000000  1.000000 ScalE2=  1.000000  1.000000
+ IRadAn=      5 IRanWt=     -1 IRanGd=            0 ICorTp=0 IEmpDi=  4
+ NAtoms=    4 NActive=    4 NUniq=    4 SFac= 1.00D+00 NAtFMM=   60 NAOKFM=F Big=F
+ Integral buffers will be    131072 words long.
+ Raffenetti 1 integral format.
+ Two-electron integral symmetry is turned off.
+ Leave Link  301 at Wed Nov 19 18:06:18 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l402.exe)
+ UFF calculation of energy and first derivatives.
+ Energy per function type:
+ Direct Coulomb + vdW (small)                           0.000000000
+ Direct Coulomb (large)                                 0.000000000
+ Direct vdW (large)                                   363.962077831
+ Non-direct Coulomb + vdW (small)                       0.000000000
+ Non-direct Coulomb (large)                             0.000000000
+ Non-direct vdW (large)                              -363.962077831
+ Harmonic stretch III                                   0.004905572
+ UFF 3-term bend                                        0.000513789
+ Energy per function class:
+        Coulomb               0.000000000
+    Vanderwaals               0.000000000
+     Stretching               0.004905572
+        Bending               0.000513789
+ Energy=    5.419360703E-03 NIter=   0.
+ Dipole moment=       0.000000       0.000000       0.000000
+ Leave Link  402 at Wed Nov 19 18:06:18 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l716.exe)
+ Dipole        = 0.00000000D+00 0.00000000D+00 0.00000000D+00
+ -------------------------------------------------------------------
+ Center     Atomic                   Forces (Hartrees/Bohr)
+ Number     Number              X              Y              Z
+ -------------------------------------------------------------------
+      1        7           0.000000000   -0.000000000    0.050099396
+      2        1           0.000000000    0.035728807   -0.016699799
+      3        1          -0.030942055   -0.017864404   -0.016699799
+      4        1           0.030942055   -0.017864404   -0.016699799
+ -------------------------------------------------------------------
+ Cartesian Forces:  Max     0.050099396 RMS     0.024454452
+ Leave Link  716 at Wed Nov 19 18:06:18 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l106.exe)
+ NDeriv=     12 NFrqRd=  0 NDerD0=      0 MskFDP=       0 MskDFD=       0 MskDF0=       0
+ Allocation parameters:
+ ICO    =           1 IFXYZ2 =          13 ICurSt =          25
+ IES    =          50 IFS    =          53 IFFS   =          89
+ IEDrv0 =          89 IEDrvS =         718 IFDPrS =        1347
+ IDFDPS =        1347 IElTrS =        1347 IMagS  =        1350
+ IDNumr =        1350 IVNACS =        1386 IFNumr =        1386
+ IDipDE =        1398 IFCNum =        1398 ID2Dip =        1542
+ IFFC   =        1542 IFFC2  =        1542 IEDrvD =        1542
+ IFDPrD =        1590 IDFDPD =        1590 IElTrD =        1590
+ IMagD  =        1602 IVNACD =        1602 IDone  =        1746
+ IAMO   =        1761 ICITDT =        1761 ICISSD =        1761
+ IB     =        1761 IMol   =        1857 IGen   =     4824377
+ IEFSav =     4825377 IStSav =     4825412 IPFS   =     4825422
+ INEqA  =     4825428 INEqC  =     4825460 IV     =     4825556
+ IDFTab 
+              1
+     1          619
+     2          777
+     3            1
+     4            4
+     5          718
+     6         1542
+     7            0
+     8            1
+     9            1
+    10            0
+    11            0
+    12            0
+ NEqCor:
+     1   -1
+     2    2
+     3    3
+     4   -4
+     5    5
+     6    6
+     7  -10
+     8   11
+     9   12
+    10   -7
+    11    8
+    12    9
+ Re-enter D2Numr:  atom      1 IXYZ=3 step-up   number 1
+ Energy from atom      1 IXYZ=3 step-up   number 1:  5.419360702585D-03
+ Forces from atom      1 IXYZ=3 step-up   number 1
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=  -5.009939643941D-02
+ I=    2 X=   0.000000000000D+00 Y=  -3.572880737249D-02 Z=   1.669979881325D-02
+ I=    3 X=   3.094205483135D-02 Y=   1.786440368625D-02 Z=   1.669979881325D-02
+ I=    4 X=  -3.094205483114D-02 Y=   1.786440368608D-02 Z=   1.669979881314D-02
+ Static electric field derivatives from atom      1 IXYZ=3 step-up   number 1 Dipole Moment 
+                 1 
+      1   0.000000D+00
+      2   0.000000D+00
+      3   0.000000D+00
+ In D2SvPt:  atom      1 IXYZ=3 step-down number 1
+ Coordinates:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   1.870828390831D-01
+ I=    2 X=   0.000000000000D+00 Y=   1.781650797718D+00 Z=  -4.409359854846D-01
+ I=    3 X=  -1.542954851497D+00 Y=  -8.908253988592D-01 Z=  -4.409359854846D-01
+ I=    4 X=   1.542954851497D+00 Y=  -8.908253988592D-01 Z=  -4.409359854846D-01
+ Electric Field:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   0.000000000000D+00
+ Leave Link  106 at Wed Nov 19 18:06:20 2025, MaxMem=   104857600 cpu:               0.1 elap:               1.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l301.exe)
+ Standard basis: Dummy (5D, 7F)
+     4 basis functions,     4 primitive gaussians,     4 cartesian basis functions
+     2 alpha electrons        2 beta electrons
+       nuclear repulsion energy         2.5602210421 Hartrees.
+ IExCor=    0 DFT=F Ex=HF Corr=None ExCW=0 ScaHFX=  1.000000
+ ScaDFX=  1.000000  1.000000  1.000000  1.000000 ScalE2=  1.000000  1.000000
+ IRadAn=      5 IRanWt=     -1 IRanGd=            0 ICorTp=0 IEmpDi=  4
+ NAtoms=    4 NActive=    4 NUniq=    4 SFac= 1.00D+00 NAtFMM=   60 NAOKFM=F Big=F
+ Integral buffers will be    131072 words long.
+ Raffenetti 1 integral format.
+ Two-electron integral symmetry is turned off.
+ Leave Link  301 at Wed Nov 19 18:06:20 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l402.exe)
+ UFF calculation of energy and first derivatives.
+ Energy per function type:
+ Direct Coulomb + vdW (small)                           0.000000000
+ Direct Coulomb (large)                                 0.000000000
+ Direct vdW (large)                                   366.886477341
+ Non-direct Coulomb + vdW (small)                       0.000000000
+ Non-direct Coulomb (large)                             0.000000000
+ Non-direct vdW (large)                              -366.886477341
+ Harmonic stretch III                                   0.005055058
+ UFF 3-term bend                                        0.000555108
+ Energy per function class:
+        Coulomb               0.000000000
+    Vanderwaals               0.000000000
+     Stretching               0.005055058
+        Bending               0.000555108
+ Energy=    5.610166782E-03 NIter=   0.
+ Dipole moment=       0.000000       0.000000       0.000000
+ Leave Link  402 at Wed Nov 19 18:06:20 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l716.exe)
+ Dipole        = 0.00000000D+00 0.00000000D+00 0.00000000D+00
+ -------------------------------------------------------------------
+ Center     Atomic                   Forces (Hartrees/Bohr)
+ Number     Number              X              Y              Z
+ -------------------------------------------------------------------
+      1        7           0.000000000   -0.000000000    0.050868406
+      2        1           0.000000000    0.036275544   -0.016956135
+      3        1          -0.031415543   -0.018137772   -0.016956135
+      4        1           0.031415543   -0.018137772   -0.016956135
+ -------------------------------------------------------------------
+ Cartesian Forces:  Max     0.050868406 RMS     0.024829203
+ Leave Link  716 at Wed Nov 19 18:06:20 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l106.exe)
+ NDeriv=     12 NFrqRd=  0 NDerD0=      0 MskFDP=       0 MskDFD=       0 MskDF0=       0
+ Allocation parameters:
+ ICO    =           1 IFXYZ2 =          13 ICurSt =          25
+ IES    =          50 IFS    =          53 IFFS   =          89
+ IEDrv0 =          89 IEDrvS =         718 IFDPrS =        1347
+ IDFDPS =        1347 IElTrS =        1347 IMagS  =        1350
+ IDNumr =        1350 IVNACS =        1386 IFNumr =        1386
+ IDipDE =        1398 IFCNum =        1398 ID2Dip =        1542
+ IFFC   =        1542 IFFC2  =        1542 IEDrvD =        1542
+ IFDPrD =        1590 IDFDPD =        1590 IElTrD =        1590
+ IMagD  =        1602 IVNACD =        1602 IDone  =        1746
+ IAMO   =        1761 ICITDT =        1761 ICISSD =        1761
+ IB     =        1761 IMol   =        1857 IGen   =     4824377
+ IEFSav =     4825377 IStSav =     4825412 IPFS   =     4825422
+ INEqA  =     4825428 INEqC  =     4825460 IV     =     4825556
+ IDFTab 
+              1
+     1          619
+     2          777
+     3            1
+     4            4
+     5          718
+     6         1542
+     7            0
+     8            1
+     9            1
+    10            0
+    11            0
+    12            0
+ NEqCor:
+     1   -1
+     2    2
+     3    3
+     4   -4
+     5    5
+     6    6
+     7  -10
+     8   11
+     9   12
+    10   -7
+    11    8
+    12    9
+ Re-enter D2Numr:  atom      1 IXYZ=3 step-down number 1
+ Energy from atom      1 IXYZ=3 step-down number 1:  5.610166781736D-03
+ Forces from atom      1 IXYZ=3 step-down number 1
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=  -5.086840638273D-02
+ I=    2 X=   0.000000000000D+00 Y=  -3.627554435581D-02 Z=   1.695613546093D-02
+ I=    3 X=   3.141554294823D-02 Y=   1.813777217797D-02 Z=   1.695613546093D-02
+ I=    4 X=  -3.141554294803D-02 Y=   1.813777217774D-02 Z=   1.695613546082D-02
+ Static electric field derivatives from atom      1 IXYZ=3 step-down number 1 Dipole Moment 
+                 1 
+      1   0.000000D+00
+      2   0.000000D+00
+      3   0.000000D+00
+ Numerical forces after IXYZ=3 IAtom=     1: 
+                 1             2             3             4             5 
+      1   0.000000D+00  0.234313D-06 -0.504851D-01  0.000000D+00  0.000000D+00
+                 6             7             8             9            10 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                11            12 
+      1   0.000000D+00  0.000000D+00
+ Numerical force constants after IXYZ=3 IAtom=     1: 
+                 1             2             3             4             5 
+      1   0.698495D+00 -0.300802D-10  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.698495D+00 -0.150401D-10  0.000000D+00  0.000000D+00
+      3   0.000000D+00 -0.240191D-06  0.203471D+00  0.000000D+00  0.000000D+00
+      4  -0.600731D-01  0.367190D-14  0.000000D+00  0.000000D+00  0.000000D+00
+      5   0.000000D+00 -0.405590D+00  0.144660D+00  0.000000D+00  0.000000D+00
+      6   0.000000D+00  0.183528D+00 -0.678238D-01  0.000000D+00  0.000000D+00
+      7  -0.319211D+00 -0.149613D+00 -0.125280D+00  0.000000D+00  0.000000D+00
+      8  -0.149613D+00 -0.146452D+00 -0.723302D-01  0.000000D+00  0.000000D+00
+      9  -0.158940D+00 -0.917639D-01 -0.678238D-01  0.000000D+00  0.000000D+00
+     10  -0.319211D+00  0.149613D+00  0.125280D+00  0.000000D+00  0.000000D+00
+     11   0.149613D+00 -0.146452D+00 -0.723302D-01  0.000000D+00  0.000000D+00
+     12   0.158940D+00 -0.917639D-01 -0.678238D-01  0.000000D+00  0.000000D+00
+                 6             7             8             9            10 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      4   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      5   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      6   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      7   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      8   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      9   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+     10   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+     11   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+     12   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                11            12 
+      1   0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00
+      4   0.000000D+00  0.000000D+00
+      5   0.000000D+00  0.000000D+00
+      6   0.000000D+00  0.000000D+00
+      7   0.000000D+00  0.000000D+00
+      8   0.000000D+00  0.000000D+00
+      9   0.000000D+00  0.000000D+00
+     10   0.000000D+00  0.000000D+00
+     11   0.000000D+00  0.000000D+00
+     12   0.000000D+00  0.000000D+00
+ Current Numerical derivative of Dipole Moment 
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9            10 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                11            12 
+      1   0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00
+ D2NDiT:  IFil=  1  File 1 number   619 JFDS=         718 JFDD=        1542 IOff=           1 LFil=           4 JSkipF=1.
+ RotOp in D2NSNx: 
+                 1             2             3             4             5 
+      1   0.100000D+01 -0.100000D+01 -0.500000D+00 -0.500000D+00  0.500000D+00
+      2   0.000000D+00  0.000000D+00 -0.866025D+00  0.866025D+00  0.866025D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      4   0.000000D+00  0.000000D+00  0.866025D+00 -0.866025D+00  0.866025D+00
+      5   0.100000D+01  0.100000D+01 -0.500000D+00 -0.500000D+00 -0.500000D+00
+      6   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      7   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      8   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      9   0.100000D+01  0.100000D+01  0.100000D+01  0.100000D+01  0.100000D+01
+     10   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+     11   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+     12   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                 6 
+      1   0.500000D+00
+      2  -0.866025D+00
+      3   0.000000D+00
+      4  -0.866025D+00
+      5  -0.500000D+00
+      6   0.000000D+00
+      7   0.000000D+00
+      8   0.000000D+00
+      9   0.100000D+01
+     10   0.000000D+00
+     11   0.000000D+00
+     12   0.000000D+00
+ NEqAtm in D2NSNx: 
+              1            2            3            4            5
+     1            1            1            1            1            1
+     2            2            2            4            3            4
+     3            3            4            2            4            3
+     4            4            3            3            2            2
+              6
+     1            1
+     2            3
+     3            2
+     4            4
+ JOp=  2 IAtP=  1 IDone=  1  1  0
+ JOp=  3 IAtP=  1 IDone=  1  1  0
+ JOp=  4 IAtP=  1 IDone=  1  1  0
+ JOp=  5 IAtP=  1 IDone=  1  1  0
+ JOp=  6 IAtP=  1 IDone=  1  1  0
+ Forces after D2NSNX:
+ I=    1 X=   0.000000000000D+00 Y=   2.343126355816D-07 Z=  -5.048511439589D-02
+ I=    2 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   0.000000000000D+00
+ I=    3 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   0.000000000000D+00
+ I=    4 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   0.000000000000D+00
+ D2NSNX Numerical derivative of Dipole Moment 
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9            10 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                11            12 
+      1   0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00
+ Finish atom      1 at Wed Nov 19 18:06:21 2025
+ In D2SvPt:  atom      2 IXYZ=1 step-up   number 1
+ Coordinates:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   1.889725652077D-01
+ I=    2 X=   1.889726124565D-03 Y=   1.781650797718D+00 Z=  -4.409359854846D-01
+ I=    3 X=  -1.542954851497D+00 Y=  -8.908253988592D-01 Z=  -4.409359854846D-01
+ I=    4 X=   1.542954851497D+00 Y=  -8.908253988592D-01 Z=  -4.409359854846D-01
+ Electric Field:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   0.000000000000D+00
+ Leave Link  106 at Wed Nov 19 18:06:21 2025, MaxMem=   104857600 cpu:               0.1 elap:               1.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l301.exe)
+ Standard basis: Dummy (5D, 7F)
+     4 basis functions,     4 primitive gaussians,     4 cartesian basis functions
+     2 alpha electrons        2 beta electrons
+       nuclear repulsion energy         2.5596920998 Hartrees.
+ IExCor=    0 DFT=F Ex=HF Corr=None ExCW=0 ScaHFX=  1.000000
+ ScaDFX=  1.000000  1.000000  1.000000  1.000000 ScalE2=  1.000000  1.000000
+ IRadAn=      5 IRanWt=     -1 IRanGd=            0 ICorTp=0 IEmpDi=  4
+ NAtoms=    4 NActive=    4 NUniq=    4 SFac= 1.00D+00 NAtFMM=   60 NAOKFM=F Big=F
+ Integral buffers will be    131072 words long.
+ Raffenetti 1 integral format.
+ Two-electron integral symmetry is turned off.
+ Leave Link  301 at Wed Nov 19 18:06:21 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l402.exe)
+ UFF calculation of energy and first derivatives.
+ Energy per function type:
+ Direct Coulomb + vdW (small)                           0.000000000
+ Direct Coulomb (large)                                 0.000000000
+ Direct vdW (large)                                   365.422327475
+ Non-direct Coulomb + vdW (small)                       0.000000000
+ Non-direct Coulomb (large)                             0.000000000
+ Non-direct vdW (large)                              -365.422327475
+ Harmonic stretch III                                   0.004980097
+ UFF 3-term bend                                        0.000534376
+ Energy per function class:
+        Coulomb               0.000000000
+    Vanderwaals               0.000000000
+     Stretching               0.004980097
+        Bending               0.000534376
+ Energy=    5.514472833E-03 NIter=   0.
+ Dipole moment=       0.000000       0.000000       0.000000
+ Leave Link  402 at Wed Nov 19 18:06:22 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l716.exe)
+ Dipole        = 0.00000000D+00 0.00000000D+00 0.00000000D+00
+ -------------------------------------------------------------------
+ Center     Atomic                   Forces (Hartrees/Bohr)
+ Number     Number              X              Y              Z
+ -------------------------------------------------------------------
+      1        7           0.000113522    0.000000406    0.050485614
+      2        1          -0.000076620    0.036002008   -0.016828442
+      3        1          -0.031197356   -0.017945577   -0.016862064
+      4        1           0.031160454   -0.018056838   -0.016795108
+ -------------------------------------------------------------------
+ Cartesian Forces:  Max     0.050485614 RMS     0.024642281
+ Leave Link  716 at Wed Nov 19 18:06:22 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l106.exe)
+ NDeriv=     12 NFrqRd=  0 NDerD0=      0 MskFDP=       0 MskDFD=       0 MskDF0=       0
+ Allocation parameters:
+ ICO    =           1 IFXYZ2 =          13 ICurSt =          25
+ IES    =          50 IFS    =          53 IFFS   =          89
+ IEDrv0 =          89 IEDrvS =         718 IFDPrS =        1347
+ IDFDPS =        1347 IElTrS =        1347 IMagS  =        1350
+ IDNumr =        1350 IVNACS =        1386 IFNumr =        1386
+ IDipDE =        1398 IFCNum =        1398 ID2Dip =        1542
+ IFFC   =        1542 IFFC2  =        1542 IEDrvD =        1542
+ IFDPrD =        1590 IDFDPD =        1590 IElTrD =        1590
+ IMagD  =        1602 IVNACD =        1602 IDone  =        1746
+ IAMO   =        1761 ICITDT =        1761 ICISSD =        1761
+ IB     =        1761 IMol   =        1857 IGen   =     4824377
+ IEFSav =     4825377 IStSav =     4825412 IPFS   =     4825422
+ INEqA  =     4825428 INEqC  =     4825460 IV     =     4825556
+ IDFTab 
+              1
+     1          619
+     2          777
+     3            1
+     4            4
+     5          718
+     6         1542
+     7            0
+     8            1
+     9            1
+    10            0
+    11            0
+    12            0
+ NEqCor:
+     1   -1
+     2    2
+     3    3
+     4   -4
+     5    5
+     6    6
+     7  -10
+     8   11
+     9   12
+    10   -7
+    11    8
+    12    9
+ Re-enter D2Numr:  atom      2 IXYZ=1 step-up   number 1
+ Energy from atom      2 IXYZ=1 step-up   number 1:  5.514472832598D-03
+ Forces from atom      2 IXYZ=1 step-up   number 1
+ I=    1 X=  -1.135219948765D-04 Y=  -4.061878371431D-07 Z=  -5.048561418198D-02
+ I=    2 X=   7.661996979647D-05 Y=  -3.600200798613D-02 Z=   1.682844232141D-02
+ I=    3 X=   3.119735585117D-02 Y=   1.794557658548D-02 Z=   1.686206378048D-02
+ I=    4 X=  -3.116045382615D-02 Y=   1.805683758840D-02 Z=   1.679510808032D-02
+ Static electric field derivatives from atom      2 IXYZ=1 step-up   number 1 Dipole Moment 
+                 1 
+      1   0.000000D+00
+      2   0.000000D+00
+      3   0.000000D+00
+ Forces transformed using operation 2.
+ Rotating derivatives, DoTrsp=F IDiff= 1 LEDeriv=      3 LFDPrp=      -2 LDFDPr=       0.
+ CorEq1 forces:
+ I=    1 X=   1.135219948765D-04 Y=  -4.061878371431D-07 Z=  -5.048561418198D-02
+ I=    2 X=  -7.661996979647D-05 Y=  -3.600200798613D-02 Z=   1.682844232141D-02
+ I=    3 X=   3.116045382615D-02 Y=   1.805683758840D-02 Z=   1.679510808032D-02
+ I=    4 X=  -3.119735585117D-02 Y=   1.794557658548D-02 Z=   1.686206378048D-02
+ CorEq1 nonadiabatic coupling:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   0.000000000000D+00
+ I=    2 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   0.000000000000D+00
+ I=    3 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   0.000000000000D+00
+ I=    4 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   0.000000000000D+00
+ CorEq1 Dipole Moment 
+                 1 
+      1   0.000000D+00
+      2   0.000000D+00
+      3   0.000000D+00
+ Skip step-back as it is equivalent to step-up.
+ Numerical forces after IXYZ=1 IAtom=     2: 
+                 1             2             3             4             5 
+      1   0.000000D+00  0.234313D-06 -0.504851D-01  0.000000D+00  0.000000D+00
+                 6             7             8             9            10 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                11            12 
+      1   0.000000D+00  0.000000D+00
+ Numerical force constants after IXYZ=1 IAtom=     2: 
+                 1             2             3             4             5 
+      1   0.698495D+00 -0.300802D-10  0.000000D+00 -0.600733D-01  0.000000D+00
+      2   0.000000D+00  0.698495D+00 -0.150401D-10  0.000000D+00  0.000000D+00
+      3   0.000000D+00 -0.240191D-06  0.203471D+00  0.000000D+00  0.000000D+00
+      4  -0.600731D-01  0.367190D-14  0.000000D+00  0.405455D-01  0.000000D+00
+      5   0.000000D+00 -0.405590D+00  0.144660D+00  0.000000D+00  0.000000D+00
+      6   0.000000D+00  0.183528D+00 -0.678238D-01  0.000000D+00  0.000000D+00
+      7  -0.319211D+00 -0.149613D+00 -0.125280D+00  0.976386D-02  0.000000D+00
+      8  -0.149613D+00 -0.146452D+00 -0.723302D-01 -0.294384D-01  0.000000D+00
+      9  -0.158940D+00 -0.917639D-01 -0.678238D-01  0.177157D-01  0.000000D+00
+     10  -0.319211D+00  0.149613D+00  0.125280D+00  0.976386D-02  0.000000D+00
+     11   0.149613D+00 -0.146452D+00 -0.723302D-01  0.294384D-01  0.000000D+00
+     12   0.158940D+00 -0.917639D-01 -0.678238D-01 -0.177157D-01  0.000000D+00
+                 6             7             8             9            10 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      4   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      5   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      6   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      7   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      8   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      9   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+     10   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+     11   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+     12   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                11            12 
+      1   0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00
+      4   0.000000D+00  0.000000D+00
+      5   0.000000D+00  0.000000D+00
+      6   0.000000D+00  0.000000D+00
+      7   0.000000D+00  0.000000D+00
+      8   0.000000D+00  0.000000D+00
+      9   0.000000D+00  0.000000D+00
+     10   0.000000D+00  0.000000D+00
+     11   0.000000D+00  0.000000D+00
+     12   0.000000D+00  0.000000D+00
+ Current Numerical derivative of Dipole Moment 
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9            10 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                11            12 
+      1   0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00
+ D2NDiT:  IFil=  1  File 1 number   619 JFDS=         718 JFDD=        1542 IOff=           1 LFil=           4 JSkipF=1.
+ In D2SvPt:  atom      2 IXYZ=2 step-up   number 1
+ Coordinates:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   1.889725652077D-01
+ I=    2 X=   0.000000000000D+00 Y=   1.783540523843D+00 Z=  -4.409359854846D-01
+ I=    3 X=  -1.542954851497D+00 Y=  -8.908253988592D-01 Z=  -4.409359854846D-01
+ I=    4 X=   1.542954851497D+00 Y=  -8.908253988592D-01 Z=  -4.409359854846D-01
+ Electric Field:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   0.000000000000D+00
+ Leave Link  106 at Wed Nov 19 18:06:23 2025, MaxMem=   104857600 cpu:               0.1 elap:               1.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l301.exe)
+ Standard basis: Dummy (5D, 7F)
+     4 basis functions,     4 primitive gaussians,     4 cartesian basis functions
+     2 alpha electrons        2 beta electrons
+       nuclear repulsion energy         2.5588503634 Hartrees.
+ IExCor=    0 DFT=F Ex=HF Corr=None ExCW=0 ScaHFX=  1.000000
+ ScaDFX=  1.000000  1.000000  1.000000  1.000000 ScalE2=  1.000000  1.000000
+ IRadAn=      5 IRanWt=     -1 IRanGd=            0 ICorTp=0 IEmpDi=  4
+ NAtoms=    4 NActive=    4 NUniq=    4 SFac= 1.00D+00 NAtFMM=   60 NAOKFM=F Big=F
+ Integral buffers will be    131072 words long.
+ Raffenetti 1 integral format.
+ Two-electron integral symmetry is turned off.
+ Leave Link  301 at Wed Nov 19 18:06:23 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l402.exe)
+ UFF calculation of energy and first derivatives.
+ Energy per function type:
+ Direct Coulomb + vdW (small)                           0.000000000
+ Direct Coulomb (large)                                 0.000000000
+ Direct vdW (large)                                   364.052014204
+ Non-direct Coulomb + vdW (small)                       0.000000000
+ Non-direct Coulomb (large)                             0.000000000
+ Non-direct vdW (large)                              -364.052014204
+ Harmonic stretch III                                   0.004910409
+ UFF 3-term bend                                        0.000536703
+ Energy per function class:
+        Coulomb               0.000000000
+    Vanderwaals               0.000000000
+     Stretching               0.004910409
+        Bending               0.000536703
+ Energy=    5.447111264E-03 NIter=   0.
+ Dipole moment=       0.000000       0.000000       0.000000
+ Leave Link  402 at Wed Nov 19 18:06:23 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l716.exe)
+ Dipole        = 0.00000000D+00 0.00000000D+00 0.00000000D+00
+ -------------------------------------------------------------------
+ Center     Atomic                   Forces (Hartrees/Bohr)
+ Number     Number              X              Y              Z
+ -------------------------------------------------------------------
+      1        7          -0.000000000    0.000766614    0.050212568
+      2        1           0.000000000    0.035213417   -0.016545131
+      3        1          -0.031183271   -0.017990016   -0.016833719
+      4        1           0.031183271   -0.017990016   -0.016833719
+ -------------------------------------------------------------------
+ Cartesian Forces:  Max     0.050212568 RMS     0.024485435
+ Leave Link  716 at Wed Nov 19 18:06:23 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l106.exe)
+ NDeriv=     12 NFrqRd=  0 NDerD0=      0 MskFDP=       0 MskDFD=       0 MskDF0=       0
+ Allocation parameters:
+ ICO    =           1 IFXYZ2 =          13 ICurSt =          25
+ IES    =          50 IFS    =          53 IFFS   =          89
+ IEDrv0 =          89 IEDrvS =         718 IFDPrS =        1347
+ IDFDPS =        1347 IElTrS =        1347 IMagS  =        1350
+ IDNumr =        1350 IVNACS =        1386 IFNumr =        1386
+ IDipDE =        1398 IFCNum =        1398 ID2Dip =        1542
+ IFFC   =        1542 IFFC2  =        1542 IEDrvD =        1542
+ IFDPrD =        1590 IDFDPD =        1590 IElTrD =        1590
+ IMagD  =        1602 IVNACD =        1602 IDone  =        1746
+ IAMO   =        1761 ICITDT =        1761 ICISSD =        1761
+ IB     =        1761 IMol   =        1857 IGen   =     4824377
+ IEFSav =     4825377 IStSav =     4825412 IPFS   =     4825422
+ INEqA  =     4825428 INEqC  =     4825460 IV     =     4825556
+ IDFTab 
+              1
+     1          619
+     2          777
+     3            1
+     4            4
+     5          718
+     6         1542
+     7            0
+     8            1
+     9            1
+    10            0
+    11            0
+    12            0
+ NEqCor:
+     1   -1
+     2    2
+     3    3
+     4   -4
+     5    5
+     6    6
+     7  -10
+     8   11
+     9   12
+    10   -7
+    11    8
+    12    9
+ Re-enter D2Numr:  atom      2 IXYZ=2 step-up   number 1
+ Energy from atom      2 IXYZ=2 step-up   number 1:  5.447111263911D-03
+ Forces from atom      2 IXYZ=2 step-up   number 1
+ I=    1 X=   0.000000000000D+00 Y=  -7.666137855722D-04 Z=  -5.021256832708D-02
+ I=    2 X=   0.000000000000D+00 Y=  -3.521341742497D-02 Z=   1.654513103588D-02
+ I=    3 X=   3.118327082175D-02 Y=   1.799001560522D-02 Z=   1.683371864550D-02
+ I=    4 X=  -3.118327082200D-02 Y=   1.799001560539D-02 Z=   1.683371864561D-02
+ Static electric field derivatives from atom      2 IXYZ=2 step-up   number 1 Dipole Moment 
+                 1 
+      1   0.000000D+00
+      2   0.000000D+00
+      3   0.000000D+00
+ In D2SvPt:  atom      2 IXYZ=2 step-down number 1
+ Coordinates:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   1.889725652077D-01
+ I=    2 X=   0.000000000000D+00 Y=   1.779761071594D+00 Z=  -4.409359854846D-01
+ I=    3 X=  -1.542954851497D+00 Y=  -8.908253988592D-01 Z=  -4.409359854846D-01
+ I=    4 X=   1.542954851497D+00 Y=  -8.908253988592D-01 Z=  -4.409359854846D-01
+ Electric Field:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   0.000000000000D+00
+ Leave Link  106 at Wed Nov 19 18:06:24 2025, MaxMem=   104857600 cpu:               0.1 elap:               0.8
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l301.exe)
+ Standard basis: Dummy (5D, 7F)
+     4 basis functions,     4 primitive gaussians,     4 cartesian basis functions
+     2 alpha electrons        2 beta electrons
+       nuclear repulsion energy         2.5605356119 Hartrees.
+ IExCor=    0 DFT=F Ex=HF Corr=None ExCW=0 ScaHFX=  1.000000
+ ScaDFX=  1.000000  1.000000  1.000000  1.000000 ScalE2=  1.000000  1.000000
+ IRadAn=      5 IRanWt=     -1 IRanGd=            0 ICorTp=0 IEmpDi=  4
+ NAtoms=    4 NActive=    4 NUniq=    4 SFac= 1.00D+00 NAtFMM=   60 NAOKFM=F Big=F
+ Integral buffers will be    131072 words long.
+ Raffenetti 1 integral format.
+ Two-electron integral symmetry is turned off.
+ Leave Link  301 at Wed Nov 19 18:06:24 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l402.exe)
+ UFF calculation of energy and first derivatives.
+ Energy per function type:
+ Direct Coulomb + vdW (small)                           0.000000000
+ Direct Coulomb (large)                                 0.000000000
+ Direct vdW (large)                                   366.810847958
+ Non-direct Coulomb + vdW (small)                       0.000000000
+ Non-direct Coulomb (large)                             0.000000000
+ Non-direct vdW (large)                              -366.810847958
+ Harmonic stretch III                                   0.005051347
+ UFF 3-term bend                                        0.000531833
+ Energy per function class:
+        Coulomb               0.000000000
+    Vanderwaals               0.000000000
+     Stretching               0.005051347
+        Bending               0.000531833
+ Energy=    5.583180185E-03 NIter=   0.
+ Dipole moment=       0.000000       0.000000       0.000000
+ Leave Link  402 at Wed Nov 19 18:06:24 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l716.exe)
+ Dipole        = 0.00000000D+00 0.00000000D+00 0.00000000D+00
+ -------------------------------------------------------------------
+ Center     Atomic                   Forces (Hartrees/Bohr)
+ Number     Number              X              Y              Z
+ -------------------------------------------------------------------
+      1        7          -0.000000000   -0.000766295    0.050759306
+      2        1           0.000000000    0.036790973   -0.017112487
+      3        1          -0.031174591   -0.018012339   -0.016823410
+      4        1           0.031174591   -0.018012339   -0.016823410
+ -------------------------------------------------------------------
+ Cartesian Forces:  Max     0.050759306 RMS     0.024802823
+ Leave Link  716 at Wed Nov 19 18:06:25 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l106.exe)
+ NDeriv=     12 NFrqRd=  0 NDerD0=      0 MskFDP=       0 MskDFD=       0 MskDF0=       0
+ Allocation parameters:
+ ICO    =           1 IFXYZ2 =          13 ICurSt =          25
+ IES    =          50 IFS    =          53 IFFS   =          89
+ IEDrv0 =          89 IEDrvS =         718 IFDPrS =        1347
+ IDFDPS =        1347 IElTrS =        1347 IMagS  =        1350
+ IDNumr =        1350 IVNACS =        1386 IFNumr =        1386
+ IDipDE =        1398 IFCNum =        1398 ID2Dip =        1542
+ IFFC   =        1542 IFFC2  =        1542 IEDrvD =        1542
+ IFDPrD =        1590 IDFDPD =        1590 IElTrD =        1590
+ IMagD  =        1602 IVNACD =        1602 IDone  =        1746
+ IAMO   =        1761 ICITDT =        1761 ICISSD =        1761
+ IB     =        1761 IMol   =        1857 IGen   =     4824377
+ IEFSav =     4825377 IStSav =     4825412 IPFS   =     4825422
+ INEqA  =     4825428 INEqC  =     4825460 IV     =     4825556
+ IDFTab 
+              1
+     1          619
+     2          777
+     3            1
+     4            4
+     5          718
+     6         1542
+     7            0
+     8            1
+     9            1
+    10            0
+    11            0
+    12            0
+ NEqCor:
+     1   -1
+     2    2
+     3    3
+     4   -4
+     5    5
+     6    6
+     7  -10
+     8   11
+     9   12
+    10   -7
+    11    8
+    12    9
+ Re-enter D2Numr:  atom      2 IXYZ=2 step-down number 1
+ Energy from atom      2 IXYZ=2 step-down number 1:  5.583180185196D-03
+ Forces from atom      2 IXYZ=2 step-down number 1
+ I=    1 X=   0.000000000000D+00 Y=   7.662954599255D-04 Z=  -5.075930648923D-02
+ I=    2 X=   0.000000000000D+00 Y=  -3.679097326188D-02 Z=   1.711248672063D-02
+ I=    3 X=   3.117459099415D-02 Y=   1.801233890092D-02 Z=   1.682340988435D-02
+ I=    4 X=  -3.117459099440D-02 Y=   1.801233890109D-02 Z=   1.682340988447D-02
+ Static electric field derivatives from atom      2 IXYZ=2 step-down number 1 Dipole Moment 
+                 1 
+      1   0.000000D+00
+      2   0.000000D+00
+      3   0.000000D+00
+ Numerical forces after IXYZ=2 IAtom=     2: 
+                 1             2             3             4             5 
+      1   0.000000D+00  0.234313D-06 -0.504851D-01  0.000000D+00 -0.360023D-01
+                 6             7             8             9            10 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                11            12 
+      1   0.000000D+00  0.000000D+00
+ Numerical force constants after IXYZ=2 IAtom=     2: 
+                 1             2             3             4             5 
+      1   0.698495D+00 -0.300802D-10  0.000000D+00 -0.600733D-01  0.000000D+00
+      2   0.000000D+00  0.698495D+00 -0.150401D-10  0.000000D+00 -0.405590D+00
+      3   0.000000D+00 -0.240191D-06  0.203471D+00  0.000000D+00  0.144661D+00
+      4  -0.600731D-01  0.367190D-14  0.000000D+00  0.405455D-01  0.734381D-14
+      5   0.000000D+00 -0.405590D+00  0.144660D+00  0.000000D+00  0.417403D+00
+      6   0.000000D+00  0.183528D+00 -0.678238D-01  0.000000D+00 -0.150116D+00
+      7  -0.319211D+00 -0.149613D+00 -0.125280D+00  0.976386D-02  0.229658D-02
+      8  -0.149613D+00 -0.146452D+00 -0.723302D-01 -0.294384D-01 -0.590649D-02
+      9  -0.158940D+00 -0.917639D-01 -0.678238D-01  0.177157D-01  0.272758D-02
+     10  -0.319211D+00  0.149613D+00  0.125280D+00  0.976386D-02 -0.229658D-02
+     11   0.149613D+00 -0.146452D+00 -0.723302D-01  0.294384D-01 -0.590649D-02
+     12   0.158940D+00 -0.917639D-01 -0.678238D-01 -0.177157D-01  0.272758D-02
+                 6             7             8             9            10 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      4   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      5   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      6   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      7   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      8   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      9   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+     10   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+     11   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+     12   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                11            12 
+      1   0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00
+      4   0.000000D+00  0.000000D+00
+      5   0.000000D+00  0.000000D+00
+      6   0.000000D+00  0.000000D+00
+      7   0.000000D+00  0.000000D+00
+      8   0.000000D+00  0.000000D+00
+      9   0.000000D+00  0.000000D+00
+     10   0.000000D+00  0.000000D+00
+     11   0.000000D+00  0.000000D+00
+     12   0.000000D+00  0.000000D+00
+ Current Numerical derivative of Dipole Moment 
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9            10 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                11            12 
+      1   0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00
+ D2NDiT:  IFil=  1  File 1 number   619 JFDS=         718 JFDD=        1542 IOff=           1 LFil=           4 JSkipF=1.
+ In D2SvPt:  atom      2 IXYZ=3 step-up   number 1
+ Coordinates:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   1.889725652077D-01
+ I=    2 X=   0.000000000000D+00 Y=   1.781650797718D+00 Z=  -4.390462593600D-01
+ I=    3 X=  -1.542954851497D+00 Y=  -8.908253988592D-01 Z=  -4.409359854846D-01
+ I=    4 X=   1.542954851497D+00 Y=  -8.908253988592D-01 Z=  -4.409359854846D-01
+ Electric Field:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   0.000000000000D+00
+ Leave Link  106 at Wed Nov 19 18:06:26 2025, MaxMem=   104857600 cpu:               0.1 elap:               1.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l301.exe)
+ Standard basis: Dummy (5D, 7F)
+     4 basis functions,     4 primitive gaussians,     4 cartesian basis functions
+     2 alpha electrons        2 beta electrons
+       nuclear repulsion energy         2.5598684890 Hartrees.
+ IExCor=    0 DFT=F Ex=HF Corr=None ExCW=0 ScaHFX=  1.000000
+ ScaDFX=  1.000000  1.000000  1.000000  1.000000 ScalE2=  1.000000  1.000000
+ IRadAn=      5 IRanWt=     -1 IRanGd=            0 ICorTp=0 IEmpDi=  4
+ NAtoms=    4 NActive=    4 NUniq=    4 SFac= 1.00D+00 NAtFMM=   60 NAOKFM=F Big=F
+ Integral buffers will be    131072 words long.
+ Raffenetti 1 integral format.
+ Two-electron integral symmetry is turned off.
+ Leave Link  301 at Wed Nov 19 18:06:26 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l402.exe)
+ UFF calculation of energy and first derivatives.
+ Energy per function type:
+ Direct Coulomb + vdW (small)                           0.000000000
+ Direct Coulomb (large)                                 0.000000000
+ Direct vdW (large)                                   365.910864065
+ Non-direct Coulomb + vdW (small)                       0.000000000
+ Non-direct Coulomb (large)                             0.000000000
+ Non-direct vdW (large)                              -365.910864065
+ Harmonic stretch III                                   0.005005109
+ UFF 3-term bend                                        0.000541186
+ Energy per function class:
+        Coulomb               0.000000000
+    Vanderwaals               0.000000000
+     Stretching               0.005005109
+        Bending               0.000541186
+ Energy=    5.546295120E-03 NIter=   0.
+ Dipole moment=       0.000000       0.000000       0.000000
+ Leave Link  402 at Wed Nov 19 18:06:26 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l716.exe)
+ Dipole        = 0.00000000D+00 0.00000000D+00 0.00000000D+00
+ -------------------------------------------------------------------
+ Center     Atomic                   Forces (Hartrees/Bohr)
+ Number     Number              X              Y              Z
+ -------------------------------------------------------------------
+      1        7          -0.000000000   -0.000346570    0.050613408
+      2        1           0.000000000    0.036285756   -0.016927165
+      3        1          -0.031191223   -0.017969593   -0.016843121
+      4        1           0.031191223   -0.017969593   -0.016843121
+ -------------------------------------------------------------------
+ Cartesian Forces:  Max     0.050613408 RMS     0.024704927
+ Leave Link  716 at Wed Nov 19 18:06:26 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l106.exe)
+ NDeriv=     12 NFrqRd=  0 NDerD0=      0 MskFDP=       0 MskDFD=       0 MskDF0=       0
+ Allocation parameters:
+ ICO    =           1 IFXYZ2 =          13 ICurSt =          25
+ IES    =          50 IFS    =          53 IFFS   =          89
+ IEDrv0 =          89 IEDrvS =         718 IFDPrS =        1347
+ IDFDPS =        1347 IElTrS =        1347 IMagS  =        1350
+ IDNumr =        1350 IVNACS =        1386 IFNumr =        1386
+ IDipDE =        1398 IFCNum =        1398 ID2Dip =        1542
+ IFFC   =        1542 IFFC2  =        1542 IEDrvD =        1542
+ IFDPrD =        1590 IDFDPD =        1590 IElTrD =        1590
+ IMagD  =        1602 IVNACD =        1602 IDone  =        1746
+ IAMO   =        1761 ICITDT =        1761 ICISSD =        1761
+ IB     =        1761 IMol   =        1857 IGen   =     4824377
+ IEFSav =     4825377 IStSav =     4825412 IPFS   =     4825422
+ INEqA  =     4825428 INEqC  =     4825460 IV     =     4825556
+ IDFTab 
+              1
+     1          619
+     2          777
+     3            1
+     4            4
+     5          718
+     6         1542
+     7            0
+     8            1
+     9            1
+    10            0
+    11            0
+    12            0
+ NEqCor:
+     1   -1
+     2    2
+     3    3
+     4   -4
+     5    5
+     6    6
+     7  -10
+     8   11
+     9   12
+    10   -7
+    11    8
+    12    9
+ Re-enter D2Numr:  atom      2 IXYZ=3 step-up   number 1
+ Energy from atom      2 IXYZ=3 step-up   number 1:  5.546295120231D-03
+ Forces from atom      2 IXYZ=3 step-up   number 1
+ I=    1 X=   0.000000000000D+00 Y=   3.465700151537D-04 Z=  -5.061340765315D-02
+ I=    2 X=   0.000000000000D+00 Y=  -3.628575612572D-02 Z=   1.692716529835D-02
+ I=    3 X=   3.119122321969D-02 Y=   1.796959305506D-02 Z=   1.684312117749D-02
+ I=    4 X=  -3.119122321993D-02 Y=   1.796959305523D-02 Z=   1.684312117760D-02
+ Static electric field derivatives from atom      2 IXYZ=3 step-up   number 1 Dipole Moment 
+                 1 
+      1   0.000000D+00
+      2   0.000000D+00
+      3   0.000000D+00
+ In D2SvPt:  atom      2 IXYZ=3 step-down number 1
+ Coordinates:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   1.889725652077D-01
+ I=    2 X=   0.000000000000D+00 Y=   1.781650797718D+00 Z=  -4.428257116092D-01
+ I=    3 X=  -1.542954851497D+00 Y=  -8.908253988592D-01 Z=  -4.409359854846D-01
+ I=    4 X=   1.542954851497D+00 Y=  -8.908253988592D-01 Z=  -4.409359854846D-01
+ Electric Field:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   0.000000000000D+00
+ Leave Link  106 at Wed Nov 19 18:06:27 2025, MaxMem=   104857600 cpu:               0.1 elap:               1.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l301.exe)
+ Standard basis: Dummy (5D, 7F)
+     4 basis functions,     4 primitive gaussians,     4 cartesian basis functions
+     2 alpha electrons        2 beta electrons
+       nuclear repulsion energy         2.5595157047 Hartrees.
+ IExCor=    0 DFT=F Ex=HF Corr=None ExCW=0 ScaHFX=  1.000000
+ ScaDFX=  1.000000  1.000000  1.000000  1.000000 ScalE2=  1.000000  1.000000
+ IRadAn=      5 IRanWt=     -1 IRanGd=            0 ICorTp=0 IEmpDi=  4
+ NAtoms=    4 NActive=    4 NUniq=    4 SFac= 1.00D+00 NAtFMM=   60 NAOKFM=F Big=F
+ Integral buffers will be    131072 words long.
+ Raffenetti 1 integral format.
+ Two-electron integral symmetry is turned off.
+ Leave Link  301 at Wed Nov 19 18:06:27 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l402.exe)
+ UFF calculation of energy and first derivatives.
+ Energy per function type:
+ Direct Coulomb + vdW (small)                           0.000000000
+ Direct Coulomb (large)                                 0.000000000
+ Direct vdW (large)                                   364.936064228
+ Non-direct Coulomb + vdW (small)                       0.000000000
+ Non-direct Coulomb (large)                             0.000000000
+ Non-direct vdW (large)                              -364.936064228
+ Harmonic stretch III                                   0.004955280
+ UFF 3-term bend                                        0.000527413
+ Energy per function class:
+        Coulomb               0.000000000
+    Vanderwaals               0.000000000
+     Stretching               0.004955280
+        Bending               0.000527413
+ Energy=    5.482692858E-03 NIter=   0.
+ Dipole moment=       0.000000       0.000000       0.000000
+ Leave Link  402 at Wed Nov 19 18:06:28 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l716.exe)
+ Dipole        = 0.00000000D+00 0.00000000D+00 0.00000000D+00
+ -------------------------------------------------------------------
+ Center     Atomic                   Forces (Hartrees/Bohr)
+ Number     Number              X              Y              Z
+ -------------------------------------------------------------------
+      1        7          -0.000000000    0.000347064    0.050357071
+      2        1           0.000000000    0.035718401   -0.016729143
+      3        1          -0.031166673   -0.018032733   -0.016813964
+      4        1           0.031166673   -0.018032733   -0.016813964
+ -------------------------------------------------------------------
+ Cartesian Forces:  Max     0.050357071 RMS     0.024580012
+ Leave Link  716 at Wed Nov 19 18:06:28 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l106.exe)
+ NDeriv=     12 NFrqRd=  0 NDerD0=      0 MskFDP=       0 MskDFD=       0 MskDF0=       0
+ Allocation parameters:
+ ICO    =           1 IFXYZ2 =          13 ICurSt =          25
+ IES    =          50 IFS    =          53 IFFS   =          89
+ IEDrv0 =          89 IEDrvS =         718 IFDPrS =        1347
+ IDFDPS =        1347 IElTrS =        1347 IMagS  =        1350
+ IDNumr =        1350 IVNACS =        1386 IFNumr =        1386
+ IDipDE =        1398 IFCNum =        1398 ID2Dip =        1542
+ IFFC   =        1542 IFFC2  =        1542 IEDrvD =        1542
+ IFDPrD =        1590 IDFDPD =        1590 IElTrD =        1590
+ IMagD  =        1602 IVNACD =        1602 IDone  =        1746
+ IAMO   =        1761 ICITDT =        1761 ICISSD =        1761
+ IB     =        1761 IMol   =        1857 IGen   =     4824377
+ IEFSav =     4825377 IStSav =     4825412 IPFS   =     4825422
+ INEqA  =     4825428 INEqC  =     4825460 IV     =     4825556
+ IDFTab 
+              1
+     1          619
+     2          777
+     3            1
+     4            4
+     5          718
+     6         1542
+     7            0
+     8            1
+     9            1
+    10            0
+    11            0
+    12            0
+ NEqCor:
+     1   -1
+     2    2
+     3    3
+     4   -4
+     5    5
+     6    6
+     7  -10
+     8   11
+     9   12
+    10   -7
+    11    8
+    12    9
+ Re-enter D2Numr:  atom      2 IXYZ=3 step-down number 1
+ Energy from atom      2 IXYZ=3 step-down number 1:  5.482692858149D-03
+ Forces from atom      2 IXYZ=3 step-down number 1
+ I=    1 X=   0.000000000000D+00 Y=  -3.470640659771D-04 Z=  -5.035707059142D-02
+ I=    2 X=   0.000000000000D+00 Y=  -3.571840145889D-02 Z=   1.672914315423D-02
+ I=    3 X=   3.116667297295D-02 Y=   1.803273276238D-02 Z=   1.681396371868D-02
+ I=    4 X=  -3.116667297320D-02 Y=   1.803273276255D-02 Z=   1.681396371879D-02
+ Static electric field derivatives from atom      2 IXYZ=3 step-down number 1 Dipole Moment 
+                 1 
+      1   0.000000D+00
+      2   0.000000D+00
+      3   0.000000D+00
+ Numerical forces after IXYZ=3 IAtom=     2: 
+                 1             2             3             4             5 
+      1   0.000000D+00  0.234313D-06 -0.504851D-01  0.000000D+00 -0.360023D-01
+                 6             7             8             9            10 
+      1   0.168284D-01  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                11            12 
+      1   0.000000D+00  0.000000D+00
+ Numerical force constants after IXYZ=3 IAtom=     2: 
+                 1             2             3             4             5 
+      1   0.698495D+00 -0.300802D-10  0.000000D+00 -0.600733D-01  0.000000D+00
+      2   0.000000D+00  0.698495D+00 -0.150401D-10  0.000000D+00 -0.405590D+00
+      3   0.000000D+00 -0.240191D-06  0.203471D+00  0.000000D+00  0.144661D+00
+      4  -0.600731D-01  0.367190D-14  0.000000D+00  0.405455D-01  0.734381D-14
+      5   0.000000D+00 -0.405590D+00  0.144660D+00  0.000000D+00  0.417403D+00
+      6   0.000000D+00  0.183528D+00 -0.678238D-01  0.000000D+00 -0.150116D+00
+      7  -0.319211D+00 -0.149613D+00 -0.125280D+00  0.976386D-02  0.229658D-02
+      8  -0.149613D+00 -0.146452D+00 -0.723302D-01 -0.294384D-01 -0.590649D-02
+      9  -0.158940D+00 -0.917639D-01 -0.678238D-01  0.177157D-01  0.272758D-02
+     10  -0.319211D+00  0.149613D+00  0.125280D+00  0.976386D-02 -0.229658D-02
+     11   0.149613D+00 -0.146452D+00 -0.723302D-01  0.294384D-01 -0.590649D-02
+     12   0.158940D+00 -0.917639D-01 -0.678238D-01 -0.177157D-01  0.272758D-02
+                 6             7             8             9            10 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.183528D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3  -0.678239D-01  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      4   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      5  -0.150116D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      6   0.523944D-01  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      7   0.649572D-02  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      8  -0.167060D-01  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      9   0.771473D-02  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+     10  -0.649572D-02  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+     11  -0.167060D-01  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+     12   0.771473D-02  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                11            12 
+      1   0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00
+      4   0.000000D+00  0.000000D+00
+      5   0.000000D+00  0.000000D+00
+      6   0.000000D+00  0.000000D+00
+      7   0.000000D+00  0.000000D+00
+      8   0.000000D+00  0.000000D+00
+      9   0.000000D+00  0.000000D+00
+     10   0.000000D+00  0.000000D+00
+     11   0.000000D+00  0.000000D+00
+     12   0.000000D+00  0.000000D+00
+ Current Numerical derivative of Dipole Moment 
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9            10 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                11            12 
+      1   0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00
+ D2NDiT:  IFil=  1  File 1 number   619 JFDS=         718 JFDD=        1542 IOff=           1 LFil=           4 JSkipF=1.
+ RotOp in D2NSNx: 
+                 1             2             3             4             5 
+      1   0.100000D+01 -0.100000D+01 -0.500000D+00 -0.500000D+00  0.500000D+00
+      2   0.000000D+00  0.000000D+00 -0.866025D+00  0.866025D+00  0.866025D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      4   0.000000D+00  0.000000D+00  0.866025D+00 -0.866025D+00  0.866025D+00
+      5   0.100000D+01  0.100000D+01 -0.500000D+00 -0.500000D+00 -0.500000D+00
+      6   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      7   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      8   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      9   0.100000D+01  0.100000D+01  0.100000D+01  0.100000D+01  0.100000D+01
+     10   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+     11   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+     12   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                 6 
+      1   0.500000D+00
+      2  -0.866025D+00
+      3   0.000000D+00
+      4  -0.866025D+00
+      5  -0.500000D+00
+      6   0.000000D+00
+      7   0.000000D+00
+      8   0.000000D+00
+      9   0.100000D+01
+     10   0.000000D+00
+     11   0.000000D+00
+     12   0.000000D+00
+ NEqAtm in D2NSNx: 
+              1            2            3            4            5
+     1            1            1            1            1            1
+     2            2            2            4            3            4
+     3            3            4            2            4            3
+     4            4            3            3            2            2
+              6
+     1            1
+     2            3
+     3            2
+     4            4
+ JOp=  2 IAtP=  2 IDone=  1  1  0
+ JOp=  3 IAtP=  4 IDone= -1 -1 -1
+ Rotating derivatives, DoTrsp=F IDiff= 0 LEDeriv=      3 LFDPrp=      -2 LDFDPr=       0.
+ Rotating derivatives, DoTrsp=F IDiff= 0 LEDeriv=      3 LFDPrp=      -2 LDFDPr=       0.
+ Rotating derivatives, DoTrsp=F IDiff= 0 LEDeriv=      3 LFDPrp=      -2 LDFDPr=       0.
+ JOp=  4 IAtP=  3 IDone= -1 -1 -1
+ Rotating derivatives, DoTrsp=F IDiff= 0 LEDeriv=      3 LFDPrp=      -2 LDFDPr=       0.
+ Rotating derivatives, DoTrsp=F IDiff= 0 LEDeriv=      3 LFDPrp=      -2 LDFDPr=       0.
+ Rotating derivatives, DoTrsp=F IDiff= 0 LEDeriv=      3 LFDPrp=      -2 LDFDPr=       0.
+ JOp=  5 IAtP=  4 IDone=  1  1  1
+ JOp=  6 IAtP=  3 IDone=  1  1  1
+ Forces after D2NSNX:
+ I=    1 X=   0.000000000000D+00 Y=   2.343126355816D-07 Z=  -5.048511439589D-02
+ I=    2 X=   0.000000000000D+00 Y=  -3.600228612916D-02 Z=   1.682843382842D-02
+ I=    3 X=   3.117889438217D-02 Y=   1.800114306458D-02 Z=   1.682843382842D-02
+ I=    4 X=  -3.117889438217D-02 Y=   1.800114306458D-02 Z=   1.682843382842D-02
+ D2NSNX Numerical derivative of Dipole Moment 
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9            10 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                11            12 
+      1   0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00
+ Finish atom      2 at Wed Nov 19 18:06:29 2025
+ Force-constant matrix: 
+                 1             2             3             4             5 
+      1   0.698495D+00  0.000000D+00  0.000000D+00 -0.600733D-01  0.000000D+00
+      2   0.000000D+00  0.698495D+00  0.000000D+00  0.000000D+00 -0.405590D+00
+      3   0.000000D+00  0.000000D+00  0.203471D+00  0.000000D+00  0.144661D+00
+      4  -0.600731D-01  0.000000D+00  0.000000D+00  0.405455D-01  0.000000D+00
+      5   0.000000D+00 -0.405590D+00  0.144660D+00  0.000000D+00  0.417403D+00
+      6   0.000000D+00  0.183528D+00 -0.678238D-01  0.000000D+00 -0.150116D+00
+      7  -0.319211D+00 -0.149613D+00 -0.125280D+00  0.976386D-02  0.229658D-02
+      8  -0.149613D+00 -0.146452D+00 -0.723302D-01 -0.294384D-01 -0.590649D-02
+      9  -0.158940D+00 -0.917639D-01 -0.678238D-01  0.177157D-01  0.272758D-02
+     10  -0.319211D+00  0.149613D+00  0.125280D+00  0.976386D-02 -0.229658D-02
+     11   0.149613D+00 -0.146452D+00 -0.723302D-01  0.294384D-01 -0.590649D-02
+     12   0.158940D+00 -0.917639D-01 -0.678238D-01 -0.177157D-01  0.272758D-02
+                 6             7             8             9            10 
+      1   0.000000D+00 -0.319211D+00 -0.149613D+00 -0.158940D+00 -0.319211D+00
+      2   0.183528D+00 -0.149613D+00 -0.146453D+00 -0.917638D-01  0.149613D+00
+      3  -0.678239D-01 -0.125280D+00 -0.723303D-01 -0.678239D-01  0.125280D+00
+      4   0.000000D+00  0.976385D-02 -0.294384D-01  0.177157D-01  0.976385D-02
+      5  -0.150116D+00  0.229658D-02 -0.590648D-02  0.272757D-02 -0.229658D-02
+      6   0.523944D-01  0.649570D-02 -0.167060D-01  0.771473D-02 -0.649570D-02
+      7   0.649572D-02  0.323189D+00  0.163184D+00  0.130004D+00 -0.137417D-01
+      8  -0.167060D-01  0.163184D+00  0.134760D+00  0.750578D-01  0.158675D-01
+      9   0.771473D-02  0.130004D+00  0.750579D-01  0.523944D-01  0.112200D-01
+     10  -0.649572D-02 -0.137417D-01  0.158675D-01  0.112200D-01  0.323189D+00
+     11  -0.167060D-01 -0.158675D-01  0.175990D-01  0.139785D-01 -0.163184D+00
+     12   0.771473D-02 -0.112200D-01  0.139785D-01  0.771473D-02 -0.130004D+00
+                11            12 
+      1   0.149613D+00  0.158940D+00
+      2  -0.146453D+00 -0.917638D-01
+      3  -0.723303D-01 -0.678239D-01
+      4   0.294384D-01 -0.177157D-01
+      5  -0.590648D-02  0.272757D-02
+      6  -0.167060D-01  0.771473D-02
+      7  -0.158675D-01 -0.112200D-01
+      8   0.175990D-01  0.139785D-01
+      9   0.139785D-01  0.771473D-02
+     10  -0.163184D+00 -0.130004D+00
+     11   0.134760D+00  0.750578D-01
+     12   0.750579D-01  0.523944D-01
+ Maximum difference in off-diagonal FC elements:
+ I=  5 J=  3 Difference=    3.1190202776D-07
+ EDrv before update Dipole Moment 
+                 1 
+      1   0.000000D+00
+      2   0.000000D+00
+      3   0.000000D+00
+ EDrvD before update Numerical derivative of Dipole Moment 
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9            10 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                11            12 
+      1   0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00
+ Numerical Dipole derivatives          1
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9            10 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                11            12 
+      1   0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00
+ Numerical Forces:
+ I=    1 X=   0.000000000000D+00 Y=   2.343126355816D-07 Z=  -5.048511439589D-02
+ I=    2 X=   0.000000000000D+00 Y=  -3.600228612916D-02 Z=   1.682843382842D-02
+ I=    3 X=   3.117889438217D-02 Y=   1.800114306458D-02 Z=   1.682843382842D-02
+ I=    4 X=  -3.117889438217D-02 Y=   1.800114306458D-02 Z=   1.682843382842D-02
+ Max difference between analytic and numerical forces:
+ I=  3 Difference=    6.0649301533D-07
+ FinFTb:  IFil= 1 IFilD=  777 LTop=  1 LFil=         4 LTop1=  0 IMask=  1
+ FinFTB:  IFilD=  777 LTop=         1 LTop1=         0 LDat=         3 LFil=         4 NDeriv=    12 ND12= 1 IndX=     3:
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9            10 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                11            12 
+      1   0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00
+ Leave Link  106 at Wed Nov 19 18:06:29 2025, MaxMem=   104857600 cpu:               0.1 elap:               1.5
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l716.exe)
+ Dipole        = 0.00000000D+00 0.00000000D+00 0.00000000D+00
+ Full mass-weighted force constant matrix:
+ Low frequencies --- -766.3707 -766.3707 -727.8867   -0.0125    0.0078    0.0128
+ Low frequencies ---  704.3370 1517.4915 1517.4915
+ Diagonal vibrational polarizability:
+        0.0000000       0.0000000       0.0000000
+ Harmonic frequencies (cm**-1), IR intensities (KM/Mole), Raman scattering
+ activities (A**4/AMU), depolarization ratios for plane and unpolarized
+ incident light, reduced masses (AMU), force constants (mDyne/A),
+ and normal coordinates:
+                      1                      2                      3
+                     A1                      E                      E
+ Frequencies --    704.3370              1516.8415              1516.8415
+ Red. masses --      1.1749                 1.0644                 1.0644
+ Frc consts  --      0.3434                 1.4429                 1.4429
+ IR Inten    --      0.0000                 0.0000                 0.0000
+  Atom  AN      X      Y      Z        X      Y      Z        X      Y      Z
+     1   7    -0.00  -0.00  -0.11     0.01  -0.07   0.00    -0.07  -0.01   0.00
+     2   1     0.00   0.23   0.53    -0.13  -0.16  -0.21     0.76  -0.03  -0.04
+     3   1    -0.20  -0.12   0.53    -0.41   0.60   0.08     0.01  -0.31   0.20
+     4   1     0.20  -0.12   0.53     0.38   0.46   0.14     0.14   0.49  -0.17
+                      4                      5                      6
+                     A1                      E                      E
+ Frequencies --   3558.2053              3681.2788              3681.2788
+ Red. masses --      1.0311                 1.0997                 1.0997
+ Frc consts  --      7.6915                 8.7807                 8.7807
+ IR Inten    --      0.0000                 0.0000                 0.0000
+  Atom  AN      X      Y      Z        X      Y      Z        X      Y      Z
+     1   7    -0.00   0.00   0.04    -0.08  -0.01   0.00     0.01  -0.08   0.00
+     2   1     0.00   0.54  -0.20     0.01   0.05  -0.02    -0.00   0.76  -0.27
+     3   1    -0.47  -0.27  -0.20     0.60   0.34   0.25     0.29   0.18   0.12
+     4   1     0.47  -0.27  -0.20     0.56  -0.31  -0.23    -0.36   0.22   0.15
+
+ -------------------
+ - Thermochemistry -
+ -------------------
+ Temperature   298.150 Kelvin.  Pressure   1.00000 Atm.
+ Atom     1 has atomic number  7 and mass  14.00307
+ Atom     2 has atomic number  1 and mass   1.00783
+ Atom     3 has atomic number  1 and mass   1.00783
+ Atom     4 has atomic number  1 and mass   1.00783
+ Molecular mass:    17.02655 amu.
+ Principal axes and moments of inertia in atomic units:
+                           1         2         3
+     Eigenvalues --     5.78532   5.78532   9.59736
+           X            0.06214   0.99807   0.00000
+           Y            0.99807  -0.06214   0.00000
+           Z           -0.00000  -0.00000   1.00000
+ This molecule is an oblate symmetric top.
+ Rotational symmetry number  3.
+ Rotational temperatures (Kelvin)     14.97134    14.97134     9.02477
+ Rotational constants (GHZ):         311.95203   311.95203   188.04568
+ Zero-point vibrational energy      87679.0 (Joules/Mol)
+                                   20.95578 (Kcal/Mol)
+ Vibrational temperatures:   1013.38  2182.40  2182.40  5119.46  5296.54
+          (Kelvin)           5296.54
+ 
+ Zero-point correction=                           0.033395 (Hartree/Particle)
+ Thermal correction to Energy=                    0.036348
+ Thermal correction to Enthalpy=                  0.037292
+ Thermal correction to Gibbs Free Energy=         0.015380
+ Sum of electronic and zero-point Energies=              0.038910
+ Sum of electronic and thermal Energies=                 0.041862
+ Sum of electronic and thermal Enthalpies=               0.042806
+ Sum of electronic and thermal Free Energies=            0.020894
+ 
+                     E (Thermal)             CV                S
+                      KCal/Mol        Cal/Mol-Kelvin    Cal/Mol-Kelvin
+ Total                   22.809              6.924             46.119
+ Electronic               0.000              0.000              0.000
+ Translational            0.889              2.981             34.441
+ Rotational               0.889              2.981             11.355
+ Vibrational             21.031              0.962              0.323
+                       Q            Log10(Q)             Ln(Q)
+ Total Bot       0.843157D-07         -7.074092        -16.288698
+ Total V=0       0.193466D+09          8.286604         19.080611
+ Vib (Bot)       0.451479D-15        -15.345363        -35.334004
+ Vib (V=0)       0.103594D+01          0.015333          0.035306
+ Electronic      0.100000D+01          0.000000          0.000000
+ Translational   0.276149D+07          6.441144         14.831282
+ Rotational      0.676281D+02          1.830127          4.214024
+ 
+                                                            fake freq run
+                                                             IR Spectrum
+ 
+      3   3                                                                     1                                                    
+      6   5                                                                     5                           7                        
+      8   5                                                                     1                           0                        
+      1   8                                                                     7                           4                        
+ 
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+ 
+ ***** Axes restored to original set *****
+ -------------------------------------------------------------------
+ Center     Atomic                   Forces (Hartrees/Bohr)
+ Number     Number              X              Y              Z
+ -------------------------------------------------------------------
+      1        7          -0.000000000    0.000000000    0.050485721
+      2        1           0.000000000    0.036002332   -0.016828574
+      3        1          -0.031178934   -0.018001166   -0.016828574
+      4        1           0.031178934   -0.018001166   -0.016828574
+ -------------------------------------------------------------------
+ Cartesian Forces:  Max     0.050485721 RMS     0.024642298
+ Force constants in Cartesian coordinates: 
+                1             2             3             4             5 
+      1  0.698495D+00
+      2  0.000000D+00  0.698495D+00
+      3  0.000000D+00  0.000000D+00  0.203471D+00
+      4 -0.600732D-01  0.000000D+00  0.000000D+00  0.405455D-01
+      5  0.000000D+00 -0.405590D+00  0.144661D+00  0.000000D+00  0.417403D+00
+      6  0.000000D+00  0.183528D+00 -0.678238D-01  0.000000D+00 -0.150116D+00
+      7 -0.319211D+00 -0.149613D+00 -0.125280D+00  0.976385D-02  0.229658D-02
+      8 -0.149613D+00 -0.146452D+00 -0.723303D-01 -0.294384D-01 -0.590648D-02
+      9 -0.158940D+00 -0.917639D-01 -0.678238D-01  0.177157D-01  0.272757D-02
+     10 -0.319211D+00  0.149613D+00  0.125280D+00  0.976385D-02 -0.229658D-02
+     11  0.149613D+00 -0.146452D+00 -0.723303D-01  0.294384D-01 -0.590648D-02
+     12  0.158940D+00 -0.917639D-01 -0.678238D-01 -0.177157D-01  0.272757D-02
+                6             7             8             9            10 
+      6  0.523944D-01
+      7  0.649571D-02  0.323189D+00
+      8 -0.167060D-01  0.163184D+00  0.134760D+00
+      9  0.771473D-02  0.130004D+00  0.750579D-01  0.523944D-01
+     10 -0.649571D-02 -0.137417D-01  0.158675D-01  0.112200D-01  0.323189D+00
+     11 -0.167060D-01 -0.158675D-01  0.175990D-01  0.139785D-01 -0.163184D+00
+     12  0.771473D-02 -0.112200D-01  0.139785D-01  0.771473D-02 -0.130004D+00
+               11            12 
+     11  0.134760D+00
+     12  0.750579D-01  0.523944D-01
+ FormGI is forming the generalized inverse of G from B-inverse, IUseBI=4.
+ Force constants in internal coordinates: 
+                1             2             3             4             5 
+      1  0.471200D+00
+      2  0.000000D+00  0.471200D+00
+      3  0.000000D+00  0.000000D+00  0.471200D+00
+      4  0.000000D+00  0.000000D+00  0.000000D+00  0.123773D+00
+      5  0.000000D+00  0.000000D+00  0.000000D+00 -0.438622D-01  0.583924D-01
+      6  0.000000D+00  0.000000D+00  0.000000D+00 -0.270198D-01 -0.438622D-01
+      7  0.000000D+00  0.000000D+00  0.000000D+00  0.552906D-02  0.177957D-01
+                6             7 
+      6  0.123773D+00
+      7  0.552904D-02  0.285669D-01
+ Leave Link  716 at Wed Nov 19 18:06:29 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.1
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l103.exe)
+
+ GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
+ Berny optimization.
+ Optmz: redundant internal coordinate code flag= 2
+ Enter Routine CrBGMt.
+ CrBGMt: DEBUG = .True.
+ CrBGMt Memory Allocations:
+    NAt3  =        12 NCoord=         7 LenBSp=        57 LenBFl=        84
+    LenGFl=        49 LenBxS=         0 MDV   = 103262668
+    IBXTmp=        33 IBFull=        90 IGFull=       258 IBxMat=       307
+    IBxQTm=       307 IV    =       307
+ CrBGMt: i=         1 IPrim=        76 Idq=         1 Idx=         1 NCoord=         7 NAt3=        12
+ CrBGMt: i=         2 IPrim=        78 Idq=         1 Idx=         2 NCoord=         7 NAt3=        12
+ CrBGMt: i=         3 IPrim=        80 Idq=         1 Idx=         3 NCoord=         7 NAt3=        12
+ CrBGMt: i=         4 IPrim=        82 Idq=         1 Idx=         4 NCoord=         7 NAt3=        12
+ CrBGMt: i=         5 IPrim=        84 Idq=         1 Idx=         5 NCoord=         7 NAt3=        12
+ CrBGMt: i=         6 IPrim=        86 Idq=         1 Idx=         6 NCoord=         7 NAt3=        12
+ CrBGMt: i=         7 IPrim=        88 Idq=         2 Idx=         1 NCoord=         7 NAt3=        12
+ CrBGMt: i=         8 IPrim=        90 Idq=         2 Idx=         2 NCoord=         7 NAt3=        12
+ CrBGMt: i=         9 IPrim=        92 Idq=         2 Idx=         3 NCoord=         7 NAt3=        12
+ CrBGMt: i=        10 IPrim=        94 Idq=         2 Idx=         7 NCoord=         7 NAt3=        12
+ CrBGMt: i=        11 IPrim=        96 Idq=         2 Idx=         8 NCoord=         7 NAt3=        12
+ CrBGMt: i=        12 IPrim=        98 Idq=         2 Idx=         9 NCoord=         7 NAt3=        12
+ CrBGMt: i=        13 IPrim=       100 Idq=         3 Idx=         1 NCoord=         7 NAt3=        12
+ CrBGMt: i=        14 IPrim=       103 Idq=         3 Idx=         2 NCoord=         7 NAt3=        12
+ CrBGMt: i=        15 IPrim=       106 Idq=         3 Idx=         3 NCoord=         7 NAt3=        12
+ CrBGMt: i=        16 IPrim=       109 Idq=         3 Idx=        10 NCoord=         7 NAt3=        12
+ CrBGMt: i=        17 IPrim=       111 Idq=         3 Idx=        11 NCoord=         7 NAt3=        12
+ CrBGMt: i=        18 IPrim=       113 Idq=         3 Idx=        12 NCoord=         7 NAt3=        12
+ CrBGMt: i=        19 IPrim=       115 Idq=         4 Idx=         4 NCoord=         7 NAt3=        12
+ CrBGMt: i=        20 IPrim=       127 Idq=         4 Idx=         5 NCoord=         7 NAt3=        12
+ CrBGMt: i=        21 IPrim=       134 Idq=         4 Idx=         6 NCoord=         7 NAt3=        12
+ CrBGMt: i=        22 IPrim=       141 Idq=         4 Idx=         1 NCoord=         7 NAt3=        12
+ CrBGMt: i=        23 IPrim=       150 Idq=         4 Idx=         2 NCoord=         7 NAt3=        12
+ CrBGMt: i=        24 IPrim=       159 Idq=         4 Idx=         3 NCoord=         7 NAt3=        12
+ CrBGMt: i=        25 IPrim=       168 Idq=         4 Idx=         7 NCoord=         7 NAt3=        12
+ CrBGMt: i=        26 IPrim=       175 Idq=         4 Idx=         8 NCoord=         7 NAt3=        12
+ CrBGMt: i=        27 IPrim=       182 Idq=         4 Idx=         9 NCoord=         7 NAt3=        12
+ CrBGMt: i=        28 IPrim=       189 Idq=         5 Idx=         4 NCoord=         7 NAt3=        12
+ CrBGMt: i=        29 IPrim=       200 Idq=         5 Idx=         5 NCoord=         7 NAt3=        12
+ CrBGMt: i=        30 IPrim=       207 Idq=         5 Idx=         6 NCoord=         7 NAt3=        12
+ CrBGMt: i=        31 IPrim=       214 Idq=         5 Idx=         1 NCoord=         7 NAt3=        12
+ CrBGMt: i=        32 IPrim=       223 Idq=         5 Idx=         2 NCoord=         7 NAt3=        12
+ CrBGMt: i=        33 IPrim=       232 Idq=         5 Idx=         3 NCoord=         7 NAt3=        12
+ CrBGMt: i=        34 IPrim=       241 Idq=         5 Idx=        10 NCoord=         7 NAt3=        12
+ CrBGMt: i=        35 IPrim=       247 Idq=         5 Idx=        11 NCoord=         7 NAt3=        12
+ CrBGMt: i=        36 IPrim=       253 Idq=         5 Idx=        12 NCoord=         7 NAt3=        12
+ CrBGMt: i=        37 IPrim=       259 Idq=         6 Idx=         7 NCoord=         7 NAt3=        12
+ CrBGMt: i=        38 IPrim=       269 Idq=         6 Idx=         8 NCoord=         7 NAt3=        12
+ CrBGMt: i=        39 IPrim=       275 Idq=         6 Idx=         9 NCoord=         7 NAt3=        12
+ CrBGMt: i=        40 IPrim=       281 Idq=         6 Idx=         1 NCoord=         7 NAt3=        12
+ CrBGMt: i=        41 IPrim=       290 Idq=         6 Idx=         2 NCoord=         7 NAt3=        12
+ CrBGMt: i=        42 IPrim=       299 Idq=         6 Idx=         3 NCoord=         7 NAt3=        12
+ CrBGMt: i=        43 IPrim=       308 Idq=         6 Idx=        10 NCoord=         7 NAt3=        12
+ CrBGMt: i=        44 IPrim=       314 Idq=         6 Idx=        11 NCoord=         7 NAt3=        12
+ CrBGMt: i=        45 IPrim=       320 Idq=         6 Idx=        12 NCoord=         7 NAt3=        12
+ CrBGMt: i=        46 IPrim=       326 Idq=         7 Idx=         4 NCoord=         7 NAt3=        12
+ CrBGMt: i=        47 IPrim=       342 Idq=         7 Idx=         5 NCoord=         7 NAt3=        12
+ CrBGMt: i=        48 IPrim=       345 Idq=         7 Idx=         6 NCoord=         7 NAt3=        12
+ CrBGMt: i=        49 IPrim=       348 Idq=         7 Idx=         1 NCoord=         7 NAt3=        12
+ CrBGMt: i=        50 IPrim=       357 Idq=         7 Idx=         2 NCoord=         7 NAt3=        12
+ CrBGMt: i=        51 IPrim=       361 Idq=         7 Idx=         3 NCoord=         7 NAt3=        12
+ CrBGMt: i=        52 IPrim=       365 Idq=         7 Idx=         7 NCoord=         7 NAt3=        12
+ CrBGMt: i=        53 IPrim=       375 Idq=         7 Idx=         8 NCoord=         7 NAt3=        12
+ CrBGMt: i=        54 IPrim=       380 Idq=         7 Idx=         9 NCoord=         7 NAt3=        12
+ CrBGMt: i=        55 IPrim=       385 Idq=         7 Idx=        10 NCoord=         7 NAt3=        12
+ CrBGMt: i=        56 IPrim=       388 Idq=         7 Idx=        11 NCoord=         7 NAt3=        12
+ CrBGMt: i=        57 IPrim=       390 Idq=         7 Idx=        12 NCoord=         7 NAt3=        12
+ CrBGMt: IBMtQ= 
+              1
+     1            1
+     2            1
+     3            1
+     4            1
+     5            1
+     6            1
+     7            2
+     8            2
+     9            2
+    10            2
+    11            2
+    12            2
+    13            3
+    14            3
+    15            3
+    16            3
+    17            3
+    18            3
+    19            4
+    20            4
+    21            4
+    22            4
+    23            4
+    24            4
+    25            4
+    26            4
+    27            4
+    28            5
+    29            5
+    30            5
+    31            5
+    32            5
+    33            5
+    34            5
+    35            5
+    36            5
+    37            6
+    38            6
+    39            6
+    40            6
+    41            6
+    42            6
+    43            6
+    44            6
+    45            6
+    46            7
+    47            7
+    48            7
+    49            7
+    50            7
+    51            7
+    52            7
+    53            7
+    54            7
+    55            7
+    56            7
+    57            7
+ CrBGMt: IBXTmp= 
+              1
+     1            1
+     2            1
+     3            1
+     4            1
+     5            1
+     6            1
+     7            1
+     8            2
+     9            2
+    10            2
+    11            2
+    12            2
+    13            2
+    14            2
+    15            3
+    16            3
+    17            3
+    18            3
+    19            3
+    20            3
+    21            3
+    22            4
+    23            4
+    24            4
+    25            4
+    26            5
+    27            5
+    28            5
+    29            5
+    30            6
+    31            6
+    32            6
+    33            6
+    34            7
+    35            7
+    36            7
+    37            7
+    38            8
+    39            8
+    40            8
+    41            8
+    42            9
+    43            9
+    44            9
+    45            9
+    46           10
+    47           10
+    48           10
+    49           10
+    50           11
+    51           11
+    52           11
+    53           11
+    54           12
+    55           12
+    56           12
+    57           12
+ CrBGMt: IBMtX= 
+              1
+     1            1
+     2            7
+     3           13
+     4           22
+     5           31
+     6           40
+     7           49
+     8            2
+     9            8
+    10           14
+    11           23
+    12           32
+    13           41
+    14           50
+    15            3
+    16            9
+    17           15
+    18           24
+    19           33
+    20           42
+    21           51
+    22            4
+    23           19
+    24           28
+    25           46
+    26            5
+    27           20
+    28           29
+    29           47
+    30            6
+    31           21
+    32           30
+    33           48
+    34           10
+    35           25
+    36           37
+    37           52
+    38           11
+    39           26
+    40           38
+    41           53
+    42           12
+    43           27
+    44           39
+    45           54
+    46           16
+    47           34
+    48           43
+    49           55
+    50           17
+    51           35
+    52           44
+    53           56
+    54           18
+    55           36
+    56           45
+    57           57
+ CrBGMt: IBMtJX= 
+              1
+     1            1
+     2            8
+     3           15
+     4           22
+     5           26
+     6           30
+     7           34
+     8           38
+     9           42
+    10           46
+    11           50
+    12           54
+    13           58
+ CrBGMt: Full (IOp=1) B-matrix= 
+                 1             2             3             4             5 
+      1   0.000000D+00 -0.942809D+00  0.333333D+00  0.000000D+00  0.942809D+00
+      2   0.816497D+00  0.471405D+00  0.333333D+00  0.000000D+00  0.000000D+00
+      3  -0.816497D+00  0.471405D+00  0.333333D+00  0.000000D+00  0.000000D+00
+      4  -0.611041D+00  0.352785D+00 -0.498913D+00  0.458281D+00  0.881962D-01
+      5   0.611041D+00  0.352785D+00 -0.498913D+00 -0.458281D+00  0.881962D-01
+      6   0.000000D+00 -0.705570D+00 -0.498913D+00  0.000000D+00  0.000000D+00
+      7   0.374185D+00  0.216036D+00 -0.122208D+01 -0.280639D+00  0.162027D+00
+                 6             7             8             9            10 
+      1  -0.333333D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00 -0.816497D+00 -0.471405D+00 -0.333333D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.816497D+00
+      4   0.249457D+00  0.152760D+00 -0.440981D+00  0.249457D+00  0.000000D+00
+      5   0.249457D+00  0.000000D+00  0.000000D+00  0.000000D+00 -0.152760D+00
+      6   0.000000D+00 -0.305521D+00  0.352785D+00  0.249457D+00  0.305521D+00
+      7   0.458281D+00 -0.935462D-01 -0.540089D-01  0.305521D+00  0.000000D+00
+                11            12 
+      1   0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00
+      3  -0.471405D+00 -0.333333D+00
+      4   0.000000D+00  0.000000D+00
+      5  -0.440981D+00  0.249457D+00
+      6   0.352785D+00  0.249457D+00
+      7  -0.324054D+00  0.458281D+00
+ CrBGMt: Full (IOp=11) B-matrix= 
+                 1             2             3             4             5 
+      1   0.000000D+00  0.816497D+00 -0.816497D+00 -0.611041D+00  0.611041D+00
+      2  -0.942809D+00  0.471405D+00  0.471405D+00  0.352785D+00  0.352785D+00
+      3   0.333333D+00  0.333333D+00  0.333333D+00 -0.498913D+00 -0.498913D+00
+      4   0.000000D+00  0.000000D+00  0.000000D+00  0.458281D+00 -0.458281D+00
+      5   0.942809D+00  0.000000D+00  0.000000D+00  0.881962D-01  0.881962D-01
+      6  -0.333333D+00  0.000000D+00  0.000000D+00  0.249457D+00  0.249457D+00
+      7   0.000000D+00 -0.816497D+00  0.000000D+00  0.152760D+00  0.000000D+00
+      8   0.000000D+00 -0.471405D+00  0.000000D+00 -0.440981D+00  0.000000D+00
+      9   0.000000D+00 -0.333333D+00  0.000000D+00  0.249457D+00  0.000000D+00
+     10   0.000000D+00  0.000000D+00  0.816497D+00  0.000000D+00 -0.152760D+00
+     11   0.000000D+00  0.000000D+00 -0.471405D+00  0.000000D+00 -0.440981D+00
+     12   0.000000D+00  0.000000D+00 -0.333333D+00  0.000000D+00  0.249457D+00
+                 6             7 
+      1   0.000000D+00  0.374185D+00
+      2  -0.705570D+00  0.216036D+00
+      3  -0.498913D+00 -0.122208D+01
+      4   0.000000D+00 -0.280639D+00
+      5   0.000000D+00  0.162027D+00
+      6   0.000000D+00  0.458281D+00
+      7  -0.305521D+00 -0.935462D-01
+      8   0.352785D+00 -0.540089D-01
+      9   0.249457D+00  0.305521D+00
+     10   0.305521D+00  0.000000D+00
+     11   0.352785D+00 -0.324054D+00
+     12   0.249457D+00  0.458281D+00
+ Sparse B in FormBX: 
+                 1 
+      1   0.000000D+00
+      2  -0.942809D+00
+      3   0.333333D+00
+      4   0.000000D+00
+      5   0.942809D+00
+      6  -0.333333D+00
+      7   0.816497D+00
+      8   0.471405D+00
+      9   0.333333D+00
+     10  -0.816497D+00
+     11  -0.471405D+00
+     12  -0.333333D+00
+     13  -0.816497D+00
+     14   0.471405D+00
+     15   0.333333D+00
+     16   0.816497D+00
+     17  -0.471405D+00
+     18  -0.333333D+00
+     19   0.458281D+00
+     20   0.881962D-01
+     21   0.249457D+00
+     22  -0.611041D+00
+     23   0.352785D+00
+     24  -0.498913D+00
+     25   0.152760D+00
+     26  -0.440981D+00
+     27   0.249457D+00
+     28  -0.458281D+00
+     29   0.881962D-01
+     30   0.249457D+00
+     31   0.611041D+00
+     32   0.352785D+00
+     33  -0.498913D+00
+     34  -0.152760D+00
+     35  -0.440981D+00
+     36   0.249457D+00
+     37  -0.305521D+00
+     38   0.352785D+00
+     39   0.249457D+00
+     40   0.000000D+00
+     41  -0.705570D+00
+     42  -0.498913D+00
+     43   0.305521D+00
+     44   0.352785D+00
+     45   0.249457D+00
+     46  -0.280639D+00
+     47   0.162027D+00
+     48   0.458281D+00
+     49   0.374185D+00
+     50   0.216036D+00
+     51  -0.122208D+01
+     52  -0.935462D-01
+     53  -0.540089D-01
+     54   0.305521D+00
+     55   0.000000D+00
+     56  -0.324054D+00
+     57   0.458281D+00
+ IB in FormBX: 
+              1
+     1            1
+     2            1
+     3            1
+     4            1
+     5            1
+     6            1
+     7            2
+     8            2
+     9            2
+    10            2
+    11            2
+    12            2
+    13            3
+    14            3
+    15            3
+    16            3
+    17            3
+    18            3
+    19            4
+    20            4
+    21            4
+    22            4
+    23            4
+    24            4
+    25            4
+    26            4
+    27            4
+    28            5
+    29            5
+    30            5
+    31            5
+    32            5
+    33            5
+    34            5
+    35            5
+    36            5
+    37            6
+    38            6
+    39            6
+    40            6
+    41            6
+    42            6
+    43            6
+    44            6
+    45            6
+    46            7
+    47            7
+    48            7
+    49            7
+    50            7
+    51            7
+    52            7
+    53            7
+    54            7
+    55            7
+    56            7
+    57            7
+    58            1
+    59            7
+    60           13
+    61           22
+    62           31
+    63           40
+    64           49
+    65            2
+    66            8
+    67           14
+    68           23
+    69           32
+    70           41
+    71           50
+    72            3
+    73            9
+    74           15
+    75           24
+    76           33
+    77           42
+    78           51
+    79            4
+    80           19
+    81           28
+    82           46
+    83            5
+    84           20
+    85           29
+    86           47
+    87            6
+    88           21
+    89           30
+    90           48
+    91           10
+    92           25
+    93           37
+    94           52
+    95           11
+    96           26
+    97           38
+    98           53
+    99           12
+   100           27
+   101           39
+   102           54
+   103           16
+   104           34
+   105           43
+   106           55
+   107           17
+   108           35
+   109           44
+   110           56
+   111           18
+   112           36
+   113           45
+   114           57
+   115            1
+   116            8
+   117           15
+   118           22
+   119           26
+   120           30
+   121           34
+   122           38
+   123           42
+   124           46
+   125           50
+   126           54
+   127           58
+ Enter Routine CrBGMt.
+ CrBGMt: DEBUG = .True.
+ CrBGMt Memory Allocations:
+    NAt3  =        12 NCoord=         7 LenBSp=        57 LenBFl=        84
+    LenGFl=        49 LenBxS=         0 MDV   = 103262560
+    IBXTmp=        33 IBFull=        90 IGFull=       258 IBxMat=       307
+    IBxQTm=       307 IV    =       307
+ CrBGMt: i=         1 IPrim=        76 Idq=         1 Idx=         1 NCoord=         7 NAt3=        12
+ CrBGMt: i=         2 IPrim=        78 Idq=         1 Idx=         2 NCoord=         7 NAt3=        12
+ CrBGMt: i=         3 IPrim=        80 Idq=         1 Idx=         3 NCoord=         7 NAt3=        12
+ CrBGMt: i=         4 IPrim=        82 Idq=         1 Idx=         4 NCoord=         7 NAt3=        12
+ CrBGMt: i=         5 IPrim=        84 Idq=         1 Idx=         5 NCoord=         7 NAt3=        12
+ CrBGMt: i=         6 IPrim=        86 Idq=         1 Idx=         6 NCoord=         7 NAt3=        12
+ CrBGMt: i=         7 IPrim=        88 Idq=         2 Idx=         1 NCoord=         7 NAt3=        12
+ CrBGMt: i=         8 IPrim=        90 Idq=         2 Idx=         2 NCoord=         7 NAt3=        12
+ CrBGMt: i=         9 IPrim=        92 Idq=         2 Idx=         3 NCoord=         7 NAt3=        12
+ CrBGMt: i=        10 IPrim=        94 Idq=         2 Idx=         7 NCoord=         7 NAt3=        12
+ CrBGMt: i=        11 IPrim=        96 Idq=         2 Idx=         8 NCoord=         7 NAt3=        12
+ CrBGMt: i=        12 IPrim=        98 Idq=         2 Idx=         9 NCoord=         7 NAt3=        12
+ CrBGMt: i=        13 IPrim=       100 Idq=         3 Idx=         1 NCoord=         7 NAt3=        12
+ CrBGMt: i=        14 IPrim=       103 Idq=         3 Idx=         2 NCoord=         7 NAt3=        12
+ CrBGMt: i=        15 IPrim=       106 Idq=         3 Idx=         3 NCoord=         7 NAt3=        12
+ CrBGMt: i=        16 IPrim=       109 Idq=         3 Idx=        10 NCoord=         7 NAt3=        12
+ CrBGMt: i=        17 IPrim=       111 Idq=         3 Idx=        11 NCoord=         7 NAt3=        12
+ CrBGMt: i=        18 IPrim=       113 Idq=         3 Idx=        12 NCoord=         7 NAt3=        12
+ CrBGMt: i=        19 IPrim=       115 Idq=         4 Idx=         4 NCoord=         7 NAt3=        12
+ CrBGMt: i=        20 IPrim=       127 Idq=         4 Idx=         5 NCoord=         7 NAt3=        12
+ CrBGMt: i=        21 IPrim=       134 Idq=         4 Idx=         6 NCoord=         7 NAt3=        12
+ CrBGMt: i=        22 IPrim=       141 Idq=         4 Idx=         1 NCoord=         7 NAt3=        12
+ CrBGMt: i=        23 IPrim=       150 Idq=         4 Idx=         2 NCoord=         7 NAt3=        12
+ CrBGMt: i=        24 IPrim=       159 Idq=         4 Idx=         3 NCoord=         7 NAt3=        12
+ CrBGMt: i=        25 IPrim=       168 Idq=         4 Idx=         7 NCoord=         7 NAt3=        12
+ CrBGMt: i=        26 IPrim=       175 Idq=         4 Idx=         8 NCoord=         7 NAt3=        12
+ CrBGMt: i=        27 IPrim=       182 Idq=         4 Idx=         9 NCoord=         7 NAt3=        12
+ CrBGMt: i=        28 IPrim=       189 Idq=         5 Idx=         4 NCoord=         7 NAt3=        12
+ CrBGMt: i=        29 IPrim=       200 Idq=         5 Idx=         5 NCoord=         7 NAt3=        12
+ CrBGMt: i=        30 IPrim=       207 Idq=         5 Idx=         6 NCoord=         7 NAt3=        12
+ CrBGMt: i=        31 IPrim=       214 Idq=         5 Idx=         1 NCoord=         7 NAt3=        12
+ CrBGMt: i=        32 IPrim=       223 Idq=         5 Idx=         2 NCoord=         7 NAt3=        12
+ CrBGMt: i=        33 IPrim=       232 Idq=         5 Idx=         3 NCoord=         7 NAt3=        12
+ CrBGMt: i=        34 IPrim=       241 Idq=         5 Idx=        10 NCoord=         7 NAt3=        12
+ CrBGMt: i=        35 IPrim=       247 Idq=         5 Idx=        11 NCoord=         7 NAt3=        12
+ CrBGMt: i=        36 IPrim=       253 Idq=         5 Idx=        12 NCoord=         7 NAt3=        12
+ CrBGMt: i=        37 IPrim=       259 Idq=         6 Idx=         7 NCoord=         7 NAt3=        12
+ CrBGMt: i=        38 IPrim=       269 Idq=         6 Idx=         8 NCoord=         7 NAt3=        12
+ CrBGMt: i=        39 IPrim=       275 Idq=         6 Idx=         9 NCoord=         7 NAt3=        12
+ CrBGMt: i=        40 IPrim=       281 Idq=         6 Idx=         1 NCoord=         7 NAt3=        12
+ CrBGMt: i=        41 IPrim=       290 Idq=         6 Idx=         2 NCoord=         7 NAt3=        12
+ CrBGMt: i=        42 IPrim=       299 Idq=         6 Idx=         3 NCoord=         7 NAt3=        12
+ CrBGMt: i=        43 IPrim=       308 Idq=         6 Idx=        10 NCoord=         7 NAt3=        12
+ CrBGMt: i=        44 IPrim=       314 Idq=         6 Idx=        11 NCoord=         7 NAt3=        12
+ CrBGMt: i=        45 IPrim=       320 Idq=         6 Idx=        12 NCoord=         7 NAt3=        12
+ CrBGMt: i=        46 IPrim=       326 Idq=         7 Idx=         4 NCoord=         7 NAt3=        12
+ CrBGMt: i=        47 IPrim=       342 Idq=         7 Idx=         5 NCoord=         7 NAt3=        12
+ CrBGMt: i=        48 IPrim=       345 Idq=         7 Idx=         6 NCoord=         7 NAt3=        12
+ CrBGMt: i=        49 IPrim=       348 Idq=         7 Idx=         1 NCoord=         7 NAt3=        12
+ CrBGMt: i=        50 IPrim=       357 Idq=         7 Idx=         2 NCoord=         7 NAt3=        12
+ CrBGMt: i=        51 IPrim=       361 Idq=         7 Idx=         3 NCoord=         7 NAt3=        12
+ CrBGMt: i=        52 IPrim=       365 Idq=         7 Idx=         7 NCoord=         7 NAt3=        12
+ CrBGMt: i=        53 IPrim=       375 Idq=         7 Idx=         8 NCoord=         7 NAt3=        12
+ CrBGMt: i=        54 IPrim=       380 Idq=         7 Idx=         9 NCoord=         7 NAt3=        12
+ CrBGMt: i=        55 IPrim=       385 Idq=         7 Idx=        10 NCoord=         7 NAt3=        12
+ CrBGMt: i=        56 IPrim=       388 Idq=         7 Idx=        11 NCoord=         7 NAt3=        12
+ CrBGMt: i=        57 IPrim=       390 Idq=         7 Idx=        12 NCoord=         7 NAt3=        12
+ CrBGMt: IBMtQ= 
+              1
+     1            1
+     2            1
+     3            1
+     4            1
+     5            1
+     6            1
+     7            2
+     8            2
+     9            2
+    10            2
+    11            2
+    12            2
+    13            3
+    14            3
+    15            3
+    16            3
+    17            3
+    18            3
+    19            4
+    20            4
+    21            4
+    22            4
+    23            4
+    24            4
+    25            4
+    26            4
+    27            4
+    28            5
+    29            5
+    30            5
+    31            5
+    32            5
+    33            5
+    34            5
+    35            5
+    36            5
+    37            6
+    38            6
+    39            6
+    40            6
+    41            6
+    42            6
+    43            6
+    44            6
+    45            6
+    46            7
+    47            7
+    48            7
+    49            7
+    50            7
+    51            7
+    52            7
+    53            7
+    54            7
+    55            7
+    56            7
+    57            7
+ CrBGMt: IBXTmp= 
+              1
+     1            1
+     2            1
+     3            1
+     4            1
+     5            1
+     6            1
+     7            1
+     8            2
+     9            2
+    10            2
+    11            2
+    12            2
+    13            2
+    14            2
+    15            3
+    16            3
+    17            3
+    18            3
+    19            3
+    20            3
+    21            3
+    22            4
+    23            4
+    24            4
+    25            4
+    26            5
+    27            5
+    28            5
+    29            5
+    30            6
+    31            6
+    32            6
+    33            6
+    34            7
+    35            7
+    36            7
+    37            7
+    38            8
+    39            8
+    40            8
+    41            8
+    42            9
+    43            9
+    44            9
+    45            9
+    46           10
+    47           10
+    48           10
+    49           10
+    50           11
+    51           11
+    52           11
+    53           11
+    54           12
+    55           12
+    56           12
+    57           12
+ CrBGMt: IBMtX= 
+              1
+     1            1
+     2            7
+     3           13
+     4           22
+     5           31
+     6           40
+     7           49
+     8            2
+     9            8
+    10           14
+    11           23
+    12           32
+    13           41
+    14           50
+    15            3
+    16            9
+    17           15
+    18           24
+    19           33
+    20           42
+    21           51
+    22            4
+    23           19
+    24           28
+    25           46
+    26            5
+    27           20
+    28           29
+    29           47
+    30            6
+    31           21
+    32           30
+    33           48
+    34           10
+    35           25
+    36           37
+    37           52
+    38           11
+    39           26
+    40           38
+    41           53
+    42           12
+    43           27
+    44           39
+    45           54
+    46           16
+    47           34
+    48           43
+    49           55
+    50           17
+    51           35
+    52           44
+    53           56
+    54           18
+    55           36
+    56           45
+    57           57
+ CrBGMt: IBMtJX= 
+              1
+     1            1
+     2            8
+     3           15
+     4           22
+     5           26
+     6           30
+     7           34
+     8           38
+     9           42
+    10           46
+    11           50
+    12           54
+    13           58
+ CrBGMt: Full (IOp=1) B-matrix= 
+                 1             2             3             4             5 
+      1   0.000000D+00 -0.942809D+00  0.333333D+00  0.000000D+00  0.942809D+00
+      2   0.816497D+00  0.471405D+00  0.333333D+00  0.000000D+00  0.000000D+00
+      3  -0.816497D+00  0.471405D+00  0.333333D+00  0.000000D+00  0.000000D+00
+      4  -0.611041D+00  0.352785D+00 -0.498913D+00  0.458281D+00  0.881962D-01
+      5   0.611041D+00  0.352785D+00 -0.498913D+00 -0.458281D+00  0.881962D-01
+      6   0.000000D+00 -0.705570D+00 -0.498913D+00  0.000000D+00  0.000000D+00
+      7   0.374185D+00  0.216036D+00 -0.122208D+01 -0.280639D+00  0.162027D+00
+                 6             7             8             9            10 
+      1  -0.333333D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00 -0.816497D+00 -0.471405D+00 -0.333333D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.816497D+00
+      4   0.249457D+00  0.152760D+00 -0.440981D+00  0.249457D+00  0.000000D+00
+      5   0.249457D+00  0.000000D+00  0.000000D+00  0.000000D+00 -0.152760D+00
+      6   0.000000D+00 -0.305521D+00  0.352785D+00  0.249457D+00  0.305521D+00
+      7   0.458281D+00 -0.935462D-01 -0.540089D-01  0.305521D+00  0.000000D+00
+                11            12 
+      1   0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00
+      3  -0.471405D+00 -0.333333D+00
+      4   0.000000D+00  0.000000D+00
+      5  -0.440981D+00  0.249457D+00
+      6   0.352785D+00  0.249457D+00
+      7  -0.324054D+00  0.458281D+00
+ CrBGMt: Full (IOp=11) B-matrix= 
+                 1             2             3             4             5 
+      1   0.000000D+00  0.816497D+00 -0.816497D+00 -0.611041D+00  0.611041D+00
+      2  -0.942809D+00  0.471405D+00  0.471405D+00  0.352785D+00  0.352785D+00
+      3   0.333333D+00  0.333333D+00  0.333333D+00 -0.498913D+00 -0.498913D+00
+      4   0.000000D+00  0.000000D+00  0.000000D+00  0.458281D+00 -0.458281D+00
+      5   0.942809D+00  0.000000D+00  0.000000D+00  0.881962D-01  0.881962D-01
+      6  -0.333333D+00  0.000000D+00  0.000000D+00  0.249457D+00  0.249457D+00
+      7   0.000000D+00 -0.816497D+00  0.000000D+00  0.152760D+00  0.000000D+00
+      8   0.000000D+00 -0.471405D+00  0.000000D+00 -0.440981D+00  0.000000D+00
+      9   0.000000D+00 -0.333333D+00  0.000000D+00  0.249457D+00  0.000000D+00
+     10   0.000000D+00  0.000000D+00  0.816497D+00  0.000000D+00 -0.152760D+00
+     11   0.000000D+00  0.000000D+00 -0.471405D+00  0.000000D+00 -0.440981D+00
+     12   0.000000D+00  0.000000D+00 -0.333333D+00  0.000000D+00  0.249457D+00
+                 6             7 
+      1   0.000000D+00  0.374185D+00
+      2  -0.705570D+00  0.216036D+00
+      3  -0.498913D+00 -0.122208D+01
+      4   0.000000D+00 -0.280639D+00
+      5   0.000000D+00  0.162027D+00
+      6   0.000000D+00  0.458281D+00
+      7  -0.305521D+00 -0.935462D-01
+      8   0.352785D+00 -0.540089D-01
+      9   0.249457D+00  0.305521D+00
+     10   0.305521D+00  0.000000D+00
+     11   0.352785D+00 -0.324054D+00
+     12   0.249457D+00  0.458281D+00
+ CrBGMt: G-matrix= 
+                 1             2             3             4             5 
+      1   0.200000D+01 -0.333333D+00 -0.333333D+00 -0.498913D+00 -0.498913D+00
+      2  -0.333333D+00  0.200000D+01 -0.333333D+00 -0.498913D+00  0.498913D+00
+      3  -0.333333D+00 -0.333333D+00  0.200000D+01  0.498913D+00 -0.498913D+00
+      4  -0.498913D+00 -0.498913D+00  0.498913D+00  0.130680D+01 -0.140014D+00
+      5  -0.498913D+00  0.498913D+00 -0.498913D+00 -0.140014D+00  0.130680D+01
+      6   0.498913D+00 -0.498913D+00 -0.498913D+00 -0.140014D+00 -0.140014D+00
+      7  -0.611041D+00  0.000000D+00 -0.611041D+00  0.543026D+00  0.142901D+01
+                 6             7 
+      1   0.498913D+00 -0.611041D+00
+      2  -0.498913D+00  0.000000D+00
+      3  -0.498913D+00 -0.611041D+00
+      4  -0.140014D+00  0.543026D+00
+      5  -0.140014D+00  0.142901D+01
+      6   0.130680D+01  0.543026D+00
+      7   0.543026D+00  0.241525D+01
+ CrBGMt: Low-triangle G-matrix= 
+                1             2             3             4             5 
+      1  0.200000D+01
+      2 -0.333333D+00  0.200000D+01
+      3 -0.333333D+00 -0.333333D+00  0.200000D+01
+      4 -0.498913D+00 -0.498913D+00  0.498913D+00  0.130680D+01
+      5 -0.498913D+00  0.498913D+00 -0.498913D+00 -0.140014D+00  0.130680D+01
+      6  0.498913D+00 -0.498913D+00 -0.498913D+00 -0.140014D+00 -0.140014D+00
+      7 -0.611041D+00  0.000000D+00 -0.611041D+00  0.543026D+00  0.142901D+01
+                6             7 
+      6  0.130680D+01
+      7  0.543026D+00  0.241525D+01
+ CrdBG: GMat. 
+                1             2             3             4             5 
+      1  0.200000D+01
+      2 -0.333333D+00  0.200000D+01
+      3 -0.333333D+00 -0.333333D+00  0.200000D+01
+      4 -0.498913D+00 -0.498913D+00  0.498913D+00  0.130680D+01
+      5 -0.498913D+00  0.498913D+00 -0.498913D+00 -0.140014D+00  0.130680D+01
+      6  0.498913D+00 -0.498913D+00 -0.498913D+00 -0.140014D+00 -0.140014D+00
+      7 -0.611041D+00  0.000000D+00 -0.611041D+00  0.543026D+00  0.142901D+01
+                6             7 
+      6  0.130680D+01
+      7  0.543026D+00  0.241525D+01
+ G Matrix: 
+                 1             2             3             4             5 
+      1   0.200000D+01 -0.333333D+00 -0.333333D+00 -0.498913D+00 -0.498913D+00
+      2  -0.333333D+00  0.200000D+01 -0.333333D+00 -0.498913D+00  0.498913D+00
+      3  -0.333333D+00 -0.333333D+00  0.200000D+01  0.498913D+00 -0.498913D+00
+      4  -0.498913D+00 -0.498913D+00  0.498913D+00  0.130680D+01 -0.140014D+00
+      5  -0.498913D+00  0.498913D+00 -0.498913D+00 -0.140014D+00  0.130680D+01
+      6   0.498913D+00 -0.498913D+00 -0.498913D+00 -0.140014D+00 -0.140014D+00
+      7  -0.611041D+00  0.000000D+00 -0.611041D+00  0.543026D+00  0.142901D+01
+                 6             7 
+      1   0.498913D+00 -0.611041D+00
+      2  -0.498913D+00  0.000000D+00
+      3  -0.498913D+00 -0.611041D+00
+      4  -0.140014D+00  0.543026D+00
+      5  -0.140014D+00  0.142901D+01
+      6   0.130680D+01  0.543026D+00
+      7   0.543026D+00  0.241525D+01
+ Red2BG:  D1=  7.71D-01 OD1=  2.29D-15 B2RMS=  0.00D+00 IAprox=1
+ Red2BG is reusing G-inverse.
+ G-Inverse: 
+                1             2             3             4             5 
+      1  0.710784D+00
+      2  0.102941D+00  0.710784D+00
+      3  0.102941D+00  0.102941D+00  0.710784D+00
+      4  0.203560D+00  0.251930D+00 -0.215652D+00  0.852680D+00
+      5  0.118911D+00 -0.203560D+00  0.118911D+00 -0.292928D+00  0.389051D+00
+      6 -0.215652D+00  0.251930D+00  0.203560D+00 -0.127612D+00 -0.292928D+00
+      7  0.138231D+00  0.592417D-01  0.138231D+00  0.852503D-01  0.117726D+00
+                6             7 
+      6  0.852680D+00
+      7  0.852503D-01  0.248595D+00
+ Enter CrX2Q.
+ Internal  Forces:  Max     0.039552848 RMS     0.026062691
+ Search for a local minimum.
+ Step number   1 out of a maximum of    2
+ All quantities printed in internal units (Hartrees-Bohrs-Radians)
+ Second derivative matrix not updated -- analytic derivatives used.
+ The second derivative matrix:
+                          R1        R2        R3        A1        A2
+           R1           0.47120
+           R2           0.00000   0.47120
+           R3           0.00000  -0.00000   0.47120
+           A1           0.00000   0.00000  -0.00000   0.12377
+           A2           0.00000  -0.00000   0.00000  -0.04386   0.05839
+           A3          -0.00000   0.00000   0.00000  -0.02702  -0.04386
+           D1           0.00000   0.00000   0.00000   0.00553   0.01780
+                          A3        D1
+           A3           0.12377
+           D1           0.00553   0.02857
+ ITU=  0
+ Eigenvectors of the second derivative matrix:
+                           1         2         3         4         5
+     Eigenvalues --     0.04105   0.14266   0.15079   0.47120   0.47120
+   1         R1         0.00000   0.00000   0.00000  -0.39448  -0.00003
+   2         R2         0.00000  -0.00000  -0.00000   0.64994  -0.70693
+   3         R3         0.00000   0.00000  -0.00000   0.64959   0.70729
+   4         A1        -0.25281   0.56631  -0.70711  -0.00000  -0.00000
+   5         A2        -0.42584  -0.59760   0.00000  -0.00000   0.00000
+   6         A3        -0.25281   0.56631   0.70711   0.00000  -0.00000
+   7         D1        -0.83117  -0.03832  -0.00000   0.00000   0.00000
+                           6
+     Eigenvalues --     0.47120
+   1         R1        -0.91891
+   2         R2        -0.27899
+   3         R3        -0.27889
+   4         A1        -0.00000
+   5         A2        -0.00000
+   6         A3        -0.00000
+   7         D1        -0.00000
+ Forces in eigenvector basis: 
+                 1 
+      1   0.680376D-02
+      2  -0.390803D-02
+      3   0.000000D+00
+      4   0.357974D-01
+      5   0.128018D-04
+      6  -0.584109D-01
+ Angle between quadratic step and forces=  43.05 degrees.
+ Linear search not attempted -- first point.
+ Enter Routine CrBGMt.
+ CrBGMt: DEBUG = .True.
+ CrBGMt Memory Allocations:
+    NAt3  =        12 NCoord=         7 LenBSp=        57 LenBFl=        84
+    LenGFl=        49 LenBxS=         0 MDV   = 103260084
+    IBXTmp=        33 IBFull=        90 IGFull=       258 IBxMat=       307
+    IBxQTm=       307 IV    =       307
+ CrBGMt: i=         1 IPrim=        76 Idq=         1 Idx=         1 NCoord=         7 NAt3=        12
+ CrBGMt: i=         2 IPrim=        78 Idq=         1 Idx=         2 NCoord=         7 NAt3=        12
+ CrBGMt: i=         3 IPrim=        80 Idq=         1 Idx=         3 NCoord=         7 NAt3=        12
+ CrBGMt: i=         4 IPrim=        82 Idq=         1 Idx=         4 NCoord=         7 NAt3=        12
+ CrBGMt: i=         5 IPrim=        84 Idq=         1 Idx=         5 NCoord=         7 NAt3=        12
+ CrBGMt: i=         6 IPrim=        86 Idq=         1 Idx=         6 NCoord=         7 NAt3=        12
+ CrBGMt: i=         7 IPrim=        88 Idq=         2 Idx=         1 NCoord=         7 NAt3=        12
+ CrBGMt: i=         8 IPrim=        90 Idq=         2 Idx=         2 NCoord=         7 NAt3=        12
+ CrBGMt: i=         9 IPrim=        92 Idq=         2 Idx=         3 NCoord=         7 NAt3=        12
+ CrBGMt: i=        10 IPrim=        94 Idq=         2 Idx=         7 NCoord=         7 NAt3=        12
+ CrBGMt: i=        11 IPrim=        96 Idq=         2 Idx=         8 NCoord=         7 NAt3=        12
+ CrBGMt: i=        12 IPrim=        98 Idq=         2 Idx=         9 NCoord=         7 NAt3=        12
+ CrBGMt: i=        13 IPrim=       100 Idq=         3 Idx=         1 NCoord=         7 NAt3=        12
+ CrBGMt: i=        14 IPrim=       103 Idq=         3 Idx=         2 NCoord=         7 NAt3=        12
+ CrBGMt: i=        15 IPrim=       106 Idq=         3 Idx=         3 NCoord=         7 NAt3=        12
+ CrBGMt: i=        16 IPrim=       109 Idq=         3 Idx=        10 NCoord=         7 NAt3=        12
+ CrBGMt: i=        17 IPrim=       111 Idq=         3 Idx=        11 NCoord=         7 NAt3=        12
+ CrBGMt: i=        18 IPrim=       113 Idq=         3 Idx=        12 NCoord=         7 NAt3=        12
+ CrBGMt: i=        19 IPrim=       115 Idq=         4 Idx=         4 NCoord=         7 NAt3=        12
+ CrBGMt: i=        20 IPrim=       127 Idq=         4 Idx=         5 NCoord=         7 NAt3=        12
+ CrBGMt: i=        21 IPrim=       134 Idq=         4 Idx=         6 NCoord=         7 NAt3=        12
+ CrBGMt: i=        22 IPrim=       141 Idq=         4 Idx=         1 NCoord=         7 NAt3=        12
+ CrBGMt: i=        23 IPrim=       150 Idq=         4 Idx=         2 NCoord=         7 NAt3=        12
+ CrBGMt: i=        24 IPrim=       159 Idq=         4 Idx=         3 NCoord=         7 NAt3=        12
+ CrBGMt: i=        25 IPrim=       168 Idq=         4 Idx=         7 NCoord=         7 NAt3=        12
+ CrBGMt: i=        26 IPrim=       175 Idq=         4 Idx=         8 NCoord=         7 NAt3=        12
+ CrBGMt: i=        27 IPrim=       182 Idq=         4 Idx=         9 NCoord=         7 NAt3=        12
+ CrBGMt: i=        28 IPrim=       189 Idq=         5 Idx=         4 NCoord=         7 NAt3=        12
+ CrBGMt: i=        29 IPrim=       200 Idq=         5 Idx=         5 NCoord=         7 NAt3=        12
+ CrBGMt: i=        30 IPrim=       207 Idq=         5 Idx=         6 NCoord=         7 NAt3=        12
+ CrBGMt: i=        31 IPrim=       214 Idq=         5 Idx=         1 NCoord=         7 NAt3=        12
+ CrBGMt: i=        32 IPrim=       223 Idq=         5 Idx=         2 NCoord=         7 NAt3=        12
+ CrBGMt: i=        33 IPrim=       232 Idq=         5 Idx=         3 NCoord=         7 NAt3=        12
+ CrBGMt: i=        34 IPrim=       241 Idq=         5 Idx=        10 NCoord=         7 NAt3=        12
+ CrBGMt: i=        35 IPrim=       247 Idq=         5 Idx=        11 NCoord=         7 NAt3=        12
+ CrBGMt: i=        36 IPrim=       253 Idq=         5 Idx=        12 NCoord=         7 NAt3=        12
+ CrBGMt: i=        37 IPrim=       259 Idq=         6 Idx=         7 NCoord=         7 NAt3=        12
+ CrBGMt: i=        38 IPrim=       269 Idq=         6 Idx=         8 NCoord=         7 NAt3=        12
+ CrBGMt: i=        39 IPrim=       275 Idq=         6 Idx=         9 NCoord=         7 NAt3=        12
+ CrBGMt: i=        40 IPrim=       281 Idq=         6 Idx=         1 NCoord=         7 NAt3=        12
+ CrBGMt: i=        41 IPrim=       290 Idq=         6 Idx=         2 NCoord=         7 NAt3=        12
+ CrBGMt: i=        42 IPrim=       299 Idq=         6 Idx=         3 NCoord=         7 NAt3=        12
+ CrBGMt: i=        43 IPrim=       308 Idq=         6 Idx=        10 NCoord=         7 NAt3=        12
+ CrBGMt: i=        44 IPrim=       314 Idq=         6 Idx=        11 NCoord=         7 NAt3=        12
+ CrBGMt: i=        45 IPrim=       320 Idq=         6 Idx=        12 NCoord=         7 NAt3=        12
+ CrBGMt: i=        46 IPrim=       326 Idq=         7 Idx=         4 NCoord=         7 NAt3=        12
+ CrBGMt: i=        47 IPrim=       342 Idq=         7 Idx=         5 NCoord=         7 NAt3=        12
+ CrBGMt: i=        48 IPrim=       345 Idq=         7 Idx=         6 NCoord=         7 NAt3=        12
+ CrBGMt: i=        49 IPrim=       348 Idq=         7 Idx=         1 NCoord=         7 NAt3=        12
+ CrBGMt: i=        50 IPrim=       357 Idq=         7 Idx=         2 NCoord=         7 NAt3=        12
+ CrBGMt: i=        51 IPrim=       361 Idq=         7 Idx=         3 NCoord=         7 NAt3=        12
+ CrBGMt: i=        52 IPrim=       365 Idq=         7 Idx=         7 NCoord=         7 NAt3=        12
+ CrBGMt: i=        53 IPrim=       375 Idq=         7 Idx=         8 NCoord=         7 NAt3=        12
+ CrBGMt: i=        54 IPrim=       380 Idq=         7 Idx=         9 NCoord=         7 NAt3=        12
+ CrBGMt: i=        55 IPrim=       385 Idq=         7 Idx=        10 NCoord=         7 NAt3=        12
+ CrBGMt: i=        56 IPrim=       388 Idq=         7 Idx=        11 NCoord=         7 NAt3=        12
+ CrBGMt: i=        57 IPrim=       390 Idq=         7 Idx=        12 NCoord=         7 NAt3=        12
+ CrBGMt: IBMtQ= 
+              1
+     1            1
+     2            1
+     3            1
+     4            1
+     5            1
+     6            1
+     7            2
+     8            2
+     9            2
+    10            2
+    11            2
+    12            2
+    13            3
+    14            3
+    15            3
+    16            3
+    17            3
+    18            3
+    19            4
+    20            4
+    21            4
+    22            4
+    23            4
+    24            4
+    25            4
+    26            4
+    27            4
+    28            5
+    29            5
+    30            5
+    31            5
+    32            5
+    33            5
+    34            5
+    35            5
+    36            5
+    37            6
+    38            6
+    39            6
+    40            6
+    41            6
+    42            6
+    43            6
+    44            6
+    45            6
+    46            7
+    47            7
+    48            7
+    49            7
+    50            7
+    51            7
+    52            7
+    53            7
+    54            7
+    55            7
+    56            7
+    57            7
+ CrBGMt: IBXTmp= 
+              1
+     1            1
+     2            1
+     3            1
+     4            1
+     5            1
+     6            1
+     7            1
+     8            2
+     9            2
+    10            2
+    11            2
+    12            2
+    13            2
+    14            2
+    15            3
+    16            3
+    17            3
+    18            3
+    19            3
+    20            3
+    21            3
+    22            4
+    23            4
+    24            4
+    25            4
+    26            5
+    27            5
+    28            5
+    29            5
+    30            6
+    31            6
+    32            6
+    33            6
+    34            7
+    35            7
+    36            7
+    37            7
+    38            8
+    39            8
+    40            8
+    41            8
+    42            9
+    43            9
+    44            9
+    45            9
+    46           10
+    47           10
+    48           10
+    49           10
+    50           11
+    51           11
+    52           11
+    53           11
+    54           12
+    55           12
+    56           12
+    57           12
+ CrBGMt: IBMtX= 
+              1
+     1            1
+     2            7
+     3           13
+     4           22
+     5           31
+     6           40
+     7           49
+     8            2
+     9            8
+    10           14
+    11           23
+    12           32
+    13           41
+    14           50
+    15            3
+    16            9
+    17           15
+    18           24
+    19           33
+    20           42
+    21           51
+    22            4
+    23           19
+    24           28
+    25           46
+    26            5
+    27           20
+    28           29
+    29           47
+    30            6
+    31           21
+    32           30
+    33           48
+    34           10
+    35           25
+    36           37
+    37           52
+    38           11
+    39           26
+    40           38
+    41           53
+    42           12
+    43           27
+    44           39
+    45           54
+    46           16
+    47           34
+    48           43
+    49           55
+    50           17
+    51           35
+    52           44
+    53           56
+    54           18
+    55           36
+    56           45
+    57           57
+ CrBGMt: IBMtJX= 
+              1
+     1            1
+     2            8
+     3           15
+     4           22
+     5           26
+     6           30
+     7           34
+     8           38
+     9           42
+    10           46
+    11           50
+    12           54
+    13           58
+ CrBGMt: Full (IOp=1) B-matrix= 
+                 1             2             3             4             5 
+      1   0.000000D+00 -0.942809D+00  0.333333D+00  0.000000D+00  0.942809D+00
+      2   0.816497D+00  0.471405D+00  0.333333D+00  0.000000D+00  0.000000D+00
+      3  -0.816497D+00  0.471405D+00  0.333333D+00  0.000000D+00  0.000000D+00
+      4  -0.611041D+00  0.352785D+00 -0.498913D+00  0.458281D+00  0.881962D-01
+      5   0.611041D+00  0.352785D+00 -0.498913D+00 -0.458281D+00  0.881962D-01
+      6   0.000000D+00 -0.705570D+00 -0.498913D+00  0.000000D+00  0.000000D+00
+      7   0.374185D+00  0.216036D+00 -0.122208D+01 -0.280639D+00  0.162027D+00
+                 6             7             8             9            10 
+      1  -0.333333D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00 -0.816497D+00 -0.471405D+00 -0.333333D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.816497D+00
+      4   0.249457D+00  0.152760D+00 -0.440981D+00  0.249457D+00  0.000000D+00
+      5   0.249457D+00  0.000000D+00  0.000000D+00  0.000000D+00 -0.152760D+00
+      6   0.000000D+00 -0.305521D+00  0.352785D+00  0.249457D+00  0.305521D+00
+      7   0.458281D+00 -0.935462D-01 -0.540089D-01  0.305521D+00  0.000000D+00
+                11            12 
+      1   0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00
+      3  -0.471405D+00 -0.333333D+00
+      4   0.000000D+00  0.000000D+00
+      5  -0.440981D+00  0.249457D+00
+      6   0.352785D+00  0.249457D+00
+      7  -0.324054D+00  0.458281D+00
+ CrBGMt: Full (IOp=11) B-matrix= 
+                 1             2             3             4             5 
+      1   0.000000D+00  0.816497D+00 -0.816497D+00 -0.611041D+00  0.611041D+00
+      2  -0.942809D+00  0.471405D+00  0.471405D+00  0.352785D+00  0.352785D+00
+      3   0.333333D+00  0.333333D+00  0.333333D+00 -0.498913D+00 -0.498913D+00
+      4   0.000000D+00  0.000000D+00  0.000000D+00  0.458281D+00 -0.458281D+00
+      5   0.942809D+00  0.000000D+00  0.000000D+00  0.881962D-01  0.881962D-01
+      6  -0.333333D+00  0.000000D+00  0.000000D+00  0.249457D+00  0.249457D+00
+      7   0.000000D+00 -0.816497D+00  0.000000D+00  0.152760D+00  0.000000D+00
+      8   0.000000D+00 -0.471405D+00  0.000000D+00 -0.440981D+00  0.000000D+00
+      9   0.000000D+00 -0.333333D+00  0.000000D+00  0.249457D+00  0.000000D+00
+     10   0.000000D+00  0.000000D+00  0.816497D+00  0.000000D+00 -0.152760D+00
+     11   0.000000D+00  0.000000D+00 -0.471405D+00  0.000000D+00 -0.440981D+00
+     12   0.000000D+00  0.000000D+00 -0.333333D+00  0.000000D+00  0.249457D+00
+                 6             7 
+      1   0.000000D+00  0.374185D+00
+      2  -0.705570D+00  0.216036D+00
+      3  -0.498913D+00 -0.122208D+01
+      4   0.000000D+00 -0.280639D+00
+      5   0.000000D+00  0.162027D+00
+      6   0.000000D+00  0.458281D+00
+      7  -0.305521D+00 -0.935462D-01
+      8   0.352785D+00 -0.540089D-01
+      9   0.249457D+00  0.305521D+00
+     10   0.305521D+00  0.000000D+00
+     11   0.352785D+00 -0.324054D+00
+     12   0.249457D+00  0.458281D+00
+ Sparse B in FormBX: 
+                 1 
+      1   0.000000D+00
+      2  -0.942809D+00
+      3   0.333333D+00
+      4   0.000000D+00
+      5   0.942809D+00
+      6  -0.333333D+00
+      7   0.816497D+00
+      8   0.471405D+00
+      9   0.333333D+00
+     10  -0.816497D+00
+     11  -0.471405D+00
+     12  -0.333333D+00
+     13  -0.816497D+00
+     14   0.471405D+00
+     15   0.333333D+00
+     16   0.816497D+00
+     17  -0.471405D+00
+     18  -0.333333D+00
+     19   0.458281D+00
+     20   0.881962D-01
+     21   0.249457D+00
+     22  -0.611041D+00
+     23   0.352785D+00
+     24  -0.498913D+00
+     25   0.152760D+00
+     26  -0.440981D+00
+     27   0.249457D+00
+     28  -0.458281D+00
+     29   0.881962D-01
+     30   0.249457D+00
+     31   0.611041D+00
+     32   0.352785D+00
+     33  -0.498913D+00
+     34  -0.152760D+00
+     35  -0.440981D+00
+     36   0.249457D+00
+     37  -0.305521D+00
+     38   0.352785D+00
+     39   0.249457D+00
+     40   0.000000D+00
+     41  -0.705570D+00
+     42  -0.498913D+00
+     43   0.305521D+00
+     44   0.352785D+00
+     45   0.249457D+00
+     46  -0.280639D+00
+     47   0.162027D+00
+     48   0.458281D+00
+     49   0.374185D+00
+     50   0.216036D+00
+     51  -0.122208D+01
+     52  -0.935462D-01
+     53  -0.540089D-01
+     54   0.305521D+00
+     55   0.000000D+00
+     56  -0.324054D+00
+     57   0.458281D+00
+ IB in FormBX: 
+              1
+     1            1
+     2            1
+     3            1
+     4            1
+     5            1
+     6            1
+     7            2
+     8            2
+     9            2
+    10            2
+    11            2
+    12            2
+    13            3
+    14            3
+    15            3
+    16            3
+    17            3
+    18            3
+    19            4
+    20            4
+    21            4
+    22            4
+    23            4
+    24            4
+    25            4
+    26            4
+    27            4
+    28            5
+    29            5
+    30            5
+    31            5
+    32            5
+    33            5
+    34            5
+    35            5
+    36            5
+    37            6
+    38            6
+    39            6
+    40            6
+    41            6
+    42            6
+    43            6
+    44            6
+    45            6
+    46            7
+    47            7
+    48            7
+    49            7
+    50            7
+    51            7
+    52            7
+    53            7
+    54            7
+    55            7
+    56            7
+    57            7
+    58            1
+    59            7
+    60           13
+    61           22
+    62           31
+    63           40
+    64           49
+    65            2
+    66            8
+    67           14
+    68           23
+    69           32
+    70           41
+    71           50
+    72            3
+    73            9
+    74           15
+    75           24
+    76           33
+    77           42
+    78           51
+    79            4
+    80           19
+    81           28
+    82           46
+    83            5
+    84           20
+    85           29
+    86           47
+    87            6
+    88           21
+    89           30
+    90           48
+    91           10
+    92           25
+    93           37
+    94           52
+    95           11
+    96           26
+    97           38
+    98           53
+    99           12
+   100           27
+   101           39
+   102           54
+   103           16
+   104           34
+   105           43
+   106           55
+   107           17
+   108           35
+   109           44
+   110           56
+   111           18
+   112           36
+   113           45
+   114           57
+   115            1
+   116            8
+   117           15
+   118           22
+   119           26
+   120           30
+   121           34
+   122           38
+   123           42
+   124           46
+   125           50
+   126           54
+   127           58
+ Iteration  1 RMS(Cart)=  0.05082374 RMS(Int)=  0.00502409
+ Iteration  2 RMS(Cart)=  0.00341990 RMS(Int)=  0.00311345
+ Iteration  3 RMS(Cart)=  0.00001721 RMS(Int)=  0.00311339
+ Iteration  4 RMS(Cart)=  0.00000014 RMS(Int)=  0.00311339
+ ITry= 1 IFail=0 DXMaxC= 9.90D-02 DCOld= 1.00D+10 DXMaxT= 3.00D-01 DXLimC= 3.00D+00 Rises=F
+ Symmetrized Coordinates in SymCor: 
+                 1             2             3             4 
+      1   0.000000D+00  0.000000D+00 -0.157671D+01  0.157671D+01
+      2   0.000000D+00  0.182063D+01 -0.910314D+00 -0.910314D+00
+      3   0.287950D+00 -0.473962D+00 -0.473962D+00 -0.473962D+00
+ Final Coordinates in SymCor: 
+                 1             2             3             4 
+      1   0.000000D+00  0.000000D+00 -0.157671D+01  0.157671D+01
+      2   0.000000D+00  0.182063D+01 -0.910314D+00 -0.910314D+00
+      3   0.287950D+00 -0.473962D+00 -0.473962D+00 -0.473962D+00
+ ClnCor:  largest displacement from symmetrization is 2.04D-04 for atom     3.
+ Variable       Old X    -DE/DX   Delta X   Delta X   Delta X     New X
+                                 (Linear)    (Quad)   (Total)
+    R1        1.88973   0.03955   0.00000   0.08394   0.08390   1.97362
+    R2        1.88973   0.03955   0.00000   0.08394   0.08390   1.97362
+    R3        1.88973   0.03955   0.00000   0.08394   0.08390   1.97362
+    A1        1.91063  -0.00393   0.00000  -0.05742  -0.05974   1.85090
+    A2        1.91063  -0.00056   0.00000  -0.05421  -0.05974   1.85090
+    A3        1.91063  -0.00393   0.00000  -0.05742  -0.05974   1.85090
+    D1        2.09440  -0.00551   0.00000  -0.13672  -0.13156   1.96284
+         Item               Value     Threshold  Converged?
+ Maximum Force            0.039553     0.000450     NO 
+ RMS     Force            0.026063     0.000300     NO 
+ Maximum Displacement     0.098978     0.001800     NO 
+ RMS     Displacement     0.050180     0.001200     NO 
+ Predicted change in Energy=-5.597502D-03
+                           ----------------------------
+                           ! Non-Optimized Parameters !
+                           ! (Angstroms and Degrees)  !
+ --------------------------                            --------------------------
+ ! Name  Definition              Value          Derivative Info.                !
+ --------------------------------------------------------------------------------
+ ! R1    R(1,2)                  1.0444         -DE/DX =    0.0396              !
+ ! R2    R(1,3)                  1.0444         -DE/DX =    0.0396              !
+ ! R3    R(1,4)                  1.0444         -DE/DX =    0.0396              !
+ ! A1    A(2,1,3)              106.0485         -DE/DX =   -0.0039              !
+ ! A2    A(2,1,4)              106.0485         -DE/DX =   -0.0006              !
+ ! A3    A(3,1,4)              106.0485         -DE/DX =   -0.0039              !
+ ! D1    D(2,1,3,4)            112.4624         -DE/DX =   -0.0055              !
+ --------------------------------------------------------------------------------
+ GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
+
+ Leave Link  103 at Wed Nov 19 18:06:30 2025, MaxMem=   104857600 cpu:               0.1 elap:               0.5
+ (Enter /gaussian/g16.c01/intel64-sandybridge/g16/l9999.exe)
+
+ Test job not archived.
+ 1\1\GINC-THIOTIMOLINE-LARGE01\Freq\UFF\ZDO\H3N1\LCRISCI_VB\19-Nov-2025
+ \0\\#p freq=num geom=gic uff iop(1/33=2)\\fake freq run\\0,1\N,0.,0.,0
+ .099999975\H,0.,0.942809,-0.233333275\H,-0.8164965449,-0.4714045,-0.23
+ 3333275\H,0.8164965449,-0.4714045,-0.233333275\\Version=ES64L-G16RevC.
+ 01\HF=0.0055144\RMSD=0.000e+00\RMSF=2.464e-02\ZeroPoint=0.0333952\Ther
+ mal=0.0363478\ETot=0.0418622\HTot=0.0428064\GTot=0.0208939\Dipole=0.,0
+ .,0.\DipoleDeriv=0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.
+ ,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.\PG=C03V [C3(N1)
+ ,3SGV(H1)]\NImag=0\\0.69849491,0.,0.69849491,0.,-0.00000012,0.20347127
+ ,-0.06007320,0.,0.,0.04054554,0.,-0.40559031,0.14466053,0.,0.41740330,
+ 0.,0.18352783,-0.06782381,0.,-0.15011571,0.05239440,-0.31921097,-0.149
+ 61330,-0.12527970,0.00976385,0.00229658,0.00649571,0.32318886,-0.14961
+ 337,-0.14645241,-0.07233027,-0.02943840,-0.00590648,-0.01670605,0.1631
+ 8420,0.13475998,-0.15893973,-0.09176385,-0.06782381,0.01771572,0.00272
+ 757,0.00771473,0.13000402,0.07505786,0.05239440,-0.31921097,0.14961330
+ ,0.12527970,0.00976385,-0.00229658,-0.00649571,-0.01374165,0.01586749,
+ 0.01122001,0.32318886,0.14961337,-0.14645241,-0.07233027,0.02943840,-0
+ .00590648,-0.01670605,-0.01586749,0.01759902,0.01397847,-0.16318420,0.
+ 13475998,0.15893973,-0.09176385,-0.06782381,-0.01771572,0.00272757,0.0
+ 0771473,-0.01122001,0.01397847,0.00771473,-0.13000402,0.07505786,0.052
+ 39440\\0.,0.,-0.05048572,0.,-0.03600233,0.01682857,0.03117893,0.018001
+ 17,0.01682857,-0.03117893,0.01800117,0.01682857\\\@
+
+
+ CONFIDENCE IS WHAT YOU FEEL BEFORE YOU FULLY
+ COMPREHEND THE SITUATION.
+ Job cpu time:       0 days  0 hours  0 minutes  2.7 seconds.
+ Elapsed time:       0 days  0 hours  0 minutes 15.1 seconds.
+ File lengths (MBytes):  RWF=     46 Int=      0 D2E=      0 Chk=     39 Scr=      1
+ Normal termination of Gaussian 16 at Wed Nov 19 18:06:30 2025.

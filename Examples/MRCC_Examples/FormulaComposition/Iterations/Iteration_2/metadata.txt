@@ -1,0 +1,5 @@
+Iteration: 2
+Output file: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/OldVersion/Examples/MRCC_FORMULA_TOTEST/Gau-2030904.EOu
+Central energy: 171.756546596276
+Number of atoms: 3
+Timestamp: 2025-11-23 14:41:45

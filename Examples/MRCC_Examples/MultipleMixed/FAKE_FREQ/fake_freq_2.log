@@ -1,0 +1,2354 @@
+ Entering Gaussian System, Link 0=g16
+ Input=/local/scratch/lcrisci_vb/test01_81711.pbs.village.sns.it/tmpmztyja9t/fake_freq.gjf
+ Output=/local/scratch/lcrisci_vb/test01_81711.pbs.village.sns.it/tmpmztyja9t/fake_freq.log
+ Initial command:
+  
+ Copyright (c) 1988-2024, Gaussian, Inc.  All Rights Reserved.
+  
+ This is the private, development version of
+ the Gaussian(R) DV system of programs. It is based on
+ the Gaussian(R) 16 system (copyright 2016, Gaussian, Inc.),
+ the Gaussian(R) 09 system (copyright 2009, Gaussian, Inc.),
+ the Gaussian(R) 03 system (copyright 2003, Gaussian, Inc.),
+ the Gaussian(R) 98 system (copyright 1998, Gaussian, Inc.),
+ the Gaussian(R) 94 system (copyright 1995, Gaussian, Inc.),
+ the Gaussian 92(TM) system (copyright 1992, Gaussian, Inc.),
+ the Gaussian 90(TM) system (copyright 1990, Gaussian, Inc.),
+ the Gaussian 88(TM) system (copyright 1988, Gaussian, Inc.),
+ the Gaussian 86(TM) system (copyright 1986, Carnegie Mellon
+ University), and the Gaussian 82(TM) system (copyright 1983,
+ Carnegie Mellon University). Gaussian is a federally registered
+ trademark of Gaussian, Inc.
+  
+ This software contains proprietary and confidential information,
+ including trade secrets, belonging to Gaussian, Inc.
+  
+ This software is provided under written license and may be
+ used, copied, transmitted, or stored only in accord with that
+ written license.
+  
+ The following legend is applicable only to US Government
+ contracts under FAR:
+  
+                    RESTRICTED RIGHTS LEGEND
+  
+ Use, reproduction and disclosure by the US Government is
+ subject to restrictions as set forth in subparagraphs (a)
+ and (c) of the Commercial Computer Software - Restricted
+ Rights clause in FAR 52.227-19.
+  
+ Gaussian, Inc.
+ 340 Quinnipiac St., Bldg. 40, Wallingford CT 06492
+  
+  
+ ---------------------------------------------------------------
+ Warning -- This program may not be used in any manner that
+ competes with the business of Gaussian, Inc. or will provide
+ assistance to any competitor of Gaussian, Inc.  The licensee
+ of this program is prohibited from giving any competitor of
+ Gaussian, Inc. access to this program.  By using this program,
+ the user acknowledges that Gaussian, Inc. is engaged in the
+ business of creating and licensing software in the field of
+ computational chemistry and represents and warrants to the
+ licensee that it is not a competitor of Gaussian, Inc. and that
+ it will not use this program in any manner prohibited above.
+ ---------------------------------------------------------------
+  
+
+ Cite this work as:
+ Gaussian Development Version, Revision J.28,
+ M. J. Frisch, G. W. Trucks, G. Scalmani, J. R. Cheeseman, X. Li, 
+ J. Bloino, B. G. Janesko, A. V. Marenich, J. Zheng, F. Lipparini, 
+ A. Jenkins, A. Liu, H. Liu, H. B. Schlegel, G. E. Scuseria, 
+ M. A. Robb, V. Barone, G. A. Petersson, H. Nakatsuji, B. Mennucci, 
+ C. Adamo, N. Rega, M. Caricato, H. P. Hratchian, J. V. Ortiz, 
+ F. Pawlowski, A. F. Izmaylov, H. Hu, C. Liao, J. L. Sonnenberg, 
+ D. Williams-Young, F. Ding, R. Gomperts, F. Egidi, J. Goings, 
+ B. Peng, A. Petrone, T. Henderson, D. Ranasinghe, V. G. Zakrzewski, 
+ J. Gao, G. Zheng, W. Liang, M. Hada, M. Ehara, K. Toyota, R. Fukuda, 
+ J. Hasegawa, M. Ishida, T. Nakajima, Y. Honda, O. Kitao, H. Nakai, 
+ T. Vreven, K. Throssell, J. A. Montgomery, Jr., J. E. Peralta, 
+ F. Ogliaro, M. J. Bearpark, J. J. Heyd, E. N. Brothers, K. N. Kudin, 
+ V. N. Staroverov, T. A. Keith, R. Kobayashi, J. Normand, 
+ K. Raghavachari, A. P. Rendell, J. C. Burant, S. S. Iyengar, 
+ M. Cossi, J. M. Millam, M. Klene, R. Cammi, R. L. Martin, O. Farkas, 
+ J. B. Foresman, and D. J. Fox, Gaussian, Inc., Wallingford CT, 2023.
+ 
+ ******************************************
+ Gaussian DV:  ES64L-GDVRevJ.28 14-Apr-2024
+                28-Dec-2025 
+ ******************************************
+ ------------------------------------
+ #p freq=num geom=gic uff iop(1/33=2)
+ ------------------------------------
+ 1/10=4,18=20,30=1,33=2,37=210000000,38=11,56=1,64=2,145=2/1,6,3;
+ 2/9=110,12=2/2;
+ 3/5=30,11=9,25=1,30=1,41=10020000,43=2,71=1/1;
+ 4/20=10,22=1,24=3,125=6000/2;
+ 7/44=-1/16;
+ 1/10=4,18=20,30=1,33=2,38=10,64=2/6(3);
+ 7/8=1,25=1,44=-1/16;
+ 1/10=4,18=20,30=1,33=2,38=10,64=2/3;
+ 99//99;
+ 3/5=30,11=9,25=1,30=1,41=10020000,43=2,71=1/1;
+ 4/16=2,20=10,22=1,24=3,125=6000/2;
+ 7/7=1,44=-1/16;
+ 1/10=4,18=20,30=1,33=2,38=10,64=2/6(-3);
+ 7/8=1,25=1,44=-1/16;
+ 1/10=4,18=20,30=1,33=2,38=10,64=2/3;
+ 99//99;
+ Leave Link    1 at Sun Dec 28 15:48:32 2025, MaxMem=           0 cpu:               0.0 elap:               0.0
+ ONIOM data not found on unit 2.
+ -------------
+ fake freq run
+ -------------
+ TstMul:  ICh=     0
+ TstMul:  Mul=     1
+ TstMul:  ICh=     0
+ TstMul:  Mul=     1
+ Symbolic Z-matrix:
+ Charge =     0 Multiplicity =     1
+ O                     0.        0.        0.11779 
+ H                     0.        0.75695  -0.47116 
+ H                     0.       -0.75695  -0.47116 
+ 
+ RdStrC is calling ZToCFu for IStruc=1 NZ=     3.
+                                ZToCFu                                
+ ---------------------------------------------------------------------
+ Center     Atomic      Atomic             Coordinates (Angstroms)
+ Number     Number       Type             X           Y           Z
+ ---------------------------------------------------------------------
+      1          8           0        0.000000    0.000000    0.117790
+      2          1           0        0.000000    0.756950   -0.471160
+      3          1           0        0.000000   -0.756950   -0.471160
+ ---------------------------------------------------------------------
+ PrtBox:  NBox=     1 Levels=  1 BoxLen=    8.00 SMaxX=        2.86
+          Shift=            0.000000            1.430428            0.890363
+ Box      1 Number                   0 centers from      1 to      3:
+            I=     1 IX=     1 XYZ=      1      1      1 Ind=                   0
+            I=     2 IX=     2 XYZ=      1      1      1 Ind=                   0
+            I=     3 IX=     3 XYZ=      1      1      1 Ind=                   0
+ GenCBx connectivity:
+ I=     1 IAn=  8 IBond, IBType=     2     1     3     1
+ I=     2 IAn=  1 IBond, IBType=     1     1
+ I=     3 IAn=  1 IBond, IBType=     1     1
+ Connectivity in DoCon:
+ I=     1 IAn=  8 IBond, RBType=     2  1.00     3  1.00
+ I=     2 IAn=  1 IBond, RBType=     1  1.00
+ I=     3 IAn=  1 IBond, RBType=     1  1.00
+ After GenITR:
+ ITRead=  0  0  0
+ MicOpt= -1 -1 -1
+ CrdCon: HavCon=T DoVirB=T IDefTp= 1 NPDir= 0 NAtomO=     3 MaxCon=   100
+ GConA1: DoDim=T HavCon=T OldVer=T NAtoms=     3
+ In GConA1
+ I=     1 IAn=  8 IBond, RBType=     2  1.00     3  1.00
+ I=     2 IAn=  1 IBond, RBType=     1  1.00
+ I=     3 IAn=  1 IBond, RBType=     1  1.00
+ List IsCon N=      3 M=      2:
+ I=      1 Vals=      2      1 |      3      1 |
+ I=      2 Vals=      1      1 |
+ I=      3 Vals=      1      1 |
+ End GConA1
+ I=     1 IAn=  8 IBond, RBType=     2  1.00     3  1.00
+ I=     2 IAn=  1 IBond, RBType=     1  1.00
+ I=     3 IAn=  1 IBond, RBType=     1  1.00
+ CrdCon IBond: 
+              1            2
+     1            2            3
+     2            1            0
+     3            1            0
+ CrdCon RBType: 
+                 1             2             3 
+      1   0.100000D+01  0.100000D+01  0.100000D+01
+      2   0.100000D+01  0.000000D+00  0.000000D+00
+ CrdCon: Bond(     1,     2)
+ 1,2,BOND
+ CrdCon: Adding coordinate No     1
+ CrdCon: Bond(     1,     3)
+ 1,3,BOND
+ CrdCon: Adding coordinate No     2
+ CrdCon: Valence angle(     2,     1,     3)
+ 2,1,3,ANGLE
+ CrdCon: Adding coordinate No     3
+ NVar =       3  NTBond =       2  NTVang  =       1  NTDih  =       0  NTLin  =       0
+ Atomic centers
+ NCoord =       1  IAtom1 =     1  IAtom2 =     2  IAtom3 =     0  IAtom4 =     0
+ NCoord =       2  IAtom1 =     1  IAtom2 =     3  IAtom3 =     0  IAtom4 =     0
+ NCoord =       3  IAtom1 =     2  IAtom2 =     1  IAtom3 =     3  IAtom4 =     0
+ Initializing the GIC definitions file.
+    ICrDer=    3 ICrDef=    9
+    ICrDfA=10031 ICrDfB=    0 ICrDf1=20010 ICrDf2=30010
+ Forming coordinate definitions.
+ CrDf31 is appending new coordinates.
+ 1,2,BOND,1,3,BOND,2,1,3,ANGLE
+ CrDfIC: Bond between atoms      1,     2.
+ CrDfIC: Bond between atoms      1,     3.
+ CrDfIC: Valence angle between atoms      2,     1,     3.
+ LCrdCa=F IOp= 9
+ LCrdCa=F IOp= 3
+ Forming B-matrix definitions.
+ CrDfDx: Enter CrDfDx.
+    ISet=    2 ISet2=    1 NAtoms=     3
+ CrDfDx: Number of derivatives built, N=       21 ISet=2
+ Forming B-matrix derivative definitions.
+ CrDfDx: Enter CrDfDx.
+    ISet=    3 ISet2=    2 NAtoms=     3
+ CrDfDx: Number of derivatives built, N=       87 ISet=3
+ Writing the coordinate definitions file.
+ CrdDef: Writing coordinates to the RWF file.
+         NPrim=      1717 NCoord=       111 MaxSet=         3 LIVars=      5265
+         LRVars=         5
+ CrdDef: NCrdSt= 
+              1            2            3
+     1            3           21           87
+ Length of the coordinate file in words =         1022573
+ Total number of GIC primitives =            1717
+ CrdInt: Enter.
+ LCrdCa=F IOp= 7
+ LCrdCa=F IOp= 8
+ Current internal coordinates: 
+                 1 
+      1   0.181240D+01
+      2   0.181240D+01
+      3   0.181916D+01
+ Current values (in a.u.) for all GICs with labels (in canonical range):
+ R1              1.81239948
+ R2              1.81239948
+ A1              1.81915881
+ IZRed in CrdIZR: 
+              1            2            3            4
+     1            1            2            0            0
+     2            1            3            0            0
+     3            2            1            3            0
+ Number of GICs ready for optimization =    3
+ ITRead=  0  0  0
+ MicOpt= -1 -1 -1
+ Symm:  InNGrp=     InAxis=0 RotPrA=F RotCs=T.
+ PtGrp-- Translation vector:   -0.000000   -0.000000    0.000000
+ PtGrp-- Principal moments and axes of charge:
+         Moments:        1.9818673        4.0922496        6.0741169
+         Axes   :        -0.000000         0.000000         1.000000
+                          1.000000         0.000000         0.000000
+                          0.000000         1.000000         0.000000
+ The molecule is not linear, ITop=1.
+ The molecule is an asymmetric top.
+ PtGrp-- Principal moments and axes of charge:
+         Moments:        1.9818673        4.0922496        6.0741169
+         Axes   :        -0.000000        -0.000000         1.000000
+                          1.000000        -0.000000         0.000000
+                          0.000000         1.000000         0.000000
+ Coordinates after PtGrp: 
+                 1             2             3 
+      1  -0.136298D-16 -0.136298D-16  0.222591D+00
+      2  -0.208246D-15  0.143043D+01 -0.890363D+00
+      3   0.317284D-15 -0.143043D+01 -0.890363D+00
+ Rotation matrix after PtGrp: 
+                 1             2             3 
+      1   0.100000D+01  0.183697D-15  0.612323D-16
+      2  -0.183697D-15  0.100000D+01  0.612323D-16
+      3  -0.612323D-16 -0.612323D-16  0.100000D+01
+ Point group C02V NOp=  4.
+  NSymOp = 2 NReps = 4
+  Orbital labels:
+ A1\A2\B1\B2\                                                                    
+                                                                                 
+                                                                                 
+                 
+  Character table:
+     1.0    1.0
+     1.0   -1.0
+    -1.0   -1.0
+    -1.0    1.0
+ Generator   1
+  Nuclear permutations:     1     3     2
+              -0.1000D+01    -0.1225D-15     0.0000D+00
+               0.1225D-15    -0.1000D+01     0.0000D+00
+               0.0000D+00     0.0000D+00     0.1000D+01
+ Generator   2
+  Nuclear permutations:     1     2     3
+              -0.1000D+01     0.0000D+00     0.0000D+00
+               0.0000D+00     0.1000D+01     0.0000D+00
+               0.0000D+00     0.0000D+00     0.1000D+01
+ Operation   1 Abelian point
+  Nuclear permutations:     1     2     3
+               0.1000D+01     0.0000D+00     0.0000D+00     0.0000D+00     0
+               0.0000D+00     0.1000D+01     0.0000D+00     0.0000D+00     0
+               0.0000D+00     0.0000D+00     0.1000D+01     0.0000D+00     0
+ Operation   2 Abelian point
+  Nuclear permutations:     1     3     2
+              -0.1000D+01     0.1225D-15     0.0000D+00     0.0000D+00     0
+              -0.1225D-15    -0.1000D+01     0.0000D+00     0.0000D+00     0
+               0.0000D+00     0.0000D+00     0.1000D+01     0.0000D+00     0
+ Operation   3 Abelian point
+  Nuclear permutations:     1     2     3
+              -0.1000D+01     0.0000D+00     0.0000D+00     0.0000D+00     0
+               0.0000D+00     0.1000D+01     0.0000D+00     0.0000D+00     0
+               0.0000D+00     0.0000D+00     0.1000D+01     0.0000D+00     0
+ Operation   4 Abelian point
+  Nuclear permutations:     1     3     2
+               0.1000D+01    -0.1225D-15     0.0000D+00     0.0000D+00     0
+              -0.1225D-15    -0.1000D+01     0.0000D+00     0.0000D+00     0
+               0.0000D+00     0.0000D+00     0.1000D+01     0.0000D+00     0
+ Symmetrized Coordinates in SymCor: 
+                 1             2             3 
+      1   0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.143043D+01 -0.143043D+01
+      3   0.222591D+00 -0.890363D+00 -0.890363D+00
+ Final Coordinates in SymCor: 
+                 1             2             3 
+      1   0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.143043D+01 -0.143043D+01
+      3   0.222591D+00 -0.890363D+00 -0.890363D+00
+ DXMax1 from symmetrization= 4.92D-16
+ Total number of internal coordinates, NTRed=         3
+ NAtoms=      3 NQM=        3 NQMF=       0 NMMI=      0 NMMIF=      0
+                NMic=       0 NMicF=      0.
+                    Isotopes and Nuclear Properties:
+ (Nuclear quadrupole moments (NQMom) in fm**2, nuclear magnetic moments (NMagM)
+  in nuclear magnetons)
+
+  Atom         1           2           3
+ IAtWgt=          16           1           1
+ AtmWgt=  15.9949146   1.0078250   1.0078250
+ NucSpn=           0           1           1
+ AtZEff=   -0.000000   -0.000000   -0.000000
+ NQMom=    0.0000000   0.0000000   0.0000000
+ NMagM=    0.0000000   2.7928460   2.7928460
+ AtZNuc=   8.0000000   1.0000000   1.0000000
+ Generating MM parameters.
+ MMInit:  IParam=     2 NAtoms=     0 ICharg=  0 ICntrl=         1 Multip=
+ CnvCon:  DoRev=F.
+ CnvCon connectivity:  1
+ I=     1 IAn=  8 IBond, IBType=     2     1     3     1
+ I=     2 IAn=  1 IBond, IBType=     1     1
+ I=     3 IAn=  1 IBond, IBType=     1     1
+          I=    1 IAn=  8 Valence= 2.
+          I=    2 IAn=  1 Valence= 1.
+          I=    3 IAn=  1 Valence= 1.
+ There are    1 entries in the MM symbol table.
+ Symbol    1 IAtTpT=           0 IUser=           0 String=*
+ Center Symbol User# IAn  Charge Atom? Charge? IAType1  2    IAtTyp
+      1            0   8   0.000    T       F      3    8  10081003
+      2            0   1   0.000    T       F      0    1  10011000
+      3            0   1   0.000    T       F      0    1  10011000
+ Include all MM classes
+ There are    1 entries in the MM symbol table.
+ Symbol    1 IAtTpT=           0 IUser=           0 String=*
+
+ MM sanity checks:
+ No residue numbers specified.
+ All charges sum to:                0.00000000
+ Charges of atoms sum to:           0.00000000
+ There are    1 entries in the MM symbol table.
+ Symbol    1 IAtTpT=           0 IUser=           0 String=*
+ MMInit generated parameter data with length LenPar=         499.
+ There are    1 entries in the MM symbol table.
+ Symbol    1 IAtTpT=           0 IUser=           0 String=*
+ New AtmChZ: 
+                 1 
+      1   0.000000D+00
+      2   0.000000D+00
+      3   0.000000D+00
+ Leave Link  101 at Sun Dec 28 15:48:32 2025, MaxMem=   104857600 cpu:               0.1 elap:               0.1
+ Numerical evaluation of force-constants.
+ Nuclear step= 0.001000 Angstroms, electric field step= 0.000333 atomic units, NStep=1.
+ In D2SvPt:  central point
+ Coordinates:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   2.225908402050D-01
+ I=    2 X=   0.000000000000D+00 Y=   1.430428189944D+00 Z=  -8.903633608217D-01
+ I=    3 X=   0.000000000000D+00 Y=  -1.430428189944D+00 Z=  -8.903633608217D-01
+ Electric Field:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   0.000000000000D+00
+ Leave Link  106 at Sun Dec 28 15:48:32 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+
+ GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
+ Berny optimization.
+ Optmz: redundant internal coordinate code flag= 2
+ LCrdCa=F IOp= 3
+ LCrdCa=F IOp= 4
+ LCrdCa=F IOp= 7
+ LCrdCa=F IOp=17
+ LCrdCa=F IOp=15
+ LCrdCa=F IOp=13
+ LCrdCa=F IOp=14
+ LCrdCa=F IOp=17
+ Initialization pass.
+                           ----------------------------
+                           !    Initial Parameters    !
+                           ! (Angstroms and Degrees)  !
+ --------------------------                            --------------------------
+ ! Name  Definition              Value          Derivative Info.                !
+ --------------------------------------------------------------------------------
+ ! R1    R(1,2)                  0.9591         calculate D2E/DX2 analytically  !
+ ! R2    R(1,3)                  0.9591         calculate D2E/DX2 analytically  !
+ ! A1    A(2,1,3)              104.2301         calculate D2E/DX2 analytically  !
+ --------------------------------------------------------------------------------
+ Maximum allowed force set to 1.00D+20.
+ Trust Radius=3.00D-01 FncErr=1.00D-07 GrdErr=1.00D-07 EigMax=2.50D+02 EigMin=1.00D-04
+ Number of steps in this run=      2 maximum allowed number of steps=      2.
+ Enter LenRIC.
+ Enter LenRIC.
+ GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
+
+ Leave Link  103 at Sun Dec 28 15:48:32 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+                          Input orientation:                          
+ ---------------------------------------------------------------------
+ Center     Atomic      Atomic             Coordinates (Angstroms)
+ Number     Number       Type             X           Y           Z
+ ---------------------------------------------------------------------
+      1          8    10081003        0.000000    0.000000    0.117790
+      2          1    10011000        0.000000    0.756950   -0.471160
+      3          1    10011000        0.000000   -0.756950   -0.471160
+ ---------------------------------------------------------------------
+                    Distance matrix (angstroms):
+                    1          2          3
+     1  O    0.000000
+     2  H    0.959080   0.000000
+     3  H    0.959080   1.513900   0.000000
+ Stoichiometry    H2O
+ Framework group  C2V[C2(O),SGV(H2)]
+ Deg. of freedom     2
+ Full point group                 C2V     NOp   4
+ Largest Abelian subgroup         C2V     NOp   4
+ Largest concise Abelian subgroup C2      NOp   2
+                         Standard orientation:                         
+ ---------------------------------------------------------------------
+ Center     Atomic      Atomic             Coordinates (Angstroms)
+ Number     Number       Type             X           Y           Z
+ ---------------------------------------------------------------------
+      1          8    10081003        0.000000   -0.000000    0.117790
+      2          1    10011000        0.000000    0.756950   -0.471160
+      3          1    10011000       -0.000000   -0.756950   -0.471160
+ ---------------------------------------------------------------------
+ Rotational constants (GHZ):         813.9366644         437.5902876         284.5889803
+ Leave Link  202 at Sun Dec 28 15:48:32 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ Standard basis: Dummy (5D, 7F)
+ There are     2 symmetry adapted cartesian basis functions of A1  symmetry.
+ There are     0 symmetry adapted cartesian basis functions of A2  symmetry.
+ There are     0 symmetry adapted cartesian basis functions of B1  symmetry.
+ There are     1 symmetry adapted cartesian basis functions of B2  symmetry.
+ There are     2 symmetry adapted basis functions of A1  symmetry.
+ There are     0 symmetry adapted basis functions of A2  symmetry.
+ There are     0 symmetry adapted basis functions of B1  symmetry.
+ There are     1 symmetry adapted basis functions of B2  symmetry.
+     3 basis functions,     3 primitive gaussians,     3 cartesian basis functions
+     2 alpha electrons        2 beta electrons
+       nuclear repulsion energy         2.5565646404 Hartrees.
+ IExCor=         0 DFT=F Ex=HF Corr=None N6=None ScaHFX=  1.000000
+ ScaDFX=  1.000000  1.000000  1.000000  1.000000  1.000000  0.000000
+ ScaDFX=  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+ Grid=UltraFine IRanWt=     -1 IRanGd=            0 ICorTp=0 IEDCtl=  2004
+ NAtoms=    3 NActive=    3 NUniq=    2 SFac= 2.25D+00 NAtFMM=   60 NAOKFM=F Big=F
+ Integral buffers will be    131072 words long.
+ Raffenetti 1 integral format.
+ Two-electron integral symmetry is turned on.
+ Leave Link  301 at Sun Dec 28 15:48:32 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ UFF calculation of energy and first derivatives.
+ Energy per function type:
+ Direct Coulomb + vdW (small)                           0.000000000
+ Direct Coulomb (large)                                 0.000000000
+ Direct vdW (large)                                   286.889816192
+ Non-direct Coulomb + vdW (small)                       0.000000000
+ Non-direct Coulomb (large)                             0.000000000
+ Non-direct vdW (large)                              -286.889816192
+ Harmonic stretch III                                   0.001734506
+ UFF 3-term bend                                        0.000002294
+ Energy per function class:
+        Coulomb               0.000000000
+    Vanderwaals               0.000000000
+     Stretching               0.001734506
+        Bending               0.000002294
+ Energy=    1.736799477E-03 NIter=   0.
+ Dipole moment=       0.000000       0.000000       0.000000
+ Leave Link  402 at Sun Dec 28 15:48:32 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ Dipole        = 0.00000000D+00 0.00000000D+00 0.00000000D+00
+ ***** Axes restored to original set *****
+ -------------------------------------------------------------------
+ Center     Atomic                   Forces (Hartrees/Bohr)
+ Number     Number              X              Y              Z
+ -------------------------------------------------------------------
+      1        8           0.000000000    0.000000000    0.035342608
+      2        1           0.000000000    0.023556518   -0.017671304
+      3        1          -0.000000000   -0.023556518   -0.017671304
+ -------------------------------------------------------------------
+ Cartesian Forces:  Max     0.035342608 RMS     0.018207047
+ Leave Link  716 at Sun Dec 28 15:48:33 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ NDeriv=      9 NFrqRd=  0 NDerD0=      0 MskFDP=       0 MskDFD=       0 MskDF0=       0
+ At 1st pt FD prop file    721 does not exist.
+ At 1st pt FD prop file    722 does not exist.
+ Allocation parameters:
+ ICO    =           1 IFXYZ2 =          10 ICurSt =          19
+ IES    =          38 IFS    =          41 IFFS   =          68
+ IEDrv0 =          68 IEDrvS =         553 IFDPrS =        1038
+ IDFDPS =        1038 IElTrS =        1038 IMagS  =        1041
+ IED    =        1041 IVNACS =        1041 IFXD   =        1050
+ IFFXD  =        1131
+ IEDrvD =        1131 IFDPrD =        1167 IDFDPD =        1167
+ IElTrD =        1167 IMagD  =        1176 IVNACD =        1176
+ IDone  =        1176 IAMO   =        1185 ICITDT =        1185
+ ICISSD =        1185 IB     =        1185 IMol   =        1265
+ IGen   =     4823785 IEFSav =     4824785 IStSav =     4824890
+ IPFS   =     4824900 IV     =     4824906
+ IDFTab 
+              1
+     1          619
+     2          777
+     3            1
+     4            4
+     5          553
+     6         1131
+     7            0
+     8            1
+     9            1
+    10            0
+    11            0
+    12            0
+ D2Numr ... symmetry will be used.
+ Original coordinates:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   2.225908402053D-01
+ I=    2 X=   0.000000000000D+00 Y=   1.430428189944D+00 Z=  -8.903633608214D-01
+ I=    3 X=   0.000000000000D+00 Y=  -1.430428189944D+00 Z=  -8.903633608214D-01
+ Energy from central point:  1.736799477287D-03
+ Forces from central point
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=  -3.534260774791D-02
+ I=    2 X=   0.000000000000D+00 Y=  -2.355651789240D-02 Z=   1.767130387384D-02
+ I=    3 X=   0.000000000000D+00 Y=   2.355651789242D-02 Z=   1.767130387384D-02
+ Static electric field derivatives from central point Dipole Moment
+                 1 
+      1   0.000000D+00
+      2   0.000000D+00
+      3   0.000000D+00
+ Rotating derivatives, DoTrsp=T IDiff=-1 LEDeriv=    484 LFDPrp=       0 LDFDPr=       0.
+ In D2SvPt:  atom      1 IXYZ=1 step-up   number 1
+ Coordinates:
+ I=    1 X=   1.889726124565D-03 Y=   0.000000000000D+00 Z=   2.225908402053D-01
+ I=    2 X=   0.000000000000D+00 Y=   1.430428189944D+00 Z=  -8.903633608214D-01
+ I=    3 X=   0.000000000000D+00 Y=  -1.430428189944D+00 Z=  -8.903633608214D-01
+ Electric Field:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   0.000000000000D+00
+ Leave Link  106 at Sun Dec 28 15:48:33 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ Standard basis: Dummy (5D, 7F)
+     3 basis functions,     3 primitive gaussians,     3 cartesian basis functions
+     2 alpha electrons        2 beta electrons
+       nuclear repulsion energy         2.5565634408 Hartrees.
+ IExCor=         0 DFT=F Ex=HF Corr=None N6=None ScaHFX=  1.000000
+ ScaDFX=  1.000000  1.000000  1.000000  1.000000  1.000000  0.000000
+ ScaDFX=  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+ Grid=UltraFine IRanWt=     -1 IRanGd=            0 ICorTp=0 IEDCtl=  2004
+ NAtoms=    3 NActive=    3 NUniq=    3 SFac= 1.00D+00 NAtFMM=   60 NAOKFM=F Big=F
+ Integral buffers will be    131072 words long.
+ Raffenetti 1 integral format.
+ Two-electron integral symmetry is turned off.
+ Leave Link  301 at Sun Dec 28 15:48:33 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ UFF calculation of energy and first derivatives.
+ Energy per function type:
+ Direct Coulomb + vdW (small)                           0.000000000
+ Direct Coulomb (large)                                 0.000000000
+ Direct vdW (large)                                   286.887944439
+ Non-direct Coulomb + vdW (small)                       0.000000000
+ Non-direct Coulomb (large)                             0.000000000
+ Non-direct vdW (large)                              -286.887944439
+ Harmonic stretch III                                   0.001734448
+ UFF 3-term bend                                        0.000002295
+ Energy per function class:
+        Coulomb               0.000000000
+    Vanderwaals               0.000000000
+     Stretching               0.001734448
+        Bending               0.000002295
+ Energy=    1.736742777E-03 NIter=   0.
+ Dipole moment=       0.000000       0.000000       0.000000
+ Leave Link  402 at Sun Dec 28 15:48:33 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ Dipole        = 0.00000000D+00 0.00000000D+00 0.00000000D+00
+ -------------------------------------------------------------------
+ Center     Atomic                   Forces (Hartrees/Bohr)
+ Number     Number              X              Y              Z
+ -------------------------------------------------------------------
+      1        8           0.000060008   -0.000000000    0.035341751
+      2        1          -0.000030004    0.023556208   -0.017670875
+      3        1          -0.000030004   -0.023556208   -0.017670875
+ -------------------------------------------------------------------
+ Cartesian Forces:  Max     0.035341751 RMS     0.018206697
+ Leave Link  716 at Sun Dec 28 15:48:33 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ NDeriv=      9 NFrqRd=  0 NDerD0=      0 MskFDP=       0 MskDFD=       0 MskDF0=       0
+ Allocation parameters:
+ ICO    =           1 IFXYZ2 =          10 ICurSt =          19
+ IES    =          38 IFS    =          41 IFFS   =          68
+ IEDrv0 =          68 IEDrvS =         553 IFDPrS =        1038
+ IDFDPS =        1038 IElTrS =        1038 IMagS  =        1041
+ IED    =        1041 IVNACS =        1041 IFXD   =        1050
+ IFFXD  =        1131
+ IEDrvD =        1131 IFDPrD =        1167 IDFDPD =        1167
+ IElTrD =        1167 IMagD  =        1176 IVNACD =        1176
+ IDone  =        1176 IAMO   =        1185 ICITDT =        1185
+ ICISSD =        1185 IB     =        1185 IMol   =        1265
+ IGen   =     4823785 IEFSav =     4824785 IStSav =     4824890
+ IPFS   =     4824900 IV     =     4824906
+ IDFTab 
+              1
+     1          619
+     2          777
+     3            1
+     4            4
+     5          553
+     6         1131
+     7            0
+     8            1
+     9            1
+    10            0
+    11            0
+    12            0
+ Re-enter D2Numr:  atom      1 IXYZ=1 step-up   number 1
+ Energy from atom      1 IXYZ=1 step-up   number 1:  1.736742777194D-03
+ Forces from atom      1 IXYZ=1 step-up   number 1
+ I=    1 X=  -6.000806665962D-05 Y=   0.000000000000D+00 Z=  -3.534175085815D-02
+ I=    2 X=   3.000403332991D-05 Y=  -2.355620800391D-02 Z=   1.767087542908D-02
+ I=    3 X=   3.000403332987D-05 Y=   2.355620800392D-02 Z=   1.767087542908D-02
+ Static electric field derivatives from atom      1 IXYZ=1 step-up   number 1 Dipole Moment
+                 1 
+      1   0.000000D+00
+      2   0.000000D+00
+      3   0.000000D+00
+ Forces transformed using operation 2.
+ Rotating derivatives, DoTrsp=F IDiff= 1 LEDeriv=      3 LFDPrp=       0 LDFDPr=       0.
+ CorEq1 forces:
+ I=    1 X=   6.000806665962D-05 Y=   0.000000000000D+00 Z=  -3.534175085815D-02
+ I=    2 X=  -3.000403332987D-05 Y=  -2.355620800392D-02 Z=   1.767087542908D-02
+ I=    3 X=  -3.000403332991D-05 Y=   2.355620800391D-02 Z=   1.767087542908D-02
+ CorEq1 Dipole Moment
+                 1 
+      1   0.000000D+00
+      2   0.000000D+00
+      3   0.000000D+00
+ Skip step-back as it is equivalent to step-up.
+ Numerical derivs of energy after atom      1 IXYZ=1 
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+ Numerical derivs of forces after atom      1 IXYZ=1 
+                 1             2             3             4             5 
+      1  -0.317549D-01  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      4   0.158775D-01  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      5   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      6   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      7   0.158775D-01  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      8   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      9   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      4   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      5   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      6   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      7   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      8   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      9   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+ Numerical Static derivatives after atom      1 IXYZ=1 
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      4   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      4   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+ Current Numerical derivative of Dipole Moment
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+ D2NDiT:  IFil=  1  File 1 number   619 JFDS=         553 JFDD=        1131 IOff=           1 LFil=           4 JSkipF=1.
+ In D2SvPt:  atom      1 IXYZ=2 step-up   number 1
+ Coordinates:
+ I=    1 X=   0.000000000000D+00 Y=   1.889726124565D-03 Z=   2.225908402053D-01
+ I=    2 X=   0.000000000000D+00 Y=   1.430428189944D+00 Z=  -8.903633608214D-01
+ I=    3 X=   0.000000000000D+00 Y=  -1.430428189944D+00 Z=  -8.903633608214D-01
+ Electric Field:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   0.000000000000D+00
+ Leave Link  106 at Sun Dec 28 15:48:33 2025, MaxMem=   104857600 cpu:               0.1 elap:               0.1
+ Standard basis: Dummy (5D, 7F)
+     3 basis functions,     3 primitive gaussians,     3 cartesian basis functions
+     2 alpha electrons        2 beta electrons
+       nuclear repulsion energy         2.5565656826 Hartrees.
+ IExCor=         0 DFT=F Ex=HF Corr=None N6=None ScaHFX=  1.000000
+ ScaDFX=  1.000000  1.000000  1.000000  1.000000  1.000000  0.000000
+ ScaDFX=  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+ Grid=UltraFine IRanWt=     -1 IRanGd=            0 ICorTp=0 IEDCtl=  2004
+ NAtoms=    3 NActive=    3 NUniq=    3 SFac= 1.00D+00 NAtFMM=   60 NAOKFM=F Big=F
+ Integral buffers will be    131072 words long.
+ Raffenetti 1 integral format.
+ Two-electron integral symmetry is turned off.
+ Leave Link  301 at Sun Dec 28 15:48:33 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ UFF calculation of energy and first derivatives.
+ Energy per function type:
+ Direct Coulomb + vdW (small)                           0.000000000
+ Direct Coulomb (large)                                 0.000000000
+ Direct vdW (large)                                   286.904272945
+ Non-direct Coulomb + vdW (small)                       0.000000000
+ Non-direct Coulomb (large)                             0.000000000
+ Non-direct vdW (large)                              -286.904272945
+ Harmonic stretch III                                   0.001735595
+ UFF 3-term bend                                        0.000002295
+ Energy per function class:
+        Coulomb               0.000000000
+    Vanderwaals               0.000000000
+     Stretching               0.001735595
+        Bending               0.000002295
+ Energy=    1.737890382E-03 NIter=   0.
+ Dipole moment=       0.000000       0.000000       0.000000
+ Leave Link  402 at Sun Dec 28 15:48:33 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ Dipole        = 0.00000000D+00 0.00000000D+00 0.00000000D+00
+ -------------------------------------------------------------------
+ Center     Atomic                   Forces (Hartrees/Bohr)
+ Number     Number              X              Y              Z
+ -------------------------------------------------------------------
+      1        8           0.000000000   -0.001154563    0.035342974
+      2        1           0.000000000    0.024133415   -0.018143990
+      3        1          -0.000000000   -0.022978852   -0.017198983
+ -------------------------------------------------------------------
+ Cartesian Forces:  Max     0.035342974 RMS     0.018214517
+ Leave Link  716 at Sun Dec 28 15:48:33 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ NDeriv=      9 NFrqRd=  0 NDerD0=      0 MskFDP=       0 MskDFD=       0 MskDF0=       0
+ Allocation parameters:
+ ICO    =           1 IFXYZ2 =          10 ICurSt =          19
+ IES    =          38 IFS    =          41 IFFS   =          68
+ IEDrv0 =          68 IEDrvS =         553 IFDPrS =        1038
+ IDFDPS =        1038 IElTrS =        1038 IMagS  =        1041
+ IED    =        1041 IVNACS =        1041 IFXD   =        1050
+ IFFXD  =        1131
+ IEDrvD =        1131 IFDPrD =        1167 IDFDPD =        1167
+ IElTrD =        1167 IMagD  =        1176 IVNACD =        1176
+ IDone  =        1176 IAMO   =        1185 ICITDT =        1185
+ ICISSD =        1185 IB     =        1185 IMol   =        1265
+ IGen   =     4823785 IEFSav =     4824785 IStSav =     4824890
+ IPFS   =     4824900 IV     =     4824906
+ IDFTab 
+              1
+     1          619
+     2          777
+     3            1
+     4            4
+     5          553
+     6         1131
+     7            0
+     8            1
+     9            1
+    10            0
+    11            0
+    12            0
+ Re-enter D2Numr:  atom      1 IXYZ=2 step-up   number 1
+ Energy from atom      1 IXYZ=2 step-up   number 1:  1.737890381748D-03
+ Forces from atom      1 IXYZ=2 step-up   number 1
+ I=    1 X=   0.000000000000D+00 Y=   1.154563251248D-03 Z=  -3.534297372323D-02
+ I=    2 X=   0.000000000000D+00 Y=  -2.413341492705D-02 Z=   1.814399032992D-02
+ I=    3 X=   0.000000000000D+00 Y=   2.297885167582D-02 Z=   1.719898339343D-02
+ Static electric field derivatives from atom      1 IXYZ=2 step-up   number 1 Dipole Moment
+                 1 
+      1   0.000000D+00
+      2   0.000000D+00
+      3   0.000000D+00
+ Forces transformed using operation 2.
+ Rotating derivatives, DoTrsp=F IDiff= 1 LEDeriv=      3 LFDPrp=       0 LDFDPr=       0.
+ CorEq1 forces:
+ I=    1 X=   0.000000000000D+00 Y=  -1.154563251248D-03 Z=  -3.534297372323D-02
+ I=    2 X=   0.000000000000D+00 Y=  -2.297885167582D-02 Z=   1.719898339343D-02
+ I=    3 X=   0.000000000000D+00 Y=   2.413341492705D-02 Z=   1.814399032992D-02
+ CorEq1 Dipole Moment
+                 1 
+      1   0.000000D+00
+      2   0.000000D+00
+      3   0.000000D+00
+ Skip step-back as it is equivalent to step-up.
+ Numerical derivs of energy after atom      1 IXYZ=2 
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+ Numerical derivs of forces after atom      1 IXYZ=2 
+                 1             2             3             4             5 
+      1  -0.317549D-01  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.610969D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      4   0.158775D-01  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      5   0.000000D+00 -0.305484D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      6   0.000000D+00  0.250038D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      7   0.158775D-01  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      8   0.000000D+00 -0.305484D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      9   0.000000D+00 -0.250038D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      4   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      5   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      6   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      7   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      8   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      9   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+ Numerical Static derivatives after atom      1 IXYZ=2 
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      4   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      4   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+ Current Numerical derivative of Dipole Moment
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+ D2NDiT:  IFil=  1  File 1 number   619 JFDS=         553 JFDD=        1131 IOff=           1 LFil=           4 JSkipF=1.
+ In D2SvPt:  atom      1 IXYZ=3 step-up   number 1
+ Coordinates:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   2.244805663299D-01
+ I=    2 X=   0.000000000000D+00 Y=   1.430428189944D+00 Z=  -8.903633608214D-01
+ I=    3 X=   0.000000000000D+00 Y=  -1.430428189944D+00 Z=  -8.903633608214D-01
+ Electric Field:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   0.000000000000D+00
+ Leave Link  106 at Sun Dec 28 15:48:33 2025, MaxMem=   104857600 cpu:               0.1 elap:               0.0
+ Standard basis: Dummy (5D, 7F)
+     3 basis functions,     3 primitive gaussians,     3 cartesian basis functions
+     2 alpha electrons        2 beta electrons
+       nuclear repulsion energy         2.5551516940 Hartrees.
+ IExCor=         0 DFT=F Ex=HF Corr=None N6=None ScaHFX=  1.000000
+ ScaDFX=  1.000000  1.000000  1.000000  1.000000  1.000000  0.000000
+ ScaDFX=  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+ Grid=UltraFine IRanWt=     -1 IRanGd=            0 ICorTp=0 IEDCtl=  2004
+ NAtoms=    3 NActive=    3 NUniq=    3 SFac= 1.00D+00 NAtFMM=   60 NAOKFM=F Big=F
+ Integral buffers will be    131072 words long.
+ Raffenetti 1 integral format.
+ Two-electron integral symmetry is turned off.
+ Leave Link  301 at Sun Dec 28 15:48:33 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ UFF calculation of energy and first derivatives.
+ Energy per function type:
+ Direct Coulomb + vdW (small)                           0.000000000
+ Direct Coulomb (large)                                 0.000000000
+ Direct vdW (large)                                   284.693065865
+ Non-direct Coulomb + vdW (small)                       0.000000000
+ Non-direct Coulomb (large)                             0.000000000
+ Non-direct vdW (large)                              -284.693065865
+ Harmonic stretch III                                   0.001666809
+ UFF 3-term bend                                        0.000004101
+ Energy per function class:
+        Coulomb               0.000000000
+    Vanderwaals               0.000000000
+     Stretching               0.001666809
+        Bending               0.000004101
+ Energy=    1.670909116E-03 NIter=   0.
+ Dipole moment=       0.000000       0.000000       0.000000
+ Leave Link  402 at Sun Dec 28 15:48:33 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ Dipole        = 0.00000000D+00 0.00000000D+00 0.00000000D+00
+ -------------------------------------------------------------------
+ Center     Atomic                   Forces (Hartrees/Bohr)
+ Number     Number              X              Y              Z
+ -------------------------------------------------------------------
+      1        8           0.000000000   -0.000000000    0.034392479
+      2        1           0.000000000    0.023191595   -0.017196239
+      3        1          -0.000000000   -0.023191595   -0.017196239
+ -------------------------------------------------------------------
+ Cartesian Forces:  Max     0.034392479 RMS     0.017795018
+ Leave Link  716 at Sun Dec 28 15:48:33 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ NDeriv=      9 NFrqRd=  0 NDerD0=      0 MskFDP=       0 MskDFD=       0 MskDF0=       0
+ Allocation parameters:
+ ICO    =           1 IFXYZ2 =          10 ICurSt =          19
+ IES    =          38 IFS    =          41 IFFS   =          68
+ IEDrv0 =          68 IEDrvS =         553 IFDPrS =        1038
+ IDFDPS =        1038 IElTrS =        1038 IMagS  =        1041
+ IED    =        1041 IVNACS =        1041 IFXD   =        1050
+ IFFXD  =        1131
+ IEDrvD =        1131 IFDPrD =        1167 IDFDPD =        1167
+ IElTrD =        1167 IMagD  =        1176 IVNACD =        1176
+ IDone  =        1176 IAMO   =        1185 ICITDT =        1185
+ ICISSD =        1185 IB     =        1185 IMol   =        1265
+ IGen   =     4823785 IEFSav =     4824785 IStSav =     4824890
+ IPFS   =     4824900 IV     =     4824906
+ IDFTab 
+              1
+     1          619
+     2          777
+     3            1
+     4            4
+     5          553
+     6         1131
+     7            0
+     8            1
+     9            1
+    10            0
+    11            0
+    12            0
+ Re-enter D2Numr:  atom      1 IXYZ=3 step-up   number 1
+ Energy from atom      1 IXYZ=3 step-up   number 1:  1.670909115807D-03
+ Forces from atom      1 IXYZ=3 step-up   number 1
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=  -3.439247880783D-02
+ I=    2 X=   0.000000000000D+00 Y=  -2.319159524767D-02 Z=   1.719623940392D-02
+ I=    3 X=   0.000000000000D+00 Y=   2.319159524768D-02 Z=   1.719623940392D-02
+ Static electric field derivatives from atom      1 IXYZ=3 step-up   number 1 Dipole Moment
+                 1 
+      1   0.000000D+00
+      2   0.000000D+00
+      3   0.000000D+00
+ In D2SvPt:  atom      1 IXYZ=3 step-down number 1
+ Coordinates:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   2.207011140808D-01
+ I=    2 X=   0.000000000000D+00 Y=   1.430428189944D+00 Z=  -8.903633608214D-01
+ I=    3 X=   0.000000000000D+00 Y=  -1.430428189944D+00 Z=  -8.903633608214D-01
+ Electric Field:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   0.000000000000D+00
+ Leave Link  106 at Sun Dec 28 15:48:33 2025, MaxMem=   104857600 cpu:               0.1 elap:               0.0
+ Standard basis: Dummy (5D, 7F)
+     3 basis functions,     3 primitive gaussians,     3 cartesian basis functions
+     2 alpha electrons        2 beta electrons
+       nuclear repulsion energy         2.5579779019 Hartrees.
+ IExCor=         0 DFT=F Ex=HF Corr=None N6=None ScaHFX=  1.000000
+ ScaDFX=  1.000000  1.000000  1.000000  1.000000  1.000000  0.000000
+ ScaDFX=  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+ Grid=UltraFine IRanWt=     -1 IRanGd=            0 ICorTp=0 IEDCtl=  2004
+ NAtoms=    3 NActive=    3 NUniq=    3 SFac= 1.00D+00 NAtFMM=   60 NAOKFM=F Big=F
+ Integral buffers will be    131072 words long.
+ Raffenetti 1 integral format.
+ Two-electron integral symmetry is turned off.
+ Leave Link  301 at Sun Dec 28 15:48:33 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ UFF calculation of energy and first derivatives.
+ Energy per function type:
+ Direct Coulomb + vdW (small)                           0.000000000
+ Direct Coulomb (large)                                 0.000000000
+ Direct vdW (large)                                   289.102592533
+ Non-direct Coulomb + vdW (small)                       0.000000000
+ Non-direct Coulomb (large)                             0.000000000
+ Non-direct vdW (large)                              -289.102592533
+ Harmonic stretch III                                   0.001803476
+ UFF 3-term bend                                        0.000001007
+ Energy per function class:
+        Coulomb               0.000000000
+    Vanderwaals               0.000000000
+     Stretching               0.001803476
+        Bending               0.000001007
+ Energy=    1.804483796E-03 NIter=   0.
+ Dipole moment=       0.000000       0.000000       0.000000
+ Leave Link  402 at Sun Dec 28 15:48:33 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ Dipole        = 0.00000000D+00 0.00000000D+00 0.00000000D+00
+ -------------------------------------------------------------------
+ Center     Atomic                   Forces (Hartrees/Bohr)
+ Number     Number              X              Y              Z
+ -------------------------------------------------------------------
+      1        8           0.000000000   -0.000000000    0.036291120
+      2        1           0.000000000    0.023921630   -0.018145560
+      3        1          -0.000000000   -0.023921630   -0.018145560
+ -------------------------------------------------------------------
+ Cartesian Forces:  Max     0.036291120 RMS     0.018619157
+ Leave Link  716 at Sun Dec 28 15:48:33 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ NDeriv=      9 NFrqRd=  0 NDerD0=      0 MskFDP=       0 MskDFD=       0 MskDF0=       0
+ Allocation parameters:
+ ICO    =           1 IFXYZ2 =          10 ICurSt =          19
+ IES    =          38 IFS    =          41 IFFS   =          68
+ IEDrv0 =          68 IEDrvS =         553 IFDPrS =        1038
+ IDFDPS =        1038 IElTrS =        1038 IMagS  =        1041
+ IED    =        1041 IVNACS =        1041 IFXD   =        1050
+ IFFXD  =        1131
+ IEDrvD =        1131 IFDPrD =        1167 IDFDPD =        1167
+ IElTrD =        1167 IMagD  =        1176 IVNACD =        1176
+ IDone  =        1176 IAMO   =        1185 ICITDT =        1185
+ ICISSD =        1185 IB     =        1185 IMol   =        1265
+ IGen   =     4823785 IEFSav =     4824785 IStSav =     4824890
+ IPFS   =     4824900 IV     =     4824906
+ IDFTab 
+              1
+     1          619
+     2          777
+     3            1
+     4            4
+     5          553
+     6         1131
+     7            0
+     8            1
+     9            1
+    10            0
+    11            0
+    12            0
+ Re-enter D2Numr:  atom      1 IXYZ=3 step-down number 1
+ Energy from atom      1 IXYZ=3 step-down number 1:  1.804483795936D-03
+ Forces from atom      1 IXYZ=3 step-down number 1
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=  -3.629112024214D-02
+ I=    2 X=   0.000000000000D+00 Y=  -2.392163049522D-02 Z=   1.814556012118D-02
+ I=    3 X=   0.000000000000D+00 Y=   2.392163049524D-02 Z=   1.814556012118D-02
+ Static electric field derivatives from atom      1 IXYZ=3 step-down number 1 Dipole Moment
+                 1 
+      1   0.000000D+00
+      2   0.000000D+00
+      3   0.000000D+00
+ Numerical derivs of energy after atom      1 IXYZ=3 
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00 -0.353423D-01  0.000000D+00  0.000000D+00
+                 6             7             8             9 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+ Numerical derivs of forces after atom      1 IXYZ=3 
+                 1             2             3             4             5 
+      1  -0.317549D-01  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.610969D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.502359D+00  0.000000D+00  0.000000D+00
+      4   0.158775D-01  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      5   0.000000D+00 -0.305484D+00  0.193159D+00  0.000000D+00  0.000000D+00
+      6   0.000000D+00  0.250038D+00 -0.251179D+00  0.000000D+00  0.000000D+00
+      7   0.158775D-01  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      8   0.000000D+00 -0.305484D+00 -0.193159D+00  0.000000D+00  0.000000D+00
+      9   0.000000D+00 -0.250038D+00 -0.251179D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      4   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      5   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      6   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      7   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      8   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      9   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+ Numerical Static derivatives after atom      1 IXYZ=3 
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00 -0.353423D-01  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      4   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      4   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+ Current Numerical derivative of Dipole Moment
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+ D2NDiT:  IFil=  1  File 1 number   619 JFDS=         553 JFDD=        1131 IOff=           1 LFil=           4 JSkipF=1.
+ In D2SvPt:  atom      2 IXYZ=1 step-up   number 1
+ Coordinates:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   2.225908402053D-01
+ I=    2 X=   1.889726124565D-03 Y=   1.430428189944D+00 Z=  -8.903633608214D-01
+ I=    3 X=   0.000000000000D+00 Y=  -1.430428189944D+00 Z=  -8.903633608214D-01
+ Electric Field:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   0.000000000000D+00
+ Leave Link  106 at Sun Dec 28 15:48:33 2025, MaxMem=   104857600 cpu:               0.1 elap:               0.0
+ Standard basis: Dummy (5D, 7F)
+     3 basis functions,     3 primitive gaussians,     3 cartesian basis functions
+     2 alpha electrons        2 beta electrons
+       nuclear repulsion energy         2.5565639643 Hartrees.
+ IExCor=         0 DFT=F Ex=HF Corr=None N6=None ScaHFX=  1.000000
+ ScaDFX=  1.000000  1.000000  1.000000  1.000000  1.000000  0.000000
+ ScaDFX=  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+ Grid=UltraFine IRanWt=     -1 IRanGd=            0 ICorTp=0 IEDCtl=  2004
+ NAtoms=    3 NActive=    3 NUniq=    3 SFac= 1.00D+00 NAtFMM=   60 NAOKFM=F Big=F
+ Integral buffers will be    131072 words long.
+ Raffenetti 1 integral format.
+ Two-electron integral symmetry is turned off.
+ Leave Link  301 at Sun Dec 28 15:48:33 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ UFF calculation of energy and first derivatives.
+ Energy per function type:
+ Direct Coulomb + vdW (small)                           0.000000000
+ Direct Coulomb (large)                                 0.000000000
+ Direct vdW (large)                                   286.888879902
+ Non-direct Coulomb + vdW (small)                       0.000000000
+ Non-direct Coulomb (large)                             0.000000000
+ Non-direct vdW (large)                              -286.888879902
+ Harmonic stretch III                                   0.001734477
+ UFF 3-term bend                                        0.000002294
+ Energy per function class:
+        Coulomb               0.000000000
+    Vanderwaals               0.000000000
+     Stretching               0.001734477
+        Bending               0.000002294
+ Energy=    1.736770600E-03 NIter=   0.
+ Dipole moment=       0.000000       0.000000       0.000000
+ Leave Link  402 at Sun Dec 28 15:48:33 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ Dipole        = 0.00000000D+00 0.00000000D+00 0.00000000D+00
+ -------------------------------------------------------------------
+ Center     Atomic                   Forces (Hartrees/Bohr)
+ Number     Number              X              Y              Z
+ -------------------------------------------------------------------
+      1        8          -0.000030004    0.000000401    0.035342273
+      2        1           0.000030562    0.023556126   -0.017670980
+      3        1          -0.000000558   -0.023556527   -0.017671293
+ -------------------------------------------------------------------
+ Cartesian Forces:  Max     0.035342273 RMS     0.018206889
+ Leave Link  716 at Sun Dec 28 15:48:33 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ NDeriv=      9 NFrqRd=  0 NDerD0=      0 MskFDP=       0 MskDFD=       0 MskDF0=       0
+ Allocation parameters:
+ ICO    =           1 IFXYZ2 =          10 ICurSt =          19
+ IES    =          38 IFS    =          41 IFFS   =          68
+ IEDrv0 =          68 IEDrvS =         553 IFDPrS =        1038
+ IDFDPS =        1038 IElTrS =        1038 IMagS  =        1041
+ IED    =        1041 IVNACS =        1041 IFXD   =        1050
+ IFFXD  =        1131
+ IEDrvD =        1131 IFDPrD =        1167 IDFDPD =        1167
+ IElTrD =        1167 IMagD  =        1176 IVNACD =        1176
+ IDone  =        1176 IAMO   =        1185 ICITDT =        1185
+ ICISSD =        1185 IB     =        1185 IMol   =        1265
+ IGen   =     4823785 IEFSav =     4824785 IStSav =     4824890
+ IPFS   =     4824900 IV     =     4824906
+ IDFTab 
+              1
+     1          619
+     2          777
+     3            1
+     4            4
+     5          553
+     6         1131
+     7            0
+     8            1
+     9            1
+    10            0
+    11            0
+    12            0
+ Re-enter D2Numr:  atom      2 IXYZ=1 step-up   number 1
+ Energy from atom      2 IXYZ=1 step-up   number 1:  1.736770600129D-03
+ Forces from atom      2 IXYZ=1 step-up   number 1
+ I=    1 X=   3.000421161459D-05 Y=  -4.011405962956D-07 Z=  -3.534227296984D-02
+ I=    2 X=  -3.056200115769D-05 Y=  -2.355612557013D-02 Z=   1.767098042990D-02
+ I=    3 X=   5.577895430904D-07 Y=   2.355652671076D-02 Z=   1.767129253983D-02
+ Static electric field derivatives from atom      2 IXYZ=1 step-up   number 1 Dipole Moment
+                 1 
+      1   0.000000D+00
+      2   0.000000D+00
+      3   0.000000D+00
+ Forces transformed using operation 3.
+ Rotating derivatives, DoTrsp=F IDiff= 1 LEDeriv=      3 LFDPrp=       0 LDFDPr=       0.
+ CorEq1 forces:
+ I=    1 X=  -3.000421161459D-05 Y=  -4.011405962956D-07 Z=  -3.534227296984D-02
+ I=    2 X=   3.056200115769D-05 Y=  -2.355612557013D-02 Z=   1.767098042990D-02
+ I=    3 X=  -5.577895430904D-07 Y=   2.355652671076D-02 Z=   1.767129253983D-02
+ CorEq1 Dipole Moment
+                 1 
+      1   0.000000D+00
+      2   0.000000D+00
+      3   0.000000D+00
+ Skip step-back as it is equivalent to step-up.
+ Numerical derivs of energy after atom      2 IXYZ=1 
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00 -0.353423D-01  0.000000D+00  0.000000D+00
+                 6             7             8             9 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+ Numerical derivs of forces after atom      2 IXYZ=1 
+                 1             2             3             4             5 
+      1  -0.317549D-01  0.000000D+00  0.000000D+00  0.158775D-01  0.000000D+00
+      2   0.000000D+00  0.610969D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.502359D+00  0.000000D+00  0.000000D+00
+      4   0.158775D-01  0.000000D+00  0.000000D+00 -0.161727D-01  0.000000D+00
+      5   0.000000D+00 -0.305484D+00  0.193159D+00  0.000000D+00  0.000000D+00
+      6   0.000000D+00  0.250038D+00 -0.251179D+00  0.000000D+00  0.000000D+00
+      7   0.158775D-01  0.000000D+00  0.000000D+00  0.295170D-03  0.000000D+00
+      8   0.000000D+00 -0.305484D+00 -0.193159D+00  0.000000D+00  0.000000D+00
+      9   0.000000D+00 -0.250038D+00 -0.251179D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      4   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      5   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      6   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      7   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      8   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      9   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+ Numerical Static derivatives after atom      2 IXYZ=1 
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00 -0.353423D-01  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      4   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      4   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+ Current Numerical derivative of Dipole Moment
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+ D2NDiT:  IFil=  1  File 1 number   619 JFDS=         553 JFDD=        1131 IOff=           1 LFil=           4 JSkipF=1.
+ In D2SvPt:  atom      2 IXYZ=2 step-up   number 1
+ Coordinates:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   2.225908402053D-01
+ I=    2 X=   0.000000000000D+00 Y=   1.432317916069D+00 Z=  -8.903633608214D-01
+ I=    3 X=   0.000000000000D+00 Y=  -1.430428189944D+00 Z=  -8.903633608214D-01
+ Electric Field:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   0.000000000000D+00
+ Leave Link  106 at Sun Dec 28 15:48:33 2025, MaxMem=   104857600 cpu:               0.1 elap:               0.0
+ Standard basis: Dummy (5D, 7F)
+     3 basis functions,     3 primitive gaussians,     3 cartesian basis functions
+     2 alpha electrons        2 beta electrons
+       nuclear repulsion energy         2.5554263242 Hartrees.
+ IExCor=         0 DFT=F Ex=HF Corr=None N6=None ScaHFX=  1.000000
+ ScaDFX=  1.000000  1.000000  1.000000  1.000000  1.000000  0.000000
+ ScaDFX=  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+ Grid=UltraFine IRanWt=     -1 IRanGd=            0 ICorTp=0 IEDCtl=  2004
+ NAtoms=    3 NActive=    3 NUniq=    3 SFac= 1.00D+00 NAtFMM=   60 NAOKFM=F Big=F
+ Integral buffers will be    131072 words long.
+ Raffenetti 1 integral format.
+ Two-electron integral symmetry is turned off.
+ Leave Link  301 at Sun Dec 28 15:48:33 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ UFF calculation of energy and first derivatives.
+ Energy per function type:
+ Direct Coulomb + vdW (small)                           0.000000000
+ Direct Coulomb (large)                                 0.000000000
+ Direct vdW (large)                                   285.478942432
+ Non-direct Coulomb + vdW (small)                       0.000000000
+ Non-direct Coulomb (large)                             0.000000000
+ Non-direct vdW (large)                              -285.478942432
+ Harmonic stretch III                                   0.001691137
+ UFF 3-term bend                                        0.000001732
+ Energy per function class:
+        Coulomb               0.000000000
+    Vanderwaals               0.000000000
+     Stretching               0.001691137
+        Bending               0.000001732
+ Energy=    1.692869286E-03 NIter=   0.
+ Dipole moment=       0.000000       0.000000       0.000000
+ Leave Link  402 at Sun Dec 28 15:48:33 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ Dipole        = 0.00000000D+00 0.00000000D+00 0.00000000D+00
+ -------------------------------------------------------------------
+ Center     Atomic                   Forces (Hartrees/Bohr)
+ Number     Number              X              Y              Z
+ -------------------------------------------------------------------
+      1        8           0.000000000    0.000577666    0.034977730
+      2        1           0.000000000    0.022937081   -0.017252740
+      3        1          -0.000000000   -0.023514747   -0.017724990
+ -------------------------------------------------------------------
+ Cartesian Forces:  Max     0.034977730 RMS     0.017995866
+ Leave Link  716 at Sun Dec 28 15:48:33 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ NDeriv=      9 NFrqRd=  0 NDerD0=      0 MskFDP=       0 MskDFD=       0 MskDF0=       0
+ Allocation parameters:
+ ICO    =           1 IFXYZ2 =          10 ICurSt =          19
+ IES    =          38 IFS    =          41 IFFS   =          68
+ IEDrv0 =          68 IEDrvS =         553 IFDPrS =        1038
+ IDFDPS =        1038 IElTrS =        1038 IMagS  =        1041
+ IED    =        1041 IVNACS =        1041 IFXD   =        1050
+ IFFXD  =        1131
+ IEDrvD =        1131 IFDPrD =        1167 IDFDPD =        1167
+ IElTrD =        1167 IMagD  =        1176 IVNACD =        1176
+ IDone  =        1176 IAMO   =        1185 ICITDT =        1185
+ ICISSD =        1185 IB     =        1185 IMol   =        1265
+ IGen   =     4823785 IEFSav =     4824785 IStSav =     4824890
+ IPFS   =     4824900 IV     =     4824906
+ IDFTab 
+              1
+     1          619
+     2          777
+     3            1
+     4            4
+     5          553
+     6         1131
+     7            0
+     8            1
+     9            1
+    10            0
+    11            0
+    12            0
+ Re-enter D2Numr:  atom      2 IXYZ=2 step-up   number 1
+ Energy from atom      2 IXYZ=2 step-up   number 1:  1.692869286032D-03
+ Forces from atom      2 IXYZ=2 step-up   number 1
+ I=    1 X=   0.000000000000D+00 Y=  -5.776662443395D-04 Z=  -3.497772985020D-02
+ I=    2 X=   0.000000000000D+00 Y=  -2.293708104399D-02 Z=   1.725274016474D-02
+ I=    3 X=   0.000000000000D+00 Y=   2.351474728835D-02 Z=   1.772498968546D-02
+ Static electric field derivatives from atom      2 IXYZ=2 step-up   number 1 Dipole Moment
+                 1 
+      1   0.000000D+00
+      2   0.000000D+00
+      3   0.000000D+00
+ In D2SvPt:  atom      2 IXYZ=2 step-down number 1
+ Coordinates:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   2.225908402053D-01
+ I=    2 X=   0.000000000000D+00 Y=   1.428538463820D+00 Z=  -8.903633608214D-01
+ I=    3 X=   0.000000000000D+00 Y=  -1.430428189944D+00 Z=  -8.903633608214D-01
+ Electric Field:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   0.000000000000D+00
+ Leave Link  106 at Sun Dec 28 15:48:33 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ Standard basis: Dummy (5D, 7F)
+     3 basis functions,     3 primitive gaussians,     3 cartesian basis functions
+     2 alpha electrons        2 beta electrons
+       nuclear repulsion energy         2.5577043040 Hartrees.
+ IExCor=         0 DFT=F Ex=HF Corr=None N6=None ScaHFX=  1.000000
+ ScaDFX=  1.000000  1.000000  1.000000  1.000000  1.000000  0.000000
+ ScaDFX=  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+ Grid=UltraFine IRanWt=     -1 IRanGd=            0 ICorTp=0 IEDCtl=  2004
+ NAtoms=    3 NActive=    3 NUniq=    3 SFac= 1.00D+00 NAtFMM=   60 NAOKFM=F Big=F
+ Integral buffers will be    131072 words long.
+ Raffenetti 1 integral format.
+ Two-electron integral symmetry is turned off.
+ Leave Link  301 at Sun Dec 28 15:48:33 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ UFF calculation of energy and first derivatives.
+ Energy per function type:
+ Direct Coulomb + vdW (small)                           0.000000000
+ Direct Coulomb (large)                                 0.000000000
+ Direct vdW (large)                                   288.315157576
+ Non-direct Coulomb + vdW (small)                       0.000000000
+ Non-direct Coulomb (large)                             0.000000000
+ Non-direct vdW (large)                              -288.315157576
+ Harmonic stretch III                                   0.001778964
+ UFF 3-term bend                                        0.000002936
+ Energy per function class:
+        Coulomb               0.000000000
+    Vanderwaals               0.000000000
+     Stretching               0.001778964
+        Bending               0.000002936
+ Energy=    1.781899592E-03 NIter=   0.
+ Dipole moment=       0.000000       0.000000       0.000000
+ Leave Link  402 at Sun Dec 28 15:48:33 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ Dipole        = 0.00000000D+00 0.00000000D+00 0.00000000D+00
+ -------------------------------------------------------------------
+ Center     Atomic                   Forces (Hartrees/Bohr)
+ Number     Number              X              Y              Z
+ -------------------------------------------------------------------
+      1        8           0.000000000   -0.000576897    0.035707765
+      2        1           0.000000000    0.024175275   -0.018090261
+      3        1          -0.000000000   -0.023598378   -0.017617504
+ -------------------------------------------------------------------
+ Cartesian Forces:  Max     0.035707765 RMS     0.018422024
+ Leave Link  716 at Sun Dec 28 15:48:33 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ NDeriv=      9 NFrqRd=  0 NDerD0=      0 MskFDP=       0 MskDFD=       0 MskDF0=       0
+ Allocation parameters:
+ ICO    =           1 IFXYZ2 =          10 ICurSt =          19
+ IES    =          38 IFS    =          41 IFFS   =          68
+ IEDrv0 =          68 IEDrvS =         553 IFDPrS =        1038
+ IDFDPS =        1038 IElTrS =        1038 IMagS  =        1041
+ IED    =        1041 IVNACS =        1041 IFXD   =        1050
+ IFFXD  =        1131
+ IEDrvD =        1131 IFDPrD =        1167 IDFDPD =        1167
+ IElTrD =        1167 IMagD  =        1176 IVNACD =        1176
+ IDone  =        1176 IAMO   =        1185 ICITDT =        1185
+ ICISSD =        1185 IB     =        1185 IMol   =        1265
+ IGen   =     4823785 IEFSav =     4824785 IStSav =     4824890
+ IPFS   =     4824900 IV     =     4824906
+ IDFTab 
+              1
+     1          619
+     2          777
+     3            1
+     4            4
+     5          553
+     6         1131
+     7            0
+     8            1
+     9            1
+    10            0
+    11            0
+    12            0
+ Re-enter D2Numr:  atom      2 IXYZ=2 step-down number 1
+ Energy from atom      2 IXYZ=2 step-down number 1:  1.781899592130D-03
+ Forces from atom      2 IXYZ=2 step-down number 1
+ I=    1 X=   0.000000000000D+00 Y=   5.768970625013D-04 Z=  -3.570776475715D-02
+ I=    2 X=   0.000000000000D+00 Y=  -2.417527459311D-02 Z=   1.809026112619D-02
+ I=    3 X=   0.000000000000D+00 Y=   2.359837753056D-02 Z=   1.761750363073D-02
+ Static electric field derivatives from atom      2 IXYZ=2 step-down number 1 Dipole Moment
+                 1 
+      1   0.000000D+00
+      2   0.000000D+00
+      3   0.000000D+00
+ Numerical derivs of energy after atom      2 IXYZ=2 
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00 -0.353423D-01  0.000000D+00 -0.235564D-01
+                 6             7             8             9 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+ Numerical derivs of forces after atom      2 IXYZ=2 
+                 1             2             3             4             5 
+      1  -0.317549D-01  0.000000D+00  0.000000D+00  0.158775D-01  0.000000D+00
+      2   0.000000D+00  0.610969D+00  0.000000D+00  0.000000D+00 -0.305484D+00
+      3   0.000000D+00  0.000000D+00  0.502359D+00  0.000000D+00  0.193159D+00
+      4   0.158775D-01  0.000000D+00  0.000000D+00 -0.161727D-01  0.000000D+00
+      5   0.000000D+00 -0.305484D+00  0.193159D+00  0.000000D+00  0.327612D+00
+      6   0.000000D+00  0.250038D+00 -0.251179D+00  0.000000D+00 -0.221599D+00
+      7   0.158775D-01  0.000000D+00  0.000000D+00  0.295170D-03  0.000000D+00
+      8   0.000000D+00 -0.305484D+00 -0.193159D+00  0.000000D+00 -0.221276D-01
+      9   0.000000D+00 -0.250038D+00 -0.251179D+00  0.000000D+00  0.284396D-01
+                 6             7             8             9 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      4   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      5   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      6   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      7   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      8   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      9   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+ Numerical Static derivatives after atom      2 IXYZ=2 
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00 -0.353423D-01  0.000000D+00 -0.235564D-01
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      4   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      4   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+ Current Numerical derivative of Dipole Moment
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+ D2NDiT:  IFil=  1  File 1 number   619 JFDS=         553 JFDD=        1131 IOff=           1 LFil=           4 JSkipF=1.
+ In D2SvPt:  atom      2 IXYZ=3 step-up   number 1
+ Coordinates:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   2.225908402053D-01
+ I=    2 X=   0.000000000000D+00 Y=   1.430428189944D+00 Z=  -8.884736346968D-01
+ I=    3 X=   0.000000000000D+00 Y=  -1.430428189944D+00 Z=  -8.903633608214D-01
+ Electric Field:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   0.000000000000D+00
+ Leave Link  106 at Sun Dec 28 15:48:34 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ Standard basis: Dummy (5D, 7F)
+     3 basis functions,     3 primitive gaussians,     3 cartesian basis functions
+     2 alpha electrons        2 beta electrons
+       nuclear repulsion energy         2.5572711949 Hartrees.
+ IExCor=         0 DFT=F Ex=HF Corr=None N6=None ScaHFX=  1.000000
+ ScaDFX=  1.000000  1.000000  1.000000  1.000000  1.000000  0.000000
+ ScaDFX=  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+ Grid=UltraFine IRanWt=     -1 IRanGd=            0 ICorTp=0 IEDCtl=  2004
+ NAtoms=    3 NActive=    3 NUniq=    3 SFac= 1.00D+00 NAtFMM=   60 NAOKFM=F Big=F
+ Integral buffers will be    131072 words long.
+ Raffenetti 1 integral format.
+ Two-electron integral symmetry is turned off.
+ Leave Link  301 at Sun Dec 28 15:48:34 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ UFF calculation of energy and first derivatives.
+ Energy per function type:
+ Direct Coulomb + vdW (small)                           0.000000000
+ Direct Coulomb (large)                                 0.000000000
+ Direct vdW (large)                                   287.996203949
+ Non-direct Coulomb + vdW (small)                       0.000000000
+ Non-direct Coulomb (large)                             0.000000000
+ Non-direct vdW (large)                              -287.996203949
+ Harmonic stretch III                                   0.001768991
+ UFF 3-term bend                                        0.000001585
+ Energy per function class:
+        Coulomb               0.000000000
+    Vanderwaals               0.000000000
+     Stretching               0.001768991
+        Bending               0.000001585
+ Energy=    1.770576329E-03 NIter=   0.
+ Dipole moment=       0.000000       0.000000       0.000000
+ Leave Link  402 at Sun Dec 28 15:48:34 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ Dipole        = 0.00000000D+00 0.00000000D+00 0.00000000D+00
+ -------------------------------------------------------------------
+ Center     Atomic                   Forces (Hartrees/Bohr)
+ Number     Number              X              Y              Z
+ -------------------------------------------------------------------
+      1        8           0.000000000   -0.000472578    0.035816819
+      2        1           0.000000000    0.023975335   -0.018076419
+      3        1          -0.000000000   -0.023502757   -0.017740400
+ -------------------------------------------------------------------
+ Cartesian Forces:  Max     0.035816819 RMS     0.018414194
+ Leave Link  716 at Sun Dec 28 15:48:34 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ NDeriv=      9 NFrqRd=  0 NDerD0=      0 MskFDP=       0 MskDFD=       0 MskDF0=       0
+ Allocation parameters:
+ ICO    =           1 IFXYZ2 =          10 ICurSt =          19
+ IES    =          38 IFS    =          41 IFFS   =          68
+ IEDrv0 =          68 IEDrvS =         553 IFDPrS =        1038
+ IDFDPS =        1038 IElTrS =        1038 IMagS  =        1041
+ IED    =        1041 IVNACS =        1041 IFXD   =        1050
+ IFFXD  =        1131
+ IEDrvD =        1131 IFDPrD =        1167 IDFDPD =        1167
+ IElTrD =        1167 IMagD  =        1176 IVNACD =        1176
+ IDone  =        1176 IAMO   =        1185 ICITDT =        1185
+ ICISSD =        1185 IB     =        1185 IMol   =        1265
+ IGen   =     4823785 IEFSav =     4824785 IStSav =     4824890
+ IPFS   =     4824900 IV     =     4824906
+ IDFTab 
+              1
+     1          619
+     2          777
+     3            1
+     4            4
+     5          553
+     6         1131
+     7            0
+     8            1
+     9            1
+    10            0
+    11            0
+    12            0
+ Re-enter D2Numr:  atom      2 IXYZ=3 step-up   number 1
+ Energy from atom      2 IXYZ=3 step-up   number 1:  1.770576328841D-03
+ Forces from atom      2 IXYZ=3 step-up   number 1
+ I=    1 X=   0.000000000000D+00 Y=   4.725778633201D-04 Z=  -3.581681867809D-02
+ I=    2 X=   0.000000000000D+00 Y=  -2.397533508380D-02 Z=   1.807641871738D-02
+ I=    3 X=   0.000000000000D+00 Y=   2.350275722063D-02 Z=   1.774039996099D-02
+ Static electric field derivatives from atom      2 IXYZ=3 step-up   number 1 Dipole Moment
+                 1 
+      1   0.000000D+00
+      2   0.000000D+00
+      3   0.000000D+00
+ In D2SvPt:  atom      2 IXYZ=3 step-down number 1
+ Coordinates:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   2.225908402053D-01
+ I=    2 X=   0.000000000000D+00 Y=   1.430428189944D+00 Z=  -8.922530869459D-01
+ I=    3 X=   0.000000000000D+00 Y=  -1.430428189944D+00 Z=  -8.903633608214D-01
+ Electric Field:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=   0.000000000000D+00
+ Leave Link  106 at Sun Dec 28 15:48:34 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ Standard basis: Dummy (5D, 7F)
+     3 basis functions,     3 primitive gaussians,     3 cartesian basis functions
+     2 alpha electrons        2 beta electrons
+       nuclear repulsion energy         2.5558580910 Hartrees.
+ IExCor=         0 DFT=F Ex=HF Corr=None N6=None ScaHFX=  1.000000
+ ScaDFX=  1.000000  1.000000  1.000000  1.000000  1.000000  0.000000
+ ScaDFX=  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+ Grid=UltraFine IRanWt=     -1 IRanGd=            0 ICorTp=0 IEDCtl=  2004
+ NAtoms=    3 NActive=    3 NUniq=    3 SFac= 1.00D+00 NAtFMM=   60 NAOKFM=F Big=F
+ Integral buffers will be    131072 words long.
+ Raffenetti 1 integral format.
+ Two-electron integral symmetry is turned off.
+ Leave Link  301 at Sun Dec 28 15:48:34 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ UFF calculation of energy and first derivatives.
+ Energy per function type:
+ Direct Coulomb + vdW (small)                           0.000000000
+ Direct Coulomb (large)                                 0.000000000
+ Direct vdW (large)                                   285.791440615
+ Non-direct Coulomb + vdW (small)                       0.000000000
+ Non-direct Coulomb (large)                             0.000000000
+ Non-direct vdW (large)                              -285.791440615
+ Harmonic stretch III                                   0.001700657
+ UFF 3-term bend                                        0.000003132
+ Energy per function class:
+        Coulomb               0.000000000
+    Vanderwaals               0.000000000
+     Stretching               0.001700657
+        Bending               0.000003132
+ Energy=    1.703789075E-03 NIter=   0.
+ Dipole moment=       0.000000       0.000000       0.000000
+ Leave Link  402 at Sun Dec 28 15:48:34 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ Dipole        = 0.00000000D+00 0.00000000D+00 0.00000000D+00
+ -------------------------------------------------------------------
+ Center     Atomic                   Forces (Hartrees/Bohr)
+ Number     Number              X              Y              Z
+ -------------------------------------------------------------------
+      1        8           0.000000000    0.000472429    0.034867498
+      2        1           0.000000000    0.023137814   -0.017265244
+      3        1          -0.000000000   -0.023610243   -0.017602253
+ -------------------------------------------------------------------
+ Cartesian Forces:  Max     0.034867498 RMS     0.018002147
+ Leave Link  716 at Sun Dec 28 15:48:34 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+ NDeriv=      9 NFrqRd=  0 NDerD0=      0 MskFDP=       0 MskDFD=       0 MskDF0=       0
+ Allocation parameters:
+ ICO    =           1 IFXYZ2 =          10 ICurSt =          19
+ IES    =          38 IFS    =          41 IFFS   =          68
+ IEDrv0 =          68 IEDrvS =         553 IFDPrS =        1038
+ IDFDPS =        1038 IElTrS =        1038 IMagS  =        1041
+ IED    =        1041 IVNACS =        1041 IFXD   =        1050
+ IFFXD  =        1131
+ IEDrvD =        1131 IFDPrD =        1167 IDFDPD =        1167
+ IElTrD =        1167 IMagD  =        1176 IVNACD =        1176
+ IDone  =        1176 IAMO   =        1185 ICITDT =        1185
+ ICISSD =        1185 IB     =        1185 IMol   =        1265
+ IGen   =     4823785 IEFSav =     4824785 IStSav =     4824890
+ IPFS   =     4824900 IV     =     4824906
+ IDFTab 
+              1
+     1          619
+     2          777
+     3            1
+     4            4
+     5          553
+     6         1131
+     7            0
+     8            1
+     9            1
+    10            0
+    11            0
+    12            0
+ Re-enter D2Numr:  atom      2 IXYZ=3 step-down number 1
+ Energy from atom      2 IXYZ=3 step-down number 1:  1.703789074830D-03
+ Forces from atom      2 IXYZ=3 step-down number 1
+ I=    1 X=   0.000000000000D+00 Y=  -4.724286859528D-04 Z=  -3.486749752028D-02
+ I=    2 X=   0.000000000000D+00 Y=  -2.313781444726D-02 Z=   1.726524419547D-02
+ I=    3 X=   0.000000000000D+00 Y=   2.361024313313D-02 Z=   1.760225332441D-02
+ Static electric field derivatives from atom      2 IXYZ=3 step-down number 1 Dipole Moment
+                 1 
+      1   0.000000D+00
+      2   0.000000D+00
+      3   0.000000D+00
+ Numerical derivs of energy after atom      2 IXYZ=3 
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00 -0.353423D-01  0.000000D+00 -0.235564D-01
+                 6             7             8             9 
+      1   0.176711D-01  0.000000D+00  0.000000D+00  0.000000D+00
+ Numerical derivs of forces after atom      2 IXYZ=3 
+                 1             2             3             4             5 
+      1  -0.317549D-01  0.000000D+00  0.000000D+00  0.158775D-01  0.000000D+00
+      2   0.000000D+00  0.610969D+00  0.000000D+00  0.000000D+00 -0.305484D+00
+      3   0.000000D+00  0.000000D+00  0.502359D+00  0.000000D+00  0.193159D+00
+      4   0.158775D-01  0.000000D+00  0.000000D+00 -0.161727D-01  0.000000D+00
+      5   0.000000D+00 -0.305484D+00  0.193159D+00  0.000000D+00  0.327612D+00
+      6   0.000000D+00  0.250038D+00 -0.251179D+00  0.000000D+00 -0.221599D+00
+      7   0.158775D-01  0.000000D+00  0.000000D+00  0.295170D-03  0.000000D+00
+      8   0.000000D+00 -0.305484D+00 -0.193159D+00  0.000000D+00 -0.221276D-01
+      9   0.000000D+00 -0.250038D+00 -0.251179D+00  0.000000D+00  0.284396D-01
+                 6             7             8             9 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.250038D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3  -0.251180D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      4   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      5  -0.221598D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      6   0.214628D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      7   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      8  -0.284395D-01  0.000000D+00  0.000000D+00  0.000000D+00
+      9   0.365520D-01  0.000000D+00  0.000000D+00  0.000000D+00
+ Numerical Static derivatives after atom      2 IXYZ=3 
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00 -0.353423D-01  0.000000D+00 -0.235564D-01
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      4   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9 
+      1   0.176711D-01  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      4   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+ Current Numerical derivative of Dipole Moment
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+ D2NDiT:  IFil=  1  File 1 number   619 JFDS=         553 JFDD=        1131 IOff=           1 LFil=           4 JSkipF=1.
+ RotOp in D2NSNy: 
+                 1             2             3             4 
+      1   0.100000D+01 -0.100000D+01 -0.100000D+01  0.100000D+01
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      4   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      5   0.100000D+01 -0.100000D+01  0.100000D+01 -0.100000D+01
+      6   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      7   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      8   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      9   0.100000D+01  0.100000D+01  0.100000D+01  0.100000D+01
+     10   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+     11   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+     12   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+ NEqAtm in D2NSNy: 
+              1            2            3            4
+     1            1            1            1            1
+     2            2            3            2            3
+     3            3            2            3            2
+ JOp=  2 IJAtP=     1    -1 I,JDer=     1     0 I,JDerP=     1     0 IJDerP=       1 IDone=  1
+ JOp=  3 IJAtP=     1    -1 I,JDer=     1     0 I,JDerP=     1     0 IJDerP=       1 IDone=  1
+ JOp=  4 IJAtP=     1    -1 I,JDer=     1     0 I,JDerP=     1     0 IJDerP=       1 IDone=  1
+ JOp=  2 IJAtP=     3    -1 I,JDer=     4     0 I,JDerP=     7     0 IJDerP=       7 IDone= -1
+ Rotating derivatives, DoTrsp=F IDiff= 0 LEDeriv=      3 LFDPrp=       0 LDFDPr=       0.
+ Rotating derivatives, DoTrsp=F IDiff= 0 LEDeriv=      3 LFDPrp=       0 LDFDPr=       0.
+ Rotating derivatives, DoTrsp=F IDiff= 0 LEDeriv=      3 LFDPrp=       0 LDFDPr=       0.
+ JOp=  3 IJAtP=     2    -1 I,JDer=     4     0 I,JDerP=     4     0 IJDerP=       4 IDone=  1
+ JOp=  4 IJAtP=     3    -1 I,JDer=     4     0 I,JDerP=     7     0 IJDerP=       7 IDone=  1
+ JOp=  2 IJAtP=     2    -1 I,JDer=     7     0 I,JDerP=     4     0 IJDerP=       4 IDone=  1
+ JOp=  3 IJAtP=     3    -1 I,JDer=     7     0 I,JDerP=     7     0 IJDerP=       7 IDone=  1
+ JOp=  4 IJAtP=     2    -1 I,JDer=     7     0 I,JDerP=     4     0 IJDerP=       4 IDone=  1
+ ED1 at end of D2NSNY 
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00 -0.353423D-01  0.000000D+00 -0.235564D-01
+                 6             7             8             9 
+      1   0.176711D-01  0.000000D+00  0.235564D-01  0.176711D-01
+ FXD1 at end of D2NSNY 
+                 1             2             3             4             5 
+      1  -0.317549D-01  0.000000D+00  0.000000D+00  0.158775D-01  0.000000D+00
+      2   0.000000D+00  0.610969D+00  0.000000D+00  0.000000D+00 -0.305484D+00
+      3   0.000000D+00  0.000000D+00  0.502359D+00  0.000000D+00  0.193159D+00
+      4   0.158775D-01  0.000000D+00  0.000000D+00 -0.161727D-01  0.000000D+00
+      5   0.000000D+00 -0.305484D+00  0.193159D+00  0.000000D+00  0.327612D+00
+      6   0.000000D+00  0.250038D+00 -0.251179D+00  0.000000D+00 -0.221599D+00
+      7   0.158775D-01  0.000000D+00  0.000000D+00  0.295170D-03  0.000000D+00
+      8   0.000000D+00 -0.305484D+00 -0.193159D+00  0.000000D+00 -0.221276D-01
+      9   0.000000D+00 -0.250038D+00 -0.251179D+00  0.000000D+00  0.284396D-01
+                 6             7             8             9 
+      1   0.000000D+00  0.158775D-01  0.000000D+00  0.000000D+00
+      2   0.250038D+00  0.000000D+00 -0.305484D+00 -0.250038D+00
+      3  -0.251180D+00  0.000000D+00 -0.193159D+00 -0.251180D+00
+      4   0.000000D+00  0.295170D-03  0.000000D+00  0.000000D+00
+      5  -0.221598D+00  0.000000D+00 -0.221276D-01  0.284395D-01
+      6   0.214628D+00  0.000000D+00 -0.284396D-01  0.365520D-01
+      7   0.000000D+00 -0.161727D-01  0.000000D+00  0.000000D+00
+      8  -0.284395D-01  0.000000D+00  0.327612D+00  0.221598D+00
+      9   0.365520D-01  0.000000D+00  0.221599D+00  0.214628D+00
+ D2NSNY Numerical derivative of Dipole Moment
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+ RotOp in D2NSNy: 
+                 1             2             3             4 
+      1   0.100000D+01 -0.100000D+01 -0.100000D+01  0.100000D+01
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      4   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      5   0.100000D+01 -0.100000D+01  0.100000D+01 -0.100000D+01
+      6   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      7   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      8   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      9   0.100000D+01  0.100000D+01  0.100000D+01  0.100000D+01
+     10   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+     11   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+     12   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+ NEqAtm in D2NSNy: 
+              1            2            3            4
+     1            1            1            1            1
+     2            2            3            2            3
+     3            3            2            3            2
+ JOp=  2 IJAtP=     3     1 I,JDer=     4     1 I,JDerP=     7     1 IJDerP=      22 IDone=  0
+ JOp=  3 IJAtP=     2     1 I,JDer=     4     1 I,JDerP=     4     1 IJDerP=       7 IDone=  1
+ JOp=  4 IJAtP=     3     1 I,JDer=     4     1 I,JDerP=     7     1 IJDerP=      22 IDone=  0
+ JOp=  2 IJAtP=     2     1 I,JDer=     7     1 I,JDerP=     4     1 IJDerP=       7 IDone=  1
+ JOp=  3 IJAtP=     3     1 I,JDer=     7     1 I,JDerP=     7     1 IJDerP=      22 IDone=  0
+ JOp=  4 IJAtP=     2     1 I,JDer=     7     1 I,JDerP=     4     1 IJDerP=       7 IDone=  1
+ JOp=  2 IJAtP=     2     3 I,JDer=     7     4 I,JDerP=     4     7 IJDerP=      25 IDone=  0
+ JOp=  3 IJAtP=     3     2 I,JDer=     7     4 I,JDerP=     7     4 IJDerP=      25 IDone=  0
+ JOp=  4 IJAtP=     2     3 I,JDer=     7     4 I,JDerP=     4     7 IJDerP=      25 IDone=  0
+ ED1 at end of D2NSNY 
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00 -0.353423D-01  0.000000D+00 -0.235564D-01
+                 6             7             8             9 
+      1   0.176711D-01  0.000000D+00  0.235564D-01  0.176711D-01
+ FXD1 at end of D2NSNY 
+                 1             2             3             4             5 
+      1  -0.317549D-01  0.000000D+00  0.000000D+00  0.158775D-01  0.000000D+00
+      2   0.000000D+00  0.610969D+00  0.000000D+00  0.000000D+00 -0.305484D+00
+      3   0.000000D+00  0.000000D+00  0.502359D+00  0.000000D+00  0.193159D+00
+      4   0.158775D-01  0.000000D+00  0.000000D+00 -0.161727D-01  0.000000D+00
+      5   0.000000D+00 -0.305484D+00  0.193159D+00  0.000000D+00  0.327612D+00
+      6   0.000000D+00  0.250038D+00 -0.251179D+00  0.000000D+00 -0.221599D+00
+      7   0.158775D-01  0.000000D+00  0.000000D+00  0.295170D-03  0.000000D+00
+      8   0.000000D+00 -0.305484D+00 -0.193159D+00  0.000000D+00 -0.221276D-01
+      9   0.000000D+00 -0.250038D+00 -0.251179D+00  0.000000D+00  0.284396D-01
+                 6             7             8             9 
+      1   0.000000D+00  0.158775D-01  0.000000D+00  0.000000D+00
+      2   0.250038D+00  0.000000D+00 -0.305484D+00 -0.250038D+00
+      3  -0.251180D+00  0.000000D+00 -0.193159D+00 -0.251180D+00
+      4   0.000000D+00  0.295170D-03  0.000000D+00  0.000000D+00
+      5  -0.221598D+00  0.000000D+00 -0.221276D-01  0.284395D-01
+      6   0.214628D+00  0.000000D+00 -0.284396D-01  0.365520D-01
+      7   0.000000D+00 -0.161727D-01  0.000000D+00  0.000000D+00
+      8  -0.284395D-01  0.000000D+00  0.327612D+00  0.221598D+00
+      9   0.365520D-01  0.000000D+00  0.221599D+00  0.214628D+00
+ D2NSNY Numerical derivative of Dipole Moment
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+ EDrv before update Dipole Moment
+                 1 
+      1   0.000000D+00
+      2   0.000000D+00
+      3   0.000000D+00
+ EDrvD before update Numerical derivative of Dipole Moment
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+ Numerical Dipole derivatives          1
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+ Numerical Forces:
+ I=    1 X=   0.000000000000D+00 Y=   0.000000000000D+00 Z=  -3.534233834006D-02
+ I=    2 X=   0.000000000000D+00 Y=  -2.355640453417D-02 Z=   1.767114640122D-02
+ I=    3 X=   0.000000000000D+00 Y=   2.355640453417D-02 Z=   1.767114640122D-02
+ Numerical Force-constant matrix: 
+                 1             2             3             4             5 
+      1  -0.317549D-01  0.000000D+00  0.000000D+00  0.158775D-01  0.000000D+00
+      2   0.000000D+00  0.610969D+00  0.000000D+00  0.000000D+00 -0.305484D+00
+      3   0.000000D+00  0.000000D+00  0.502359D+00  0.000000D+00  0.193159D+00
+      4   0.158775D-01  0.000000D+00  0.000000D+00 -0.161727D-01  0.000000D+00
+      5   0.000000D+00 -0.305484D+00  0.193159D+00  0.000000D+00  0.327612D+00
+      6   0.000000D+00  0.250038D+00 -0.251179D+00  0.000000D+00 -0.221599D+00
+      7   0.158775D-01  0.000000D+00  0.000000D+00  0.295170D-03  0.000000D+00
+      8   0.000000D+00 -0.305484D+00 -0.193159D+00  0.000000D+00 -0.221276D-01
+      9   0.000000D+00 -0.250038D+00 -0.251179D+00  0.000000D+00  0.284396D-01
+                 6             7             8             9 
+      1   0.000000D+00  0.158775D-01  0.000000D+00  0.000000D+00
+      2   0.250038D+00  0.000000D+00 -0.305484D+00 -0.250038D+00
+      3  -0.251180D+00  0.000000D+00 -0.193159D+00 -0.251180D+00
+      4   0.000000D+00  0.295170D-03  0.000000D+00  0.000000D+00
+      5  -0.221598D+00  0.000000D+00 -0.221276D-01  0.284395D-01
+      6   0.214628D+00  0.000000D+00 -0.284396D-01  0.365520D-01
+      7   0.000000D+00 -0.161727D-01  0.000000D+00  0.000000D+00
+      8  -0.284395D-01  0.000000D+00  0.327612D+00  0.221598D+00
+      9   0.365520D-01  0.000000D+00  0.221599D+00  0.214628D+00
+ Max difference in off-diagonal FC elements: I=      9 J=      3 Difference=    1.1656093718D-07
+ Max difference between analytic and numerical forces: I=      3 Difference=    2.6940784952D-07
+ FinFTb:  IFil= 1 IFilD=  777 LTop=  1 LFil=         4 LTop1=  0 IMask=  1
+ FinFTB:  IFilD=  777 LTop=         1 LTop1=         0 LDat=         3 LFil=         4 NDeriv=     9 ND12= 1 IndX=     3:
+                 1             2             3             4             5 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+                 6             7             8             9 
+      1   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00  0.000000D+00  0.000000D+00
+ Leave Link  106 at Sun Dec 28 15:48:34 2025, MaxMem=   104857600 cpu:               0.1 elap:               0.1
+ Dipole        = 0.00000000D+00 0.00000000D+00 0.00000000D+00
+ Full mass-weighted force constant matrix:
+ Low frequencies --- -684.6616 -666.8892 -657.0987    0.0004    0.0081    0.0209
+ Low frequencies --- 1687.4754 3706.4966 3759.3573
+ Diagonal vibrational polarizability:
+        0.0000000       0.0000000       0.0000000
+ Harmonic frequencies (cm**-1), IR intensities (KM/Mole), Raman scattering
+ activities (A**4/AMU), depolarization ratios for plane and unpolarized
+ incident light, reduced masses (AMU), force constants (mDyne/A),
+ and normal coordinates:
+                      1                      2                      3
+                     A1                     A1                     B2
+ Frequencies --   1687.4754              3706.4966              3759.3544
+ Red. masses --      1.0732                 1.0542                 1.0816
+ Frc consts  --      1.8005                 8.5329                 9.0061
+ IR Inten    --      0.0000                 0.0000                 0.0000
+  Atom  AN      X      Y      Z        X      Y      Z        X      Y      Z
+     1   8    -0.00  -0.00  -0.07     0.00   0.00   0.06    -0.00  -0.07   0.00
+     2   1     0.00   0.47   0.52    -0.00   0.55  -0.44     0.00   0.56  -0.43
+     3   1     0.00  -0.47   0.52    -0.00  -0.55  -0.44     0.00   0.56   0.43
+
+ -------------------
+ - Thermochemistry -
+ -------------------
+ Temperature 298.150 Kelvin.  Pressure 1.00000 Atm.
+ Atom     1 has atomic number  8 and mass  15.99491
+ Atom     2 has atomic number  1 and mass   1.00783
+ Atom     3 has atomic number  1 and mass   1.00783
+ Molecular mass:    18.01056 amu.
+ Principal axes and moments of inertia in atomic units:
+                                 1                 2                 3
+     Eigenvalues --            2.217299          4.124272          6.341571
+           X                  -0.000000          0.000000          1.000000
+           Y                   1.000000          0.000000         -0.000000
+           Z                  -0.000000          1.000000          0.000000
+ This molecule is an asymmetric top.
+ Rotational symmetry number  2.
+ Rotational temperatures (Kelvin)     39.06280    21.00102    13.65812
+ Rotational constants (GHZ):         813.93666   437.59029   284.58898
+ Zero-point vibrational energy      54749.1 (Joules/Mol)
+                                   13.08534 (Kcal/Mol)
+ Vibrational temperatures:   2427.90  5332.82  5408.87
+          (Kelvin)
+ 
+ Zero-point correction=                           0.020853 (Hartree/Particle)
+ Thermal correction to Energy=                    0.023688
+ Thermal correction to Enthalpy=                  0.024632
+ Thermal correction to Gibbs Free Energy=         0.003216
+ Sum of electronic and zero-point Energies=              0.022590
+ Sum of electronic and thermal Energies=                 0.025424
+ Sum of electronic and thermal Enthalpies=               0.026369
+ Sum of electronic and thermal Free Energies=            0.004953
+ 
+                     E (Thermal)             CV                S
+                      KCal/Mol        Cal/Mol-Kelvin    Cal/Mol-Kelvin
+ Total                   14.864              6.000             45.073
+ Electronic               0.000              0.000              0.000
+ Translational            0.889              2.981             34.608
+ Rotational               0.889              2.981             10.460
+ Vibrational             13.087              0.038              0.005
+                       Q            Log10(Q)             Ln(Q)
+ Total Bot       0.331705D-01         -1.479248         -3.406095
+ Total V=0       0.129530D+09          8.112371         18.679424
+ Vib (Bot)       0.256158D-09         -9.591493        -22.085229
+ Vib (V=0)       0.100029D+01          0.000126          0.000291
+ Electronic      0.100000D+01          0.000000          0.000000
+ Translational   0.300431D+07          6.477745         14.915559
+ Rotational      0.431022D+02          1.634500          3.763575
+ 
+                                                            fake freq run
+                                                             IR Spectrum
+ 
+     3 3                                                                   1                                                         
+     7 7                                                                   6                                                         
+     5 0                                                                   8                                                         
+     9 6                                                                   7                                                         
+ 
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+ 
+ ***** Axes restored to original set *****
+ -------------------------------------------------------------------
+ Center     Atomic                   Forces (Hartrees/Bohr)
+ Number     Number              X              Y              Z
+ -------------------------------------------------------------------
+      1        8           0.000000000    0.000000000    0.035342608
+      2        1           0.000000000    0.023556518   -0.017671304
+      3        1          -0.000000000   -0.023556518   -0.017671304
+ -------------------------------------------------------------------
+ Cartesian Forces:  Max     0.035342608 RMS     0.018207047
+ Force constants in Cartesian coordinates: 
+                1             2             3             4             5 
+      1 -0.317549D-01
+      2  0.000000D+00  0.610969D+00
+      3  0.000000D+00  0.000000D+00  0.502359D+00
+      4  0.158775D-01  0.000000D+00  0.000000D+00 -0.161727D-01
+      5  0.000000D+00 -0.305484D+00  0.193159D+00  0.000000D+00  0.327612D+00
+      6  0.000000D+00  0.250038D+00 -0.251180D+00  0.000000D+00 -0.221598D+00
+      7  0.158775D-01  0.000000D+00  0.000000D+00  0.295170D-03  0.000000D+00
+      8  0.000000D+00 -0.305484D+00 -0.193159D+00  0.000000D+00 -0.221276D-01
+      9  0.000000D+00 -0.250038D+00 -0.251180D+00  0.000000D+00  0.284396D-01
+                6             7             8             9 
+      6  0.214628D+00
+      7  0.000000D+00 -0.161727D-01
+      8 -0.284396D-01  0.000000D+00  0.327612D+00
+      9  0.365520D-01  0.000000D+00  0.221598D+00  0.214628D+00
+ FormGI is forming the generalized inverse of G from B-inverse, IUseBI=4.
+ NTrRot=    -1 NTRed=     3 NAtoms=     3 NSkip=     0 NRank=     3 IsLin=F EigSml=7.8010D-01
+ Force constants in internal coordinates: 
+                1             2             3 
+      1  0.499805D+00
+      2  0.000000D+00  0.499805D+00
+      3  0.000000D+00  0.000000D+00  0.192750D+00
+ Leave Link  716 at Sun Dec 28 15:48:34 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+
+ GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
+ Berny optimization.
+ Optmz: redundant internal coordinate code flag= 2
+ LCrdCa=F IOp= 3
+ LCrdCa=F IOp= 4
+ LCrdCa=F IOp= 7
+ LCrdCa=F IOp=17
+ LCrdCa=F IOp=15
+ LCrdCa=F IOp=13
+ LCrdCa=F IOp=14
+ LCrdCa=F IOp=17
+ Internal  Forces:  Max     0.029443431 RMS     0.024046583
+ Enter LenRIC.
+ Enter LenRIC.
+ Enter LenRIC.
+ Enter LenRIC.
+ Search for a local minimum.
+ Step number   1 out of a maximum of    2
+ All quantities printed in internal units (Hartrees-Bohrs-Radians)
+ Enter LenRIC.
+ Enter LenRIC.
+ Enter LenRIC.
+ Enter LenRIC.
+ Second derivative matrix not updated -- analytic derivatives used.
+ The second derivative matrix:
+                          R1        R2        A1
+           R1           0.49981
+           R2           0.00000   0.49981
+           A1           0.00000   0.00000   0.19275
+ ITU=  0
+ Eigenvectors of the second derivative matrix:
+                           1         2         3
+     Eigenvalues --     0.19275   0.49981   0.49981
+   1         R1        -0.00000   0.70711  -0.70711
+   2         R2        -0.00000  -0.70711  -0.70711
+   3         A1         1.00000  -0.00000  -0.00000
+ Forces in eigenvector basis: 
+                 1 
+      1   0.939784D-03
+      2   0.000000D+00
+      3  -0.416393D-01
+ Angle between quadratic step and forces=   2.06 degrees.
+ Linear search not attempted -- first point.
+         Cartesian coordinates in GrdOpt (initial):         
+ ---------------------------------------------------------------------
+ Center     Atomic                     Coordinates (Angstroms)
+ Number     Number                        X           Y           Z
+ ---------------------------------------------------------------------
+      1          8                    0.000000    0.000000    0.117790
+      2          1                    0.000000    0.756950   -0.471160
+      3          1                   -0.000000   -0.756950   -0.471160
+ ---------------------------------------------------------------------
+ GrdOpt: GIC=T ITstSp=  0 NP=   1 DidLin=F DidDIS=F IDoGRo=0 IDoRot=0
+         ISwap=1 XLin= 0.000 DXMaxT= 0.300
+ CrdRng: NTRed=       3
+ LCrdCa=F IOp=18
+ Enter CrdPBC.
+ Enter LenRIC.
+ Enter LenRIC.
+ CrdBG: NAtInp=     3 NAtoms=     3 NAtNew=     3 NPDir= 0 LGicZM=F NAtDZM=     0 NZG=     0
+ Enter Routine CrBGMt.
+ CrBGMt: DEBUG = .True.
+ CrBGMt Memory Allocations:
+    NAt3  =         9 NCoord=         3 LenBSp=        21 LenBFl=        27
+    LenGFl=         9 LenBxS=         0 MDV   = 102332593
+    IBXTmp=         4 IBFull=        25 IGFull=        79 IBxMat=        88
+    IBxQTm=        88 IV    =        88
+ CrBGMt: i=         1 IPrim=        14 Idq=         1 Idx=         1 NCoord=         3 NAt3=         9
+ CrBGMt: i=         2 IPrim=        17 Idq=         1 Idx=         2 NCoord=         3 NAt3=         9
+ CrBGMt: i=         3 IPrim=        20 Idq=         1 Idx=         3 NCoord=         3 NAt3=         9
+ CrBGMt: i=         4 IPrim=        23 Idq=         1 Idx=         4 NCoord=         3 NAt3=         9
+ CrBGMt: i=         5 IPrim=        26 Idq=         1 Idx=         5 NCoord=         3 NAt3=         9
+ CrBGMt: i=         6 IPrim=        28 Idq=         1 Idx=         6 NCoord=         3 NAt3=         9
+ CrBGMt: i=         7 IPrim=        30 Idq=         2 Idx=         1 NCoord=         3 NAt3=         9
+ CrBGMt: i=         8 IPrim=        33 Idq=         2 Idx=         2 NCoord=         3 NAt3=         9
+ CrBGMt: i=         9 IPrim=        36 Idq=         2 Idx=         3 NCoord=         3 NAt3=         9
+ CrBGMt: i=        10 IPrim=        39 Idq=         2 Idx=         7 NCoord=         3 NAt3=         9
+ CrBGMt: i=        11 IPrim=        41 Idq=         2 Idx=         8 NCoord=         3 NAt3=         9
+ CrBGMt: i=        12 IPrim=        43 Idq=         2 Idx=         9 NCoord=         3 NAt3=         9
+ CrBGMt: i=        13 IPrim=        45 Idq=         3 Idx=         4 NCoord=         3 NAt3=         9
+ CrBGMt: i=        14 IPrim=        57 Idq=         3 Idx=         5 NCoord=         3 NAt3=         9
+ CrBGMt: i=        15 IPrim=        64 Idq=         3 Idx=         6 NCoord=         3 NAt3=         9
+ CrBGMt: i=        16 IPrim=        71 Idq=         3 Idx=         1 NCoord=         3 NAt3=         9
+ CrBGMt: i=        17 IPrim=        80 Idq=         3 Idx=         2 NCoord=         3 NAt3=         9
+ CrBGMt: i=        18 IPrim=        89 Idq=         3 Idx=         3 NCoord=         3 NAt3=         9
+ CrBGMt: i=        19 IPrim=        98 Idq=         3 Idx=         7 NCoord=         3 NAt3=         9
+ CrBGMt: i=        20 IPrim=       105 Idq=         3 Idx=         8 NCoord=         3 NAt3=         9
+ CrBGMt: i=        21 IPrim=       112 Idq=         3 Idx=         9 NCoord=         3 NAt3=         9
+ CrBGMt: IBMtQ= 
+              1
+     1            1
+     2            1
+     3            1
+     4            1
+     5            1
+     6            1
+     7            2
+     8            2
+     9            2
+    10            2
+    11            2
+    12            2
+    13            3
+    14            3
+    15            3
+    16            3
+    17            3
+    18            3
+    19            3
+    20            3
+    21            3
+ CrBGMt: IBXTmp= 
+              1
+     1            1
+     2            1
+     3            1
+     4            2
+     5            2
+     6            2
+     7            3
+     8            3
+     9            3
+    10            4
+    11            4
+    12            5
+    13            5
+    14            6
+    15            6
+    16            7
+    17            7
+    18            8
+    19            8
+    20            9
+    21            9
+ CrBGMt: IBMtX= 
+              1
+     1            1
+     2            7
+     3           16
+     4            2
+     5            8
+     6           17
+     7            3
+     8            9
+     9           18
+    10            4
+    11           13
+    12            5
+    13           14
+    14            6
+    15           15
+    16           10
+    17           19
+    18           11
+    19           20
+    20           12
+    21           21
+ CrBGMt: IBMtJX= 
+              1
+     1            1
+     2            4
+     3            7
+     4           10
+     5           12
+     6           14
+     7           16
+     8           18
+     9           20
+    10           22
+ CrBGMt: Full (IOp=1) B-matrix= 
+                 1             2             3             4             5 
+      1   0.000000D+00 -0.789246D+00  0.614078D+00  0.000000D+00  0.789246D+00
+      2   0.000000D+00  0.789246D+00  0.614078D+00  0.000000D+00  0.000000D+00
+      3   0.000000D+00  0.000000D+00 -0.870940D+00  0.000000D+00  0.338820D+00
+                 6             7             8             9 
+      1  -0.614078D+00  0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.000000D+00 -0.789246D+00 -0.614078D+00
+      3   0.435470D+00  0.000000D+00 -0.338820D+00  0.435470D+00
+ CrBGMt: Full (IOp=11) B-matrix= 
+                 1             2             3 
+      1   0.000000D+00  0.000000D+00  0.000000D+00
+      2  -0.789246D+00  0.789246D+00  0.000000D+00
+      3   0.614078D+00  0.614078D+00 -0.870940D+00
+      4   0.000000D+00  0.000000D+00  0.000000D+00
+      5   0.789246D+00  0.000000D+00  0.338820D+00
+      6  -0.614078D+00  0.000000D+00  0.435470D+00
+      7   0.000000D+00  0.000000D+00  0.000000D+00
+      8   0.000000D+00 -0.789246D+00 -0.338820D+00
+      9   0.000000D+00 -0.614078D+00  0.435470D+00
+ CrBGMt: G-matrix= 
+                 1             2             3 
+      1   0.200000D+01 -0.245817D+00 -0.534825D+00
+      2  -0.245817D+00  0.200000D+01 -0.534825D+00
+      3  -0.534825D+00 -0.534825D+00  0.136740D+01
+ CrBGMt: Low-triangle G-matrix= 
+                1             2             3 
+      1  0.200000D+01
+      2 -0.245817D+00  0.200000D+01
+      3 -0.534825D+00 -0.534825D+00  0.136740D+01
+ Jacobi:  N=     3 NSweep=     1 Done= 1.00D-13 Thrsh= 2.94D-02 NDid=           2  66.7%
+ Jacobi:  N=     3 NSweep=     2 Done= 1.00D-13 Thrsh= 8.83D-05 NDid=           3 100.0%
+ Jacobi:  N=     3 NSweep=     3 Done= 1.00D-13 Thrsh= 9.90D-14 NDid=           3 100.0%
+ Jacobi:  N=     3 NO=     0 IConv= 0 OffTop= 5.35D-01 ATop= 2.00D+00 Done= 1.00D-13 NSweep=     3 NTot=         8
+ CrBGMt: G-matrix eigenvalues from Jacobi= 
+                 1 
+      1   0.234148D+01
+      2   0.224582D+01
+      3   0.780104D+00
+ CrdBG: Low-triangle G-matrix= 
+                1             2             3 
+      1  0.200000D+01
+      2 -0.245817D+00  0.200000D+01
+      3 -0.534825D+00 -0.534825D+00  0.136740D+01
+ Sparse B in FormBX: 
+                 1 
+      1   0.000000D+00
+      2  -0.789246D+00
+      3   0.614078D+00
+      4   0.000000D+00
+      5   0.789246D+00
+      6  -0.614078D+00
+      7   0.000000D+00
+      8   0.789246D+00
+      9   0.614078D+00
+     10   0.000000D+00
+     11  -0.789246D+00
+     12  -0.614078D+00
+     13   0.000000D+00
+     14   0.338820D+00
+     15   0.435470D+00
+     16   0.000000D+00
+     17   0.000000D+00
+     18  -0.870940D+00
+     19   0.000000D+00
+     20  -0.338820D+00
+     21   0.435470D+00
+ IB in FormBX: 
+              1
+     1            1
+     2            1
+     3            1
+     4            1
+     5            1
+     6            1
+     7            2
+     8            2
+     9            2
+    10            2
+    11            2
+    12            2
+    13            3
+    14            3
+    15            3
+    16            3
+    17            3
+    18            3
+    19            3
+    20            3
+    21            3
+    22            1
+    23            7
+    24           16
+    25            2
+    26            8
+    27           17
+    28            3
+    29            9
+    30           18
+    31            4
+    32           13
+    33            5
+    34           14
+    35            6
+    36           15
+    37           10
+    38           19
+    39           11
+    40           20
+    41           12
+    42           21
+    43            1
+    44            4
+    45            7
+    46           10
+    47           12
+    48           14
+    49           16
+    50           18
+    51           20
+    52           22
+ Enter LenRIC.
+ CrdRng: NTRed=       3
+ LCrdCa=F IOp= 0
+ CrdMsk: Enter.
+ Iteration  1 RMS(Cart)=  0.02484416 RMS(Int)=  0.00008872
+ CrdMsk: Enter.
+ Iteration  2 RMS(Cart)=  0.00005070 RMS(Int)=  0.00000000
+ CrdMsk: Enter.
+ Iteration  3 RMS(Cart)=  0.00000000 RMS(Int)=  0.00000000
+      Cartesian coordinates in GrdOpt (after RedCar):      
+ ---------------------------------------------------------------------
+ Center     Atomic                     Coordinates (Angstroms)
+ Number     Number                        X           Y           Z
+ ---------------------------------------------------------------------
+      1          8                    0.000000    0.000000    0.129281
+      2          1                    0.000000    0.783034   -0.476905
+      3          1                   -0.000000   -0.783034   -0.476905
+ ---------------------------------------------------------------------
+ ITry= 1 IFail=0 DXMaxC= 4.93D-02 DCOld= 1.00D+10 DXMaxT= 3.00D-01 DXLimC= 3.00D+00 Rises=F
+ Atom      3 displaced by   0.0267 Angst.
+ Symmetrized Coordinates in SymCor: 
+                 1             2             3 
+      1   0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.147972D+01 -0.147972D+01
+      3   0.244305D+00 -0.901220D+00 -0.901220D+00
+ Final Coordinates in SymCor: 
+                 1             2             3 
+      1   0.000000D+00  0.000000D+00  0.000000D+00
+      2   0.000000D+00  0.147972D+01 -0.147972D+01
+      3   0.244305D+00 -0.901220D+00 -0.901220D+00
+ ClnCor:  largest displacement from symmetrization is 4.02D-15 for atom     3.
+ Variable       Old X    -DE/DX   Delta X   Delta X   Delta X     New X
+                                 (Linear)    (Quad)   (Total)
+    R1        1.81240   0.02944   0.00000   0.05891   0.05891   1.87131
+    R2        1.81240   0.02944   0.00000   0.05891   0.05891   1.87131
+    A1        1.81916   0.00094   0.00000   0.00488   0.00488   1.82403
+         Item               Value     Threshold  Converged?
+ Maximum Force            0.029443     0.000450     NO 
+ RMS     Force            0.024047     0.000300     NO 
+ Maximum Displacement     0.049291     0.001800     NO 
+ RMS     Displacement     0.043076     0.001200     NO 
+ Predicted change in Energy=-1.736797D-03
+          Cartesian coordinates in GrdOpt (final):          
+ ---------------------------------------------------------------------
+ Center     Atomic                     Coordinates (Angstroms)
+ Number     Number                        X           Y           Z
+ ---------------------------------------------------------------------
+      1          8                    0.000000    0.000000    0.129281
+      2          1                    0.000000    0.783034   -0.476905
+      3          1                   -0.000000   -0.783034   -0.476905
+ ---------------------------------------------------------------------
+ Current values (in a.u.) for all GICs with labels (in canonical range):
+ R1              1.87130926
+ R2              1.87130926
+ A1              1.82403450
+                           ----------------------------
+                           ! Non-Optimized Parameters !
+                           ! (Angstroms and Degrees)  !
+ --------------------------                            --------------------------
+ ! Name  Definition              Value          Derivative Info.                !
+ --------------------------------------------------------------------------------
+ ! R1    R(1,2)                  0.9903         -DE/DX =    0.0294              !
+ ! R2    R(1,3)                  0.9903         -DE/DX =    0.0294              !
+ ! A1    A(2,1,3)              104.5095         -DE/DX =    0.0009              !
+ --------------------------------------------------------------------------------
+ GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
+
+ Leave Link  103 at Sun Dec 28 15:48:34 2025, MaxMem=   104857600 cpu:               0.0 elap:               0.0
+
+ Test job not archived.
+ 1\1\GINC-THIOTIMOLINE01\Freq\UFF\ZDO\H2O1\LCRISCI_VB\28-Dec-2025\0\\#p
+  freq=num geom=gic uff iop(1/33=2)\\fake freq run\\0,1\O,0.,0.,0.11779
+ \H,0.,0.75695,-0.47116\H,0.,-0.75695,-0.47116\\Version=ES64L-GDVRevJ.2
+ 8\HF=0.0017368\RMSD=0.000e+00\RMSF=1.821e-02\ZeroPoint=0.0208528\Therm
+ al=0.0236876\ETot=0.0254244\HTot=0.0263686\GTot=0.0049528\Dipole=0.,0.
+ ,0.\DipoleDeriv=0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,
+ 0.,0.,0.,0.,0.,0.,0.,0.,0.\PG=C02V [C2(O1),SGV(H2)]\NImag=0\\-0.031754
+ 90,0.,0.61096856,0.,0.,0.50235889,0.01587750,0.,0.,-0.01617271,0.,-0.3
+ 0548429,0.19315896,0.,0.32761190,0.,0.25003802,-0.25117950,0.,-0.22159
+ 846,0.21462754,0.01587750,0.,0.,0.00029517,0.,0.,-0.01617271,0.,-0.305
+ 48429,-0.19315896,0.,-0.02212761,-0.02843957,0.,0.32761190,0.,-0.25003
+ 802,-0.25117950,0.,0.02843957,0.03655203,0.,0.22159846,0.21462754\\0.,
+ 0.,-0.03534261,0.,-0.02355652,0.01767130,0.,0.02355652,0.01767130\\\@
+
+
+ LET US LEARN TO DREAM, GENTLEMEN, THEN PERHAPS WE SHALL
+ DISCOVER THE TRUTH;  BUT LET US BEWARE OF PUBLISHING
+ OUR DREAMS ABROAD BEFORE THEY HAVE BEEN SCRUTINIZED
+ BY OUR VIGILANT INTELLECT ... LET US ALWAYS ALLOW
+ THE FRUIT TO HANG UNTIL IT IS RIPE.  UNRIPE FRUIT
+ BRINGS EVEN THE GROWER BUT LITTLE PROFIT; IT DAMAGES
+ THE HEALTH OF THOSE WHO CONSUME IT; IT ENDANGERS
+ PARTICULARLY THE YOUTH WHO CANNOT YET DISTINGUISH
+ BETWEEN RIPE AND UNRIPE FRUIT.
+
+                                  -- KEKULE, 1890
+ Job cpu time:       0 days  0 hours  0 minutes  1.5 seconds.
+ Elapsed time:       0 days  0 hours  0 minutes  1.4 seconds.
+ File lengths (MBytes):  RWF=     59 Int=      0 D2E=      0 Chk=     54 Scr=      1
+ Normal termination of Gaussian DV at Sun Dec 28 15:48:34 2025.

@@ -1,0 +1,20 @@
+!scheme
+!  1.0 -1.0
+!end
+
+!SECTION1
+energy_pattern=DF-MP2 energy [au]:
+calc=df-MP2
+basis=cc-pVDZ
+
+
+
+!SECTION2
+energy_pattern=DF-MP2 energy [au]:
+calc=df-MP2
+basis=cc-pVDZ
+dens=2
+symm=off
+
+
+

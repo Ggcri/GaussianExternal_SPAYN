@@ -1,0 +1,18 @@
+!scheme
+!  1.0 -1.0
+!end
+
+!SECTION1
+energy_pattern=FINAL HARTREE-FOCK ENERGY: 
+calc=hf
+basis=custom
+
+
+
+!SECTION2
+energy_pattern=FINAL HARTREE-FOCK ENERGY:
+calc=hf
+basis=custom
+
+
+

@@ -1,0 +1,8 @@
+!scheme
+! 1 1 1
+--link1--
+#P hf/gen force
+--link1--
+#P rohf/gen force
+--link1--
+#P uhf/gen force

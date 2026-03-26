@@ -1,0 +1,5 @@
+Iteration: 1
+Output file: /home/barone/lcrisci_vb/ACTUAL_PROJECTS/MRCC_new_Interface_project/TestingOldVersion/Symmetry/Acetaldehyde_Cs/Gau-4150630.EOu
+Central energy: -150.944532122054
+Number of atoms: 7
+Timestamp: 2025-11-19 18:09:39
