@@ -464,6 +464,41 @@ To compute vibrational frequencies with the External interface, use Gaussian's `
 
 **Note:** Direct Hessian computation via OptFlag=2 is not available in this release. Use `freq=num` instead.
 
+## Interfacing with Post-Processing Tools
+
+When you need to extract results from an External calculation for use with other codes, there are two approaches.
+
+### Option 1: Formatted Checkpoint File (recommended)
+
+Add the `FCHK` keyword to the route section of the External block:
+
+```gaussian
+#p opt=(nomicro) FCHK External="CE mol preamble.dat ending.dat 8 16GB READ parall_n 4"
+```
+
+Gaussian will write a `Test.FChk` formatted checkpoint file containing all standard properties (energy, gradient, geometry, etc.) in a machine-readable format that most post-processing tools can parse.
+
+**Caveat:** If your `.gjf` contains multiple Link1 blocks, each block may overwrite `Test.FChk`. To avoid this, use different `%chk` filenames for each block and generate `.fchk` files afterwards with `formchk`.
+
+### Option 2: Custom Energy Formatting via `!EN_FORMATTING`
+
+You can specify a custom format string in the `ending.dat` file to control how the energy is printed in the Gaussian `.log` output. This is useful for post-processing scripts that parse specific patterns.
+
+Add the `!EN_FORMATTING` keyword to the ending file:
+
+```
+!EN_FORMATTING="SCF Done: E = {e:.12f} Hartree"
+```
+
+The `{e}` placeholder is replaced with the computed energy using Python format syntax. This line is printed to stdout at each External call, and Gaussian captures it in the `.log` file. You can use any format string, for example:
+
+```
+!EN_FORMATTING="ENERGY = {e:.15f}"
+!EN_FORMATTING="Total Energy: {e:20.10f} au"
+```
+
+Gradients and frequencies remain in Gaussian's standard output format (`.log` file) and do not require special handling.
+
 ## Workflow Example: DPCS3 + PCS2
 
 A complete workflow template is provided in `ExtScript/WorkflowTemplate/DPCS3_PCS2_workflow.gjf`.
@@ -986,6 +1021,24 @@ exe_energy = ccsd_energy + mp2_ae - mp2_fc
 ```
 
 **Required:** `exe_energy = energy` (or composite formula) must be present.
+
+#### Exploiting Symmetry with Z-Matrix Geometry
+
+By default, the External interface passes displaced geometries to Molpro in Cartesian (XYZ) format. However, Molpro's symmetry detection works much better with Z-matrix (internal coordinate) input, which can significantly speed up calculations for symmetric molecules.
+
+To enable automatic conversion to Z-matrix format, add `!zmat` to the `!normalmode` section of the `ending.dat` file:
+
+```
+!normalmode
+!symmetry=auto
+!reference_fc=error_dependent
+!energy_error_grad=1e-10
+!zmat
+```
+
+When `!zmat` is enabled, each displaced geometry is automatically converted from Cartesian to Z-matrix format before being passed to Molpro. This allows Molpro to detect and exploit molecular symmetry during the single-point energy calculation, reducing computational cost.
+
+The Cartesian-to-Z-matrix conversion is performed by `gcutil.py`, based on the [geomConvert](https://github.com/robashaw/geomConvert) library by R. A. Shaw (MIT license).
 
 ### ORCA
 
