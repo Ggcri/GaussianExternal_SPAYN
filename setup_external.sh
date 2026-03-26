@@ -264,16 +264,16 @@ setenv ELECEXT_PATH "$SCRIPT_DIR/Executables"
 prepend-path PATH "$SCRIPT_DIR/Executables"${python_env_line}
 
 # Molpro scripts
-setenv PMOL "$extscript_dir/PreambleMolpro"
-setenv EMOL "$extscript_dir/EndingMolpro"
+setenv PMOL "$extscript_dir/Molpro/Preamble"
+setenv EMOL "$extscript_dir/Molpro/Ending"
 
 # Gaussian scripts
-setenv PGAU "$extscript_dir/PreambleGau"
+setenv PGAU "$extscript_dir/Gaussian/Preamble"
 setenv EGAU "$extscript_dir/Gaussian/Ending"
 
 # MRCC scripts
-setenv PMRCC "$extscript_dir/PreambleMR"
-setenv EMRCC "$extscript_dir/EndingMR"
+setenv PMRCC "$extscript_dir/MRCC/Preamble"
+setenv EMRCC "$extscript_dir/MRCC/Ending"
 
 # Orca scripts
 setenv PORCA "$extscript_dir/Orca/Preamble"
@@ -329,12 +329,12 @@ print_summary() {
     if [ "$SKIP_PYTHON" = false ]; then
         echo "  EXT_PYTHON_PATH  -> $PYTHON_PATH"
     fi
-    echo "  PMOL             -> $extscript_dir/PreambleMolpro"
-    echo "  EMOL             -> $extscript_dir/EndingMolpro"
-    echo "  PGAU             -> $extscript_dir/PreambleGau"
+    echo "  PMOL             -> $extscript_dir/Molpro/Preamble"
+    echo "  EMOL             -> $extscript_dir/Molpro/Ending"
+    echo "  PGAU             -> $extscript_dir/Gaussian/Preamble"
     echo "  EGAU             -> $extscript_dir/Gaussian/Ending"
-    echo "  PMRCC            -> $extscript_dir/PreambleMR"
-    echo "  EMRCC            -> $extscript_dir/EndingMR"
+    echo "  PMRCC            -> $extscript_dir/MRCC/Preamble"
+    echo "  EMRCC            -> $extscript_dir/MRCC/Ending"
     echo "  PORCA            -> $extscript_dir/Orca/Preamble"
     echo "  EORCA            -> $extscript_dir/Orca/Ending"
     echo "  EBAS             -> $extscript_dir/BasisSet"

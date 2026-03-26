@@ -10,9 +10,28 @@ default,avtz
 explicit,ri_basis=ri,df_basis=mp2fit,df_basis_exch=jkfit
 
 
-df-hf,basis=jkfit            !Hartree-Fock using the JKFIT density fitting basis
+df-hf,basis=jkfit            
 {pno-lccsd(t)-f12,scale_trip=1}
-exe_energy=energy
+
+ccsd_energy = energy
+
+
+basis=cc-pwcvtz
+
+{rhf,so-sci}
+{mp2}
+
+mp2_fc = energy
+
+
+{rhf,so-sci}
+{mp2;core}
+mp2_ae = energy
+
+
+
+exe_energy = ccsd_energy + mp2_ae - mp2_fc
+
 
 
 !normalmode

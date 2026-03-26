@@ -17,7 +17,7 @@ Options:
     --basis PATH          Path to 3F12red.gbs basis set file
                           (default: $EBAS/Gaussian/3F12red.gbs)
     --preamble PATH       Path to Molpro preamble file
-                          (default: $PMOL/preamble.dat)
+                          (default: $PMOL/preamble_single.dat)
     --ending PATH         Path to Molpro ending file
                           (default: $EMOL/PCS2c_en)
     --output FILE         Output .gjf filename (default: <xyz_basename>.gjf)
@@ -26,6 +26,14 @@ Options:
 import argparse
 import os
 import sys
+
+# Program configuration: maps program name to (abbreviation, preamble env var, ending env var)
+PROGRAM_CONFIG = {
+    'molpro': ('mol', '$PMOL', '$EMOL'),
+    'mrcc':   ('mrcc', '$PMRCC', '$EMRCC'),
+    'orca':   ('orc', '$PORCA', '$EORCA'),
+    'gaussian': ('gau', '$PGAU', '$EGAU'),
+}
 
 
 def parse_xyz(xyz_path):
@@ -61,8 +69,9 @@ def format_geometry(atoms):
 def create_workflow(atoms, charge, spin, nprocs, mem,
                     mol_nprocs, mol_mem, nthreads,
                     basis_path, preamble_path, ending_path,
-                    chk_name):
+                    chk_name, program='molpro'):
     """Generate the 3-block Gaussian Link1 workflow."""
+    prog_abbr = PROGRAM_CONFIG[program][0]
 
     geom = format_geometry(atoms)
 
@@ -109,15 +118,15 @@ DPCS3 Geometry Optimization
 %nprocs=1
 %mem=1GB
 ! -----------------------------------------------------------------------
-! PCS2 Geometry Optimization using the External interface with Molpro
+! PCS2 Geometry Optimization using the External interface with {program}
 ! -----------------------------------------------------------------------
 ! External command breakdown:
 !   CE              = CentralExt (main dispatcher)
-!   mol             = use Molpro as external program
+!   {prog_abbr}             = use {program} as external program
 !   {preamble_path}  = preamble file (gradient combination scheme)
-!   {ending_path}  = ending file (Molpro methods + normal mode settings)
-!   {mol_nprocs}              = processors per Molpro worker
-!   {mol_mem}           = memory per Molpro worker
+!   {ending_path}  = ending file (methods + normal mode settings)
+!   {mol_nprocs}              = processors per worker
+!   {mol_mem}           = memory per worker
 !   READ            = read gradient combination scheme from preamble
 !   parall_n        = parallel gradients along normal mode coordinates
 !   {nthreads}              = number of parallel workers
@@ -127,7 +136,7 @@ DPCS3 Geometry Optimization
 ! Gaussian adds the layer (R), input (.EIn) and output (.EOut) automatically.
 ! readFC reads the Hessian from the DPCS3 frequency calculation (Block 2).
 ! -----------------------------------------------------------------------
-#p opt=(nomicro,readFC,maxcycles=100) output=pickett External="CE mol {preamble_path} {ending_path} {mol_nprocs} {mol_mem} READ parall_n {nthreads}" geom=allcheck
+#p opt=(nomicro,readFC,maxcycles=100) output=pickett External="CE {prog_abbr} {preamble_path} {ending_path} {mol_nprocs} {mol_mem} READ parall_n {nthreads}" geom=allcheck
 
 """
 
@@ -201,20 +210,37 @@ Environment variables (set by the module file after running setup_external.sh):
     pcs2_group.add_argument("--nthreads", type=int, default=4,
                             help="Number of parallel workers for parall_n (default: 4)")
 
+    # Program selection
+    prog_group = parser.add_argument_group("External program")
+    prog_group.add_argument("--program", default="molpro",
+                            choices=list(PROGRAM_CONFIG.keys()),
+                            help="External QC program for the PCS2 step (default: molpro). "
+                                 "This determines the program abbreviation in the External command "
+                                 "and the default environment variables for preamble/ending paths.")
+
     # File paths
     path_group = parser.add_argument_group("File paths (defaults use environment variables from module)")
     path_group.add_argument("--basis", default="$EBAS/Gaussian/3F12red.gbs",
                             help="Path to 3F12red.gbs basis set (default: $EBAS/Gaussian/3F12red.gbs)")
-    path_group.add_argument("--preamble", default="$PMOL/preamble.dat",
-                            help="Molpro preamble file with scheme coefficients (default: $PMOL/preamble.dat)")
-    path_group.add_argument("--ending", default="$EMOL/PCS2c_en",
-                            help="Molpro ending file with methods and displacement strategy (default: $EMOL/PCS2c_en)")
+    path_group.add_argument("--preamble", default=None,
+                            help="Preamble file with scheme coefficients "
+                                 "(default: uses env var for selected program, e.g. $PMOL/preamble_single.dat)")
+    path_group.add_argument("--ending", default=None,
+                            help="Ending file with methods and displacement strategy "
+                                 "(default: uses env var for selected program, e.g. $EMOL/PCS2c_en)")
 
     # Output
     parser.add_argument("--output", default=None,
                         help="Output .gjf filename (default: <xyz_basename>.gjf)")
 
     args = parser.parse_args()
+
+    # Resolve default preamble/ending based on selected program
+    _, preamble_env, ending_env = PROGRAM_CONFIG[args.program]
+    if args.preamble is None:
+        args.preamble = f"{preamble_env}/preamble.dat"
+    if args.ending is None:
+        args.ending = f"{ending_env}/PCS2c_en"
 
     # Resolve the basis set path: Gaussian does NOT expand environment
     # variables after the @ include directive, so we must resolve $EBAS
@@ -256,6 +282,7 @@ Environment variables (set by the module file after running setup_external.sh):
         preamble_path=args.preamble,
         ending_path=args.ending,
         chk_name=chk_name,
+        program=args.program,
     )
 
     with open(out_path, 'w') as f:
@@ -264,6 +291,7 @@ Environment variables (set by the module file after running setup_external.sh):
     print(f"Workflow written to: {out_path}")
     print(f"  Block 1: DPCS3 optimization")
     print(f"  Block 2: DPCS3 frequencies")
+    print(f"  Program: {args.program}")
     print(f"  Block 3: PCS2 optimization (parall_n, {args.nthreads} workers)")
     print(f"  Molpro resources per worker: {args.mol_nprocs} procs, {args.mol_mem}")
     print(f"  Total Molpro resources: {args.mol_nprocs * args.nthreads} procs, {args.nthreads}x{args.mol_mem}")

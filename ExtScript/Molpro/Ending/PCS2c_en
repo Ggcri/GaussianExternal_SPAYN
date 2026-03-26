@@ -1,7 +1,4 @@
-basis={
-default=cc-pvqz-pp-f12
-}
-
+include path/to/2F12red
 
 rhf,so-sci           !Hartree-Fock using the JKFIT density fitting basis
 {ccsd(t)-f12c,scale_trip=1}
@@ -9,16 +6,16 @@ rhf,so-sci           !Hartree-Fock using the JKFIT density fitting basis
 ccsd_energy = energy
 
 
-basis=cc-pwcvtz-PP
+basis=cc-pwcvtz
 
 {rhf,so-sci}
-{ccsd(t)}
+{mp2}
 
 mp2_fc = energy
 
 
 {rhf,so-sci}
-{ccsd(t);core}
+{mp2;core}
 mp2_ae = energy
 
 
@@ -27,16 +24,14 @@ exe_energy = ccsd_energy + mp2_ae - mp2_fc
 
 
 
-!EN_FORMATTING="SCF Done: E = {e:.12f} Hartree"
 !normalmode
 !symmetry=auto
 !reference_fc=error_dependent
 !energy_error_grad=1e-10
 !fakekey
-! scf=xqc  level="b3lyp/gen" pseudo=read
+! scf=xqc  level="b3lyp/gen"
 !fakekeyend
-!@/home/lcrisci/BasisSet/Gaussian/3F12red.gbs
+!@/path/to/BasisSet/Gaussian/3F12red.gbs
 !fakekeyend
-
 
 

@@ -1,24 +1,20 @@
-basis=cc-pvdz-f12
-{rhf,so-sci}
-{ccsd(t)-f12b}
-ccsd_energy = energy
+include /path/to/2F12redBasis
 
+rhf,so-sci
+{ccsd(t)-f12c,scale_trip=1}
+ccsd_energy = energy
 {forces}
 
 basis=cc-pwcvtz
 
 {rhf,so-sci}
 {mp2}
-
 mp2_fc = energy
-
 {forces}
 
 {rhf,so-sci}
 {mp2;core}
 mp2_ae = energy
-
 {forces}
 
-! Composite energy calculation according to scheme, without hf_energy
 exe_energy = ccsd_energy + mp2_ae - mp2_fc

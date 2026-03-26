@@ -1,0 +1,7 @@
+!normalmode
+!symmetry=auto
+!reference_fc=error_dependent
+!energy_error_grad=1e-10
+
+!fakekey
+! scf=xqc level="b3lyp/6-31g(d,p)"

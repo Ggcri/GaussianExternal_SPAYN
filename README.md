@@ -6,6 +6,34 @@ Python wrappers for interfacing Gaussian with external quantum chemistry program
 > The ORCA (`orc`) and eT (`et`) interfaces are experimental and have not been extensively validated.
 > Use them at your own risk. For production calculations, use **Molpro** or **MRCC**.
 
+## Table of Contents
+
+- [Quick Start](#quick-start)
+- [Command Structure](#command-structure)
+- [Memory and Resource Management](#memory-and-resource-management)
+- [Configuration Files](#configuration-files)
+- [Gradient Combination Schemes](#gradient-combination-schemes)
+- [Parallel Gradient Calculations](#parallel-gradient-calculations)
+- [Fake Frequency Calculation (!fakekey)](#fake-frequency-calculation-fakekey)
+- [Displacement Strategies](#displacement-strategies)
+- [Computing Frequencies](#computing-frequencies)
+- [Interfacing with Post-Processing Tools](#interfacing-with-post-processing-tools)
+- [Workflow Example: DPCS3 + PCS2](#workflow-example-dpcs3--pcs2)
+- [Complete Working Examples](#complete-working-examples)
+- [Gaussian Integration](#gaussian-integration)
+- [Multi-Node MPI](#multi-node-mpi)
+- [PBS/SLURM Job Submission](#pbsslurm-job-submission)
+- [Program-Specific Configuration](#program-specific-configuration)
+  - [Molpro](#molpro)
+  - [MRCC](#mrcc)
+  - [ORCA (experimental)](#orca)
+  - [Gaussian (as External Program)](#gaussian-as-external-program)
+  - [eT (experimental)](#et)
+- [Environment Variables](#environment-variables)
+- [Troubleshooting](#troubleshooting)
+- [Directory Structure](#directory-structure)
+- [Quick Reference](#quick-reference)
+
 ## Quick Start
 
 ### Prerequisites
@@ -1042,7 +1070,11 @@ When `!zmat` is enabled, each displaced geometry is automatically converted from
 
 The Cartesian-to-Z-matrix conversion is performed by `gcutil.py`, based on the [geomConvert](https://github.com/robashaw/geomConvert) library by R. A. Shaw (MIT license).
 
+---
+
 ### ORCA
+
+> **Experimental:** The ORCA interface has not been extensively validated. Use with caution.
 
 **Preamble:**
 ```
@@ -1050,6 +1082,8 @@ The Cartesian-to-Z-matrix conversion is performed by `gcutil.py`, based on the [
 ```
 
 **Ending** — usually empty for single-method calculations.
+
+---
 
 ### MRCC
 
@@ -1172,6 +1206,8 @@ calc=CCSD
 
 **MRCC memory:** Total memory is divided by MPI processes. With `16GB` and `2` MPI: each process gets 8GB.
 
+---
+
 ### Gaussian (as External Program)
 
 The External interface can call Gaussian itself as the electronic structure program, useful for composite schemes combining multiple Gaussian calculations.
@@ -1201,7 +1237,11 @@ The External interface can call Gaussian itself as the electronic structure prog
 
 Environment variables (`$PGAU`, `$EGAU`) can be used for file paths.
 
+---
+
 ### eT
+
+> **Experimental:** The eT interface has not been extensively validated. Use with caution.
 
 **Environment:** `ET_PATH` must point to the directory containing `eT_launch.py`.
 
@@ -1268,15 +1308,18 @@ External/
 │   ├── WorkflowTemplate/     # Complete workflow examples
 │   │   └── Molpro/           # PCS2/PPCS2 preamble+ending pairs
 │   ├── DisplacementStrategies/  # Normal mode displacement strategies
-│   ├── EndingMolpro/         # Molpro ending templates
-│   ├── PreambleMolpro/       # Molpro preamble templates
-│   ├── PreambleGau/          # Gaussian preamble templates
-│   ├── PreambleMR/           # MRCC preamble templates
-│   ├── EndingMR/             # MRCC ending templates
-│   ├── Gaussian/             # Gaussian default files
-│   ├── Molpro/               # Molpro default files
-│   ├── MRCC/                 # MRCC default files
-│   └── Orca/                 # ORCA default files
+│   ├── Molpro/
+│   │   ├── Ending/           # Molpro ending templates ($EMOL)
+│   │   └── Preamble/         # Molpro preamble templates ($PMOL)
+│   ├── Gaussian/
+│   │   ├── Ending/           # Gaussian ending templates ($EGAU)
+│   │   └── Preamble/         # Gaussian preamble templates ($PGAU)
+│   ├── MRCC/
+│   │   ├── Ending/           # MRCC ending templates ($EMRCC)
+│   │   └── Preamble/         # MRCC preamble templates ($PMRCC)
+│   ├── Orca/
+│   │   ├── Ending/           # ORCA ending templates ($EORCA)
+│   │   └── Preamble/         # ORCA preamble templates ($PORCA)
 ├── Examples/                 # Working calculation examples
 │   └── MRCC_Examples/       # MRCC examples (custom basis, mixed mode, symmetry, etc.)
 ├── tests/                    # Test suite

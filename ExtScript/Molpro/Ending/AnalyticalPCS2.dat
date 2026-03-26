@@ -11,11 +11,11 @@ forces
 
 to_patch =  HF_QZ - HF_DZ
 
-include /home/barone/lcrisci_vb/MolproProcedures/basis/TrdRowElements_3F12
+include /path/to/BasisSet/Molpro/TrdRowElements_3F12
 {rhf,so}
 
 
-{df-ccsd(t)-f12b,df_basis=avdz-f12/mp2fit,df_basis_exch=avdz-f12/jkfit,ri_basis=avdz/jkfit}
+{df-ccsd(t)-f12c,df_basis=avdz-f12/mp2fit,df_basis_exch=avdz-f12/jkfit,ri_basis=avdz/jkfit,scale_trip=1}
 ccsd_energy = energy
 {forces}
 
