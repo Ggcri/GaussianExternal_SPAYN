@@ -1,0 +1,17 @@
+PROGRAM: MolproExt_project
+NPROCS: 50
+MEMORY: 220.0GB
+WARNING: Molpro returned non-zero exit code: 255
+
+--- Last lines of qmolpro.out ---
+
+Diagnostic files saved to /leonardo/home/userexternal/lcrisci1/Tests/RunExternal/CoronenePPCS2/Iterations/Iteration_1/tasks/mode_97_A1G_up/molpro_tmp_2259962:
+  qmolpro.out
+
+======================================================================
+ERROR: Molpro calculation failed!
+  Exit code: 255
+  Output directory: /leonardo/home/userexternal/lcrisci1/Tests/RunExternal/CoronenePPCS2/Iterations/Iteration_1/tasks/mode_97_A1G_up/molpro_tmp_2259962
+  Check the output files in the directory above for error details.
+======================================================================
+

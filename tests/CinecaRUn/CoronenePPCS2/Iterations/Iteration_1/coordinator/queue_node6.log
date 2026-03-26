@@ -1,0 +1,25 @@
+
+Module loaded, path to binaries is /leonardo/home/userexternal/lcrisci1/MyBin/Molpro/2025.3
+
+
+Module loaded, path to binaries is /leonardo/home/userexternal/lcrisci1/MyBin/Molpro/2025.3
+
+========================================
+Multi-Queue Worker: node6
+Start time: Thu Mar 26 12:38:11 CET 2026
+Hostname: lrdn4885.leonardo.local
+SLURM Resources: nodes=1, cpus-per-task=100, mem=400GB
+Energy Resources: nprocs=50, mem=220.0GB
+Tasks file: /leonardo/home/userexternal/lcrisci1/Tests/RunExternal/CoronenePPCS2/Iterations/Iteration_1/coordinator/tasks_node6.json
+Results file: /leonardo/home/userexternal/lcrisci1/Tests/RunExternal/CoronenePPCS2/Iterations/Iteration_1/coordinator/results_node6.json
+========================================
+Loading tasks from /leonardo/home/userexternal/lcrisci1/Tests/RunExternal/CoronenePPCS2/Iterations/Iteration_1/coordinator/tasks_node6.json
+Loaded 1 tasks
+Task mode_64_A1G_up: E = -921.3691523200
+Writing results to /leonardo/home/userexternal/lcrisci1/Tests/RunExternal/CoronenePPCS2/Iterations/Iteration_1/coordinator/results_node6.json
+Creating sentinel file: /leonardo/home/userexternal/lcrisci1/Tests/RunExternal/CoronenePPCS2/Iterations/Iteration_1/coordinator/sentinel_node6.done
+Worker completed successfully
+========================================
+Worker completed with status: 0
+End time: Thu Mar 26 13:31:01 CET 2026
+========================================
