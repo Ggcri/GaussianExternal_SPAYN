@@ -1,0 +1,12 @@
+%oldchk=Coronene_DPCS3_freq.chk
+%chk=Coronene_PPCS2.chk
+%nprocs=1
+#p opt(nomicro) output=pickett External="CE mol $PMOL/test_dl.dat $EMOL/ending.dat 100 400 read parall_n_mpi 1"  symmetry=loose geom=allcheck
+
+
+
+
+
+
+
+

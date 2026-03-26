@@ -1,0 +1,461 @@
+<?xml version="1.0"?>
+<molpro xmlns="http://www.molpro.net/schema/molpro-output" xmlns:xsd="http://www.w3.org/1999/XMLSchema"
+  xmlns:cml="http://www.xml-cml.org/schema" xmlns:stm="http://www.xml-cml.org/schema" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+ <job>
+  <stm:metadataList>
+   <stm:metadata name="dc:date" content="2026-03-26T12:38:25+01:00"/>
+   <stm:metadata name="dc:creator" content="lcrisci1"/>
+   <stm:metadata name="cmlm:insilico" content="Molpro"/>
+  </stm:metadataList>
+  <platform pid="658074">
+   <version major="2025" minor="3" SHA="8b4e6ca4f3f93c17213d6e40ebba8bc80473818c" integer_bits="64">
+    2025.3
+    <date year="2026" month="3" day="26" hour="12" minute="38" second="25">
+     2026-03-26T12:38:25
+    </date>
+   </version>
+   <licence id="vbarone"/>
+   <parallel processes="49" nodes="1" all_processes="49" omp_get_thread_limit="1" omp_get_max_threads="1" mkl_get_max_threads="1"/>
+   <dimensions natom="400" nvalence="500" nvalence_pno="1000" nbasis="12000" nstate="100" nsymm="16" nrec="1024" nprim="2" ncol="100"/>
+  </platform>
+  <jobstep command="RHF-SCF" commandset="SCFPRO">
+   <cml:molecule>
+    <cml:symmetry pointGroup="D2h">
+     <cml:transform3 title="generator" id="X">
+      -1  0  0  0  0  1  0  0  0  0  1  0  0  0  0  1
+     </cml:transform3>
+     <cml:transform3 title="generator" id="Y">
+       1  0  0  0  0 -1  0  0  0  0  1  0  0  0  0  1
+     </cml:transform3>
+     <cml:transform3 title="generator" id="Z">
+       1  0  0  0  0  1  0  0  0  0 -1  0  0  0  0  1
+     </cml:transform3>
+    </cml:symmetry>
+    <cml:atomArray>
+     <cml:atom id="a1" elementType="C" x3="1.233167805582" y3="-0.711969764503255" z3="0.0"/>
+     <cml:atom id="a2" elementType="C" x3="0.0" y3="-1.423939529018" z3="0.0"/>
+     <cml:atom id="a3" elementType="C" x3="1.233167805582" y3="0.711969764503255" z3="0.0"/>
+     <cml:atom id="a4" elementType="C" x3="-1.233167805582" y3="-0.711969764503255" z3="0.0"/>
+     <cml:atom id="a5" elementType="C" x3="0.0" y3="1.423939529018" z3="0.0"/>
+     <cml:atom id="a6" elementType="C" x3="-1.233167805582" y3="0.711969764503255" z3="0.0"/>
+     <cml:atom id="a7" elementType="C" x3="2.458238159588" y3="-1.41926446315949" z3="0.0"/>
+     <cml:atom id="a8" elementType="C" x3="0.0" y3="-2.83852892634" z3="0.0"/>
+     <cml:atom id="a9" elementType="C" x3="2.458238159588" y3="1.41926446315949" z3="0.0"/>
+     <cml:atom id="a10" elementType="C" x3="-2.458238159588" y3="-1.41926446315949" z3="0.0"/>
+     <cml:atom id="a11" elementType="C" x3="0.0" y3="2.83852892634" z3="0.0"/>
+     <cml:atom id="a12" elementType="C" x3="-2.458238159588" y3="1.41926446315949" z3="0.0"/>
+     <cml:atom id="a13" elementType="C" x3="3.67522710562976" y3="-0.684880106840212" z3="0.0"/>
+     <cml:atom id="a14" elementType="C" x3="1.24448998191905" y3="-3.52528009153023" z3="0.0"/>
+     <cml:atom id="a15" elementType="C" x3="2.43073712381241" y3="-2.84039998475051" z3="0.0"/>
+     <cml:atom id="a16" elementType="C" x3="-3.67522710562976" y3="-0.684880106840212" z3="0.0"/>
+     <cml:atom id="a17" elementType="C" x3="-1.24448998191905" y3="3.52528009153023" z3="0.0"/>
+     <cml:atom id="a18" elementType="C" x3="2.43073712381241" y3="2.84039998475051" z3="0.0"/>
+     <cml:atom id="a19" elementType="C" x3="-3.67522710562976" y3="0.684880106840212" z3="0.0"/>
+     <cml:atom id="a20" elementType="C" x3="1.24448998191905" y3="3.52528009153023" z3="0.0"/>
+     <cml:atom id="a21" elementType="C" x3="3.67522710562976" y3="0.684880106840212" z3="0.0"/>
+     <cml:atom id="a22" elementType="C" x3="-2.43073712381241" y3="2.84039998475051" z3="0.0"/>
+     <cml:atom id="a23" elementType="C" x3="-1.24448998191905" y3="-3.52528009153023" z3="0.0"/>
+     <cml:atom id="a24" elementType="C" x3="-2.43073712381241" y3="-2.84039998475051" z3="0.0"/>
+     <cml:atom id="a25" elementType="H" x3="4.6130427871199" y3="-1.2305300174245" z3="0.0"/>
+     <cml:atom id="a26" elementType="H" x3="1.24085113728634" y3="-4.61027725150107" z3="0.0"/>
+     <cml:atom id="a27" elementType="H" x3="3.37219164859491" y3="-3.37974723363884" z3="0.0"/>
+     <cml:atom id="a28" elementType="H" x3="-4.6130427871199" y3="1.2305300174245" z3="0.0"/>
+     <cml:atom id="a29" elementType="H" x3="-1.24085113728634" y3="4.61027725150107" z3="0.0"/>
+     <cml:atom id="a30" elementType="H" x3="4.6130427871199" y3="1.2305300174245" z3="0.0"/>
+     <cml:atom id="a31" elementType="H" x3="1.24085113728634" y3="4.61027725150107" z3="0.0"/>
+     <cml:atom id="a32" elementType="H" x3="-4.6130427871199" y3="-1.2305300174245" z3="0.0"/>
+     <cml:atom id="a33" elementType="H" x3="-1.24085113728634" y3="-4.61027725150107" z3="0.0"/>
+     <cml:atom id="a34" elementType="H" x3="3.37219164859491" y3="3.37974723363884" z3="0.0"/>
+     <cml:atom id="a35" elementType="H" x3="-3.37219164859491" y3="3.37974723363884" z3="0.0"/>
+     <cml:atom id="a36" elementType="H" x3="-3.37219164859491" y3="-3.37974723363884" z3="0.0"/>
+    </cml:atomArray>
+    <cml:bondArray>
+     <cml:bond atomRefs2="a1 a2"/>
+     <cml:bond atomRefs2="a3 a4"/>
+     <cml:bond atomRefs2="a1 a5"/>
+     <cml:bond atomRefs2="a3 a5"/>
+     <cml:bond atomRefs2="a2 a6"/>
+     <cml:bond atomRefs2="a4 a6"/>
+     <cml:bond atomRefs2="a1 a7"/>
+     <cml:bond atomRefs2="a2 a8"/>
+     <cml:bond atomRefs2="a3 a9"/>
+     <cml:bond atomRefs2="a4 a10"/>
+     <cml:bond atomRefs2="a5 a11"/>
+     <cml:bond atomRefs2="a6 a12"/>
+     <cml:bond atomRefs2="a7 a13"/>
+     <cml:bond atomRefs2="a9 a14"/>
+     <cml:bond atomRefs2="a10 a15"/>
+     <cml:bond atomRefs2="a14 a15"/>
+     <cml:bond atomRefs2="a8 a16"/>
+     <cml:bond atomRefs2="a13 a16"/>
+     <cml:bond atomRefs2="a11 a17"/>
+     <cml:bond atomRefs2="a12 a18"/>
+     <cml:bond atomRefs2="a12 a19"/>
+     <cml:bond atomRefs2="a11 a20"/>
+     <cml:bond atomRefs2="a7 a21"/>
+     <cml:bond atomRefs2="a17 a21"/>
+     <cml:bond atomRefs2="a8 a22"/>
+     <cml:bond atomRefs2="a19 a22"/>
+     <cml:bond atomRefs2="a10 a23"/>
+     <cml:bond atomRefs2="a18 a23"/>
+     <cml:bond atomRefs2="a9 a24"/>
+     <cml:bond atomRefs2="a20 a24"/>
+     <cml:bond atomRefs2="a13 a25"/>
+     <cml:bond atomRefs2="a15 a26"/>
+     <cml:bond atomRefs2="a16 a27"/>
+     <cml:bond atomRefs2="a14 a28"/>
+     <cml:bond atomRefs2="a17 a29"/>
+     <cml:bond atomRefs2="a18 a30"/>
+     <cml:bond atomRefs2="a19 a31"/>
+     <cml:bond atomRefs2="a20 a32"/>
+     <cml:bond atomRefs2="a21 a33"/>
+     <cml:bond atomRefs2="a22 a34"/>
+     <cml:bond atomRefs2="a23 a35"/>
+     <cml:bond atomRefs2="a24 a36"/>
+    </cml:bondArray>
+   </cml:molecule>
+   <property name="Energy" method="RHF" principal="true" stateSymmetry="1" stateNumber="1" stateMultiplicity="1" value="-916.01352445582"/>
+   <property name="One-electron energy" method="RHF" stateMultiplicity="1" value="-4887.75923270076"/>
+   <property name="Two-electron energy" method="RHF" stateMultiplicity="1" value="2136.5442520632"/>
+   <property name="Kinetic energy" method="RHF" stateMultiplicity="1" value="915.59664011792"/>
+   <property name="Nuclear energy" method="RHF" stateMultiplicity="1" value="1835.20145618174"/>
+   <property name="Virial quotient" method="RHF" stateMultiplicity="1" value="-1.00045531440334"/>
+   <property name="Dipole moment" method="RHF" principal="true" stateSymmetry="1" stateNumber="1" stateMultiplicity="1" value="0.0 0.0 0.0"/>
+   <molecule id="M79F17B1" method="RHF-SCF" energy="-916.01352445582">
+    <cml:molecule id="M79F17B1" spinMultiplicity="1" formalCharge="0">
+     <cml:symmetry pointGroup="D2h" irreducibleRepresentation="1">
+      <cml:transform3 title="generator" id="X">
+      -1  0  0  0  0  1  0  0  0  0  1  0  0  0  0  1
+      </cml:transform3>
+      <cml:transform3 title="generator" id="Y">
+       1  0  0  0  0 -1  0  0  0  0  1  0  0  0  0  1
+      </cml:transform3>
+      <cml:transform3 title="generator" id="Z">
+       1  0  0  0  0  1  0  0  0  0 -1  0  0  0  0  1
+      </cml:transform3>
+     </cml:symmetry>
+     <cml:atomArray>
+      <cml:atom id="a1" elementType="C" x3="1.233167805582" y3="-0.711969764503255" z3="0.0"/>
+      <cml:atom id="a2" elementType="C" x3="0.0" y3="-1.423939529018" z3="0.0"/>
+      <cml:atom id="a3" elementType="C" x3="1.233167805582" y3="0.711969764503255" z3="0.0"/>
+      <cml:atom id="a4" elementType="C" x3="-1.233167805582" y3="-0.711969764503255" z3="0.0"/>
+      <cml:atom id="a5" elementType="C" x3="0.0" y3="1.423939529018" z3="0.0"/>
+      <cml:atom id="a6" elementType="C" x3="-1.233167805582" y3="0.711969764503255" z3="0.0"/>
+      <cml:atom id="a7" elementType="C" x3="2.458238159588" y3="-1.41926446315949" z3="0.0"/>
+      <cml:atom id="a8" elementType="C" x3="0.0" y3="-2.83852892634" z3="0.0"/>
+      <cml:atom id="a9" elementType="C" x3="2.458238159588" y3="1.41926446315949" z3="0.0"/>
+      <cml:atom id="a10" elementType="C" x3="-2.458238159588" y3="-1.41926446315949" z3="0.0"/>
+      <cml:atom id="a11" elementType="C" x3="0.0" y3="2.83852892634" z3="0.0"/>
+      <cml:atom id="a12" elementType="C" x3="-2.458238159588" y3="1.41926446315949" z3="0.0"/>
+      <cml:atom id="a13" elementType="C" x3="3.67522710562976" y3="-0.684880106840212" z3="0.0"/>
+      <cml:atom id="a14" elementType="C" x3="1.24448998191905" y3="-3.52528009153023" z3="0.0"/>
+      <cml:atom id="a15" elementType="C" x3="2.43073712381241" y3="-2.84039998475051" z3="0.0"/>
+      <cml:atom id="a16" elementType="C" x3="-3.67522710562976" y3="-0.684880106840212" z3="0.0"/>
+      <cml:atom id="a17" elementType="C" x3="-1.24448998191905" y3="3.52528009153023" z3="0.0"/>
+      <cml:atom id="a18" elementType="C" x3="2.43073712381241" y3="2.84039998475051" z3="0.0"/>
+      <cml:atom id="a19" elementType="C" x3="-3.67522710562976" y3="0.684880106840212" z3="0.0"/>
+      <cml:atom id="a20" elementType="C" x3="1.24448998191905" y3="3.52528009153023" z3="0.0"/>
+      <cml:atom id="a21" elementType="C" x3="3.67522710562976" y3="0.684880106840212" z3="0.0"/>
+      <cml:atom id="a22" elementType="C" x3="-2.43073712381241" y3="2.84039998475051" z3="0.0"/>
+      <cml:atom id="a23" elementType="C" x3="-1.24448998191905" y3="-3.52528009153023" z3="0.0"/>
+      <cml:atom id="a24" elementType="C" x3="-2.43073712381241" y3="-2.84039998475051" z3="0.0"/>
+      <cml:atom id="a25" elementType="H" x3="4.6130427871199" y3="-1.2305300174245" z3="0.0"/>
+      <cml:atom id="a26" elementType="H" x3="1.24085113728634" y3="-4.61027725150107" z3="0.0"/>
+      <cml:atom id="a27" elementType="H" x3="3.37219164859491" y3="-3.37974723363884" z3="0.0"/>
+      <cml:atom id="a28" elementType="H" x3="-4.6130427871199" y3="1.2305300174245" z3="0.0"/>
+      <cml:atom id="a29" elementType="H" x3="-1.24085113728634" y3="4.61027725150107" z3="0.0"/>
+      <cml:atom id="a30" elementType="H" x3="4.6130427871199" y3="1.2305300174245" z3="0.0"/>
+      <cml:atom id="a31" elementType="H" x3="1.24085113728634" y3="4.61027725150107" z3="0.0"/>
+      <cml:atom id="a32" elementType="H" x3="-4.6130427871199" y3="-1.2305300174245" z3="0.0"/>
+      <cml:atom id="a33" elementType="H" x3="-1.24085113728634" y3="-4.61027725150107" z3="0.0"/>
+      <cml:atom id="a34" elementType="H" x3="3.37219164859491" y3="3.37974723363884" z3="0.0"/>
+      <cml:atom id="a35" elementType="H" x3="-3.37219164859491" y3="3.37974723363884" z3="0.0"/>
+      <cml:atom id="a36" elementType="H" x3="-3.37219164859491" y3="-3.37974723363884" z3="0.0"/>
+     </cml:atomArray>
+     <cml:bondArray>
+      <cml:bond atomRefs2="a1 a2"/>
+      <cml:bond atomRefs2="a3 a4"/>
+      <cml:bond atomRefs2="a1 a5"/>
+      <cml:bond atomRefs2="a3 a5"/>
+      <cml:bond atomRefs2="a2 a6"/>
+      <cml:bond atomRefs2="a4 a6"/>
+      <cml:bond atomRefs2="a1 a7"/>
+      <cml:bond atomRefs2="a2 a8"/>
+      <cml:bond atomRefs2="a3 a9"/>
+      <cml:bond atomRefs2="a4 a10"/>
+      <cml:bond atomRefs2="a5 a11"/>
+      <cml:bond atomRefs2="a6 a12"/>
+      <cml:bond atomRefs2="a7 a13"/>
+      <cml:bond atomRefs2="a9 a14"/>
+      <cml:bond atomRefs2="a10 a15"/>
+      <cml:bond atomRefs2="a14 a15"/>
+      <cml:bond atomRefs2="a8 a16"/>
+      <cml:bond atomRefs2="a13 a16"/>
+      <cml:bond atomRefs2="a11 a17"/>
+      <cml:bond atomRefs2="a12 a18"/>
+      <cml:bond atomRefs2="a12 a19"/>
+      <cml:bond atomRefs2="a11 a20"/>
+      <cml:bond atomRefs2="a7 a21"/>
+      <cml:bond atomRefs2="a17 a21"/>
+      <cml:bond atomRefs2="a8 a22"/>
+      <cml:bond atomRefs2="a19 a22"/>
+      <cml:bond atomRefs2="a10 a23"/>
+      <cml:bond atomRefs2="a18 a23"/>
+      <cml:bond atomRefs2="a9 a24"/>
+      <cml:bond atomRefs2="a20 a24"/>
+      <cml:bond atomRefs2="a13 a25"/>
+      <cml:bond atomRefs2="a15 a26"/>
+      <cml:bond atomRefs2="a16 a27"/>
+      <cml:bond atomRefs2="a14 a28"/>
+      <cml:bond atomRefs2="a17 a29"/>
+      <cml:bond atomRefs2="a18 a30"/>
+      <cml:bond atomRefs2="a19 a31"/>
+      <cml:bond atomRefs2="a20 a32"/>
+      <cml:bond atomRefs2="a21 a33"/>
+      <cml:bond atomRefs2="a22 a34"/>
+      <cml:bond atomRefs2="a23 a35"/>
+      <cml:bond atomRefs2="a24 a36"/>
+     </cml:bondArray>
+    </cml:molecule>
+    <symmetry>
+     <irreducibleRepresentation index="1" id="Ag" cartesian=""/>
+     <irreducibleRepresentation index="2" id="B3u" cartesian="x"/>
+     <irreducibleRepresentation index="3" id="B2u" cartesian="y"/>
+     <irreducibleRepresentation index="4" id="B1g" cartesian="xy"/>
+     <irreducibleRepresentation index="5" id="B1u" cartesian="z"/>
+     <irreducibleRepresentation index="6" id="B2g" cartesian="xz"/>
+     <irreducibleRepresentation index="7" id="B3g" cartesian="yz"/>
+     <irreducibleRepresentation index="8" id="Au" cartesian="xyz"/>
+    </symmetry>
+    <basisSet id="ORBITAL" length="396" angular="spherical" type="gaussian" groups="96" cartesianLength="420" primitives="732">
+     <basisGroup id="1" minL="0" maxL="0" primitives="9" angular="spherical" contractions="3">
+      <basisExponents>
+        6665.0 1000.0 228.0 64.71 21.06 7.495 2.797 0.5215 0.1596
+      </basisExponents>
+      <basisContraction id="1">
+        0.692000179266016E-03 0.532900138050376E-02 0.270770070144305E-01 0.10171802635055 0.274740071172753 0.448564116202719 0.285074073849827 0.152040039386713E-01 -0.31910008266443E-02
+      </basisContraction>
+      <basisContraction id="2">
+        -0.146000064227371E-03 -0.115400050766018E-02 -0.572500251850478E-02 -0.233120102552635E-01 -0.639550281346678E-01 -0.149981065978667 -0.127262055984272 0.544529239545658 0.580496255368027
+      </basisContraction>
+      <basisContraction id="3">
+        0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0
+      </basisContraction>
+     </basisGroup>
+     <basisGroup id="2" minL="1" maxL="1" primitives="4" angular="spherical" contractions="2">
+      <basisExponents>
+        9.439 2.002 0.5456 0.1517
+      </basisExponents>
+      <basisContraction id="1">
+        0.381090212706097E-01 0.209480116921654 0.508557283852042 0.468842261685041
+      </basisContraction>
+      <basisContraction id="2">
+        0.0 0.0 0.0 1.0
+      </basisContraction>
+     </basisGroup>
+     <basisGroup id="3" minL="2" maxL="2" primitives="1" angular="spherical" contractions="1">
+      <basisExponents>
+        0.55
+      </basisExponents>
+      <basisContraction id="1">
+        1.0
+      </basisContraction>
+     </basisGroup>
+     <basisGroup id="4" minL="0" maxL="0" primitives="4" angular="spherical" contractions="2">
+      <basisExponents>
+        13.01 1.962 0.4446 0.122
+      </basisExponents>
+      <basisContraction id="1">
+        0.196849899909421E-01 0.137976929844054 0.478147756880313 0.501239745138928
+      </basisContraction>
+      <basisContraction id="2">
+        0.0 0.0 0.0 1.0
+      </basisContraction>
+     </basisGroup>
+     <basisGroup id="5" minL="1" maxL="1" primitives="1" angular="spherical" contractions="1">
+      <basisExponents>
+        0.727
+      </basisExponents>
+      <basisContraction id="1">
+        1.0
+      </basisContraction>
+     </basisGroup>
+     <association xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="extended">
+      <bases xlink:type="locator" xlink:label="bases"
+        xlink:href="#xpointer(//molecule[@id='M79F17B1']//basisGroup[@id='1' or @id='2' or @id='3'])"/>
+      <atoms xlink:label="atoms"
+        xlink:href="#xpointer(//molecule[@id='M79F17B1']//atom[@id='a1' or @id='a3' or @id='a4' or @id='a6' or @id='a2' or @id='a5' or @id='a7' or @id='a9' or @id='a10' or @id='a12' or @id='a8' or @id='a11' or @id='a13' or @id='a16' or @id='a19' or @id='a21' or @id='a14' or @id='a17' or @id='a20' or @id='a23' or @id='a15' or @id='a18' or @id='a22' or @id='a24'])"/>
+      <associate xlink:type="arc" xlink:from="atoms" xlink:to="bases"/>
+     </association>
+     <association xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="extended">
+      <bases xlink:type="locator" xlink:label="bases" xlink:href="#xpointer(//molecule[@id='M79F17B1']//basisGroup[@id='4' or @id='5'])"/>
+      <atoms xlink:label="atoms"
+        xlink:href="#xpointer(//molecule[@id='M79F17B1']//atom[@id='a25' or @id='a28' or @id='a30' or @id='a32' or @id='a26' or @id='a29' or @id='a31' or @id='a33' or @id='a27' or @id='a34' or @id='a35' or @id='a36'])"/>
+      <associate xlink:type="arc" xlink:from="atoms" xlink:to="bases"/>
+     </association>
+    </basisSet>
+    <orbitals sidecar="qmolpro.xml-sidecar" basis="ORBITAL" angular="cartesian" method="RHF" type="CANONICAL" spin="closed" stateID="1"
+      state_symmetry="1" state_nelec="156" state_ms2="0">
+     <orbital occupation="2.0" energy="-11.251186" ID="1.1" symmetryID="1" sidecar_offset="0">
+     </orbital>
+     <orbital occupation="2.0" energy="-11.250865" ID="1.3" symmetryID="3" sidecar_offset="1930">
+     </orbital>
+     <orbital occupation="2.0" energy="-11.250865" ID="1.2" symmetryID="2" sidecar_offset="3860">
+     </orbital>
+     <orbital occupation="2.0" energy="-11.250498" ID="2.1" symmetryID="1" sidecar_offset="5678">
+     </orbital>
+     <orbital occupation="2.0" energy="-11.250498" ID="1.4" symmetryID="4" sidecar_offset="7608">
+     </orbital>
+     <orbital occupation="2.0" energy="-11.250435" ID="2.3" symmetryID="3" sidecar_offset="9426">
+     </orbital>
+     <orbital occupation="2.0" energy="-11.249943" ID="3.1" symmetryID="1" sidecar_offset="11356">
+     </orbital>
+     <orbital occupation="2.0" energy="-11.249796" ID="3.3" symmetryID="3" sidecar_offset="13286">
+     </orbital>
+     <orbital occupation="2.0" energy="-11.249796" ID="2.2" symmetryID="2" sidecar_offset="15216">
+     </orbital>
+     <orbital occupation="2.0" energy="-11.249149" ID="4.1" symmetryID="1" sidecar_offset="17034">
+     </orbital>
+     <orbital occupation="2.0" energy="-11.249149" ID="2.4" symmetryID="4" sidecar_offset="18964">
+     </orbital>
+     <orbital occupation="2.0" energy="-11.248715" ID="4.3" symmetryID="3" sidecar_offset="20782">
+     </orbital>
+     <orbital occupation="2.0" energy="-11.245567" ID="3.2" symmetryID="2" sidecar_offset="22712">
+     </orbital>
+     <orbital occupation="2.0" energy="-11.245538" ID="3.4" symmetryID="4" sidecar_offset="24594">
+     </orbital>
+     <orbital occupation="2.0" energy="-11.245538" ID="5.1" symmetryID="1" sidecar_offset="26412">
+     </orbital>
+     <orbital occupation="2.0" energy="-11.245478" ID="5.3" symmetryID="3" sidecar_offset="28342">
+     </orbital>
+     <orbital occupation="2.0" energy="-11.245478" ID="4.2" symmetryID="2" sidecar_offset="30272">
+     </orbital>
+     <orbital occupation="2.0" energy="-11.245446" ID="6.1" symmetryID="1" sidecar_offset="32090">
+     </orbital>
+     <orbital occupation="2.0" energy="-11.244211" ID="4.4" symmetryID="4" sidecar_offset="34020">
+     </orbital>
+     <orbital occupation="2.0" energy="-11.244184" ID="5.2" symmetryID="2" sidecar_offset="35886">
+     </orbital>
+     <orbital occupation="2.0" energy="-11.244184" ID="6.3" symmetryID="3" sidecar_offset="37704">
+     </orbital>
+     <orbital occupation="2.0" energy="-11.244135" ID="7.1" symmetryID="1" sidecar_offset="39634">
+     </orbital>
+     <orbital occupation="2.0" energy="-11.244135" ID="5.4" symmetryID="4" sidecar_offset="41564">
+     </orbital>
+     <orbital occupation="2.0" energy="-11.244111" ID="7.3" symmetryID="3" sidecar_offset="43382">
+     </orbital>
+     <orbital occupation="2.0" energy="-1.218841" ID="8.1" symmetryID="1" sidecar_offset="45312">
+     </orbital>
+     <orbital occupation="2.0" energy="-1.172528" ID="8.3" symmetryID="3" sidecar_offset="47242">
+     </orbital>
+     <orbital occupation="2.0" energy="-1.172528" ID="6.2" symmetryID="2" sidecar_offset="49172">
+     </orbital>
+     <orbital occupation="2.0" energy="-1.113012" ID="9.1" symmetryID="1" sidecar_offset="50990">
+     </orbital>
+     <orbital occupation="2.0" energy="-1.113012" ID="6.4" symmetryID="4" sidecar_offset="52920">
+     </orbital>
+     <orbital occupation="2.0" energy="-1.092431" ID="10.1" symmetryID="1" sidecar_offset="54738">
+     </orbital>
+     <orbital occupation="2.0" energy="-1.052165" ID="7.2" symmetryID="2" sidecar_offset="56668">
+     </orbital>
+     <orbital occupation="2.0" energy="-1.035681" ID="9.3" symmetryID="3" sidecar_offset="58422">
+     </orbital>
+     <orbital occupation="2.0" energy="-1.014822" ID="10.3" symmetryID="3" sidecar_offset="60352">
+     </orbital>
+     <orbital occupation="2.0" energy="-1.014822" ID="8.2" symmetryID="2" sidecar_offset="62282">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.972912" ID="11.1" symmetryID="1" sidecar_offset="64100">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.972912" ID="7.4" symmetryID="4" sidecar_offset="66030">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.865508" ID="11.3" symmetryID="3" sidecar_offset="67848">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.865508" ID="9.2" symmetryID="2" sidecar_offset="69778">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.864421" ID="12.1" symmetryID="1" sidecar_offset="71596">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.864421" ID="8.4" symmetryID="4" sidecar_offset="73526">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.849664" ID="13.1" symmetryID="1" sidecar_offset="75344">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.777141" ID="9.4" symmetryID="4" sidecar_offset="77274">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.764912" ID="12.3" symmetryID="3" sidecar_offset="79060">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.740487" ID="13.3" symmetryID="3" sidecar_offset="80990">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.740487" ID="10.2" symmetryID="2" sidecar_offset="82920">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.725309" ID="11.2" symmetryID="2" sidecar_offset="84738">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.704538" ID="14.1" symmetryID="1" sidecar_offset="86492">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.652935" ID="10.4" symmetryID="4" sidecar_offset="88422">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.652935" ID="15.1" symmetryID="1" sidecar_offset="90240">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.635608" ID="14.3" symmetryID="3" sidecar_offset="92170">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.635608" ID="12.2" symmetryID="2" sidecar_offset="94100">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.634989" ID="16.1" symmetryID="1" sidecar_offset="95918">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.634989" ID="11.4" symmetryID="4" sidecar_offset="97848">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.594284" ID="17.1" symmetryID="1" sidecar_offset="99666">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.5879" ID="13.2" symmetryID="2" sidecar_offset="101596">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.5879" ID="15.3" symmetryID="3" sidecar_offset="103414">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.583858" ID="14.2" symmetryID="2" sidecar_offset="105344">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.578933" ID="1.5" symmetryID="5" sidecar_offset="107146">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.56615" ID="12.4" symmetryID="4" sidecar_offset="108260">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.56615" ID="18.1" symmetryID="1" sidecar_offset="110078">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.533083" ID="16.3" symmetryID="3" sidecar_offset="112008">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.529821" ID="13.4" symmetryID="4" sidecar_offset="113938">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.522168" ID="1.7" symmetryID="7" sidecar_offset="115692">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.522167" ID="1.6" symmetryID="6" sidecar_offset="116806">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.513612" ID="15.2" symmetryID="2" sidecar_offset="117824">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.511888" ID="17.3" symmetryID="3" sidecar_offset="119642">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.511888" ID="16.2" symmetryID="2" sidecar_offset="121572">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.459764" ID="19.1" symmetryID="1" sidecar_offset="123390">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.459764" ID="14.4" symmetryID="4" sidecar_offset="125320">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.447029" ID="2.5" symmetryID="5" sidecar_offset="127138">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.447029" ID="1.8" symmetryID="8" sidecar_offset="128252">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.423293" ID="3.5" symmetryID="5" sidecar_offset="129270">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.365728" ID="2.6" symmetryID="6" sidecar_offset="130384">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.348262" ID="2.7" symmetryID="7" sidecar_offset="131210">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.331883" ID="3.7" symmetryID="7" sidecar_offset="132324">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.331883" ID="3.6" symmetryID="6" sidecar_offset="133438">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.258451" ID="2.8" symmetryID="8" sidecar_offset="134456">
+     </orbital>
+     <orbital occupation="2.0" energy="-0.258451" ID="4.5" symmetryID="5" sidecar_offset="135474">
+     </orbital>
+    </orbitals>
+   </molecule>
+   <time start="12:38:25" end="12:38:55" cpu="28.91" system="2.77" real="31.69"/>
+   <storage units="megabyte" memory="3860.47" sf="12.28" df="1722.49" eaf="6650.2" ga="0.0"/>
+   <summary method="RHF" basis="cc-pVDZ" overall_method="RHF/cc-pVDZ"/>
+  </jobstep>
+  <jobstep command="CCSD(T)-F12B" commandset="CCSD">

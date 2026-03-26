@@ -1945,36 +1945,49 @@ def run_normal_mode_parallel_gradient_mpi():
         fake_freq_log = None
         fake_freq_fchk = None
         if not os.environ.get('EXT_TEST_MODE'):
-            debug_print(f"\n--- Running fake_freq for symmetry-adapted basis ---")
-            try:
-                fake_freq_result = run_fake_freq_for_normal_modes(
-                    central_geom_bohr=central_geom_bohr,
-                    atomic_numbers=atomic_numbers,
-                    charge=charge,
-                    spin=spin,
-                    workdir=iteration_dir,
-                    gaussian="g16",
-                    original_dir=original_working_dir,
-                    ending_file=ending_file,
-                    nprocs_initial=str(nprocs),
-                    mem_initial=mem,
-                    nthreads=nthreads,
-                    nm_keywords=nm_keywords
-                )
-                fake_freq_log = fake_freq_result[0]
-                fake_freq_fchk = fake_freq_result[1] if len(fake_freq_result) > 1 else None
+            # Check for existing fake_freq files in restart mode
+            candidate_log = os.path.join(iteration_dir, "fake_freq.log")
+            candidate_fchk = os.path.join(iteration_dir, "Test.FChk")
+            if use_restart and os.path.exists(candidate_log):
+                debug_print(f"\n--- RESTART: Reusing existing fake_freq files ---")
+                fake_freq_log = candidate_log
+                fake_freq_fchk = candidate_fchk if os.path.exists(candidate_fchk) else None
+            else:
+                debug_print(f"\n--- Running fake_freq for symmetry-adapted basis ---")
+                try:
+                    fake_freq_result = run_fake_freq_for_normal_modes(
+                        central_geom_bohr=central_geom_bohr,
+                        atomic_numbers=atomic_numbers,
+                        charge=charge,
+                        spin=spin,
+                        workdir=iteration_dir,
+                        gaussian="g16",
+                        original_dir=original_working_dir,
+                        ending_file=ending_file,
+                        nprocs_initial=str(nprocs),
+                        mem_initial=mem,
+                        nthreads=nthreads,
+                        nm_keywords=nm_keywords
+                    )
+                    fake_freq_log = fake_freq_result[0]
+                    fake_freq_fchk = fake_freq_result[1] if len(fake_freq_result) > 1 else None
+                except Exception as e:
+                    debug_print(f"  WARNING: fake_freq failed: {e}")
+                    debug_print(f"  Proceeding without symmetry adaptation (all modes labeled 'A')")
 
-                # Parse ALL modes from Gaussian (no symmetry filtering)
-                gaussian_mode_data = parse_normal_modes_from_log(
-                    log_path=fake_freq_log,
-                    symmetry_filters=None,  # ALL modes for symmetry-adapted basis
-                    fchk_path=fake_freq_fchk
-                )
-                debug_print(f"  Parsed {len(gaussian_mode_data['mode_indices'])} Gaussian HF modes for symmetry basis")
-            except Exception as e:
-                debug_print(f"  WARNING: fake_freq failed: {e}")
-                debug_print(f"  Proceeding without symmetry adaptation (all modes labeled 'A')")
-                gaussian_mode_data = None
+            # Parse ALL modes from Gaussian (no symmetry filtering)
+            if fake_freq_log is not None:
+                try:
+                    gaussian_mode_data = parse_normal_modes_from_log(
+                        log_path=fake_freq_log,
+                        symmetry_filters=None,  # ALL modes for symmetry-adapted basis
+                        fchk_path=fake_freq_fchk
+                    )
+                    debug_print(f"  Parsed {len(gaussian_mode_data['mode_indices'])} Gaussian HF modes for symmetry basis")
+                except Exception as e:
+                    debug_print(f"  WARNING: parsing fake_freq modes failed: {e}")
+                    debug_print(f"  Proceeding without symmetry adaptation (all modes labeled 'A')")
+                    gaussian_mode_data = None
 
         # Build normal mode data from external Hessian (with symmetry adaptation if available)
         normal_mode_data = build_normal_mode_data_from_hessian(
@@ -1998,23 +2011,31 @@ def run_normal_mode_parallel_gradient_mpi():
             )
             debug_print(f"Built {len(all_modes_data['mode_indices'])} total modes for Hessian")
     else:
-        # Existing flow: run fake frequency calculation
-        fake_freq_result = run_fake_freq_for_normal_modes(
-            central_geom_bohr=central_geom_bohr,
-            atomic_numbers=atomic_numbers,
-            charge=charge,
-            spin=spin,
-            workdir=iteration_dir,
-            gaussian="g16",
-            original_dir=original_working_dir,
-            ending_file=ending_file,
-            nprocs_initial=str(nprocs),
-            mem_initial=mem,
-            nthreads=nthreads,
-            nm_keywords=nm_keywords
-        )
-        fake_freq_log = fake_freq_result[0]
-        fake_freq_fchk = fake_freq_result[1] if len(fake_freq_result) > 1 else None
+        # Check for existing fake_freq files in restart mode
+        candidate_log = os.path.join(iteration_dir, "fake_freq.log")
+        candidate_fchk = os.path.join(iteration_dir, "Test.FChk")
+        if use_restart and os.path.exists(candidate_log):
+            debug_print("\n--- RESTART: Reusing existing fake_freq files ---")
+            fake_freq_log = candidate_log
+            fake_freq_fchk = candidate_fchk if os.path.exists(candidate_fchk) else None
+        else:
+            # Existing flow: run fake frequency calculation
+            fake_freq_result = run_fake_freq_for_normal_modes(
+                central_geom_bohr=central_geom_bohr,
+                atomic_numbers=atomic_numbers,
+                charge=charge,
+                spin=spin,
+                workdir=iteration_dir,
+                gaussian="g16",
+                original_dir=original_working_dir,
+                ending_file=ending_file,
+                nprocs_initial=str(nprocs),
+                mem_initial=mem,
+                nthreads=nthreads,
+                nm_keywords=nm_keywords
+            )
+            fake_freq_log = fake_freq_result[0]
+            fake_freq_fchk = fake_freq_result[1] if len(fake_freq_result) > 1 else None
 
         # Parse normal modes from log (filtered for gradient)
         normal_mode_data = parse_normal_modes_from_log(
@@ -2292,7 +2313,8 @@ def run_normal_mode_parallel_gradient_mpi():
 
                     from elecext.mpi_coordinator import (
                         generate_analytical_pbs_script,
-                        submit_pbs_job
+                        submit_pbs_job,
+                        check_scheduler_job_alive
                     )
                     import json
 
@@ -2560,6 +2582,18 @@ def run_normal_mode_parallel_gradient_mpi():
                             if analytical_status[section_idx] != 'running':
                                 debug_print(f"  Analytical section {section_idx}: RUNNING")
                             analytical_status[section_idx] = 'running'
+
+                            # Fallback: verify scheduler job is still alive
+                            if section_idx in analytical_job_ids:
+                                alive = check_scheduler_job_alive(
+                                    analytical_job_ids[section_idx],
+                                    mpi_config.scheduler)
+                                if alive is False:
+                                    analytical_status[section_idx] = 'failed'
+                                    debug_print(
+                                        f"  Analytical section {section_idx}: FAILED "
+                                        f"(job {analytical_job_ids[section_idx]} no longer "
+                                        f"in scheduler — likely node failure or OOM kill)")
 
                     analytical_all_done = all(s in ['completed', 'failed'] for s in analytical_status.values())
 

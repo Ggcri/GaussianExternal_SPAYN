@@ -1,0 +1,35 @@
+basis=cc-pvdz
+{rhf,so-sci}
+{ccsd(t)-f12b,df_basis=avdz-f12/mp2fit,df_basis_exch=avdz-f12/jkfit,ri_basis=avdz/jkfit}
+ccsd_energy = energy
+
+
+basis=cc-pwcvtz
+
+{rhf,so-sci}
+{mp2}
+
+mp2_fc = energy
+
+
+{rhf,so-sci}
+{mp2;core}
+mp2_ae = energy
+
+
+! Composite energy calculation according to scheme, without hf_energy
+exe_energy = ccsd_energy + mp2_ae - mp2_fc
+
+
+
+!normalmode
+!symmetry=auto
+!zmat
+!restart
+!reference_fc=error_dependent
+!energy_error_grad=1e-9
+!characteristic_length=0.1
+!fakekey
+! scf=xqc  
+
+

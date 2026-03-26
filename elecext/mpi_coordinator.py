@@ -1745,66 +1745,72 @@ def submit_job_dispatch(script_path: str, scheduler: str = 'auto') -> Tuple[str,
         return submit_pbs_job(script_path)
 
 
-def check_job_status(job_id: str, result_file: str = None) -> str:
-    """Check PBS job status.
+def check_scheduler_job_alive(job_id: str, scheduler: str = 'auto') -> bool:
+    """Check if a scheduler job is still active (running or queued).
+
+    Used as a fallback when sentinel files are missing — e.g. when a
+    worker node dies abruptly (node failure, OOM kill) and never writes
+    a sentinel.
 
     Parameters
     ----------
     job_id : str
-        PBS job ID.
-    result_file : str, optional
-        Path to expected result file. Used to distinguish between
-        'completed' and 'not yet in queue' when qstat fails.
+        Scheduler job ID.
+    scheduler : str
+        'slurm', 'pbs', or 'auto' (auto-detect).
 
     Returns
     -------
-    str
-        Status: 'running', 'queued', 'completed', 'failed', or 'unknown'.
+    bool or None
+        True if job is still active (running/pending/queued),
+        False if job is gone (completed/cancelled/failed/timeout),
+        None if status could not be determined.
     """
     try:
-        result = subprocess.run(
-            ['qstat', job_id],
-            capture_output=True,
-            text=True,
-            timeout=30
-        )
+        from elecext.parall_mpi import detect_scheduler
+        if scheduler == 'auto':
+            scheduler = detect_scheduler()
 
-        if result.returncode != 0:
-            # Job not in queue - could be completed OR not yet submitted/visible
-            # Check result file to distinguish
-            if result_file and os.path.exists(result_file):
-                return 'completed'
-            else:
-                # No result file = job hasn't finished yet (or hasn't appeared in queue)
-                return 'unknown'
-
-        # Parse qstat output
-        output = result.stdout
-        if ' R ' in output:
-            return 'running'
-        elif ' Q ' in output:
-            return 'queued'
-        elif ' C ' in output:
-            return 'completed'
-        elif ' E ' in output:
-            return 'failed'
+        if scheduler == 'slurm':
+            result = subprocess.run(
+                ['squeue', '-j', job_id, '-h', '-o', '%T'],
+                capture_output=True, text=True, timeout=30
+            )
+            if result.returncode != 0 or not result.stdout.strip():
+                return False
+            state = result.stdout.strip().split('\n')[0]
+            return state in ('RUNNING', 'PENDING', 'CONFIGURING',
+                             'COMPLETING', 'REQUEUED', 'SUSPENDED')
         else:
-            return 'unknown'
+            result = subprocess.run(
+                ['qstat', job_id],
+                capture_output=True, text=True, timeout=30
+            )
+            if result.returncode != 0:
+                return False
+            output = result.stdout
+            return (' R ' in output or ' Q ' in output or ' H ' in output)
 
     except Exception:
-        return 'unknown'
+        return None
 
 
 def wait_for_jobs_file_based(status_files: Dict[str, Dict[str, str]],
                               result_files: Dict[str, str],
                               poll_interval: int = 60,
-                              timeout_hours: float = 0) -> Dict[str, str]:
-    """Wait for all PBS jobs to complete using file-based status tracking.
+                              timeout_hours: float = 0,
+                              job_ids: Dict[str, str] = None,
+                              scheduler: str = 'auto') -> Dict[str, str]:
+    """Wait for all PBS/SLURM jobs to complete using file-based status tracking.
 
-    Uses status files instead of qstat for reliable status detection:
+    Uses status files instead of qstat/squeue for reliable status detection:
     - waiting_{queue} = job submitted, waiting in queue
     - running_{queue} = job is executing
     - sentinel_{queue}.done = job completed successfully
+
+    When job_ids are provided, also verifies with the scheduler that jobs
+    marked as 'running' are still alive. This catches cases where a worker
+    node dies abruptly (node failure, OOM kill) without writing a sentinel.
 
     Parameters
     ----------
@@ -1816,6 +1822,11 @@ def wait_for_jobs_file_based(status_files: Dict[str, Dict[str, str]],
         Seconds between status checks.
     timeout_hours : float
         Maximum hours to wait (0 = wait indefinitely).
+    job_ids : dict, optional
+        Mapping of queue_name to scheduler job ID. If provided, enables
+        dead-job detection for queues stuck in 'running' state.
+    scheduler : str
+        Scheduler type: 'slurm', 'pbs', or 'auto'.
 
     Returns
     -------
@@ -1875,6 +1886,19 @@ def wait_for_jobs_file_based(status_files: Dict[str, Dict[str, str]],
                 if status[queue_name] != 'running':
                     debug_print(f"Queue '{queue_name}': RUNNING")
                 status[queue_name] = 'running'
+
+                # Fallback: verify scheduler job is still alive.
+                # Catches node failures, OOM kills, walltime exceeded etc.
+                # where the worker dies without writing a sentinel.
+                if job_ids and queue_name in job_ids:
+                    alive = check_scheduler_job_alive(
+                        job_ids[queue_name], scheduler)
+                    if alive is False:
+                        status[queue_name] = 'failed'
+                        debug_print(
+                            f"Queue '{queue_name}': FAILED "
+                            f"(job {job_ids[queue_name]} no longer in "
+                            f"scheduler — likely node failure or OOM kill)")
 
             elif os.path.exists(waiting_file):
                 # Job still in queue
@@ -2439,7 +2463,9 @@ class MultiQueueCoordinator:
                 self.status_files,
                 self.result_files,
                 poll_interval=settings['poll_interval'],
-                timeout_hours=settings['timeout_hours']
+                timeout_hours=settings['timeout_hours'],
+                job_ids=self.job_ids,
+                scheduler=self.config.scheduler
             )
 
             # Check for failures

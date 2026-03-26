@@ -1,0 +1,22 @@
+
+Module loaded, path to binaries is /leonardo/home/userexternal/lcrisci1/MyBin/Molpro/2025.3
+
+Scratch dir: /tmp/mol_38426500
+Traceback (most recent call last):
+  File "/leonardo/home/userexternal/lcrisci1/MyBin/External/Executables/CentralExt.py", line 4497, in <module>
+    main()
+  File "/leonardo/home/userexternal/lcrisci1/MyBin/External/Executables/CentralExt.py", line 4392, in main
+    if run_normal_mode_parallel_gradient_mpi():
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/leonardo/home/userexternal/lcrisci1/MyBin/External/Executables/CentralExt.py", line 2778, in run_normal_mode_parallel_gradient_mpi
+    raise RuntimeError("Failed to submit jobs to all queues")
+RuntimeError: Failed to submit jobs to all queues
+Error: segmentation violation
+   rax 0x0000000000000000, rbx 0x0000000013040c18, rcx 0x000015223e5a355b
+   rdx 0x0000000000000000, rsp 0x00007ffe28fb4bc8, rbp 0x0000000003309f20
+   rsi 0x000000000000000b, rdi 0x000000000030d7a3, r8  0x0000000032001000
+   r9  0x000000006dc9c012, r10 0x0000000000000009, r11 0x0000000000000202
+   r12 0x00007ffe28fb4c80, r13 0x00007ffe28fb4cf8, r14 0x00007ffe28fb4cf0
+   r15 0x0000000013040c38
+  /lib64/libpthread.so.0(+0x12cf0) [0x15223ecd9cf0]
+  /lib64/libc.so.6(kill+0xb) [0x15223e5a355b]
