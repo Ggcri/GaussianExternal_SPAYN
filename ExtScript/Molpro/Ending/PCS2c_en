@@ -1,3 +1,14 @@
+basis={
+set,jkfit,context=jkfit
+default,avtz
+set,mp2fit,context=mp2fit
+default,avtz
+set,ri,context=jkfit
+default,avtz
+}
+explicit,ri_basis=ri,df_basis=mp2fit,df_basis_exch=jkfit
+
+
 include path/to/2F12red
 
 rhf,so-sci           !Hartree-Fock using the JKFIT density fitting basis
