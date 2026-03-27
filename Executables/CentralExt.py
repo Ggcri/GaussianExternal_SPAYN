@@ -263,16 +263,17 @@ def find_and_parse_initial_gjf(working_dir):
     """
     import glob
 
-    # Look for .gjf files in the working directory
-    gjf_files = glob.glob(os.path.join(working_dir, "*.gjf"))
+    # Look for .gjf or .com files in the working directory
+    gjf_files = glob.glob(os.path.join(working_dir, "*.gjf")) + \
+                glob.glob(os.path.join(working_dir, "*.com"))
 
     if not gjf_files:
-        debug_print(f"DEBUG [find_and_parse_initial_gjf]: No .gjf file found in {working_dir}")
+        debug_print(f"DEBUG [find_and_parse_initial_gjf]: No .gjf/.com file found in {working_dir}")
         return None
 
-    # Use the first .gjf file found
+    # Use the first file found
     gjf_file = gjf_files[0]
-    debug_print(f"DEBUG [find_and_parse_initial_gjf]: Found .gjf file: {gjf_file}")
+    debug_print(f"DEBUG [find_and_parse_initial_gjf]: Found input file: {gjf_file}")
 
     try:
         with open(gjf_file, 'r') as f:
