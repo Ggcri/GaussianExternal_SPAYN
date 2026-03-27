@@ -5888,10 +5888,16 @@ def scan_completed_tasks(
     incomplete_task_ids = []
 
     for task_id in expected_task_ids:
-        task_dir = os.path.join(workdir, f"task_{task_id}")
-        output_file = os.path.join(task_dir, "output.EOut")
+        # parall_n convention: workdir/task_{task_id}/output.EOut
+        candidate1 = os.path.join(workdir, f"task_{task_id}", "output.EOut")
+        # parall_n_mpi convention: workdir/tasks/{task_id}/output.EOut
+        candidate2 = os.path.join(workdir, "tasks", task_id, "output.EOut")
 
-        if not os.path.exists(output_file):
+        if os.path.exists(candidate1):
+            output_file = candidate1
+        elif os.path.exists(candidate2):
+            output_file = candidate2
+        else:
             incomplete_task_ids.append(task_id)
             continue
 
