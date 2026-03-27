@@ -9,7 +9,7 @@ default,avtz
 explicit,ri_basis=ri,df_basis=mp2fit,df_basis_exch=jkfit
 
 
-include path/to/2F12red
+include path/to/2F12plus
 
 rhf,so-sci           !Hartree-Fock using the JKFIT density fitting basis
 {ccsd(t)-f12c,scale_trip=1}
