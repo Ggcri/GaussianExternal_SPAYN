@@ -2108,6 +2108,18 @@ def run_normal_mode_parallel_gradient_mpi():
             debug_print(f"RESTART: Will compute {len(geometries_to_calculate)} remaining tasks")
 
     # ============================================================================
+    # Clean stale coordinator files on restart
+    # ============================================================================
+    if use_restart and geometries_to_calculate:
+        coordinator_dir = os.path.join(iteration_dir, "coordinator")
+        if os.path.isdir(coordinator_dir):
+            import glob as _glob
+            for pattern in ['sentinel_*.done', 'results_*.json', 'running_*', 'waiting_*']:
+                for stale_file in _glob.glob(os.path.join(coordinator_dir, pattern)):
+                    os.remove(stale_file)
+            debug_print("RESTART: Cleaned stale coordinator files from previous run")
+
+    # ============================================================================
     # PBS/SLURM PARALLEL EXECUTION
     # ============================================================================
     # Skip execution entirely if restart found all tasks completed
@@ -2826,25 +2838,6 @@ def run_normal_mode_parallel_gradient_mpi():
         debug_print(f"RESTART: Merging {len(cached_energies_restart)} cached + {len(calculated_energies)} fresh results")
         calculated_energies = {**cached_energies_restart, **calculated_energies}
         debug_print(f"RESTART: Total results: {len(calculated_energies)}")
-
-    # ============================================================================
-    # Materialize results to canonical location for restart
-    # ============================================================================
-    # Workers write output.EOut in various locations (multinode/node_N/, tasks/, etc.)
-    # but scan_completed_tasks() looks in iteration_dir/task_{task_id}/output.EOut.
-    # Materialize results there so future !restart can find them.
-    if not restart_all_cached:
-        materialized = 0
-        for task_id, energy in calculated_energies.items():
-            canonical_dir = os.path.join(iteration_dir, f"task_{task_id}")
-            canonical_output = os.path.join(canonical_dir, "output.EOut")
-            if not os.path.exists(canonical_output):
-                os.makedirs(canonical_dir, exist_ok=True)
-                with open(canonical_output, 'w') as f:
-                    f.write(f"{energy:.12f}\n")
-                materialized += 1
-        if materialized > 0:
-            debug_print(f"RESTART: Materialized {materialized} results to canonical locations")
 
     # ============================================================================
     # Assemble gradient and write output
