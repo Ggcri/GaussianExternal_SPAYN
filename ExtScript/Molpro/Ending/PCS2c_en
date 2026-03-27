@@ -23,6 +23,7 @@ mp2_ae = energy
 exe_energy = ccsd_energy + mp2_ae - mp2_fc
 
 
+!EN_FORMATTING="SCF Done: E = {e:.12f} Hartree"
 
 !normalmode
 !symmetry=auto

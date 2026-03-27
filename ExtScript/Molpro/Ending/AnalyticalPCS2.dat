@@ -35,4 +35,6 @@ mp2_ae = energy
 {forces}
 
 exe_energy = ccsd_energy + to_patch + mp2_ae - mp2_fc
+
+!EN_FORMATTING="SCF Done: E = {e:.12f} Hartree"
 ---
