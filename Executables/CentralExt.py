@@ -99,6 +99,61 @@ def create_iteration_directory(base_dir=None, subtype=None):
         return abs_iteration_path
 
 
+def _is_iteration_complete(iteration_dir):
+    """Check if all tasks in an iteration directory have completed.
+
+    Supports both parall_n and parall_n_mpi directory structures:
+    - parall_n:     iteration_dir/task_{id}/output.EOut
+    - parall_n_mpi: iteration_dir/tasks/{id}/output.EOut
+                    iteration_dir/tasks/master/task_{id}/output.EOut
+
+    Returns False if no task directories exist (iteration never started).
+    """
+    # parall_n: look for task_* directories directly in iteration_dir
+    task_dirs = [
+        d for d in os.listdir(iteration_dir)
+        if d.startswith('task_') and os.path.isdir(os.path.join(iteration_dir, d))
+    ]
+    if task_dirs:
+        for task_dir_name in task_dirs:
+            output_file = os.path.join(iteration_dir, task_dir_name, 'output.EOut')
+            if not os.path.exists(output_file) or os.path.getsize(output_file) == 0:
+                return False
+        return True
+
+    # parall_n_mpi: look inside tasks/ subdirectory
+    tasks_dir = os.path.join(iteration_dir, 'tasks')
+    if not os.path.isdir(tasks_dir):
+        return False
+
+    # Collect unique task IDs from worker and master directories
+    task_ids = set()
+    for entry in os.listdir(tasks_dir):
+        entry_path = os.path.join(tasks_dir, entry)
+        if not os.path.isdir(entry_path) or entry == 'master':
+            continue
+        task_ids.add(entry)
+
+    master_dir = os.path.join(tasks_dir, 'master')
+    if os.path.isdir(master_dir):
+        for entry in os.listdir(master_dir):
+            if os.path.isdir(os.path.join(master_dir, entry)):
+                tid = entry[5:] if entry.startswith('task_') else entry
+                task_ids.add(tid)
+
+    if not task_ids:
+        return False
+
+    # Check each task ID: output.EOut in worker OR master path
+    for tid in task_ids:
+        c1 = os.path.join(tasks_dir, tid, 'output.EOut')
+        c2 = os.path.join(master_dir, f'task_{tid}', 'output.EOut')
+        if not (os.path.exists(c1) or os.path.exists(c2)):
+            return False
+
+    return True
+
+
 def find_last_iteration_directory(base_dir=None, subtype=None):
     """Find the most recent Iteration_N directory for restart.
 
@@ -1176,7 +1231,10 @@ def run_normal_mode_parallel_gradient():
             use_restart = False
         else:
             iteration_dir, _ = result
-            debug_print(f"RESTART: Resuming from {iteration_dir}")
+            if _is_iteration_complete(iteration_dir):
+                debug_print(f"RESTART: Last iteration {iteration_dir} is already complete — returning cached gradient")
+            else:
+                debug_print(f"RESTART: Resuming incomplete iteration {iteration_dir}")
     else:
         # In mixed mode, this will be overridden by AN/NUM iteration directories
         # In standard mode, this is the only iteration directory
@@ -1473,6 +1531,12 @@ def run_normal_mode_parallel_gradient():
 
     # Return to original working directory before writing output
     os.chdir(original_working_dir)
+
+    # Create empty Iteration_N+1 after completing a restart
+    # so the next Gaussian call starts fresh with the new geometry
+    if use_restart:
+        next_iter = create_iteration_directory(original_working_dir)
+        debug_print(f"RESTART: Created empty {next_iter} for next optimization step")
 
     # Write output
     debug_print(f"\nWriting output to: {output_path}")
@@ -1896,7 +1960,10 @@ def run_normal_mode_parallel_gradient_mpi():
             use_restart = False
         else:
             iteration_dir, _ = result
-            debug_print(f"RESTART: Resuming from {iteration_dir}")
+            if _is_iteration_complete(iteration_dir):
+                debug_print(f"RESTART: Last iteration {iteration_dir} is already complete — returning cached gradient")
+            else:
+                debug_print(f"RESTART: Resuming incomplete iteration {iteration_dir}")
     else:
         iteration_dir = create_iteration_directory(original_working_dir)
     debug_print(f"Iteration directory: {iteration_dir}")
@@ -2838,6 +2905,12 @@ def run_normal_mode_parallel_gradient_mpi():
         debug_print(f"RESTART: Merging {len(cached_energies_restart)} cached + {len(calculated_energies)} fresh results")
         calculated_energies = {**cached_energies_restart, **calculated_energies}
         debug_print(f"RESTART: Total results: {len(calculated_energies)}")
+
+    # Create empty Iteration_N+1 after completing a restart
+    # so the next Gaussian call starts fresh with the new geometry
+    if use_restart:
+        next_iter = create_iteration_directory(original_working_dir)
+        debug_print(f"RESTART: Created empty {next_iter} for next optimization step")
 
     # ============================================================================
     # Assemble gradient and write output
