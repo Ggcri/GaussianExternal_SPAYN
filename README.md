@@ -17,6 +17,7 @@ Python wrappers for interfacing Gaussian with external quantum chemistry program
 - [Fake Frequency Calculation (!fakekey)](#fake-frequency-calculation-fakekey)
 - [Displacement Strategies](#displacement-strategies)
 - [Computing Frequencies](#computing-frequencies)
+- [Restarting Failed Calculations](#restarting-failed-calculations)
 - [Interfacing with Post-Processing Tools](#interfacing-with-post-processing-tools)
 - [Workflow Example: DPCS3 + PCS2](#workflow-example-dpcs3--pcs2)
 - [Complete Working Examples](#complete-working-examples)
@@ -494,6 +495,53 @@ To compute vibrational frequencies with the External interface, use Gaussian's `
 
 **Note:** Direct Hessian computation via OptFlag=2 is not available in this release. Use `freq=num` instead.
 
+## Restarting Failed Calculations
+
+When a calculation using `parall_n` or `parall_n_mpi` fails partway through (job timeout, external program crash, node failure, etc.), you can restart it without recomputing the tasks that already completed successfully.
+
+### How to Enable Restart
+
+Two changes are required:
+
+1. **Add `restart` to Gaussian's `opt` keyword** — this tells Gaussian to resume the optimization from the checkpoint file:
+
+```gaussian
+#p opt=(nomicro,restart) External="CE mol preamble.dat ending.dat 8 16GB READ parall_n 4" geom=allcheck
+```
+
+2. **Add `!restart` to the `!normalmode` block in the ending file** — this tells the External interface to reuse results from already-completed tasks:
+
+```
+!normalmode
+!restart
+!symmetry=auto
+!reference_fc=error_dependent
+!energy_error_grad=1e-10
+```
+
+Both keywords are necessary: Gaussian's `restart` resumes the optimization from where it left off, while `!restart` in the ending file tells the interface to skip single-point calculations that already have valid results.
+
+### What the Code Does on Restart
+
+1. Finds the last `Iteration_N` directory in the working directory
+2. Scans each task for a valid `output.EOut` file (exists, non-empty, parseable energy)
+3. Caches the energies from completed tasks
+4. Submits only the incomplete tasks for execution
+5. Cleans stale coordinator files (sentinel files, status files) from the previous run
+6. Merges cached results with fresh results
+
+### Example
+
+A calculation with 20 tasks crashes after 15 complete. To restart:
+
+1. Add `restart` to the `opt` keyword in the `.gjf` file: `opt=(nomicro,restart)`
+2. Add `!restart` to the ending file (inside the `!normalmode` block)
+3. Re-submit the job
+
+The interface detects 15 completed tasks, runs only the remaining 5, and merges all 20 results.
+
+**Note:** Once the optimization resumes successfully, you can remove `!restart` from the ending file for subsequent runs. If the next optimization step completes normally, no restart is needed. Leaving `!restart` enabled is harmless — if all tasks are already complete, the interface skips execution and returns the cached results immediately.
+
 ## Interfacing with Post-Processing Tools
 
 When you need to extract results from an External calculation for use with other codes, there are two approaches.
@@ -959,28 +1007,110 @@ Layer identifiers: **H** (high), **M** (medium), **L** (low), **R** (single-laye
 
 ## Multi-Node MPI
 
-For large molecules, `parall_n_mpi` distributes work across multiple compute nodes:
+For large molecules, `parall_n_mpi` distributes single-point energy calculations across multiple compute nodes by submitting PBS or SLURM jobs for each configured queue. The coordinator runs on the master node (where Gaussian is running), submits worker jobs, and monitors their completion via sentinel files.
 
 ```
-           NODE 0 (MASTER)
-   - Generates displacement geometries
-   - Distributes tasks to workers
-   - Assembles gradient
-                |
-    +-----------+-----------+
-    v           v           v
- NODE 1      NODE 2      NODE N
- WORKER      WORKER      WORKER
-ThreadPool  ThreadPool  ThreadPool
+     MASTER NODE (Gaussian + Coordinator)
+     - Generates displacement geometries
+     - Reads mpi_config.dat
+     - Submits PBS/SLURM jobs per queue
+     - Polls sentinel files for completion
+     - Assembles gradient from results
+                    |
+       submit jobs  |  collect results (JSON)
+                    |
+    +---------------+---------------+
+    v               v               v
+ PBS/SLURM Job   PBS/SLURM Job   PBS/SLURM Job
+ (queue.fast)    (queue.large)   (queue.gpu)
+ ThreadPool(N)   ThreadPool(N)   ThreadPool(N)
+ task_1..M       task_M+1..K     task_K+1..Z
+    |               |               |
+    v               v               v
+ sentinel.done   sentinel.done   sentinel.done
+ results.json    results.json    results.json
 ```
 
-Requires `mpi4py` (`pip install mpi4py`). Falls back to single-node `ThreadPoolExecutor` if unavailable.
+The master node can also participate in the calculations (see `[master]` configuration below).
 
-MPI configuration templates are in `ExtScript/mpi_config*.dat`.
+### Configuration: `mpi_config.dat`
+
+Place an `mpi_config.dat` file in the Gaussian working directory. A template is available at `ExtScript/mpi_config.dat`.
+
+```ini
+# Variables (referenced as ${name} elsewhere)
+external_module = ExtMod.module
+
+# Global setup — applied to ALL worker jobs
+[setup]
+module load ${external_module}
+module load molpro/2025.3
+export SCRATCH="/local/scratch/$USER/parall_$PBS_JOBID"
+export TMPDIR=$SCRATCH
+export GAUSS_SCRDIR="/local/scratch/$USER/Gaussian_$PBS_JOBID"
+mkdir -p $SCRATCH
+mkdir -p $GAUSS_SCRDIR
+
+# Master node participation (optional)
+[master]
+participates = true
+nthreads = 1
+
+# Queue definitions — one [queue.NAME] per queue/partition
+[queue.fast]
+nodes = 1
+queue_name = q02matrix     # PBS queue or SLURM partition
+ppn = 9                    # Processors per node (PBS allocation)
+mem = 40gb                 # Memory per PBS/SLURM allocation
+nprocs = 8                 # Override: cores per energy calculation
+mem_energy = 32GB          # Override: memory per energy calculation
+
+[queue.large]
+nodes = 1
+queue_name = q07hugo
+ppn = 16
+mem = 100gb
+nprocs = 14
+mem_energy = 80GB
+
+# Per-queue setup (optional) — overrides or extends [setup]
+# [queue.large.setup]
+# module load molpro/2024.2
+
+# Task distribution strategy
+[distribution]
+strategy = round_robin     # round_robin or proportional
+
+# Coordinator settings
+[coordinator]
+poll_interval = 30         # Seconds between status checks
+timeout_hours = 0          # 0 = no timeout
+scheduler = auto           # auto, pbs, or slurm
+# account =                # SLURM --account (required on some clusters)
+# qos =                    # SLURM --qos (optional)
+```
+
+### Key Configuration Details
+
+- **`nprocs` and `mem_energy`** (per-queue overrides): override the `<nprocs>` and `<mem>` values from the External command line for the single-point calculations submitted to that queue. This allows different queues to use different resource allocations.
+- **`ppn` and `mem`**: control the PBS/SLURM **job allocation** (how many cores and memory the scheduler reserves for the worker job).
+- **`scheduler = auto`**: auto-detects PBS or SLURM by checking for `sbatch`/`qsub` in `PATH`. SLURM is checked first on clusters that have both.
+- **`[master] participates = true`**: the master node runs a subset of tasks locally using a ThreadPool, in addition to submitting worker jobs.
+- **Worker scripts**: generated automatically by the coordinator — the user does not write them. Each worker script loads the environment from `[setup]` (and optionally `[queue.NAME.setup]`), runs its assigned tasks with a ThreadPool, writes results to JSON, and creates a sentinel file on completion.
 
 ## PBS/SLURM Job Submission
 
-Example PBS script for running an optimization with the external interface:
+### Main Job Script
+
+This is the script that submits the Gaussian job to the scheduler. You write this script yourself.
+
+**Resource calculation for `parall_n` (single-node):** If the External command uses `nprocs=8`, `mem=10GB`, `nthreads=6`, then request:
+- `ncpus` = 8 x 6 = 48 cores
+- `mem` = 10 x 6 = 60 GB
+
+Add ~10-20% safety margin to memory requests to account for system overhead.
+
+**PBS example:**
 
 ```bash
 #!/bin/sh
@@ -988,38 +1118,66 @@ Example PBS script for running an optimization with the external interface:
 #PBS -m ae
 #PBS -M user@example.com
 #PBS -q batch
-#PBS -l select=1:ncpus=48:mem=60GB:mpiprocs=48
+#PBS -l select=1:ncpus=48:mem=60GB
 
 set +e
 
-# Load required modules
 module load gaussian/g16
 module load molpro/2024.2
 module load /path/to/External/external_tools.module
 
-# Set up scratch directories
 export SCRATCH="/local/scratch/$USER/job_$PBS_JOBID"
 export TMPDIR=$SCRATCH
 export GAUSS_SCRDIR="/local/scratch/$USER/gauss_$PBS_JOBID"
+mkdir -p $SCRATCH $GAUSS_SCRDIR
 
-# Create scratch directories
-mkdir -p $SCRATCH
-mkdir -p $GAUSS_SCRDIR
-
-# Change to working directory and run
 cd $PBS_O_WORKDIR
 g16 calculation.gjf
 
-# Cleanup
-rm -r $SCRATCH
-rm -r $GAUSS_SCRDIR
+rm -rf $SCRATCH $GAUSS_SCRDIR
 ```
 
-**Resource calculation:** If the External command uses `nprocs=8`, `mem=10GB`, `nthreads=6`, then request:
-- `ncpus` = 8 x 6 = 48 cores
-- `mem` = 10 x 6 = 60 GB
+**SLURM example:**
 
-Add ~10-20% safety margin to memory requests to account for system overhead.
+```bash
+#!/bin/bash
+#SBATCH --job-name=testjob
+#SBATCH --mail-type=END,FAIL
+#SBATCH --mail-user=user@example.com
+#SBATCH --partition=batch
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=48
+#SBATCH --mem=60GB
+#SBATCH --time=24:00:00
+
+set +e
+
+module load gaussian/g16
+module load molpro/2024.2
+module load /path/to/External/external_tools.module
+
+export SCRATCH="/local/scratch/$USER/job_$SLURM_JOB_ID"
+export TMPDIR=$SCRATCH
+export GAUSS_SCRDIR="/local/scratch/$USER/gauss_$SLURM_JOB_ID"
+mkdir -p $SCRATCH $GAUSS_SCRDIR
+
+cd $SLURM_SUBMIT_DIR
+g16 calculation.gjf
+
+rm -rf $SCRATCH $GAUSS_SCRDIR
+```
+
+### Worker Scripts for `parall_n_mpi`
+
+When using `parall_n_mpi`, the coordinator **automatically generates and submits** PBS or SLURM worker scripts for each queue defined in `mpi_config.dat`. You do not write these scripts — the code handles:
+
+- Script generation with the correct scheduler directives (PBS `#PBS` or SLURM `#SBATCH`)
+- Environment setup from `[setup]` and `[queue.NAME.setup]` sections
+- Resource allocation with a 10% safety margin
+- Job submission (`qsub` or `sbatch`), monitoring, and result collection
+
+The main job script (above) only needs to launch `g16`. The coordinator, running inside the External interface, takes care of distributing tasks to the configured queues.
 
 ## Program-Specific Configuration
 
