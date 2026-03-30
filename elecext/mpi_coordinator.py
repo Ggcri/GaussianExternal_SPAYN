@@ -1072,18 +1072,24 @@ def generate_slurm_script(queue_name: str,
 
     # Parse mem for SLURM format (needs uppercase GB)
     # PBS uses '70gb', SLURM needs '70GB' or '70G'
+    # Special case: mem=0 (no unit) means --mem=0, i.e. request all node memory
     import re
     mem_match = re.match(r'(\d+)\s*([gGtTmM]?[bB]?)', str(mem))
     if mem_match:
         mem_value = mem_match.group(1)
-        mem_unit = mem_match.group(2).upper()
-        if not mem_unit or mem_unit == 'B':
-            mem_unit = 'GB'
-        elif mem_unit == 'G':
-            mem_unit = 'GB'
-        elif mem_unit == 'T':
-            mem_unit = 'TB'
-        slurm_mem = f"{mem_value}{mem_unit}"
+        mem_unit_raw = mem_match.group(2).strip()
+        if mem_value == '0' and not mem_unit_raw:
+            # SLURM --mem=0 means "all available memory on the node"
+            slurm_mem = "0"
+        else:
+            mem_unit = mem_unit_raw.upper()
+            if not mem_unit or mem_unit == 'B':
+                mem_unit = 'GB'
+            elif mem_unit == 'G':
+                mem_unit = 'GB'
+            elif mem_unit == 'T':
+                mem_unit = 'TB'
+            slurm_mem = f"{mem_value}{mem_unit}"
     else:
         slurm_mem = str(mem)
 

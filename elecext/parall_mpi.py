@@ -601,7 +601,7 @@ def generate_worker_slurm_script(
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task={ppn}
-#SBATCH --mem={mem_gb}GB
+#SBATCH --mem={f"{mem_gb}GB" if mem_gb != 0 else "0"}
 #SBATCH --time={walltime}
 #SBATCH --output={workdir}/worker_{node_id}.log
 {partition_directive}

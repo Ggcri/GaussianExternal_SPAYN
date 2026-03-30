@@ -65,12 +65,6 @@ Before running calculations, ensure:
 export SCRATCH=/scratch/$USER
 ```
 
-### Verify installation
-
-```bash
-EXT_TEST_MODE=1 pytest -q
-```
-
 ### Generate a workflow from an XYZ file
 
 After loading the module, use `create_workflow.py` to generate a complete Gaussian `.gjf` input with DPCS3 optimization, DPCS3 frequencies, and PCS2 optimization via the External interface:
@@ -1037,31 +1031,49 @@ The master node can also participate in the calculations (see `[master]` configu
 
 Place an `mpi_config.dat` file in the Gaussian working directory. A template is available at `ExtScript/mpi_config.dat`.
 
-```ini
-# Variables (referenced as ${name} elsewhere)
-external_module = ExtMod.module
+The file uses an INI-like format with the following sections:
 
-# Global setup — applied to ALL worker jobs
+| Section | Required | Description |
+|---------|----------|-------------|
+| `[setup]` | Yes | Bash commands for environment setup (modules, scratch dirs). Applied to **all** worker jobs. |
+| `[queue.NAME]` | Yes (at least one) | Queue/partition definition: resources, walltime, scheduler queue name. One section per logical queue. |
+| `[queue.NAME.setup]` | No | Per-queue bash commands that override or extend `[setup]`. |
+| `[master]` | No | Whether the master node also runs tasks locally. |
+| `[distribution]` | No | Task distribution strategy (`round_robin` or `proportional`). |
+| `[coordinator]` | Yes | Scheduler type, account, polling, timeouts, extra directives. |
+
+#### Choosing the scheduler: SLURM vs PBS
+
+The scheduler type is set in the `[coordinator]` section:
+
+```ini
+[coordinator]
+scheduler = slurm    # or: pbs, auto
+```
+
+| Value | Behaviour |
+|-------|-----------|
+| `slurm` | Worker scripts use `#SBATCH` directives; submission via `sbatch`; status via `squeue`. |
+| `pbs` | Worker scripts use `#PBS` directives; submission via `qsub`; status via `qstat`. |
+| `auto` | Auto-detect by checking for `sbatch` (SLURM) or `qsub` (PBS) in `PATH`. SLURM is checked first on clusters that have both. |
+
+When using **SLURM**, the `account` field is often required (e.g., on CINECA systems). Additional scheduler-specific directives can be passed via `extra_sbatch` (SLURM) or `extra_pbs` (PBS) — these are appended verbatim to every worker script. Both global (in `[coordinator]`) and per-queue (in `[queue.NAME]`) extra directives are supported and merged in order.
+
+#### Minimal example (PBS, two queues)
+
+```ini
 [setup]
-module load ${external_module}
 module load molpro/2025.3
+module load External/LoadExternal.module
 export SCRATCH="/local/scratch/$USER/parall_$PBS_JOBID"
 export TMPDIR=$SCRATCH
-export GAUSS_SCRDIR="/local/scratch/$USER/Gaussian_$PBS_JOBID"
 mkdir -p $SCRATCH
-mkdir -p $GAUSS_SCRDIR
 
-# Master node participation (optional)
-[master]
-participates = true
-nthreads = 1
-
-# Queue definitions — one [queue.NAME] per queue/partition
 [queue.fast]
 nodes = 1
-queue_name = q02matrix     # PBS queue or SLURM partition
-ppn = 9                    # Processors per node (PBS allocation)
-mem = 40gb                 # Memory per PBS/SLURM allocation
+queue_name = q02matrix     # PBS queue name
+ppn = 9                    # Processors per node (job allocation)
+mem = 40gb                 # Memory per job allocation
 nprocs = 8                 # Override: cores per energy calculation
 mem_energy = 32GB          # Override: memory per energy calculation
 
@@ -1073,29 +1085,94 @@ mem = 100gb
 nprocs = 14
 mem_energy = 80GB
 
-# Per-queue setup (optional) — overrides or extends [setup]
-# [queue.large.setup]
-# module load molpro/2024.2
+[master]
+participates = true
+nthreads = 1
 
-# Task distribution strategy
 [distribution]
-strategy = round_robin     # round_robin or proportional
+strategy = round_robin
 
-# Coordinator settings
 [coordinator]
-poll_interval = 30         # Seconds between status checks
-timeout_hours = 0          # 0 = no timeout
-scheduler = auto           # auto, pbs, or slurm
-# account =                # SLURM --account (required on some clusters)
-# qos =                    # SLURM --qos (optional)
+scheduler = pbs
+poll_interval = 30
+timeout_hours = 0
 ```
+
+#### Full SLURM example (CINECA-like cluster, many queues)
+
+This example submits 36 independent worker jobs to the same SLURM partition, each using a full node. The master node also participates with 1 local thread.
+
+```ini
+# Global environment — applied to every worker script
+[setup]
+module purge
+module load profile/chem-phys
+module load Molpro/2025.3
+module load External/LoadExternal.module
+export SCRATCH="/tmp/mol_$SLURM_JOBID"
+export GAUSS_SCRDIR="/tmp/g16_$SLURM_JOBID"
+export TMPDIR=$SCRATCH
+mkdir -p $SCRATCH
+mkdir -p $GAUSS_SCRDIR
+
+# Define as many [queue.NAME] sections as needed.
+# Each section corresponds to ONE sbatch submission.
+# Here 36 queues are defined; all target the same partition.
+[queue.SUM_MIN_1]
+nodes = 1
+ppn = 100
+mem = 440gb
+walltime = 03:00:00
+queue_name = dcgp_usr_prod    # SLURM partition name
+
+[queue.SUM_MIN_2]
+nodes = 1
+ppn = 100
+mem = 440gb
+walltime = 03:00:00
+queue_name = dcgp_usr_prod
+
+# ... (repeat for SUM_MIN_3 through SUM_MIN_36)
+
+# Master participation: the node running Gaussian also computes tasks
+[master]
+participates = true
+nthreads = 1
+
+[distribution]
+strategy = round_robin
+
+# Coordinator — SLURM-specific settings
+[coordinator]
+scheduler = slurm
+account = CNHPC_1491856       # SLURM --account (required on CINECA)
+poll_interval = 60            # seconds between sentinel checks
+timeout_hours = 0             # 0 = wait indefinitely
+extra_sbatch = --gres=tmpfs:3t  # appended as #SBATCH to every worker script
+```
+
+In this configuration each `[queue.SUM_MIN_N]` section produces one `sbatch` job requesting 1 node with 100 cores and 440 GB. The `extra_sbatch = --gres=tmpfs:3t` line adds `#SBATCH --gres=tmpfs:3t` to every generated worker script (useful for requesting node-local temporary storage). The tasks (displaced geometries) are distributed round-robin across the 36 queues plus the master node.
+
+#### Per-queue setup (optional)
+
+If different queues need different modules or environment, add a `[queue.NAME.setup]` section:
+
+```ini
+[queue.gpu.setup]
+module load cuda/12.0
+export CUDA_VISIBLE_DEVICES=0,1
+```
+
+This is appended **after** the global `[setup]` commands in the worker script for that queue only.
 
 ### Key Configuration Details
 
-- **`nprocs` and `mem_energy`** (per-queue overrides): override the `<nprocs>` and `<mem>` values from the External command line for the single-point calculations submitted to that queue. This allows different queues to use different resource allocations.
-- **`ppn` and `mem`**: control the PBS/SLURM **job allocation** (how many cores and memory the scheduler reserves for the worker job).
-- **`scheduler = auto`**: auto-detects PBS or SLURM by checking for `sbatch`/`qsub` in `PATH`. SLURM is checked first on clusters that have both.
-- **`[master] participates = true`**: the master node runs a subset of tasks locally using a ThreadPool, in addition to submitting worker jobs.
+- **`nprocs` and `mem_energy`** (per-queue overrides): override the `<nprocs>` and `<mem>` values from the External command line for the single-point calculations submitted to that queue. This allows different queues to use different resource allocations. If omitted, the values from the External command are used.
+- **`ppn` and `mem`**: control the PBS/SLURM **job allocation** (how many cores and memory the scheduler reserves for the worker job). These can be set to `auto` to let the coordinator calculate them from `nprocs` x `nthreads` + 10% overhead.
+- **`scheduler`**: set in `[coordinator]`. Determines whether worker scripts are generated with `#PBS` or `#SBATCH` directives.
+- **`account`**: SLURM `--account` string. Required on clusters that enforce project accounting (e.g., CINECA). Ignored for PBS.
+- **`extra_sbatch` / `extra_pbs`**: arbitrary scheduler directives appended to every worker script. Can appear in `[coordinator]` (global) and/or in `[queue.NAME]` (per-queue). Both are merged. Example: `extra_sbatch = --gres=tmpfs:3t`.
+- **`[master] participates = true`**: the master node runs a subset of tasks locally using a ThreadPool, in addition to submitting worker jobs. `nthreads` controls how many parallel tasks the master runs.
 - **Worker scripts**: generated automatically by the coordinator — the user does not write them. Each worker script loads the environment from `[setup]` (and optionally `[queue.NAME.setup]`), runs its assigned tasks with a ThreadPool, writes results to JSON, and creates a sentinel file on completion.
 
 ## PBS/SLURM Job Submission
@@ -1104,13 +1181,20 @@ scheduler = auto           # auto, pbs, or slurm
 
 This is the script that submits the Gaussian job to the scheduler. You write this script yourself.
 
-**Resource calculation for `parall_n` (single-node):** If the External command uses `nprocs=8`, `mem=10GB`, `nthreads=6`, then request:
-- `ncpus` = 8 x 6 = 48 cores
-- `mem` = 10 x 6 = 60 GB
+There are two distinct resource scenarios depending on the parallelization mode:
 
-Add ~10-20% safety margin to memory requests to account for system overhead.
+**`parall_n` (single-node):** all workers run on the master node. Request total resources:
+- `ncpus` = `<nprocs>` x `<nthreads>`
+- `mem` = `<mem>` x `<nthreads>`
+- Add ~10-20% safety margin to memory.
 
-**PBS example:**
+**`parall_n_mpi` (multi-node):** workers are submitted as separate PBS/SLURM jobs via `mpi_config.dat`. The master node only needs resources for Gaussian itself (and optionally for master-participation tasks if `[master] participates = true`). Worker resources are defined in `mpi_config.dat`, not in the main script.
+
+### Single-node examples (`parall_n`)
+
+If the External command uses `nprocs=8`, `mem=10GB`, `nthreads=6`, request 48 cores and 60 GB.
+
+**PBS:**
 
 ```bash
 #!/bin/sh
@@ -1137,7 +1221,7 @@ g16 calculation.gjf
 rm -rf $SCRATCH $GAUSS_SCRDIR
 ```
 
-**SLURM example:**
+**SLURM:**
 
 ```bash
 #!/bin/bash
@@ -1168,16 +1252,91 @@ g16 calculation.gjf
 rm -rf $SCRATCH $GAUSS_SCRDIR
 ```
 
-### Worker Scripts for `parall_n_mpi`
+### Multi-node example (`parall_n_mpi`)
+
+For `parall_n_mpi`, the main job script only runs Gaussian + the coordinator. Worker jobs are submitted automatically by the coordinator according to `mpi_config.dat`. The master node needs enough resources for Gaussian and, if `[master] participates = true`, for the master-participation tasks as well.
+
+**SLURM main script (CINECA-like):**
+
+```bash
+#!/bin/bash
+#SBATCH --job-name=freq_mpi
+#SBATCH --mail-type=END,FAIL
+#SBATCH --mail-user=user@example.com
+#SBATCH --account=CNHPC_1491856
+#SBATCH --partition=dcgp_usr_prod
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=100
+#SBATCH --mem=440GB
+#SBATCH --time=24:00:00
+#SBATCH --gres=tmpfs:3t
+
+set +e
+
+module purge
+module load profile/chem-phys
+module load gaussian/g16
+module load Molpro/2025.3
+module load External/LoadExternal.module
+
+export SCRATCH="/tmp/mol_$SLURM_JOBID"
+export TMPDIR=$SCRATCH
+export GAUSS_SCRDIR="/tmp/g16_$SLURM_JOBID"
+mkdir -p $SCRATCH $GAUSS_SCRDIR
+
+cd $SLURM_SUBMIT_DIR
+
+# mpi_config.dat must be in this directory
+g16 calculation.gjf
+
+rm -rf $SCRATCH $GAUSS_SCRDIR
+```
+
+The corresponding Gaussian input would use:
+```gaussian
+#p External="CentralExt molpro preamble.dat ending.dat 8 16GB READ parall_n_mpi twoside 4 R"
+```
+
+The coordinator reads `mpi_config.dat` from the working directory, generates one SLURM worker script per `[queue.NAME]` section, and submits them via `sbatch`. Each worker runs its assigned subset of displaced-geometry energy calculations, writes results to JSON, and signals completion with a sentinel file. The coordinator polls for sentinel files and assembles the gradient once all workers finish.
+
+**PBS main script:**
+
+```bash
+#!/bin/sh
+#PBS -N freq_mpi
+#PBS -m ae
+#PBS -M user@example.com
+#PBS -q batch
+#PBS -l select=1:ncpus=16:mem=40GB
+
+set +e
+
+module load gaussian/g16
+module load molpro/2024.2
+module load /path/to/External/external_tools.module
+
+export SCRATCH="/local/scratch/$USER/job_$PBS_JOBID"
+export TMPDIR=$SCRATCH
+export GAUSS_SCRDIR="/local/scratch/$USER/gauss_$PBS_JOBID"
+mkdir -p $SCRATCH $GAUSS_SCRDIR
+
+cd $PBS_O_WORKDIR
+g16 calculation.gjf
+
+rm -rf $SCRATCH $GAUSS_SCRDIR
+```
+
+### Worker Scripts (auto-generated)
 
 When using `parall_n_mpi`, the coordinator **automatically generates and submits** PBS or SLURM worker scripts for each queue defined in `mpi_config.dat`. You do not write these scripts — the code handles:
 
-- Script generation with the correct scheduler directives (PBS `#PBS` or SLURM `#SBATCH`)
-- Environment setup from `[setup]` and `[queue.NAME.setup]` sections
-- Resource allocation with a 10% safety margin
-- Job submission (`qsub` or `sbatch`), monitoring, and result collection
+- Script generation with the correct scheduler directives (`#PBS` or `#SBATCH`, based on `scheduler` in `[coordinator]`)
+- Environment setup from `[setup]` and optionally `[queue.NAME.setup]` sections
+- Extra directives from `extra_sbatch`/`extra_pbs` (both global and per-queue)
+- Job submission (`qsub` or `sbatch`), monitoring via sentinel files, and result collection
 
-The main job script (above) only needs to launch `g16`. The coordinator, running inside the External interface, takes care of distributing tasks to the configured queues.
+The main job script only needs to launch `g16`. The coordinator, running inside the External interface, takes care of distributing tasks to the configured queues.
 
 ## Program-Specific Configuration
 
