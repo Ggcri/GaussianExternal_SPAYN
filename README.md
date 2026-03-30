@@ -8,6 +8,7 @@ Python wrappers for interfacing Gaussian with external quantum chemistry program
 
 ## Table of Contents
 
+- [Install through pip](#install-through-pip)
 - [Quick Start](#quick-start)
 - [Command Structure](#command-structure)
 - [Memory and Resource Management](#memory-and-resource-management)
@@ -34,6 +35,24 @@ Python wrappers for interfacing Gaussian with external quantum chemistry program
 - [Troubleshooting](#troubleshooting)
 - [Directory Structure](#directory-structure)
 - [Quick Reference](#quick-reference)
+
+## Install through pip
+
+The simplest way to install the External interface is via pip:
+
+```bash
+pip install elecext
+```
+
+This installs all CLI commands (`CentralExt`, `CE`, `GauExt`, `OrcaExt`, `MolproExt`, `MRCC_ext`, etc.) directly into your PATH. No module file or `ELECEXT_PATH` setup is needed.
+
+After installation, you must define a `SCRATCH` directory pointing to fast local storage (SSD preferred). This is where temporary calculation files are created:
+
+```bash
+export SCRATCH=/scratch/$USER
+```
+
+You also need Gaussian and at least one external QC program (Molpro, ORCA, MRCC, or eT) available in your environment.
 
 ## Quick Start
 
