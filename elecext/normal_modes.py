@@ -894,7 +894,7 @@ def build_normal_mode_data_from_hessian(
         When gaussian_mode_data is provided, modes have actual symmetry labels.
         Otherwise, all modes get label "A".
         - list of str: filter by substring match (e.g., ["A1"] matches A1)
-        - 'auto': treated as ["A"] (matches all modes)
+        - 'auto': automatic TSR detection (exact match, same as parse_normal_modes_from_log)
         - None: no filtering (ALL modes)
     gaussian_mode_data : dict, optional
         Normal mode data from parse_normal_modes_from_log() with ALL modes
@@ -1077,9 +1077,16 @@ def build_normal_mode_data_from_hessian(
     elif effective_filters is not None:
         selected = []
         for k in range(n_vib):
-            sym = all_symmetries[k]
-            if any(filt in sym for filt in effective_filters):
-                selected.append(k)
+            sym = all_symmetries[k].upper()
+            for filt in effective_filters:
+                filt_upper = filt.upper()
+                if "'" in filt_upper:
+                    match = (sym == filt_upper)
+                else:
+                    match = (filt_upper in sym)
+                if match:
+                    selected.append(k)
+                    break
     else:
         selected = list(range(n_vib))
 
@@ -2504,7 +2511,11 @@ def parse_normal_modes_from_log(log_path: str, symmetry_filters: List[str] = Non
     debug_print(f"Available symmetries in log: {available_symmetries}")
 
     # Special case: if symmetry_filters == 'auto', automatically detect TSR
+    # Auto uses EXACT match (TSR detector returns the precise label)
+    # User-specified filters use SUBSTRING match (e.g., "A" matches A1, AG, AU)
+    use_exact_match = False
     if symmetry_filters == 'auto':
+        use_exact_match = True
         debug_print(f"\nAutomatic TSR detection requested")
         try:
             tsr_label = _find_totally_symmetric_representation(available_symmetries)
@@ -2534,9 +2545,17 @@ def parse_normal_modes_from_log(log_path: str, symmetry_filters: List[str] = Non
             for sym_filter in symmetry_filters:
                 sym_filter_upper = sym_filter.upper()
 
-                # Exact matching only to avoid false positives
-                # e.g., "A'" must NOT match "A''" (substring match would be wrong)
-                if mode_sym == sym_filter_upper:
+                # Matching strategy depends on source:
+                # - auto/TSR: EXACT match (TSR label is already precise)
+                # - user-specified with prime ('): EXACT match (A' must not match A'')
+                # - user-specified without prime: SUBSTRING match
+                #   e.g., "A" matches A1, A2, AG, AU
+                if use_exact_match or "'" in sym_filter_upper:
+                    match = (mode_sym == sym_filter_upper)
+                else:
+                    match = (sym_filter_upper in mode_sym)
+
+                if match:
                     filtered_modes.append(mode)
                     matched_filters.add(sym_filter)
                     break  # Don't double-count the same mode
