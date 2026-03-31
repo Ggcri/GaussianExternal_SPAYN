@@ -68,9 +68,10 @@ def parse_fakekey_keywords(filepath, source_type='gjf'):
     Returns
     -------
     tuple
-        (keywords_list, tail_content_list) where:
+        (keywords_list, tail_content_list, link0_directives) where:
         - keywords_list: keywords for route section
         - tail_content_list: lines to write after geometry (! removed)
+        - link0_directives: dict with optional 'nprocs' and 'mem' keys from !%nprocs= and !%mem= lines
 
     Notes
     -----
@@ -87,6 +88,8 @@ def parse_fakekey_keywords(filepath, source_type='gjf'):
 
     Example:
         !fakekey
+        !%nprocs=4
+        !%mem=8GB
         ! scf=xqc level="b3lyp/aug-cc-pvtz"
         !fakekeyend
         ! @path/to/basis/set
@@ -97,6 +100,7 @@ def parse_fakekey_keywords(filepath, source_type='gjf'):
     """
     keywords = []
     tail_content = []
+    link0_directives = {}  # For !%nprocs= and !%mem= directives
 
     source_name = "Gaussian input file" if source_type == 'gjf' else "ending.dat file"
 
@@ -142,6 +146,20 @@ def parse_fakekey_keywords(filepath, source_type='gjf'):
                         debug_print(f"  Stopping fakekey parsing at !normalmode marker")
                         break
 
+                    # Check for link0 directives: !%nprocs= and !%mem=
+                    if keyword_line.lower().startswith('%nprocs='):
+                        value = keyword_line.split('=', 1)[1].strip()
+                        if value:
+                            link0_directives['nprocs'] = value
+                            debug_print(f"  Found fakekey link0 directive: %nprocs={value}")
+                        continue
+                    if keyword_line.lower().startswith('%mem='):
+                        value = keyword_line.split('=', 1)[1].strip()
+                        if value:
+                            link0_directives['mem'] = value
+                            debug_print(f"  Found fakekey link0 directive: %mem={value}")
+                        continue
+
                     if keyword_line:  # Skip empty comments
                         # Split by spaces to handle multiple keywords on same line
                         for kw in keyword_line.split():
@@ -181,8 +199,10 @@ def parse_fakekey_keywords(filepath, source_type='gjf'):
 
     if tail_content:
         debug_print(f"  Total tail content lines: {len(tail_content)}")
+    if link0_directives:
+        debug_print(f"  Link0 directives: {link0_directives}")
 
-    return keywords, tail_content
+    return keywords, tail_content, link0_directives
 
 
 def parse_g4_fakekey_keywords(filepath):
@@ -684,7 +704,7 @@ def merge_route_keywords(base_route, additional_keywords):
 
 @profile_function("write_gaussian_freq_input")
 @profile_io("file_write")
-def write_gaussian_freq_input(path, geom, charge, spin, additional_keywords=None, tail_content=None):
+def write_gaussian_freq_input(path, geom, charge, spin, additional_keywords=None, tail_content=None, link0_directives=None):
     """Write Gaussian input for a fake numerical frequency calculation.
 
     Parameters
@@ -702,6 +722,9 @@ def write_gaussian_freq_input(path, geom, charge, spin, additional_keywords=None
     tail_content : list, optional
         Lines to write after geometry (e.g., basis set specifications).
         Each line is written as-is after a blank line separator.
+    link0_directives : dict, optional
+        Gaussian link0 directives (e.g., {'nprocs': '4', 'mem': '8GB'}).
+        Written as %nprocs=, %mem= lines before the route section.
     """
     base_route = "#p freq=num geom=gic uff iop(1/33=2)"
 
@@ -714,6 +737,12 @@ def write_gaussian_freq_input(path, geom, charge, spin, additional_keywords=None
 
     geom_block = "\n".join(geom)
     with open(path, "w") as f:
+        # Write link0 directives if provided
+        if link0_directives:
+            if 'nprocs' in link0_directives:
+                f.write(f"%nprocs={link0_directives['nprocs']}\n")
+            if 'mem' in link0_directives:
+                f.write(f"%mem={link0_directives['mem']}\n")
         f.write(route + "\n\n")
         f.write("fake freq run\n\n")
         f.write(f"{charge} {spin}\n")
@@ -788,12 +817,13 @@ def run_fake_freq_calculation(geom, charge, spin, workdir=".", gaussian="g16", e
     # Parse !fakekey keywords and tail content for fake frequency calculation
     additional_keywords = None
     tail_content = None
+    link0_directives = None
 
     if ending_file is not None:
         # NEW APPROACH: Read keywords from ending.dat file (preferred method)
         debug_print(f"Reading !fakekey keywords from ending.dat: {ending_file}")
         if os.path.exists(ending_file):
-            fakekey_keywords, fakekey_tail = parse_fakekey_keywords(ending_file, source_type='ending')
+            fakekey_keywords, fakekey_tail, fakekey_link0 = parse_fakekey_keywords(ending_file, source_type='ending')
             if fakekey_keywords:
                 debug_print(f"Found {len(fakekey_keywords)} fakekey keyword(s) from ending.dat")
                 additional_keywords = fakekey_keywords
@@ -802,6 +832,9 @@ def run_fake_freq_calculation(geom, charge, spin, workdir=".", gaussian="g16", e
             if fakekey_tail:
                 tail_content = fakekey_tail
                 debug_print(f"Found {len(fakekey_tail)} tail content line(s) from ending.dat")
+            if fakekey_link0:
+                link0_directives = fakekey_link0
+                debug_print(f"Found link0 directives from ending.dat: {fakekey_link0}")
         else:
             debug_print(f"Warning: ending.dat file not found: {ending_file}, using default route")
     else:
@@ -817,17 +850,20 @@ def run_fake_freq_calculation(geom, charge, spin, workdir=".", gaussian="g16", e
 
         if gaussian_input:
             # Parse fakekey keywords from .gjf file
-            fakekey_keywords, fakekey_tail = parse_fakekey_keywords(gaussian_input, source_type='gjf')
+            fakekey_keywords, fakekey_tail, fakekey_link0 = parse_fakekey_keywords(gaussian_input, source_type='gjf')
             if fakekey_keywords:
                 debug_print(f"Found {len(fakekey_keywords)} fakekey keyword(s) from .gjf file")
                 additional_keywords = fakekey_keywords
             if fakekey_tail:
                 tail_content = fakekey_tail
                 debug_print(f"Found {len(fakekey_tail)} tail content line(s) from .gjf file")
+            if fakekey_link0:
+                link0_directives = fakekey_link0
+                debug_print(f"Found link0 directives from .gjf file: {fakekey_link0}")
         else:
             debug_print("No Gaussian input file with External keyword found, using default route")
 
-    write_gaussian_freq_input(inp, converted_geom, charge, spin, additional_keywords, tail_content)
+    write_gaussian_freq_input(inp, converted_geom, charge, spin, additional_keywords, tail_content, link0_directives)
 
     if os.environ.get("EXT_TEST_MODE") == "1":
         # In test mode we do not actually run Gaussian

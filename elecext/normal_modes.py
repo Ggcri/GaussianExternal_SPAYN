@@ -5190,11 +5190,13 @@ def run_fake_freq_for_normal_modes(
     level_of_theory = None  # Track custom level of theory
     tail_content = None  # Content to write after geometry
 
+    fakekey_link0 = {}  # Link0 directives from !%nprocs= and !%mem=
+
     if ending_file is not None:
         # NEW APPROACH: Read keywords from ending.dat file (preferred method)
         debug_print(f"Reading !fakekey keywords from ending.dat: {ending_file}")
         if os.path.exists(ending_file):
-            fakekey_keywords, fakekey_tail = parse_fakekey_keywords(ending_file, source_type='ending')
+            fakekey_keywords, fakekey_tail, fakekey_link0 = parse_fakekey_keywords(ending_file, source_type='ending')
             if fakekey_keywords:
                 # Extract level="..." from keywords if present
                 fakekey_keywords, level_of_theory = extract_level_from_keywords(fakekey_keywords)
@@ -5206,6 +5208,8 @@ def run_fake_freq_for_normal_modes(
             if fakekey_tail:
                 tail_content = fakekey_tail
                 debug_print(f"Found {len(fakekey_tail)} tail content line(s) from ending.dat")
+            if fakekey_link0:
+                debug_print(f"Found link0 directives from ending.dat: {fakekey_link0}")
         else:
             debug_print(f"Warning: ending.dat file not found: {ending_file}, using default route")
     else:
@@ -5225,7 +5229,7 @@ def run_fake_freq_for_normal_modes(
 
         if gaussian_input:
             # Parse fakekey keywords from .gjf file
-            fakekey_keywords, fakekey_tail = parse_fakekey_keywords(gaussian_input, source_type='gjf')
+            fakekey_keywords, fakekey_tail, fakekey_link0 = parse_fakekey_keywords(gaussian_input, source_type='gjf')
             if fakekey_keywords:
                 # Extract level="..." from keywords if present
                 fakekey_keywords, level_of_theory = extract_level_from_keywords(fakekey_keywords)
@@ -5235,6 +5239,8 @@ def run_fake_freq_for_normal_modes(
             if fakekey_tail:
                 tail_content = fakekey_tail
                 debug_print(f"Found {len(fakekey_tail)} tail content line(s) from .gjf file")
+            if fakekey_link0:
+                debug_print(f"Found link0 directives from .gjf file: {fakekey_link0}")
         else:
             debug_print("No Gaussian input file with External keyword found, using default route")
 
@@ -5273,24 +5279,32 @@ def run_fake_freq_for_normal_modes(
             route = route.replace('#p ', '#p iop(7/8=210001) ')
             debug_print(f"Added IOp(7/8=210001) to request Full Mass-Weighted Hessian matrix")
 
-    # Calculate resources for fake_freq.gjf based on user input
-    # For parall_n, total resources = single_calc_resources × nthreads
+    # Calculate resources for fake_freq.gjf
+    # Priority: !%nprocs= / !%mem= from ending.dat override scaled defaults
     nprocs_fake = None
     mem_fake = None
 
-    if nthreads is not None and mem_initial is not None and nprocs_initial is not None:
-        # Scale nprocs by nthreads (total parallel workers)
+    if 'nprocs' in fakekey_link0:
+        nprocs_fake = int(fakekey_link0['nprocs'])
+        debug_print(f"\nResource from ending.dat !fakekey: %nprocs={nprocs_fake}")
+    elif nthreads is not None and nprocs_initial is not None:
+        # Fallback: scale nprocs by nthreads (total parallel workers)
         nprocs_fake = int(nprocs_initial) * int(nthreads)
+        debug_print(f"\nResource scaled: %nprocs={nprocs_fake} (={nprocs_initial}×{nthreads})")
 
-        # Parse and scale memory by nthreads
+    if 'mem' in fakekey_link0:
+        mem_fake = fakekey_link0['mem']
+        # Normalize: ensure it has a unit suffix
+        if mem_fake.isdigit():
+            mem_fake = f"{mem_fake}GB"
+        debug_print(f"Resource from ending.dat !fakekey: %mem={mem_fake}")
+    elif nthreads is not None and mem_initial is not None:
+        # Fallback: scale memory by nthreads
         from elecext.parall_mpi import parse_memory_string
         mem_gb = parse_memory_string(str(mem_initial))
         mem_total_gb = int(mem_gb * int(nthreads))
         mem_fake = f"{mem_total_gb}GB"
-
-        debug_print(f"\nResource allocation for fake_freq.gjf:")
-        debug_print(f"  Original: nprocs={nprocs_initial}, mem={mem_initial}, nthreads={nthreads}")
-        debug_print(f"  Scaled: %nprocs={nprocs_fake}, %mem={mem_fake}")
+        debug_print(f"Resource scaled: %mem={mem_fake} (={mem_initial}×{nthreads})")
 
     # Write Gaussian input with checkpoint directives
     geom_block = "\n".join(geom_lines)
@@ -7061,7 +7075,7 @@ def run_normal_mode_gradient_calculation(
             g4_kw_filtered, prelim_level = extract_level_from_keywords(g4_kw)
             if not prelim_level:
                 # Backward compatible fallback to !fakekey
-                fk_kw, g4_tail = parse_fakekey_keywords(ending_file, source_type='ending')
+                fk_kw, g4_tail, _ = parse_fakekey_keywords(ending_file, source_type='ending')
                 g4_kw_filtered, prelim_level = extract_level_from_keywords(fk_kw)
             if not prelim_level:
                 raise ValueError(
@@ -7529,7 +7543,7 @@ def run_normal_mode_gradient_calculation(
             g4_kw, g4_tail = parse_g4_fakekey_keywords(ending_file)
             g4_kw_filtered, prelim_level = extract_level_from_keywords(g4_kw)
             if not prelim_level:
-                fk_kw, g4_tail = parse_fakekey_keywords(ending_file, source_type='ending')
+                fk_kw, g4_tail, _ = parse_fakekey_keywords(ending_file, source_type='ending')
                 g4_kw_filtered, prelim_level = extract_level_from_keywords(fk_kw)
             if not prelim_level:
                 raise ValueError(
@@ -7978,7 +7992,7 @@ def run_normal_mode_gradient_calculation(
             g4_kw, g4_tail = parse_g4_fakekey_keywords(ending_file)
             g4_kw_filtered, prelim_level = extract_level_from_keywords(g4_kw)
             if not prelim_level:
-                fk_kw, g4_tail = parse_fakekey_keywords(ending_file, source_type='ending')
+                fk_kw, g4_tail, _ = parse_fakekey_keywords(ending_file, source_type='ending')
                 g4_kw_filtered, prelim_level = extract_level_from_keywords(fk_kw)
             if not prelim_level:
                 raise ValueError(
@@ -8858,7 +8872,7 @@ def run_normal_mode_gradient_calculation(
             g4_kw, g4_tail = parse_g4_fakekey_keywords(ending_file)
             g4_kw_filtered, prelim_level = extract_level_from_keywords(g4_kw)
             if not prelim_level:
-                fk_kw, g4_tail = parse_fakekey_keywords(ending_file, source_type='ending')
+                fk_kw, g4_tail, _ = parse_fakekey_keywords(ending_file, source_type='ending')
                 g4_kw_filtered, prelim_level = extract_level_from_keywords(fk_kw)
             if not prelim_level:
                 raise ValueError(
