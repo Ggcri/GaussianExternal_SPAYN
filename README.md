@@ -8,8 +8,7 @@ Python wrappers for interfacing Gaussian with external quantum chemistry program
 
 ## Table of Contents
 
-- [Install through pip](#install-through-pip)
-- [Quick Start](#quick-start)
+- [Getting Started in 3 Simple Steps](#getting-started-in-3-simple-steps)
 - [Command Structure](#command-structure)
 - [Memory and Resource Management](#memory-and-resource-management)
 - [Configuration Files](#configuration-files)
@@ -36,72 +35,39 @@ Python wrappers for interfacing Gaussian with external quantum chemistry program
 - [Directory Structure](#directory-structure)
 - [Quick Reference](#quick-reference)
 
-## Install through pip
+## Getting Started in 3 Simple Steps
 
-The simplest way to install the External interface is via pip:
+**Requirements:** Python >= 3.11, Gaussian, and at least one external QC program (Molpro, ORCA, MRCC, or eT).
 
-```bash
-pip install elecext
-```
-
-This installs all CLI commands (`CentralExt`, `CE`, `GauExt`, `OrcaExt`, `MolproExt`, `MRCC_ext`, etc.) directly into your PATH. No module file or `ELECEXT_PATH` setup is needed.
-
-After installation, you must define a `SCRATCH` directory pointing to fast local storage (SSD preferred). This is where temporary calculation files are created:
+### Step 1: Install and configure the environment
 
 ```bash
-export SCRATCH=/scratch/$USER
+pip3.11 install elecext
 ```
 
-You also need Gaussian and at least one external QC program (Molpro, ORCA, MRCC, or eT) available in your environment.
-
-## Quick Start
-
-### Prerequisites
-
-- Python 3.9+ with `numpy`
-- Gaussian (for the driver interface)
-- At least one external QC program (Molpro, ORCA, MRCC, or eT)
-
-### Setup
+After installation, run `elecext-env` and follow the instructions to make the environment permanent. It will print a command like:
 
 ```bash
-# Install Python dependency
-pip install numpy
-
-# Run the setup script (generates a module file)
-./setup_external.sh --python /path/to/python3.12
-
-# Load the module
-module load ./external_tools.module
+echo 'eval "$(elecext-env)"' >> ~/.bashrc
 ```
 
-Before running calculations, ensure:
-1. **Gaussian** is loaded in your environment
-2. **The external QC program** (e.g., Molpro) is loaded
-3. **`SCRATCH`** (or `TMPDIR`) is set to a local scratch directory (use fast local disk, SSD preferred)
+Copy-paste it, then restart your shell (or `source ~/.bashrc`). This sets all the environment variables (`EBAS`, `PMOL`, `EMOL`, etc.) and resolves the basis set paths in the installed template files.
+
+### Step 2: Generate a workflow
 
 ```bash
-export SCRATCH=/scratch/$USER
+create-workflow molecule.xyz
 ```
 
-### Generate a workflow from an XYZ file
-
-After loading the module, use `create_workflow.py` to generate a complete Gaussian `.gjf` input with DPCS3 optimization, DPCS3 frequencies, and PCS2 optimization via the External interface:
+This produces a `.gjf` file with three Link1 blocks (DPCS3 optimization, DPCS3 frequencies, PCS2 optimization via the External interface). Use `--help` for all options:
 
 ```bash
-create_workflow.py molecule.xyz
+create-workflow molecule.xyz --charge 0 --spin 1 --mol-nprocs 16 --mol-mem 32GB --nthreads 8
 ```
 
-This produces a `.gjf` file with three Link1 blocks. Use `--help` for all options:
+### Step 3: Run the Gaussian calculation
 
-```bash
-create_workflow.py --help
-create_workflow.py molecule.xyz --charge 0 --spin 1 --mol-nprocs 16 --mol-mem 32GB --nthreads 8
-```
-
-A static workflow template is also available at `ExtScript/WorkflowTemplate/DPCS3_PCS2_workflow.gjf`, along with ready-to-use Molpro PCS2/PPCS2 preamble and ending files in `ExtScript/WorkflowTemplate/Molpro/`.
-
-### Run the calculation
+Make sure `$SCRATCH` is set to fast local storage (SSD preferred) and that Gaussian and the external QC program (e.g., Molpro) are callable in your environment:
 
 ```bash
 export SCRATCH=/scratch/$USER
@@ -110,7 +76,7 @@ mkdir -p $SCRATCH
 g16 molecule.gjf
 ```
 
-Make sure Gaussian, Molpro (or the external program), and the External module are all loaded before running. A working Gaussian environment requires at minimum `GAUSS_EXEDIR` and `GAUSS_SCRDIR` to be set, but these are typically configured when loading the Gaussian module.
+A working Gaussian environment requires at minimum `GAUSS_EXEDIR` and `GAUSS_SCRDIR` to be set, but these are typically configured when loading the Gaussian module.
 
 ## Command Structure
 
