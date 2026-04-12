@@ -636,6 +636,18 @@ def compute_energy(nprocs,mem,OptFlag=False,readgradpy='NONE',operations=[],atom
         # shared-memory initialization to deadlock.
         env_for_subprocess.pop('LD_LIBRARY_PATH', None)
 
+        # SLURM handling: isolate Molpro subprocess from SLURM environment.
+        # Two problems with SLURM vars leaking to Molpro:
+        # 1. Molpro's wrapper ignores -n flag when SLURM_JOB_ID is set
+        # 2. Intel MPI (Hydra) uses srun bootstrap, causing step conflicts
+        #    when multiple Molpro instances run in parallel (parall_n)
+        # Fix: strip all SLURM_* vars and force fork bootstrap.
+        if os.environ.get('SLURM_JOB_ID') or os.environ.get('SLURM_JOBID'):
+            for var in list(env_for_subprocess.keys()):
+                if var.startswith('SLURM_'):
+                    del env_for_subprocess[var]
+            env_for_subprocess['I_MPI_HYDRA_BOOTSTRAP'] = 'fork'
+
         # If we're in PBS and want to limit processes
         if pbs_found:
             # Check if requested processes differ from PBS allocation
